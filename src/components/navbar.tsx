@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { Menu, ArrowRight, Calculator, FileText, Users } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -131,87 +131,153 @@ export default function Navbar() {
                   <Menu size={24} />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="bg-liberty-base">
-                <div className="flex flex-col space-y-4 mt-8">
+              <SheetContent side="right" className="bg-liberty-base w-80 sm:w-96">
+                <SheetHeader>
+                  <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                </SheetHeader>
+                
+                <div className="flex flex-col space-y-6 mt-6">
+                  {/* Logo and Brand */}
+                  <div className="flex items-center gap-3 px-2">
+                    <Image
+                      src="/logo.png"
+                      alt="Liberty Bell Property Management"
+                      width={40}
+                      height={40}
+                      className="h-10 w-10 rounded-lg"
+                    />
+                    <div>
+                      <h2 className="font-reckless font-semibold text-liberty-background text-lg">Liberty Property</h2>
+                      <p className="text-liberty-background/60 text-sm">Property Freedom</p>
+                    </div>
+                  </div>
+
                   {/* Mobile Services Section */}
-                  <div className="space-y-3">
-                    <h3 className="font-reckless font-semibold text-liberty-background">Services</h3>
-                    <Link 
-                      href="/right-to-manage" 
-                      className="text-liberty-background/70 hover:text-liberty-primary px-3 py-2 rounded-md text-sm transition-colors block"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Right to Manage
-                    </Link>
-                    <Link 
-                      href="/collective-enfranchisement" 
-                      className="text-liberty-background/70 hover:text-liberty-primary px-3 py-2 rounded-md text-sm transition-colors block"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Collective Enfranchisement
-                    </Link>
-                    <Link 
-                      href="/commonhold-conversion" 
-                      className="text-liberty-background/70 hover:text-liberty-primary px-3 py-2 rounded-md text-sm transition-colors block"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Commonhold Conversion
-                    </Link>
+                  <div className="space-y-4">
+                    <h3 className="font-reckless font-semibold text-liberty-background text-lg px-2 border-b border-liberty-secondary/30 pb-2">Services</h3>
+                    <div className="space-y-1">
+                      <Link 
+                        href="/right-to-manage" 
+                        className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200 group"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <div className="w-8 h-8 bg-liberty-primary/10 rounded-lg flex items-center justify-center group-hover:bg-liberty-primary/20 transition-colors">
+                          <Users className="w-4 h-4 text-liberty-primary" />
+                        </div>
+                        <div>
+                          <div className="font-medium">Right to Manage</div>
+                          <div className="text-sm text-liberty-background/50">Take control of your building</div>
+                        </div>
+                      </Link>
+                      
+                      <Link 
+                        href="/collective-enfranchisement" 
+                        className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200 group"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <div className="w-8 h-8 bg-liberty-primary/10 rounded-lg flex items-center justify-center group-hover:bg-liberty-primary/20 transition-colors">
+                          <FileText className="w-4 h-4 text-liberty-primary" />
+                        </div>
+                        <div>
+                          <div className="font-medium">Collective Enfranchisement</div>
+                          <div className="text-sm text-liberty-background/50">Buy your freehold</div>
+                        </div>
+                      </Link>
+                      
+                      <Link 
+                        href="/commonhold-conversion" 
+                        className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200 group"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <div className="w-8 h-8 bg-liberty-primary/10 rounded-lg flex items-center justify-center group-hover:bg-liberty-primary/20 transition-colors">
+                          <ArrowRight className="w-4 h-4 text-liberty-primary" />
+                        </div>
+                        <div>
+                          <div className="font-medium">Commonhold Conversion</div>
+                          <div className="text-sm text-liberty-background/50">Future of ownership</div>
+                        </div>
+                      </Link>
+                    </div>
                   </div>
 
                   {/* Mobile Resources Section */}
-                  <div className="space-y-3 pt-4 border-t border-liberty-secondary/30">
-                    <h3 className="font-reckless font-semibold text-liberty-background">Resources</h3>
-                    <Link 
-                      href="/cost-calculator" 
-                      className="text-liberty-background/70 hover:text-liberty-primary px-3 py-2 rounded-md text-sm transition-colors block"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Cost Calculator
-                    </Link>
-                    <Link 
-                      href="/commonhold-guide" 
-                      className="text-liberty-background/70 hover:text-liberty-primary px-3 py-2 rounded-md text-sm transition-colors block"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Free Guide
-                    </Link>
-                    <Link 
-                      href="/case-studies" 
-                      className="text-liberty-background/70 hover:text-liberty-primary px-3 py-2 rounded-md text-sm transition-colors block"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Case Studies
-                    </Link>
+                  <div className="space-y-4">
+                    <h3 className="font-reckless font-semibold text-liberty-background text-lg px-2 border-b border-liberty-secondary/30 pb-2">Resources</h3>
+                    <div className="space-y-1">
+                      <Link 
+                        href="/cost-calculator" 
+                        className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200 group"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <div className="w-8 h-8 bg-liberty-accent/10 rounded-lg flex items-center justify-center group-hover:bg-liberty-accent/20 transition-colors">
+                          <Calculator className="w-4 h-4 text-liberty-accent" />
+                        </div>
+                        <div>
+                          <div className="font-medium">Cost Calculator</div>
+                          <div className="text-sm text-liberty-background/50">Calculate savings</div>
+                        </div>
+                      </Link>
+                      
+                      <Link 
+                        href="/commonhold-guide" 
+                        className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200 group"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <div className="w-8 h-8 bg-liberty-accent/10 rounded-lg flex items-center justify-center group-hover:bg-liberty-accent/20 transition-colors">
+                          <FileText className="w-4 h-4 text-liberty-accent" />
+                        </div>
+                        <div>
+                          <div className="font-medium">Free Guide</div>
+                          <div className="text-sm text-liberty-background/50">Commonhold explained</div>
+                        </div>
+                      </Link>
+                      
+                      <Link 
+                        href="/case-studies" 
+                        className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200 group"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <div className="w-8 h-8 bg-liberty-accent/10 rounded-lg flex items-center justify-center group-hover:bg-liberty-accent/20 transition-colors">
+                          <Users className="w-4 h-4 text-liberty-accent" />
+                        </div>
+                        <div>
+                          <div className="font-medium">Case Studies</div>
+                          <div className="text-sm text-liberty-background/50">Success stories</div>
+                        </div>
+                      </Link>
+                    </div>
                   </div>
 
                   {/* Mobile Simple Links */}
-                  <div className="space-y-3 pt-4 border-t border-liberty-secondary/30">
-                    <Link 
-                      href="/about" 
-                      className="text-liberty-background/70 hover:text-liberty-primary px-3 py-2 rounded-md text-base font-medium transition-colors block"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      About
-                    </Link>
-                    <Link 
-                      href="/contact" 
-                      className="text-liberty-background/70 hover:text-liberty-primary px-3 py-2 rounded-md text-base font-medium transition-colors block"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Contact
-                    </Link>
-                  </div>
-
-                  <div className="pt-6">
-                    <Button asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base w-full">
-                      <Link href="/get-started" onClick={() => setIsOpen(false)} className="flex items-center justify-center gap-2">
-                        Get Started
-                        <ArrowRight className="h-4 w-4" />
+                  <div className="space-y-4">
+                    <h3 className="font-reckless font-semibold text-liberty-background text-lg px-2 border-b border-liberty-secondary/30 pb-2">Company</h3>
+                    <div className="space-y-1">
+                      <Link 
+                        href="/about" 
+                        className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <span className="font-medium">About Us</span>
                       </Link>
-                    </Button>
+                      <Link 
+                        href="/contact" 
+                        className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <span className="font-medium">Contact</span>
+                      </Link>
+                    </div>
                   </div>
                 </div>
+
+                <SheetFooter className="mt-auto">
+                  <Button asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base w-full h-12">
+                    <Link href="/get-started" onClick={() => setIsOpen(false)} className="flex items-center justify-center gap-2">
+                      Get Started
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                </SheetFooter>
               </SheetContent>
             </Sheet>
           </div>
