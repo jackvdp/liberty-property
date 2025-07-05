@@ -68,9 +68,9 @@ export default function Hero() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button size="xl" asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base">
-                <Link href="/get-started" className="flex items-center gap-2 group">
+                <Link href="/get-started" className="flex items-center gap-3 group">
                   Start Your Journey to Freedom
-                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight size={20} className="group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300 ease-out" />
                 </Link>
               </Button>
               <Button size="xl" variant="outline" asChild className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-liberty-base">
@@ -126,9 +126,20 @@ export default function Hero() {
                 <h2 className="text-5xl sm:text-6xl lg:text-7xl font-reckless font-black mb-4 drop-shadow-2xl !text-white">
                   Your Property Freedom
                 </h2>
-                <p className="text-xl sm:text-2xl lg:text-3xl opacity-95 drop-shadow-xl max-w-2xl mx-auto text-white">
+                <p className="text-xl sm:text-2xl lg:text-3xl font-bold opacity-95 drop-shadow-xl max-w-2xl mx-auto text-white mb-6">
                   Join thousands who've taken control of their buildings and eliminated ground rent forever
                 </p>
+                <Button 
+                  size="xl" 
+                  variant="outline" 
+                  asChild 
+                  className="border-2 border-white text-white hover:bg-white hover:text-liberty-background backdrop-blur-sm transition-all duration-300"
+                >
+                  <Link href="/get-started" className="flex items-center gap-3 group">
+                    Start Your Journey
+                    <ArrowRight size={20} className="group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300 ease-out" />
+                  </Link>
+                </Button>
               </div>
             </motion.div>
           </motion.div>
@@ -175,9 +186,20 @@ export default function Hero() {
                 <h2 className="text-3xl sm:text-4xl font-reckless font-black mb-3 drop-shadow-2xl !text-white">
                   Your Property Freedom
                 </h2>
-                <p className="text-base sm:text-lg font-bold opacity-95 drop-shadow-xl text-white">
+                <p className="text-base sm:text-lg font-bold opacity-95 drop-shadow-xl text-white mb-4">
                   Join thousands who've taken control of their buildings
                 </p>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  asChild 
+                  className="border-2 border-white text-white hover:bg-white hover:text-liberty-background backdrop-blur-sm transition-all duration-300"
+                >
+                  <Link href="/get-started" className="flex items-center gap-2 group">
+                    Start Your Journey
+                    <ArrowRight size={18} className="group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300 ease-out" />
+                  </Link>
+                </Button>
               </div>
             </motion.div>
           </motion.div>
