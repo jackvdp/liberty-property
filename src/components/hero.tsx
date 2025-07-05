@@ -4,8 +4,22 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { useRef } from 'react'
 
 export default function Hero() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  })
+  
+  // Transform scroll progress to padding values - responsive
+  const paddingXDesktop = useTransform(scrollYProgress, [0, 0.25, 0.5], [256, 128, 0])
+  const paddingXMobile = useTransform(scrollYProgress, [0, 0.25, 0.5], [16, 8, 0])
+  const borderRadius = useTransform(scrollYProgress, [0, 0.25, 0.5], [16, 8, 0])
+
   return (
     <section className="bg-liberty-base">
       {/* Hero Content */}
@@ -62,18 +76,57 @@ export default function Hero() {
         </div>
       </div>
       
-      {/* Hero Image */}
-      <div className="px-4 sm:px-6 lg:px-8 pb-16">
-        <div className="max-w-7xl mx-auto">
-          <Image
-            src="/london.png"
-            alt="Modern apartment building representing property ownership freedom"
-            width={1200}
-            height={800}
-            className="w-full h-auto rounded-2xl shadow-xl"
-            priority
-          />
-        </div>
+      {/* Hero Image with Scroll Effect */}
+      <div ref={containerRef} className="pb-16">
+        {/* Desktop - animated padding */}
+        <motion.div
+          style={{
+            paddingLeft: paddingXDesktop,
+            paddingRight: paddingXDesktop,
+          }}
+          className="relative hidden lg:block"
+        >
+          <motion.div
+            style={{
+              borderRadius: borderRadius,
+            }}
+            className="overflow-hidden shadow-xl"
+          >
+            <Image
+              src="/london.png"
+              alt="Modern apartment building representing property ownership freedom"
+              width={1200}
+              height={600}
+              className="w-full h-auto object-cover"
+              priority
+            />
+          </motion.div>
+        </motion.div>
+        
+        {/* Mobile/Tablet - smaller animated padding */}
+        <motion.div
+          style={{
+            paddingLeft: paddingXMobile,
+            paddingRight: paddingXMobile,
+          }}
+          className="relative lg:hidden px-4"
+        >
+          <motion.div
+            style={{
+              borderRadius: borderRadius,
+            }}
+            className="overflow-hidden shadow-xl"
+          >
+            <Image
+              src="/london.png"
+              alt="Modern apartment building representing property ownership freedom"
+              width={1200}
+              height={600}
+              className="w-full h-auto object-cover"
+              priority
+            />
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   )
