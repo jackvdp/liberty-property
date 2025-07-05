@@ -3,11 +3,11 @@
 
 /* Custom Colors and Fonts for Tailwind v4 */
 @theme {
-  --color-liberty-primary: #365a89;
-  --color-liberty-secondary: #d5dee8;
-  --color-liberty-accent: #4dcabb;
-  --color-liberty-standard: #0f1115;
-  --color-liberty-background: #0f1115;
+  --color-liberty-primary: #456e9b;
+  --color-liberty-secondary: #dde4ed;
+  --color-liberty-accent: #5ad2c7;
+  --color-liberty-standard: #11151c;
+  --color-liberty-background: #11151c;
   --color-liberty-base: #ffffff;
   
   --font-family-inter: 'Inter', sans-serif;
