@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -15,8 +16,15 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="text-2xl font-reckless font-bold text-liberty-background">
-              Liberty Property
+            <Link href="/" className="block">
+              <Image
+                src="/logo.png"
+                alt="Liberty Bell Property Management"
+                width={48}
+                height={48}
+                className="h-12 w-12 rounded-lg"
+                priority
+              />
             </Link>
           </div>
 
