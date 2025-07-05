@@ -107,30 +107,20 @@ const steps = [
   }
 ]
 
-export default function HowItWorks() {
+// Common component that contains all the shared logic
+interface HowItWorksContentProps {
+  enableScrollTracking?: boolean
+}
+
+function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentProps) {
   const [activeStep, setActiveStep] = useState(1)
   const stepRefs = useRef<(HTMLDivElement | null)[]>([])
   const sectionRef = useRef<HTMLDivElement>(null)
-  const [isDesktop, setIsDesktop] = useState(false)
 
   const currentStep = steps.find(step => step.id === activeStep) || steps[0]
 
-  // Check if we're on desktop (lg breakpoint and above)
   useEffect(() => {
-    const checkIsDesktop = () => {
-      // Tailwind's lg breakpoint is 1024px
-      setIsDesktop(window.innerWidth >= 1024)
-    }
-
-    checkIsDesktop()
-    window.addEventListener('resize', checkIsDesktop)
-
-    return () => window.removeEventListener('resize', checkIsDesktop)
-  }, [])
-
-  useEffect(() => {
-    // Only set up scroll observers on desktop
-    if (!isDesktop) return
+    if (!enableScrollTracking) return
 
     const observers: IntersectionObserver[] = []
 
@@ -163,13 +153,13 @@ export default function HowItWorks() {
     return () => {
       observers.forEach(observer => observer.disconnect())
     }
-  }, [isDesktop])
+  }, [enableScrollTracking])
 
   // Function to handle manual step click
   const handleStepClick = (stepId: number) => {
     setActiveStep(stepId)
-    // Only scroll to step on desktop
-    if (isDesktop) {
+    // Only scroll to step when scroll tracking is enabled (desktop)
+    if (enableScrollTracking) {
       const stepElement = stepRefs.current[stepId - 1]
       if (stepElement) {
         const yOffset = -100 // Offset from top
@@ -414,5 +404,22 @@ export default function HowItWorks() {
         </motion.div>
       </div>
     </section>
+  )
+}
+
+// Main component that renders mobile and desktop versions
+export default function HowItWorks() {
+  return (
+    <>
+      {/* Mobile version - no scroll tracking */}
+      <div className="block lg:hidden">
+        <HowItWorksContent enableScrollTracking={false} />
+      </div>
+      
+      {/* Desktop version - with scroll tracking */}
+      <div className="hidden lg:block">
+        <HowItWorksContent enableScrollTracking={true} />
+      </div>
+    </>
   )
 }
