@@ -30,7 +30,7 @@ export default function ContactForm() {
   }
 
   return (
-    <section className="py-16 sm:py-24 lg:py-32 bg-liberty-secondary relative overflow-hidden">
+    <section className="py-16 sm:py-24 lg:py-32 bg-liberty-secondary/40 relative overflow-hidden">
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
