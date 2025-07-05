@@ -193,12 +193,65 @@ export default function HowItWorks() {
                     </div>
                   </CardContent>
                 </Card>
+
+                {/* Mobile Details - Show below each step */}
+                <AnimatePresence>
+                  {activeStep === step.id && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="lg:hidden mt-4 space-y-4"
+                    >
+                      {/* Step Details */}
+                      <Card className="bg-liberty-base border-liberty-secondary/30">
+                        <CardContent className="p-6">
+                          <p className="text-liberty-background/80 leading-relaxed mb-6">
+                            {step.details}
+                          </p>
+                          
+                          <div className="space-y-4">
+                            <h4 className="font-reckless font-bold text-liberty-background">
+                              Key Points:
+                            </h4>
+                            <ul className="space-y-2">
+                              {step.keyPoints.map((point, pointIndex) => (
+                                <li key={pointIndex} className="flex items-start gap-3">
+                                  <div className="w-2 h-2 bg-liberty-accent rounded-full mt-2 flex-shrink-0"></div>
+                                  <span className="text-liberty-background/70">{point}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      {/* Did You Know - Mobile */}
+                      <Card className="bg-liberty-accent/5 border-liberty-accent/20">
+                        <CardContent className="p-6">
+                          <div className="flex items-start gap-3">
+                            <Lightbulb className="w-6 h-6 text-liberty-accent flex-shrink-0 mt-1" />
+                            <div>
+                              <h4 className="font-reckless font-bold text-liberty-background mb-2">
+                                Did You Know?
+                              </h4>
+                              <p className="text-liberty-background/70">
+                                {step.didYouKnow}
+                              </p>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             ))}
           </div>
 
-          {/* Step Details */}
-          <div className="lg:sticky lg:top-24">
+          {/* Step Details - Desktop Only */}
+          <div className="hidden lg:block lg:sticky lg:top-24">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeStep}
