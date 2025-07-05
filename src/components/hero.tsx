@@ -25,7 +25,7 @@ export default function Hero() {
   const textY = useTransform(scrollYProgress, [0, 0.3, 0.45], [30, 15, 0])
   
   // Dark overlay that increases as we scroll
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.2, 0.5], [0, 0.3, 0.6])
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.2, 0.3, 0.5], [0, 0, 0.2, 0.4])
 
   return (
     <section className="bg-liberty-base">
@@ -97,14 +97,14 @@ export default function Hero() {
             style={{
               borderRadius: borderRadius,
             }}
-            className="overflow-hidden shadow-xl relative"
+            className="overflow-hidden shadow-xl relative h-[100vh] min-h-[300px]"
           >
             <Image
               src="/london.png"
               alt="Modern apartment building representing property ownership freedom"
               width={1200}
               height={600}
-              className="w-full h-auto object-cover"
+              className="w-full h-full object-cover"
               priority
             />
             {/* Dark Overlay */}
@@ -146,14 +146,14 @@ export default function Hero() {
             style={{
               borderRadius: borderRadius,
             }}
-            className="overflow-hidden shadow-xl relative"
+            className="overflow-hidden shadow-xl relative h-[60vh]"
           >
             <Image
               src="/london.png"
               alt="Modern apartment building representing property ownership freedom"
               width={1200}
-              height={600}
-              className="w-full h-auto object-cover"
+              height={800}
+              className="w-full h-full"
               priority
             />
             {/* Dark Overlay */}
