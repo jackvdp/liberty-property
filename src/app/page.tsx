@@ -4,6 +4,7 @@ import ProblemSolution from '@/components/problem-solution'
 import StatsSection from '@/components/stats-section'
 import HowItWorks from '@/components/how-it-works'
 import FAQSection from '@/components/faq-section'
+import ContactForm from '@/components/contact-form'
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <StatsSection />
       <HowItWorks />
       <FAQSection />
+      <ContactForm />
     </div>
   )
 }
