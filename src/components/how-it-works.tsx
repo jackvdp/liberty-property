@@ -158,15 +158,17 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
   // Function to handle manual step click
   const handleStepClick = (stepId: number) => {
     setActiveStep(stepId)
-    // Only scroll to step when scroll tracking is enabled (desktop)
-    if (enableScrollTracking) {
-      const stepElement = stepRefs.current[stepId - 1]
-      if (stepElement) {
-        const yOffset = -100 // Offset from top
-        const y = stepElement.getBoundingClientRect().top + window.pageYOffset + yOffset
-        window.scrollTo({ top: y, behavior: 'smooth' })
-      }
+    
+    // Use native anchor scrolling
+    if (!enableScrollTracking) {
+      // Mobile: Use a small delay to allow expansion animation
+      setTimeout(() => {
+        const element = document.getElementById(`step-${stepId}`)
+        element?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 100)
     }
+    // Desktop with scroll tracking doesn't need manual scrolling
+    // as the intersection observer handles active state
   }
 
   return (
@@ -198,11 +200,15 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
             {steps.map((step, index) => (
               <motion.div
                 key={step.id}
-                ref={(el) => (stepRefs.current[index] = el)}
+                id={`step-${step.id}`}
+                ref={(el) => {
+                  stepRefs.current[index] = el
+                }}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
+                className="scroll-mt-20 lg:scroll-mt-28"
               >
                 <Card 
                   className={`cursor-pointer transition-all duration-300 ${
