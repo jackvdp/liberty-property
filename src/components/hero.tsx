@@ -6,6 +6,7 @@ import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
+import HeroOverlay from './hero-overlay'
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -44,7 +45,7 @@ export default function Hero() {
             
             {/* Subheadline */}
             <p className="text-xl sm:text-2xl text-liberty-background/70 mb-8 max-w-4xl mx-auto">
-              We turn frustrated leaseholders into empowered commonholders through technology, transparency, and real results.
+              We help frustrated leaseholders become empowered commonholders through technology, transparency, and real results.
             </p>
             
             {/* Stats Bar */}
@@ -75,7 +76,7 @@ export default function Hero() {
               </Button>
               <Button size="xl" variant="outline" asChild className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-liberty-base">
                 <Link href="/commonhold-guide">
-                  Download Free Commonhold Guide
+                  Get Your Commonhold Guide
                 </Link>
               </Button>
             </div>
@@ -122,25 +123,7 @@ export default function Hero() {
               }}
               className="absolute inset-0 flex items-center justify-center z-10"
             >
-              <div className="text-center px-8">
-                <h2 className="text-5xl sm:text-6xl lg:text-7xl font-reckless font-black mb-4 drop-shadow-2xl !text-white">
-                  Your Property Freedom
-                </h2>
-                <p className="text-xl sm:text-2xl lg:text-3xl font-bold opacity-95 drop-shadow-xl max-w-2xl mx-auto text-white mb-6">
-                  Join thousands who've taken control of their buildings and eliminated ground rent forever
-                </p>
-                <Button 
-                  size="xl" 
-                  variant="outline" 
-                  asChild 
-                  className="border-2 border-white text-white hover:bg-white hover:text-liberty-background backdrop-blur-sm transition-all duration-300"
-                >
-                  <Link href="/get-started" className="flex items-center gap-3 group">
-                    Start Your Journey
-                    <ArrowRight size={20} className="group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300 ease-out" />
-                  </Link>
-                </Button>
-              </div>
+              <HeroOverlay isMobile={false} />
             </motion.div>
           </motion.div>
         </motion.div>
@@ -182,25 +165,7 @@ export default function Hero() {
               }}
               className="absolute inset-0 flex items-center justify-center z-10"
             >
-              <div className="text-center px-4">
-                <h2 className="text-3xl sm:text-4xl font-reckless font-black mb-3 drop-shadow-2xl !text-white">
-                  Your Property Freedom
-                </h2>
-                <p className="text-base sm:text-lg font-bold opacity-95 drop-shadow-xl text-white mb-4">
-                  Join thousands who've taken control of their buildings
-                </p>
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  asChild 
-                  className="border-2 border-white text-white hover:bg-white hover:text-liberty-background backdrop-blur-sm transition-all duration-300"
-                >
-                  <Link href="/get-started" className="flex items-center gap-2 group">
-                    Start Your Journey
-                    <ArrowRight size={18} className="group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300 ease-out" />
-                  </Link>
-                </Button>
-              </div>
+              <HeroOverlay isMobile={true} />
             </motion.div>
           </motion.div>
         </motion.div>
