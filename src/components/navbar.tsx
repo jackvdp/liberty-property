@@ -288,15 +288,17 @@ export default function Navbar() {
   )
 }
 
-const ListItem = ({ className, title, children, icon, ...props }: {
+const ListItem = ({ className, title, children, icon, href, ...props }: {
   className?: string
   title: string
   children: React.ReactNode
   icon?: React.ReactNode
-} & React.ComponentPropsWithoutRef<"a">) => {
+  href: string
+} & Omit<React.ComponentPropsWithoutRef<"a">, "href">) => {
   return (
     <NavigationMenuLink asChild>
       <Link
+        href={href}
         className={cn(
           "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-liberty-secondary/20 hover:text-liberty-primary focus:bg-liberty-secondary/20 focus:text-liberty-primary",
           className

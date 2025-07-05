@@ -109,7 +109,6 @@ const steps = [
 
 export default function HowItWorks() {
   const [activeStep, setActiveStep] = useState(1)
-  const [expandedFact, setExpandedFact] = useState<number | null>(null)
 
   const currentStep = steps.find(step => step.id === activeStep) || steps[0]
 
