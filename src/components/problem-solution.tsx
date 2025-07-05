@@ -1,16 +1,18 @@
 'use client'
 
+import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { AlertTriangle, TrendingDown, Users, Scale, Building, DollarSign } from 'lucide-react'
+import { TrendingDown, Banknote, Scale, Building, PoundSterling, ArrowRight } from 'lucide-react'
 import { CheckCircle, Shield, TrendingUp, UserCheck, Home, Heart } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 const problems = [
   {
-    icon: TrendingUp,
+    icon: Banknote,
     text: "Rising ground rents that benefit no one but freeholders"
   },
   {
-    icon: DollarSign,
+    icon: PoundSterling,
     text: "Expensive lawyer-led processes that drain your savings"
   },
   {
@@ -150,11 +152,31 @@ export default function ProblemSolution() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="text-center"
+            className="text-center mb-8"
           >
             <p className="text-xl sm:text-2xl font-reckless font-light text-liberty-standard italic xl:py-6">
               "We've been there. We know exactly how you feel."
             </p>
+          </motion.div>
+
+          {/* CTA Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <Button 
+              size="xl" 
+              asChild 
+              className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base"
+            >
+              <Link href="/get-started" className="flex items-center gap-3 group">
+                Join the Solution Now
+                <ArrowRight size={20} className="group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300 ease-out" />
+              </Link>
+            </Button>
           </motion.div>
         </div>
       </div>
