@@ -58,27 +58,19 @@ export default function Hero() {
               We help frustrated leaseholders become empowered commonholders through technology, transparency, and real results.
             </motion.p>
             
-            {/* Stats Bar */}
+            {/* Clear Mission Statement */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-              className="flex flex-col sm:flex-row justify-center items-center gap-8 mb-12 text-sm sm:text-base"
+              className="mb-12 text-center"
             >
-              <div className="text-center">
-                <div className="text-2xl font-reckless font-bold text-liberty-primary">3.6M</div>
-                <div className="text-liberty-background/60">Leaseholders Need Help</div>
-              </div>
-              <div className="hidden sm:block w-px h-8 bg-liberty-secondary"></div>
-              <div className="text-center">
-                <div className="text-2xl font-reckless font-bold text-liberty-primary">£1.2B</div>
-                <div className="text-liberty-background/60">Market Savings Potential</div>
-              </div>
-              <div className="hidden sm:block w-px h-8 bg-liberty-secondary"></div>
-              <div className="text-center">
-                <div className="text-2xl font-reckless font-bold text-liberty-primary">100%</div>
-                <div className="text-liberty-background/60">Legal Protection</div>
-              </div>
+              
+              <p className="text-lg text-liberty-background/70 mb-8 max-w-3xl mx-auto">
+                Stop paying ground rent forever.
+                We guide leaseholders through <span className="text-liberty-primary">commonhold conversion</span>.
+                We streamline the Right to Manage process, handle the legal complexities, and support you every step of the way to property ownership freedom.
+              </p>
             </motion.div>
             
             {/* CTA Buttons */}
