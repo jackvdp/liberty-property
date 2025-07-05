@@ -1,7 +1,10 @@
 'use client'
 
+import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
 import { useRef, useEffect, useState } from 'react'
+import { ArrowRight } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 interface StatItemProps {
   value: number
@@ -106,7 +109,7 @@ export default function StatsSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-base mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold !text-liberty-base mb-4">
             Real Results for Real People
           </h2>
           <p className="text-xl sm:text-2xl text-liberty-secondary max-w-3xl mx-auto">
@@ -136,9 +139,19 @@ export default function StatsSection() {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <p className="text-lg sm:text-xl text-liberty-accent font-medium">
-            Join thousands who've already made the switch to property freedom
+          <p className="text-lg sm:text-xl text-liberty-secondary font-medium mb-6">
+            Join us in making the switch to property freedom
           </p>
+          <Button 
+            size="xl" 
+            asChild 
+            className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-background"
+          >
+            <Link href="#how-it-works" className="flex items-center gap-3 group">
+              Find Out How
+              <ArrowRight size={20} className="group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300 ease-out" />
+            </Link>
+          </Button>
         </motion.div>
       </div>
     </section>
