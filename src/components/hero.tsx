@@ -18,11 +18,14 @@ export default function Hero() {
   // Transform scroll progress to padding values - responsive
   const paddingXDesktop = useTransform(scrollYProgress, [0, 0.25, 0.5], [256, 128, 0])
   const paddingXMobile = useTransform(scrollYProgress, [0, 0.25, 0.5], [16, 8, 0])
-  const borderRadius = useTransform(scrollYProgress, [0, 0.25, 0.5], [16, 8, 0])
+  const borderRadius = useTransform(scrollYProgress, [0, 0.25, 0.5], [32, 16, 0])
   
   // Text fade in animation - starts later and fades in quickly
   const textOpacity = useTransform(scrollYProgress, [0, 0.3, 0.45], [0, 0, 1])
   const textY = useTransform(scrollYProgress, [0, 0.3, 0.45], [30, 15, 0])
+  
+  // Dark overlay that increases as we scroll
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.2, 0.5], [0, 0.3, 0.6])
 
   return (
     <section className="bg-liberty-base">
@@ -104,19 +107,26 @@ export default function Hero() {
               className="w-full h-auto object-cover"
               priority
             />
+            {/* Dark Overlay */}
+            <motion.div
+              style={{
+                opacity: overlayOpacity,
+              }}
+              className="absolute inset-0 bg-black"
+            />
             {/* Overlay Text */}
             <motion.div
               style={{
                 opacity: textOpacity,
                 y: textY,
               }}
-              className="absolute inset-0 flex items-center justify-center"
+              className="absolute inset-0 flex items-center justify-center z-10"
             >
               <div className="text-center px-8">
                 <h2 className="text-5xl sm:text-6xl lg:text-7xl font-reckless font-black mb-4 drop-shadow-2xl !text-white">
                   Your Property Freedom
                 </h2>
-                <p className="text-xl sm:text-2xl lg:text-3xl font-bold opacity-95 drop-shadow-xl max-w-2xl text-white">
+                <p className="text-xl sm:text-2xl lg:text-3xl opacity-95 drop-shadow-xl max-w-2xl mx-auto text-white">
                   Join thousands who've taken control of their buildings and eliminated ground rent forever
                 </p>
               </div>
@@ -146,13 +156,20 @@ export default function Hero() {
               className="w-full h-auto object-cover"
               priority
             />
+            {/* Dark Overlay */}
+            <motion.div
+              style={{
+                opacity: overlayOpacity,
+              }}
+              className="absolute inset-0 bg-black"
+            />
             {/* Overlay Text - Mobile */}
             <motion.div
               style={{
                 opacity: textOpacity,
                 y: textY,
               }}
-              className="absolute inset-0 flex items-center justify-center"
+              className="absolute inset-0 flex items-center justify-center z-10"
             >
               <div className="text-center px-4">
                 <h2 className="text-3xl sm:text-4xl font-reckless font-black mb-3 drop-shadow-2xl !text-white">
