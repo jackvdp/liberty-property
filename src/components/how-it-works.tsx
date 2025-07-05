@@ -111,10 +111,27 @@ export default function HowItWorks() {
   const [activeStep, setActiveStep] = useState(1)
   const stepRefs = useRef<(HTMLDivElement | null)[]>([])
   const sectionRef = useRef<HTMLDivElement>(null)
+  const [isDesktop, setIsDesktop] = useState(false)
 
   const currentStep = steps.find(step => step.id === activeStep) || steps[0]
 
+  // Check if we're on desktop (lg breakpoint and above)
   useEffect(() => {
+    const checkIsDesktop = () => {
+      // Tailwind's lg breakpoint is 1024px
+      setIsDesktop(window.innerWidth >= 1024)
+    }
+
+    checkIsDesktop()
+    window.addEventListener('resize', checkIsDesktop)
+
+    return () => window.removeEventListener('resize', checkIsDesktop)
+  }, [])
+
+  useEffect(() => {
+    // Only set up scroll observers on desktop
+    if (!isDesktop) return
+
     const observers: IntersectionObserver[] = []
 
     // Create intersection observer for each step
@@ -146,17 +163,19 @@ export default function HowItWorks() {
     return () => {
       observers.forEach(observer => observer.disconnect())
     }
-  }, [])
+  }, [isDesktop])
 
   // Function to handle manual step click
   const handleStepClick = (stepId: number) => {
     setActiveStep(stepId)
-    // Scroll to the step with smooth behavior
-    const stepElement = stepRefs.current[stepId - 1]
-    if (stepElement) {
-      const yOffset = -100 // Offset from top
-      const y = stepElement.getBoundingClientRect().top + window.pageYOffset + yOffset
-      window.scrollTo({ top: y, behavior: 'smooth' })
+    // Only scroll to step on desktop
+    if (isDesktop) {
+      const stepElement = stepRefs.current[stepId - 1]
+      if (stepElement) {
+        const yOffset = -100 // Offset from top
+        const y = stepElement.getBoundingClientRect().top + window.pageYOffset + yOffset
+        window.scrollTo({ top: y, behavior: 'smooth' })
+      }
     }
   }
 
