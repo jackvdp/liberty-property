@@ -82,7 +82,7 @@ export default function Hero() {
             >
               <Button size="xl" asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base">
                 <Link href="/get-started" className="flex items-center gap-3 group">
-                  Start Your Journey to Freedom
+                  Find Out How
                   <ArrowRight size={20} className="group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300 ease-out" />
                 </Link>
               </Button>
