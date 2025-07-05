@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Users, Calculator, FileText, Building, Award, Heart, ChevronRight, Lightbulb } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -109,11 +109,59 @@ const steps = [
 
 export default function HowItWorks() {
   const [activeStep, setActiveStep] = useState(1)
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([])
+  const sectionRef = useRef<HTMLDivElement>(null)
 
   const currentStep = steps.find(step => step.id === activeStep) || steps[0]
 
+  useEffect(() => {
+    const observers: IntersectionObserver[] = []
+
+    // Create intersection observer for each step
+    stepRefs.current.forEach((ref, index) => {
+      if (!ref) return
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              // Only update if we're scrolling within the section
+              const sectionRect = sectionRef.current?.getBoundingClientRect()
+              if (sectionRect && sectionRect.top <= 100 && sectionRect.bottom >= 100) {
+                setActiveStep(index + 1)
+              }
+            }
+          })
+        },
+        {
+          rootMargin: '-40% 0px -40% 0px', // Trigger when step is in middle 20% of viewport
+          threshold: 0
+        }
+      )
+
+      observer.observe(ref)
+      observers.push(observer)
+    })
+
+    return () => {
+      observers.forEach(observer => observer.disconnect())
+    }
+  }, [])
+
+  // Function to handle manual step click
+  const handleStepClick = (stepId: number) => {
+    setActiveStep(stepId)
+    // Scroll to the step with smooth behavior
+    const stepElement = stepRefs.current[stepId - 1]
+    if (stepElement) {
+      const yOffset = -100 // Offset from top
+      const y = stepElement.getBoundingClientRect().top + window.pageYOffset + yOffset
+      window.scrollTo({ top: y, behavior: 'smooth' })
+    }
+  }
+
   return (
-    <section className="py-16 sm:py-24 lg:py-32 bg-gradient-to-br from-liberty-secondary/20 via-liberty-base to-liberty-secondary/10">
+    <section ref={sectionRef} className="py-16 sm:py-24 lg:py-32 bg-gradient-to-br from-liberty-secondary/20 via-liberty-base to-liberty-secondary/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -141,6 +189,7 @@ export default function HowItWorks() {
             {steps.map((step, index) => (
               <motion.div
                 key={step.id}
+                ref={(el) => (stepRefs.current[index] = el)}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -152,7 +201,7 @@ export default function HowItWorks() {
                       ? 'bg-liberty-accent/10 border-liberty-accent shadow-lg' 
                       : 'bg-liberty-base border-liberty-secondary/30 hover:bg-liberty-secondary/10'
                   }`}
-                  onClick={() => setActiveStep(step.id)}
+                  onClick={() => handleStepClick(step.id)}
                 >
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
