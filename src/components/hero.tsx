@@ -67,9 +67,8 @@ export default function Hero() {
             >
               
               <p className="text-lg text-liberty-background/70 mb-8 max-w-3xl mx-auto">
-                Stop paying ground rent forever.
                 We guide leaseholders through <span className="text-liberty-primary">commonhold conversion</span>.
-                We streamline the Right to Manage process, handle the legal complexities, and support you every step of the way to property ownership freedom.
+                Helping streamline the Right to Manage process, handle the legal complexities, and support you every step of the way to property ownership freedom.
               </p>
             </motion.div>
             
