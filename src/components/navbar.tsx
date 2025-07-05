@@ -131,7 +131,7 @@ export default function Navbar() {
                   <Menu size={24} />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="bg-liberty-base w-80 sm:w-96 flex flex-col">
+              <SheetContent side="right" className="bg-liberty-base w-full sm:w-full flex flex-col">
                 <SheetHeader className="flex-shrink-0">
                   <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 </SheetHeader>
