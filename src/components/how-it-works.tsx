@@ -125,10 +125,10 @@ export default function HowItWorks() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-4">
-            From Frustrated Leaseholder to <span className="text-liberty-accent">Empowered Commonholder</span>
+            How it <span className="text-liberty-accent">Works</span>
           </h2>
           <p className="text-xl sm:text-2xl text-liberty-background/70 max-w-3xl mx-auto">
-            The proven path thousands have taken to property freedom
+            The proven path from frustrated leaseholder to empowered commonholder
           </p>
         </motion.div>
 
@@ -198,7 +198,7 @@ export default function HowItWorks() {
           </div>
 
           {/* Step Details */}
-          <div className="lg:sticky lg:top-8">
+          <div className="lg:sticky lg:top-24">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeStep}
