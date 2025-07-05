@@ -54,12 +54,12 @@ const steps = [
     title: "Understand the Costs",
     icon: FileText,
     description: "Get transparent pricing for your specific situation",
-    details: "Traditional lawyers charge £15,000-£30,000 per building. Our automated approach reduces costs by 70% while providing the same legal protection.",
+    details: "Traditional lawyers charge £15,000-£30,000 per building. With our automated approach we can reduce costs by 70% while providing robust legal protection.",
     timeEstimate: "1 day",
     didYouKnow: "Technology can reduce legal costs by 70% because these are procedural frameworks, not complex litigation.",
     keyPoints: [
       "Traditional legal costs: £15,000-£30,000",
-      "Automated approach: £3,000-£8,000",
+      "With automation: £3,000-£8,000",
       "Plus valuation and freeholder costs"
     ]
   },
@@ -68,9 +68,9 @@ const steps = [
     title: "Navigate the Legal Process",
     icon: Building,
     description: "Handle statutory notices, documentation, and compliance",
-    details: "These are procedural frameworks—perfect for automation. We generate statutory notices, manage timelines, and handle freeholder responses automatically.",
+    details: "These are procedural frameworks—perfect for automation. We have done this many times before and so are able to generate the statutory notices, manage timelines, and handle freeholder responses automatically.",
     timeEstimate: "3-6 months",
-    didYouKnow: "The legal process is mostly procedural paperwork—ideal for automation rather than expensive lawyers.",
+    didYouKnow: "The legal process is mostly procedural paperwork — ideal for automation rather than expensive lawyers.",
     keyPoints: [
       "Statutory notices generated automatically",
       "Timeline management and reminders",
