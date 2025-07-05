@@ -198,7 +198,7 @@ export default function ContactForm() {
             className="space-y-8"
           >
             {/* What You'll Get */}
-            <Card className="bg-liberty-base/10 backdrop-blur-sm border-liberty-secondary/20">
+            <Card className="bg-liberty-base/95 backdrop-blur-sm border-liberty-secondary/20">
               <CardContent className="p-8">
                 <h3 className="text-2xl font-reckless font-bold !text-liberty-background mb-6">
                   What You'll Receive
@@ -242,7 +242,7 @@ export default function ContactForm() {
             </Card>
 
             {/* Contact Info */}
-            <Card className="bg-liberty-base/10 backdrop-blur-sm border-liberty-secondary/20">
+            <Card className="bg-liberty-base/95 backdrop-blur-sm border-liberty-secondary/20">
               <CardContent className="p-8">
                 <h3 className="text-2xl font-reckless font-bold !text-liberty-background mb-6">
                   Get in Touch
@@ -250,11 +250,21 @@ export default function ContactForm() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
                     <Mail className="w-6 h-6 text-liberty-accent" />
-                    <span className="text-liberty-background/70">lbpm@libertybell.co.uk</span>
+                    <a 
+                      href="mailto:lbpm@libertybell.co.uk" 
+                      className="text-liberty-background/70 hover:text-liberty-accent transition-colors"
+                    >
+                      lbpm@libertybell.co.uk
+                    </a>
                   </div>
                   <div className="flex items-center gap-4">
                     <Phone className="w-6 h-6 text-liberty-accent" />
-                    <span className="text-liberty-background/70">+44 (0) 7894 309 321</span>
+                    <a 
+                      href="tel:+447894309321" 
+                      className="text-liberty-background/70 hover:text-liberty-accent transition-colors"
+                    >
+                      +44 (0) 7894 309 321
+                    </a>
                   </div>
                   <div className="flex items-center gap-4">
                     <MapPin className="w-6 h-6 text-liberty-accent" />
