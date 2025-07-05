@@ -11,14 +11,14 @@ export default function HeroOverlay({ isMobile = false }: HeroOverlayProps) {
     <div className="text-center px-4 lg:px-8">
       <h2 className={`font-black drop-shadow-2xl !text-white mb-3 lg:mb-4 ${
         isMobile 
-          ? 'text-3xl sm:text-4xl' 
+          ? 'text-3xl sm:text-4xl max-w-xs mx-auto' 
           : 'text-5xl sm:text-6xl lg:text-7xl'
       }`}>
         Your Property Freedom
       </h2>
       <p className={`drop-shadow-xl text-white ${
         isMobile 
-          ? 'text-base sm:text-lg mb-4' 
+          ? 'text-base sm:text-lg mb-4 max-w-sm mx-auto' 
           : 'text-xl sm:text-2xl lg:text-3xl max-w-2xl mx-auto mb-6'
       }`}>
           Join us and take control of your building, eliminating ground rent forever
