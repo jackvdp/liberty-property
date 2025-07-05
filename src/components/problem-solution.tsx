@@ -170,7 +170,7 @@ export default function ProblemSolution() {
             <Button 
               size="xl" 
               asChild 
-              className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base"
+              className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-standard"
             >
               <Link href="/get-started" className="flex items-center gap-3 group">
                 Join the Solution Now

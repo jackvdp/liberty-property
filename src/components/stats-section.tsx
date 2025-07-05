@@ -65,16 +65,10 @@ function StatItem({ value, suffix, label, prefix = '', duration = 2 }: StatItemP
 
 const stats = [
   {
-    value: 2.4,
-    suffix: 'M',
-    label: 'Saved for Leaseholders',
+    value: 2000,
+    suffix: '',
+    label: 'Average saved each year',
     prefix: '£',
-    duration: 2
-  },
-  {
-    value: 850,
-    suffix: '+',
-    label: 'Properties Freed',
     duration: 2
   },
   {
@@ -84,10 +78,16 @@ const stats = [
     duration: 1.8
   },
   {
+    value: 1000,
+    suffix: '+',
+    label: 'Properties Already Freed',
+    duration: 2
+  },
+  {
     value: 6,
     suffix: '',
     label: 'Average Months to Complete',
-    duration: 1.5
+    duration: 1
   }
 ]
 
