@@ -131,30 +131,51 @@ export default function Navbar() {
                   <Menu size={24} />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="bg-liberty-base w-80 sm:w-96">
-                <SheetHeader>
+              <SheetContent side="right" className="bg-liberty-base w-80 sm:w-96 flex flex-col">
+                <SheetHeader className="flex-shrink-0">
                   <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 </SheetHeader>
                 
-                <div className="flex flex-col space-y-6 mt-6">
-                  {/* Logo and Brand */}
-                  <div className="flex items-center gap-3 px-2">
-                    <Image
-                      src="/logo.png"
-                      alt="Liberty Bell Property Management"
-                      width={40}
-                      height={40}
-                      className="h-10 w-10 rounded-lg"
-                    />
-                    <div>
-                      <h2 className="font-reckless font-semibold text-liberty-background text-lg">Liberty Property</h2>
-                      <p className="text-liberty-background/60 text-sm">Property Freedom</p>
+                {/* Logo and Brand - Fixed at top */}
+                <div className="flex items-center gap-3 px-2 py-4 flex-shrink-0">
+                  <Image
+                    src="/logo.png"
+                    alt="Liberty Bell Property Management"
+                    width={40}
+                    height={40}
+                    className="h-10 w-10 rounded-lg"
+                  />
+                  <div>
+                    <h2 className="font-reckless font-semibold text-liberty-background text-lg">Liberty Property</h2>
+                    <p className="text-liberty-background/60 text-sm">Property Freedom</p>
+                  </div>
+                </div>
+
+                {/* Scrollable content area */}
+                <div className="flex-1 overflow-y-auto px-2 space-y-6">
+                  {/* Mobile Simple Links */}
+                  <div className="space-y-4">
+                    <h3 className="font-reckless font-semibold text-liberty-background text-lg border-b border-liberty-secondary/30 pb-2">Company</h3>
+                    <div className="space-y-1">
+                      <Link
+                          href="/about"
+                          className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200"
+                          onClick={() => setIsOpen(false)}
+                      >
+                        <span className="font-medium">About Us</span>
+                      </Link>
+                      <Link
+                          href="/contact"
+                          className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200"
+                          onClick={() => setIsOpen(false)}
+                      >
+                        <span className="font-medium">Contact</span>
+                      </Link>
                     </div>
                   </div>
-
                   {/* Mobile Services Section */}
                   <div className="space-y-4">
-                    <h3 className="font-reckless font-semibold text-liberty-background text-lg px-2 border-b border-liberty-secondary/30 pb-2">Services</h3>
+                    <h3 className="font-reckless font-semibold text-liberty-background text-lg border-b border-liberty-secondary/30 pb-2">Services</h3>
                     <div className="space-y-1">
                       <Link 
                         href="/right-to-manage" 
@@ -202,7 +223,7 @@ export default function Navbar() {
 
                   {/* Mobile Resources Section */}
                   <div className="space-y-4">
-                    <h3 className="font-reckless font-semibold text-liberty-background text-lg px-2 border-b border-liberty-secondary/30 pb-2">Resources</h3>
+                    <h3 className="font-reckless font-semibold text-liberty-background text-lg border-b border-liberty-secondary/30 pb-2">Resources</h3>
                     <div className="space-y-1">
                       <Link 
                         href="/cost-calculator" 
@@ -247,30 +268,10 @@ export default function Navbar() {
                       </Link>
                     </div>
                   </div>
-
-                  {/* Mobile Simple Links */}
-                  <div className="space-y-4">
-                    <h3 className="font-reckless font-semibold text-liberty-background text-lg px-2 border-b border-liberty-secondary/30 pb-2">Company</h3>
-                    <div className="space-y-1">
-                      <Link 
-                        href="/about" 
-                        className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        <span className="font-medium">About Us</span>
-                      </Link>
-                      <Link 
-                        href="/contact" 
-                        className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        <span className="font-medium">Contact</span>
-                      </Link>
-                    </div>
-                  </div>
                 </div>
 
-                <SheetFooter className="mt-auto">
+                {/* Fixed footer with CTA */}
+                <SheetFooter className="flex-shrink-0 px-2 pb-4">
                   <Button asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base w-full h-12">
                     <Link href="/get-started" onClick={() => setIsOpen(false)} className="flex items-center justify-center gap-2">
                       Get Started
