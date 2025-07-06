@@ -143,7 +143,13 @@ export default function FAQSection() {
         </motion.div>
 
         {/* Category Navigation */}
-        <div className="flex flex-wrap gap-4 justify-center mb-12">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="flex flex-wrap gap-4 justify-center mb-12"
+        >
           {faqCategories.map((category) => (
             <motion.button
               key={category.id}
@@ -163,25 +169,33 @@ export default function FAQSection() {
               <span className="font-medium">{category.title}</span>
             </motion.button>
           ))}
-        </div>
+        </motion.div>
 
         {/* FAQ List */}
         <div className="max-w-4xl mx-auto">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeCategory}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
               className="space-y-4"
             >
               {categoryFaqs.map((faq, index) => (
                 <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  key={`${activeCategory}-${index}`}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ 
+                    duration: 0.5, 
+                    delay: index * 0.1,
+                    ease: "easeOut"
+                  }}
+                  viewport={{ 
+                    once: true,
+                    margin: "-50px"
+                  }}
                 >
                   <Card className="border-liberty-secondary/30 hover:border-liberty-accent/50 transition-all duration-300">
                     <CardContent className="p-0">
