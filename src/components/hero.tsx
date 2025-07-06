@@ -18,7 +18,7 @@ export default function Hero() {
   
   // Transform scroll progress to padding values - responsive
   const paddingXDesktop = useTransform(scrollYProgress, [0, 0.25, 0.5], [256, 128, 0])
-  const paddingXMobile = useTransform(scrollYProgress, [0, 0.25, 0.5], [16, 8, 0])
+  const paddingXMobile = useTransform(scrollYProgress, [0, 0.25, 0.5], [36, 18, 0])
   const borderRadius = useTransform(scrollYProgress, [0, 0.25, 0.5], [32, 16, 0])
   
   // Text fade in animation - starts later and fades in quickly
