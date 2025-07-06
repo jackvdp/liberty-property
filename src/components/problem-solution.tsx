@@ -2,26 +2,18 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { TrendingDown, Banknote, Scale, Building, PoundSterling, ArrowRight } from 'lucide-react'
+import { TrendingDown, Building, PoundSterling, ArrowRight } from 'lucide-react'
 import { CheckCircle, Shield, TrendingUp, UserCheck, Home, Heart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const problems = [
   {
-    icon: Banknote,
-    text: "Rising ground rents that benefit no one but freeholders"
-  },
-  {
     icon: PoundSterling,
     text: "Expensive lawyer-led processes that drain your savings"
   },
   {
-    icon: Scale,
-    text: "Zero control over your own property decisions"
-  },
-  {
     icon: TrendingDown,
-    text: "Declining property values as leases get shorter"
+    text: "Declining property values as leases get shorter and ground rents increase"
   },
   {
     icon: Building,
@@ -32,8 +24,8 @@ const problems = [
 const solutions = [
   {
     icon: CheckCircle,
-    title: "Cut Legal Costs by 70%",
-    description: "AI-powered automation eliminates expensive lawyer fees"
+    title: "Cut Legal Costs",
+    description: "Our AI-powered automation dramatically reduces expensive lawyer fees"
   },
   {
     icon: Home,
