@@ -5,28 +5,24 @@ import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { useRef } from 'react'
 import HeroOverlay from './hero-overlay'
 
 export default function Hero() {
-  const containerRef = useRef<HTMLDivElement>(null)
   
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  })
+  // Track absolute scroll position from the top of the page
+  const { scrollY } = useScroll()
   
-  // Transform scroll progress to padding values - responsive
-  const paddingXDesktop = useTransform(scrollYProgress, [0, 0.25, 0.5], [256, 128, 0])
-  const paddingXMobile = useTransform(scrollYProgress, [0, 0.25, 0.5], [36, 18, 0])
-  const borderRadius = useTransform(scrollYProgress, [0, 0.25, 0.5], [32, 16, 0])
+  // Transform absolute scroll position to padding values - responsive
+  const paddingXDesktop = useTransform(scrollY, [0, 800], [256, 0])
+  const paddingXMobile = useTransform(scrollY, [0, 800], [36, 0])
+  const borderRadius = useTransform(scrollY, [0, 800], [32, 0])
   
   // Text fade in animation - starts later and fades in quickly
-  const textOpacity = useTransform(scrollYProgress, [0, 0.3, 0.45], [0, 0, 1])
-  const textY = useTransform(scrollYProgress, [0, 0.3, 0.45], [30, 15, 0])
+  const textOpacity = useTransform(scrollY, [240, 400], [0, 1])
+  const textY = useTransform(scrollY, [240, 400], [30, 0])
   
   // Dark overlay that increases as we scroll
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.2, 0.3, 0.5], [0, 0, 0.2, 0.4])
+  const overlayOpacity = useTransform(scrollY, [0, 600], [0, 0.4])
 
   return (
     <section className="bg-liberty-base">
@@ -95,7 +91,7 @@ export default function Hero() {
       </div>
       
       {/* Hero Image with Scroll Effect */}
-      <div ref={containerRef} className="pb-16">
+      <div className="pb-16">
         {/* Desktop - animated padding */}
         <motion.div
           style={{
