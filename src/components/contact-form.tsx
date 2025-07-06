@@ -168,13 +168,13 @@ export default function ContactForm() {
                   </div>
 
                   {/* Submit Button */}
-                  <Button 
-                    type="submit" 
-                    size="xl" 
+                  <Button
+                    type="submit"
+                    size="xl"
                     className="w-full bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-background"
                   >
                     <span className="flex items-center gap-3 group">
-                      Get My Free Guide & Join the Movement
+                      Get Guide & Join the Movement
                       <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                     </span>
                   </Button>
