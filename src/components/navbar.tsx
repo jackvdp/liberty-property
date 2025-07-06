@@ -146,8 +146,8 @@ export default function Navbar() {
                     className="h-10 w-10 rounded-lg"
                   />
                   <div>
-                    <h2 className="font-reckless font-semibold text-liberty-background text-lg">Liberty Property</h2>
-                    <p className="text-liberty-background/60 text-sm">Property Freedom</p>
+                    <h2 className="font-reckless font-semibold text-liberty-background text-lg">Liberty Bell</h2>
+                    <p className="text-liberty-background/60 text-sm">Ethical Enfranchisement</p>
                   </div>
                 </div>
 
