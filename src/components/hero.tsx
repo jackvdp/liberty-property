@@ -35,7 +35,7 @@ export default function Hero() {
         {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-liberty-secondary/20 via-liberty-base to-liberty-base"></div>
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <div className="text-center">
             {/* Main headline */}
             <motion.h1 
@@ -67,8 +67,7 @@ export default function Hero() {
             >
               
               <p className="text-lg text-liberty-background/70 mb-8 max-w-3xl mx-auto">
-                We guide leaseholders through <span className="text-liberty-primary">commonhold conversion</span>.
-                Helping streamline the Right to Manage process, handle the legal complexities, and support you every step of the way to property ownership freedom.
+                Liberty Bell is dedicated to assisting leaseholders in all areas of leasehold enfranchisement, from acquiring the freehold of their building and Right to Manage to Commonhold conversion. Our technology-driven, end-to-end services provide comprehensive support throughout your property ownership journey.
               </p>
             </motion.div>
             
