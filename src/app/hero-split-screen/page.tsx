@@ -1,5 +1,5 @@
 import Navbar from '@/components/navbar'
-import HeroDynamic from '@/components/hero-dynamic'
+import { HeroSplitScreen } from '@/components/heroes'
 import ProblemSolution from '@/components/problem-solution'
 import StatsSection from '@/components/stats-section'
 import HowItWorks from '@/components/how-it-works'
@@ -7,11 +7,11 @@ import FAQSection from '@/components/faq-section'
 import ContactForm from '@/components/contact-form'
 import Footer from '@/components/footer'
 
-export default function Home() {
+export default function HeroSplitScreenPage() {
   return (
     <div className="min-h-screen bg-liberty-base">
       <Navbar />
-      <HeroDynamic />
+      <HeroSplitScreen />
       <ProblemSolution />
       <StatsSection />
       <HowItWorks />
