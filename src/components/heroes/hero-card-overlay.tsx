@@ -104,7 +104,7 @@ export default function HeroCardOverlay() {
                 <p className="text-liberty-background/70 mb-6">
                   Get a personalized analysis of your enfranchisement options and potential savings.
                 </p>
-                <Button asChild className="w-full bg-liberty-primary hover:bg-liberty-primary/90">
+                <Button asChild className="w-full bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base">
                   <Link href="/assessment">
                     Start Assessment
                   </Link>

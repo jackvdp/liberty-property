@@ -91,9 +91,9 @@ export default function HeroSplitScreen() {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="absolute inset-0 flex items-center justify-start pl-8 lg:pl-16"
+              className="absolute inset-0 flex items-center justify-center"
             >
-              <div className="bg-liberty-base/95 backdrop-blur-sm p-8 rounded-lg shadow-xl max-w-md -ml-8 lg:-ml-16">
+              <div className="bg-liberty-base/95 backdrop-blur-sm p-8 rounded-lg shadow-xl max-w-md">
                 <h3 className="text-2xl font-bold text-liberty-background mb-4">
                   Why Choose Liberty Bell?
                 </h3>

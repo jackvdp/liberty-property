@@ -138,7 +138,7 @@ export default function HeroDiagonalSplit() {
                     </div>
                   </div>
                   
-                  <Button asChild className="w-full bg-liberty-primary hover:bg-liberty-primary/90">
+                  <Button asChild className="w-full bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base">
                     <Link href="/consultation">
                       Book Free Consultation
                     </Link>

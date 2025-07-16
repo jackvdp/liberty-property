@@ -67,18 +67,24 @@ export default function HeroMinimalCentered() {
             </Button>
           </motion.div>
 
-          {/* Floating elements */}
+          {/* Floating elements - more purposeful positioning */}
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.6 }}
-            className="absolute top-1/4 left-1/4 w-4 h-4 bg-liberty-accent rounded-full opacity-60"
+            className="absolute top-20 right-20 w-4 h-4 bg-liberty-accent rounded-full opacity-60"
           />
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.8 }}
-            className="absolute bottom-1/4 right-1/4 w-6 h-6 bg-liberty-accent/40 rounded-full opacity-60"
+            className="absolute bottom-32 left-16 w-6 h-6 bg-liberty-accent/40 rounded-full opacity-60"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 1 }}
+            className="absolute top-1/3 left-8 w-3 h-3 bg-liberty-accent/60 rounded-full opacity-80"
           />
         </div>
       </div>

@@ -26,13 +26,8 @@ export default function HeroVideoBackground() {
           className="object-cover"
           priority
         />
-        {/* Animated overlay */}
-        <motion.div 
-          initial={{ opacity: 0.3 }}
-          animate={{ opacity: 0.7 }}
-          transition={{ duration: 3, ease: "easeInOut" }}
-          className="absolute inset-0 bg-gradient-to-t from-liberty-background via-liberty-background/40 to-liberty-background/20"
-        />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-liberty-background via-liberty-background/70 to-liberty-background/50" />
       </motion.div>
 
       {/* Content */}
