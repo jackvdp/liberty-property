@@ -6,9 +6,7 @@ import { heroVariants } from '@/content/heroes'
 import { 
   HeroOriginal, 
   HeroAggressive, 
-  HeroDataDriven, 
-  HeroSimple, 
-  HeroCommunity,
+  HeroDataDriven,
   HeroSplitScreen,
   HeroMinimalCentered,
   HeroVideoBackground,
@@ -22,14 +20,11 @@ import HowItWorks from "@/components/how-it-works";
 import FAQSection from "@/components/faq-section";
 import ContactForm from "@/components/contact-form";
 import Footer from "@/components/footer";
-import Navbar from "@/components/navbar";
 
 const heroComponents = {
   'original': HeroOriginal,
   'aggressive': HeroAggressive,
   'data-driven': HeroDataDriven,
-  'simple': HeroSimple,
-  'community': HeroCommunity,
   'split-screen': HeroSplitScreen,
   'minimal-centered': HeroMinimalCentered,
   'video-background': HeroVideoBackground,

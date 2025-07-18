@@ -2,8 +2,7 @@
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { heroVariants, HeroContent } from '@/content/heroes'
-import { HeroVariant } from '@/config/site'
+import { heroVariants } from '@/content/heroes'
 import { Copy, CheckCircle, ExternalLink, Layout, Palette } from 'lucide-react'
 
 export default function HeroAdminPage() {

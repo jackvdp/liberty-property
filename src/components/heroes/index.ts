@@ -1,8 +1,6 @@
 export { default as HeroOriginal } from './hero-original'
 export { default as HeroAggressive } from './hero-aggressive'
 export { default as HeroDataDriven } from './hero-data-driven'
-export { default as HeroSimple } from './hero-simple'
-export { default as HeroCommunity } from './hero-community'
 export { default as HeroSplitScreen } from './hero-split-screen'
 export { default as HeroMinimalCentered } from './hero-minimal-centered'
 export { default as HeroVideoBackground } from './hero-video-background'
