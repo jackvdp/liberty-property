@@ -21,7 +21,7 @@ export const siteConfig = {
 
   const getVariantType = (id: string) => {
     const designFocused = ['split-screen', 'minimal-centered', 'video-background', 'card-overlay', 'diagonal-split']
-    const leftAligned = ['left-aligned-happy']
+    const leftAligned = ['left-aligned-happy', 'left-aligned-bold', 'left-aligned-soft']
     
     if (designFocused.includes(id)) return 'Design'
     if (leftAligned.includes(id)) return 'Left-Aligned'
@@ -36,7 +36,9 @@ export const siteConfig = {
       'video-background': 'Video-style background with demo section and animated stats',
       'card-overlay': 'Card-based overlay design with feature highlights and testimonials',
       'diagonal-split': 'Diagonal split design with geometric shapes and modern layout',
-      'left-aligned-happy': 'Left-aligned content with happy leaseholders image on right - success focused'
+      'left-aligned-happy': 'Left-aligned content with happy leaseholders image - success focused with green accents',
+      'left-aligned-bold': 'High-impact dark theme with dramatic styling and uppercase text',
+      'left-aligned-soft': 'Gentle, approachable design with soft gradients and rounded elements'
     }
     return descriptions[id as keyof typeof descriptions] || 'Custom hero variant'
   }
@@ -191,6 +193,16 @@ export const siteConfig = {
             <Button variant="outline" asChild>
               <a href="/hero-left-aligned-happy" target="_blank" rel="noopener noreferrer">
                 Left Aligned Happy
+              </a>
+            </Button>
+            <Button variant="outline" asChild>
+              <a href="/hero-left-aligned-bold" target="_blank" rel="noopener noreferrer">
+                Left Aligned Bold
+              </a>
+            </Button>
+            <Button variant="outline" asChild>
+              <a href="/hero-left-aligned-soft" target="_blank" rel="noopener noreferrer">
+                Left Aligned Soft
               </a>
             </Button>
             <Button variant="outline" asChild>

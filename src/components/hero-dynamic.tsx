@@ -6,7 +6,8 @@ import {
   HeroVideoBackground,
   HeroCardOverlay,
   HeroDiagonalSplit,
-  HeroLeftAlignedHappy
+  HeroLeftAlignedHappy,
+  HeroLeftAlignedBold,
 } from '@/components/heroes'
 
 const heroComponents = {
@@ -17,6 +18,7 @@ const heroComponents = {
   'card-overlay': HeroCardOverlay,
   'diagonal-split': HeroDiagonalSplit,
   'left-aligned-happy': HeroLeftAlignedHappy,
+  'left-aligned-bold': HeroLeftAlignedBold,
 }
 
 export default function HeroDynamic() {

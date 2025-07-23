@@ -10,7 +10,8 @@ import {
   HeroVideoBackground,
   HeroCardOverlay,
   HeroDiagonalSplit,
-  HeroLeftAlignedHappy
+  HeroLeftAlignedHappy,
+  HeroLeftAlignedBold
 } from '@/components/heroes'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import ProblemSolution from "@/components/problem-solution";
@@ -28,6 +29,7 @@ const heroComponents = {
   'card-overlay': HeroCardOverlay,
   'diagonal-split': HeroDiagonalSplit,
   'left-aligned-happy': HeroLeftAlignedHappy,
+  'left-aligned-bold': HeroLeftAlignedBold,
 }
 
 export default function HeroDemoPage() {

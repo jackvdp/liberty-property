@@ -29,7 +29,7 @@ export const heroVariants: HeroContent[] = [
       text: "Get Your Commonhold Guide",
       href: "/commonhold-guide"
     },
-    backgroundImage: "/london.png",
+    backgroundImage: "/family.jpeg",
     backgroundImageAlt: "Modern apartment building representing property ownership freedom"
   },
   {
@@ -45,7 +45,7 @@ export const heroVariants: HeroContent[] = [
       text: "Get Your Guide",
       href: "/commonhold-guide"
     },
-    backgroundImage: "/london.png",
+    backgroundImage: "/family.jpeg",
     backgroundImageAlt: "Modern apartment building representing property ownership freedom"
   },
   {
@@ -61,7 +61,7 @@ export const heroVariants: HeroContent[] = [
       text: "Learn More",
       href: "/how-it-works"
     },
-    backgroundImage: "/london.png",
+    backgroundImage: "/family.jpeg",
     backgroundImageAlt: "Modern apartment building representing property ownership freedom"
   },
   {
@@ -77,7 +77,7 @@ export const heroVariants: HeroContent[] = [
       text: "Watch Demo",
       href: "/demo"
     },
-    backgroundImage: "/london.png",
+    backgroundImage: "/family.jpeg",
     backgroundImageAlt: "Modern apartment building representing property ownership freedom"
   },
   {
@@ -93,7 +93,7 @@ export const heroVariants: HeroContent[] = [
       text: "See How",
       href: "/how-it-works"
     },
-    backgroundImage: "/london.png",
+    backgroundImage: "/family.jpeg",
     backgroundImageAlt: "Modern apartment building representing property ownership freedom"
   },
   {
@@ -109,7 +109,7 @@ export const heroVariants: HeroContent[] = [
       text: "Learn More",
       href: "/about"
     },
-    backgroundImage: "/london.png",
+    backgroundImage: "/family.jpeg",
     backgroundImageAlt: "Modern apartment building representing property ownership freedom"
   },
   {
@@ -125,7 +125,23 @@ export const heroVariants: HeroContent[] = [
       text: "See Success Stories",
       href: "/success-stories"
     },
-    backgroundImage: "/happy-leaseholders.jpg",
+    backgroundImage: "/family.jpeg",
+    backgroundImageAlt: "Happy leaseholders celebrating their property freedom"
+  },
+  {
+    id: "left-aligned-bold",
+    title: "Finally, Take Control of Your Property",
+    subtitle: "Property",
+    description: "Join thousands of leaseholders who've broken free from ground rent and unfair charges. Our proven technology makes collective enfranchisement simple, fast, and affordable.",
+    primaryCTA: {
+      text: "Start Your Journey", 
+      href: "/get-started"
+    },
+    secondaryCTA: {
+      text: "Watch Demo",
+      href: "/demo"
+    },
+    backgroundImage: "/family.jpeg",
     backgroundImageAlt: "Happy leaseholders celebrating their property freedom"
   }
 ]

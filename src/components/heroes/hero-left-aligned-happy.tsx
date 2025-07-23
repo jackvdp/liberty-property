@@ -12,10 +12,10 @@ export default function HeroLeftAlignedHappy() {
 
   return (
     <section className="min-h-screen bg-liberty-base relative overflow-hidden">
-      <div className="max-w-7xl mx-auto min-h-screen">
-        <div className="grid lg:grid-cols-2 min-h-screen">
-          {/* Left Content - Text */}
-          <div className="flex items-center px-8 lg:px-16 py-16 lg:py-0">
+      <div className="min-h-screen flex">
+        {/* Left Content - Text (constrained) */}
+        <div className="w-full lg:w-1/2 flex items-center">
+          <div className="w-full max-w-7xl mx-auto pl-8 lg:pl-24 pr-8 lg:pr-16 py-16 lg:py-0">
             <div className="max-w-xl">
               {/* Success Badge */}
               <motion.div
@@ -105,71 +105,57 @@ export default function HeroLeftAlignedHappy() {
               </motion.div>
             </div>
           </div>
+        </div>
 
-          {/* Right Content - Happy Leaseholders Image */}
-          <div className="relative lg:min-h-screen">
-            <motion.div 
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-              className="absolute inset-0"
-            >
-              {/* Placeholder for happy leaseholders image */}
-              <div className="w-full h-full bg-gradient-to-br from-liberty-accent/20 to-liberty-primary/20 flex items-center justify-center relative overflow-hidden">
-                {/* Temporary placeholder - replace with actual image */}
-                <Image
-                  src={content.backgroundImage}
-                  alt={content.backgroundImageAlt}
-                  fill
-                  className="object-cover opacity-30"
-                  priority
-                />
-                
-                {/* Overlay content suggesting happy people */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center p-8 bg-liberty-base/90 backdrop-blur-sm rounded-2xl shadow-xl max-w-sm">
-                    <div className="text-6xl mb-4">😊</div>
-                    <h3 className="text-xl font-bold text-liberty-background mb-2">
-                      Happy Leaseholders
-                    </h3>
-                    <p className="text-liberty-background/70 text-sm">
-                      Replace with actual photo of satisfied customers celebrating their property freedom
-                    </p>
-                  </div>
-                </div>
-              </div>
+        {/* Right Content - Image (full width to edge) */}
+        <div className="hidden lg:block lg:w-1/2 relative">
+          <motion.div 
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            className="absolute inset-0"
+          >
+            {/* Main image */}
+            <div className="w-full h-full relative overflow-hidden">
+              <Image
+                src={content.backgroundImage}
+                alt={content.backgroundImageAlt}
+                fill
+                className="object-cover"
+                priority
+              />
               
-              {/* Subtle gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-liberty-base/10" />
-            </motion.div>
+              {/* Subtle gradient overlay for better text readability */}
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-liberty-base/5" />
+            </div>
+          </motion.div>
 
-            {/* Floating testimonial */}
-            <motion.div 
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="absolute bottom-8 left-8 right-8 lg:left-8 lg:right-16"
-            >
-              <div className="bg-liberty-base/95 backdrop-blur-sm p-6 rounded-lg shadow-xl border border-liberty-secondary/20">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-liberty-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Users className="text-liberty-accent" size={20} />
+          {/* Floating testimonial */}
+          <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="absolute bottom-8 left-8 right-8"
+          >
+            <div className="bg-liberty-base/95 backdrop-blur-sm p-6 rounded-lg shadow-xl border border-liberty-secondary/20">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-liberty-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Users className="text-liberty-accent" size={20} />
+                </div>
+                <div>
+                  <p className="text-liberty-background/80 text-sm mb-2">
+                    "We finally own our property! No more ground rent, no more managing agent problems. Liberty Bell made it so simple."
+                  </p>
+                  <div className="font-medium text-liberty-background text-sm">
+                    Sarah & Mike Thompson
                   </div>
-                  <div>
-                    <p className="text-liberty-background/80 text-sm mb-2">
-                      "We finally own our property! No more ground rent, no more managing agent problems. Liberty Bell made it so simple."
-                    </p>
-                    <div className="font-medium text-liberty-background text-sm">
-                      Sarah & Mike Thompson
-                    </div>
-                    <div className="text-liberty-background/60 text-xs">
-                      Manchester Apartment Block
-                    </div>
+                  <div className="text-liberty-background/60 text-xs">
+                    Manchester Apartment Block
                   </div>
                 </div>
               </div>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
