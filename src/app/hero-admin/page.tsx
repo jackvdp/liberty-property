@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { heroVariants } from '@/content/heroes'
-import { Copy, CheckCircle, ExternalLink, Layout, Palette } from 'lucide-react'
+import { Copy, CheckCircle, ExternalLink, Layout, Palette, Users } from 'lucide-react'
 
 export default function HeroAdminPage() {
   const [copiedId, setCopiedId] = useState<string | null>(null)
@@ -21,19 +21,22 @@ export const siteConfig = {
 
   const getVariantType = (id: string) => {
     const designFocused = ['split-screen', 'minimal-centered', 'video-background', 'card-overlay', 'diagonal-split']
-    return designFocused.includes(id) ? 'Design' : 'Content'
+    const leftAligned = ['left-aligned-happy']
+    
+    if (designFocused.includes(id)) return 'Design'
+    if (leftAligned.includes(id)) return 'Left-Aligned'
+    return 'Content'
   }
 
   const getVariantDescription = (id: string) => {
     const descriptions = {
       'original': 'Conservative, professional approach with scrolling image effects',
-      'aggressive': 'Bold, confrontational messaging with red color scheme',
-      'data-driven': 'Social proof focused with green theme and statistics',
       'split-screen': 'Full-screen split with image right, text left, and creeping overlay',
       'minimal-centered': 'Centered design with full-screen background and elegant typography',
       'video-background': 'Video-style background with demo section and animated stats',
       'card-overlay': 'Card-based overlay design with feature highlights and testimonials',
-      'diagonal-split': 'Diagonal split design with geometric shapes and modern layout'
+      'diagonal-split': 'Diagonal split design with geometric shapes and modern layout',
+      'left-aligned-happy': 'Left-aligned content with happy leaseholders image on right - success focused'
     }
     return descriptions[id as keyof typeof descriptions] || 'Custom hero variant'
   }
@@ -61,6 +64,10 @@ export const siteConfig = {
               <Layout className="text-liberty-primary" size={16} />
               <span className="text-sm font-medium text-liberty-background">Design Variants</span>
             </div>
+            <div className="flex items-center gap-2 bg-green-100 px-4 py-2 rounded-full">
+              <Users className="text-green-600" size={16} />
+              <span className="text-sm font-medium text-green-700">Left-Aligned Variants</span>
+            </div>
           </div>
         </div>
 
@@ -79,6 +86,8 @@ export const siteConfig = {
                       <span className={`px-2 py-1 rounded text-xs font-medium ${
                         getVariantType(hero.id) === 'Design' 
                           ? 'bg-liberty-accent/20 text-liberty-accent' 
+                          : getVariantType(hero.id) === 'Left-Aligned'
+                          ? 'bg-green-100 text-green-700'
                           : 'bg-liberty-secondary/50 text-liberty-background'
                       }`}>
                         {getVariantType(hero.id)}
@@ -173,10 +182,15 @@ export const siteConfig = {
           <h2 className="text-2xl font-bold text-liberty-background mb-4">
             Quick Links
           </h2>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <Button variant="outline" asChild>
               <a href="/hero-demo" target="_blank" rel="noopener noreferrer">
                 Interactive Demo
+              </a>
+            </Button>
+            <Button variant="outline" asChild>
+              <a href="/hero-left-aligned-happy" target="_blank" rel="noopener noreferrer">
+                Left Aligned Happy
               </a>
             </Button>
             <Button variant="outline" asChild>
@@ -207,21 +221,6 @@ export const siteConfig = {
             <Button variant="outline" asChild>
               <a href="/hero-original" target="_blank" rel="noopener noreferrer">
                 Original
-              </a>
-            </Button>
-            <Button variant="outline" asChild>
-              <a href="/hero-aggressive" target="_blank" rel="noopener noreferrer">
-                Aggressive
-              </a>
-            </Button>
-            <Button variant="outline" asChild>
-              <a href="/hero-data-driven" target="_blank" rel="noopener noreferrer">
-                Data-Driven
-              </a>
-            </Button>
-            <Button variant="outline" asChild>
-              <a href="/hero-community" target="_blank" rel="noopener noreferrer">
-                Community
               </a>
             </Button>
           </div>

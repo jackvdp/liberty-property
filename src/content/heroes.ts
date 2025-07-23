@@ -33,38 +33,6 @@ export const heroVariants: HeroContent[] = [
     backgroundImageAlt: "Modern apartment building representing property ownership freedom"
   },
   {
-    id: "aggressive",
-    title: "End Leasehold Forever",
-    subtitle: "Nightmare",
-    description: "Skip the lawyers. Skip the paperwork. Skip the stress. Our AI-powered platform automates the entire journey from angry leaseholder to empowered commonholder.",
-    primaryCTA: {
-      text: "Start Your Revolution",
-      href: "/get-started"
-    },
-    secondaryCTA: {
-      text: "Calculate Your Savings",
-      href: "/calculator"
-    },
-    backgroundImage: "/london.png",
-    backgroundImageAlt: "Modern apartment building representing property ownership freedom"
-  },
-  {
-    id: "data-driven",
-    title: "Join 12,000+ Leaseholders Taking Control",
-    subtitle: "Movement",
-    description: "£2.3M saved for leaseholders this month. See real-time success stories and join the technology revolution ending leasehold forever.",
-    primaryCTA: {
-      text: "See Live Results",
-      href: "/dashboard"
-    },
-    secondaryCTA: {
-      text: "Join the Movement",
-      href: "/get-started"
-    },
-    backgroundImage: "/london.png",
-    backgroundImageAlt: "Modern apartment building representing property ownership freedom"
-  },
-  {
     id: "split-screen",
     title: "Take Control of Your Property",
     subtitle: "Property",
@@ -143,6 +111,22 @@ export const heroVariants: HeroContent[] = [
     },
     backgroundImage: "/london.png",
     backgroundImageAlt: "Modern apartment building representing property ownership freedom"
+  },
+  {
+    id: "left-aligned-happy",
+    title: "Finally, Take Control of Your Property",
+    subtitle: "Property",
+    description: "Join thousands of leaseholders who've broken free from ground rent and unfair charges. Our proven technology makes collective enfranchisement simple, fast, and affordable.",
+    primaryCTA: {
+      text: "Start Your Journey",
+      href: "/get-started"
+    },
+    secondaryCTA: {
+      text: "See Success Stories",
+      href: "/success-stories"
+    },
+    backgroundImage: "/happy-leaseholders.jpg",
+    backgroundImageAlt: "Happy leaseholders celebrating their property freedom"
   }
 ]
 

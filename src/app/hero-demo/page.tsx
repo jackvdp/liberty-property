@@ -5,13 +5,12 @@ import { Button } from '@/components/ui/button'
 import { heroVariants } from '@/content/heroes'
 import { 
   HeroOriginal, 
-  HeroAggressive, 
-  HeroDataDriven,
   HeroSplitScreen,
   HeroMinimalCentered,
   HeroVideoBackground,
   HeroCardOverlay,
-  HeroDiagonalSplit
+  HeroDiagonalSplit,
+  HeroLeftAlignedHappy
 } from '@/components/heroes'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import ProblemSolution from "@/components/problem-solution";
@@ -23,13 +22,12 @@ import Footer from "@/components/footer";
 
 const heroComponents = {
   'original': HeroOriginal,
-  'aggressive': HeroAggressive,
-  'data-driven': HeroDataDriven,
   'split-screen': HeroSplitScreen,
   'minimal-centered': HeroMinimalCentered,
   'video-background': HeroVideoBackground,
   'card-overlay': HeroCardOverlay,
   'diagonal-split': HeroDiagonalSplit,
+  'left-aligned-happy': HeroLeftAlignedHappy,
 }
 
 export default function HeroDemoPage() {
