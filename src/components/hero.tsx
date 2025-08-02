@@ -81,6 +81,9 @@ export default function Hero() {
                 alt="Modern apartment building representing property ownership freedom"
                 fill
                 className="object-cover"
+                style={{
+                  clipPath: 'polygon(0% 100%, 70% 0%, 100% 0%, 100% 100%)'
+                }}
                 priority
               />
               
