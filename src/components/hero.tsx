@@ -8,11 +8,11 @@ import { motion } from 'framer-motion'
 
 export default function Hero() {
   return (
-    <section className="min-h-screen bg-liberty-base relative overflow-hidden">
-      <div className="min-h-screen flex">
+    <section className="h-[calc(100vh-64px)] bg-liberty-base relative overflow-hidden">
+      <div className="h-full flex">
         {/* Left Content - Text (constrained in container) */}
         <div className="w-full lg:w-1/2 flex items-center">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-0">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-0 mb-16">
             <div className="max-w-xl">
               {/* Success Badge */}
               <motion.div
