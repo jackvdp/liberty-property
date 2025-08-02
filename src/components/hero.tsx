@@ -10,10 +10,9 @@ export default function Hero() {
   return (
     <section className="h-[calc(100vh-64px)] bg-liberty-base relative overflow-hidden">
       <div className="h-full flex">
-        {/* Left Content - Text (constrained in container) */}
-        <div className="w-full lg:w-1/2 flex items-center">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-0 mb-16">
-            <div className="max-w-xl">
+        {/* Left Content - Text extending into diagonal white space */}
+        <div className="w-full lg:w-1/2 flex items-center relative z-10">
+          <div className="w-full max-w-xl ml-auto pr-4 pl-8 sm:pl-12 lg:pl-16 py-16 mb-16">
               {/* Success Badge */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -64,10 +63,9 @@ export default function Hero() {
               </motion.div>
             </div>
           </div>
-        </div>
 
         {/* Right Content - Image (full width to edge, not constrained by container) */}
-        <div className="hidden lg:block lg:w-1/2 relative">
+        <div className="hidden lg:block lg:w-2/3 relative">
           <motion.div 
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -82,7 +80,7 @@ export default function Hero() {
                 fill
                 className="object-cover"
                 style={{
-                  clipPath: 'polygon(0% 100%, 70% 0%, 100% 0%, 100% 100%)'
+                  clipPath: 'polygon(0% 100%, 40% 0%, 100% 0%, 100% 100%)'
                 }}
                 priority
               />
