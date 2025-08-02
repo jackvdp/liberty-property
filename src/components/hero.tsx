@@ -4,9 +4,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 
 export default function Hero() {
+  // Parallax scroll effect for the image only
+  const { scrollY } = useScroll()
+  const imageY = useTransform(scrollY, [0, 1000], [0, -200])
+  const imageScale = useTransform(scrollY, [0, 1000], [1, 1.1])
+
   return (
     <section className="h-[calc(100vh-64px)] bg-liberty-base relative overflow-hidden">
       <div className="h-full flex">
@@ -40,7 +45,7 @@ export default function Hero() {
                 transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                 className="text-lg lg:text-xl text-liberty-background/70 mb-8 leading-relaxed"
               >
-                Reduce your service charges, save you money and stress. We turn every unhappy leaseholder into a happy and empowered commonholder through technology, transparency, and legal empowerment.
+                Reduce your service charges, save you money and stress. We turn unhappy leaseholders into happy and empowered commonholders through technology, transparency, and legal empowerment.
               </motion.p>
               
               <motion.div 
@@ -72,18 +77,26 @@ export default function Hero() {
             transition={{ duration: 1.2, ease: "easeOut" }}
             className="absolute inset-0"
           >
-            {/* Main image */}
-            <div className="w-full h-full relative overflow-hidden">
-              <Image
-                src="/family.jpeg"
-                alt="Modern apartment building representing property ownership freedom"
-                fill
-                className="object-cover"
+            {/* Main image with parallax inside fixed diagonal mask */}
+            <div className="w-full h-full relative overflow-hidden"
+                 style={{
+                   clipPath: 'polygon(0% 100%, 40% 0%, 100% 0%, 100% 100%)'
+                 }}>
+              <motion.div
                 style={{
-                  clipPath: 'polygon(0% 100%, 40% 0%, 100% 0%, 100% 100%)'
+                  y: imageY,
+                  scale: imageScale,
                 }}
-                priority
-              />
+                className="w-full h-full"
+              >
+                <Image
+                  src="/family.jpeg"
+                  alt="Modern apartment building representing property ownership freedom"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </motion.div>
               
               {/* Subtle gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-liberty-base/5" />
