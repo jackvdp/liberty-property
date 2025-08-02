@@ -4,14 +4,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 export default function Hero() {
-  // Parallax scroll effect for the image only
-  const { scrollY } = useScroll()
-  const imageY = useTransform(scrollY, [0, 1000], [0, -200])
-  const imageScale = useTransform(scrollY, [0, 1000], [1, 1.1])
-
   return (
     <section className="h-[calc(100vh-64px)] bg-liberty-base relative overflow-hidden">
       <div className="h-full flex">
@@ -83,10 +78,6 @@ export default function Hero() {
                    clipPath: 'polygon(0% 100%, 40% 0%, 100% 0%, 100% 100%)'
                  }}>
               <motion.div
-                style={{
-                  y: imageY,
-                  scale: imageScale,
-                }}
                 className="w-full h-full"
               >
                 <Image
