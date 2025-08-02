@@ -45,7 +45,7 @@ export default function Hero() {
                 transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                 className="text-lg lg:text-xl text-liberty-background/70 mb-8 leading-relaxed"
               >
-                Reduce your service charges, save you money and stress. We turn unhappy leaseholders into happy and empowered commonholders through technology, transparency, and legal empowerment.
+                Reduce your service charges, save you money and stress. We help leaseholders exercise their Right to Manage or buy their freehold – empowering property ownership.
               </motion.p>
               
               <motion.div 
