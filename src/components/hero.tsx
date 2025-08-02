@@ -2,179 +2,93 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import HeroOverlay from './hero-overlay'
+import { motion } from 'framer-motion'
 
 export default function Hero() {
-  
-  // Track absolute scroll position from the top of the page
-  const { scrollY } = useScroll()
-  
-  // Transform absolute scroll position to padding values - responsive
-  const paddingXDesktop = useTransform(scrollY, [0, 800], [256, 0])
-  const paddingXMobile = useTransform(scrollY, [0, 800], [36, 0])
-  const borderRadius = useTransform(scrollY, [0, 800], [32, 0])
-  
-  // Text fade in animation - starts later and fades in quickly
-  const textOpacity = useTransform(scrollY, [240, 400], [0, 1])
-  const textY = useTransform(scrollY, [240, 400], [30, 0])
-  
-  // Dark overlay that increases as we scroll
-  const overlayOpacity = useTransform(scrollY, [0, 600], [0, 0.4])
-
   return (
-    <section className="bg-liberty-base">
-      {/* Hero Content */}
-      <div className="relative overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-liberty-secondary/20 via-liberty-base to-liberty-base"></div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-          <div className="text-center">
-            {/* Main headline */}
-            <motion.h1 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-reckless font-bold text-liberty-background mb-6"
-            >
-              Take Control of Your{' '}
-              <span className="text-liberty-accent">Property</span>
-            </motion.h1>
-            
-            {/* Subheadline */}
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              className="text-xl sm:text-2xl text-liberty-background/70 mb-8 max-w-4xl mx-auto"
-            >
-              We help frustrated leaseholders become empowered commonholders through technology, transparency, and real results.
-            </motion.p>
-            
-            {/* Clear Mission Statement */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-              className="mb-12 text-center"
-            >
+    <section className="min-h-screen bg-liberty-base relative overflow-hidden">
+      <div className="min-h-screen flex">
+        {/* Left Content - Text (constrained in container) */}
+        <div className="w-full lg:w-1/2 flex items-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-0">
+            <div className="max-w-xl">
+              {/* Success Badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="inline-flex items-center gap-2 bg-liberty-accent/10 text-liberty-accent px-4 py-2 rounded-full text-sm font-medium mb-6 border border-liberty-accent/20"
+              >
+                <CheckCircle size={16} />
+                End the Outdated Leasehold System
+              </motion.div>
+
+              <motion.h1 
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+                className="text-4xl lg:text-5xl xl:text-6xl font-reckless font-bold text-liberty-background mb-6 leading-tight"
+              >
+                Let us help you take back{' '}
+                <span className="text-liberty-accent">control</span>
+              </motion.h1>
               
-              <p className="text-lg text-liberty-background/70 mb-8 max-w-3xl mx-auto">
-                Liberty Bell is dedicated to assisting leaseholders in all areas of leasehold enfranchisement, from acquiring the freehold of their building and Right to Manage to Commonhold conversion. Our technology-driven, end-to-end services provide comprehensive support throughout your property ownership journey.
-              </p>
-            </motion.div>
-            
-            {/* CTA Buttons */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-            >
-              <Button size="xl" asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base">
-                <Link href="/get-started" className="flex items-center gap-3 group">
-                  Find Out How
-                  <ArrowRight size={20} className="group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300 ease-out" />
-                </Link>
-              </Button>
-              <Button size="xl" variant="outline" asChild className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-liberty-base">
-                <Link href="/commonhold-guide">
-                  Get Your Commonhold Guide
-                </Link>
-              </Button>
-            </motion.div>
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                className="text-lg lg:text-xl text-liberty-background/70 mb-8 leading-relaxed"
+              >
+                Reduce your service charges, save you money and stress. We turn every unhappy leaseholder into a happy and empowered commonholder through technology, transparency, and legal empowerment.
+              </motion.p>
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+                className="flex flex-col sm:flex-row gap-4"
+              >
+                <Button size="xl" asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base">
+                  <Link href="/eligibility-check" className="flex items-center gap-3 group">
+                    Check Your Eligibility
+                    <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </Button>
+                <Button size="xl" variant="outline" asChild className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-liberty-base">
+                  <Link href="/ai-advisor">
+                    Talk to Our AI Advisor
+                  </Link>
+                </Button>
+              </motion.div>
+            </div>
           </div>
         </div>
-      </div>
-      
-      {/* Hero Image with Scroll Effect */}
-      <div className="pb-16">
-        {/* Desktop - animated padding */}
-        <motion.div
-          style={{
-            paddingLeft: paddingXDesktop,
-            paddingRight: paddingXDesktop,
-          }}
-          className="relative hidden lg:block"
-        >
-          <motion.div
-            style={{
-              borderRadius: borderRadius,
-            }}
-            className="overflow-hidden shadow-xl relative h-[100vh] min-h-[300px]"
+
+        {/* Right Content - Image (full width to edge, not constrained by container) */}
+        <div className="hidden lg:block lg:w-1/2 relative">
+          <motion.div 
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            className="absolute inset-0"
           >
-            <Image
-              src="/london.png"
-              alt="Modern apartment building representing property ownership freedom"
-              width={1200}
-              height={600}
-              className="w-full h-full object-cover"
-              priority
-            />
-            {/* Dark Overlay */}
-            <motion.div
-              style={{
-                opacity: overlayOpacity,
-              }}
-              className="absolute inset-0 bg-black"
-            />
-            {/* Overlay Text */}
-            <motion.div
-              style={{
-                opacity: textOpacity,
-                y: textY,
-              }}
-              className="absolute inset-0 flex items-center justify-center z-10"
-            >
-              <HeroOverlay isMobile={false} />
-            </motion.div>
+            {/* Main image */}
+            <div className="w-full h-full relative overflow-hidden">
+              <Image
+                src="/family.jpeg"
+                alt="Modern apartment building representing property ownership freedom"
+                fill
+                className="object-cover"
+                priority
+              />
+              
+              {/* Subtle gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-liberty-base/5" />
+            </div>
           </motion.div>
-        </motion.div>
-        
-        {/* Mobile/Tablet - smaller animated padding */}
-        <motion.div
-          style={{
-            paddingLeft: paddingXMobile,
-            paddingRight: paddingXMobile,
-          }}
-          className="relative lg:hidden px-4"
-        >
-          <motion.div
-            style={{
-              borderRadius: borderRadius,
-            }}
-            className="overflow-hidden shadow-xl relative h-[60vh]"
-          >
-            <Image
-              src="/london.png"
-              alt="Modern apartment building representing property ownership freedom"
-              width={1200}
-              height={800}
-              className="w-full h-full"
-              priority
-            />
-            {/* Dark Overlay */}
-            <motion.div
-              style={{
-                opacity: overlayOpacity,
-              }}
-              className="absolute inset-0 bg-black"
-            />
-            {/* Overlay Text - Mobile */}
-            <motion.div
-              style={{
-                opacity: textOpacity,
-                y: textY,
-              }}
-              className="absolute inset-0 flex items-center justify-center z-10"
-            >
-              <HeroOverlay isMobile={true} />
-            </motion.div>
-          </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )
