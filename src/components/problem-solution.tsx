@@ -260,7 +260,7 @@ export default function ProblemSolution() {
             </p>
             <Button variant="outline" size="sm" asChild className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-liberty-base">
               <Link href="/legal-options" className="flex items-center gap-2">
-                View Legal Options Guide
+                View Leaseholder Options Guide
                 <ArrowRight size={16} />
               </Link>
             </Button>
