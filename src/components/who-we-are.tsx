@@ -49,7 +49,7 @@ export default function WhoWeAre() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold !text-white mb-6">
-            Who We Are and What We <span className="text-liberty-accent">Stand For</span>
+            Who We Are and <span className="text-liberty-accent">What We Stand For</span>
           </h2>
         </motion.div>
 
@@ -84,9 +84,9 @@ export default function WhoWeAre() {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="relative"
+            className="relative flex justify-center lg:justify-end"
           >
-            <div className="relative h-[500px] rounded-xl overflow-hidden shadow-2xl">
+            <div className="relative w-80 h-80 rounded-xl overflow-hidden shadow-2xl">
               <Image
                 src="/james_lewis.avif"
                 alt="James speaking to MPs in Parliament about leasehold reform"
@@ -96,15 +96,15 @@ export default function WhoWeAre() {
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent" />
               
               {/* Parliament Badge */}
-              <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm p-4 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <Users className="text-liberty-primary w-6 h-6" />
+              <div className="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-sm p-3 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <Users className="text-liberty-primary w-5 h-5" />
                   <div>
-                    <p className="font-semibold text-slate-900 text-sm">
+                    <p className="font-semibold text-slate-900 text-xs">
                       Speaking at Parliament
                     </p>
                     <p className="text-slate-700 text-xs">
-                      "Fighting for leaseholder rights at the highest level"
+                      "Fighting for leaseholder rights"
                     </p>
                   </div>
                 </div>
