@@ -35,8 +35,8 @@ const painPoints = [
   },
   {
     icon: AlertTriangle,
-    title: "Feeling Trapped",
-    description: "Having no control over how your home is managed or important building decisions"
+    title: "Losing Value",
+    description: "Poor building management and short leases causing your home’s value to drop"
   }
 ]
 
@@ -124,8 +124,8 @@ export default function ProblemSolution() {
             >
               <div className="relative h-[500px] rounded-xl overflow-hidden shadow-xl">
                 <Image
-                  src="/family-home.jpeg"
-                  alt="Frustrated family dealing with leasehold problems in their home"
+                  src="/couple-pain.jpeg"
+                  alt="Frustrated couple dealing with leasehold problems in their home"
                   fill
                   className="object-cover"
                 />
@@ -147,7 +147,7 @@ export default function ProblemSolution() {
               The time to act is now - take control before new regulations make the process more complex.
             </p>
             <Button variant="outline" size="sm" asChild className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-liberty-base">
-              <Link href="https://www.gov.uk/government/consultations/leasehold-and-commonhold-reform" target="_blank" className="flex items-center gap-2">
+              <Link href="https://commonslibrary.parliament.uk/leasehold-reform-in-england-and-wales/" target="_blank" className="flex items-center gap-2">
                 Read Government Plans
                 <ExternalLink size={16} />
               </Link>
@@ -157,55 +157,94 @@ export default function ProblemSolution() {
 
         {/* Solution Section */}
         <div>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
-              How We Help<span className="text-liberty-accent"> You Take Control</span>
-            </h2>
-            <p className="text-xl text-liberty-background/70 max-w-3xl mx-auto mb-8">
-              We work with you every step of the way. As qualified members of The Property Institute, 
-              we provide expert guidance you can trust.
-            </p>
-            <div className="flex justify-center">
-              <Button variant="outline" size="sm" asChild className="border-liberty-accent text-liberty-accent hover:bg-liberty-accent hover:text-liberty-base">
-                <Link href="https://www.property-institute.org" target="_blank" className="flex items-center gap-2">
-                  <Image src="/property-institute-logo.png" alt="Property Institute" width={20} height={20} className="w-5 h-5" />
-                  Verified Property Institute Members
-                  <ExternalLink size={16} />
-                </Link>
-              </Button>
-            </div>
-          </motion.div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {solutionSteps.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-12">
+            {/* Left: How We Help */}
+            <motion.div
+                initial={{ opacity: 0, scale: 1.05 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1, ease: "easeOut" }}
                 viewport={{ once: true }}
-                className="text-center p-6 bg-liberty-accent/5 border border-liberty-accent/20 rounded-xl hover:bg-liberty-accent/10 transition-colors duration-300"
+                className="relative"
+            >
+              <div className="relative h-[500px] rounded-xl overflow-hidden shadow-xl">
+                <Image
+                    src="/family-home.jpeg"
+                    alt="Happy family enjoying control of their property after successful enfranchisement"
+                    fill
+                    className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-liberty-accent/20 to-transparent" />
+
+                {/* Success overlay */}
+                <div className="absolute bottom-4 left-4 right-4 bg-liberty-base/95 backdrop-blur-sm p-4 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="text-liberty-accent w-6 h-6" />
+                    <div>
+                      <p className="font-semibold text-liberty-background text-sm">
+                        Success Story
+                      </p>
+                      <p className="text-liberty-background/70 text-xs">
+                        "We now control our building and saved £3,000 annually"
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            <div>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                viewport={{ once: true }}
+                className="mb-8"
               >
-                <div className="w-16 h-16 bg-liberty-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <step.icon className="w-8 h-8 text-liberty-accent" />
-                </div>
-                <div className="w-8 h-8 bg-liberty-accent text-liberty-base rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold">
-                  {index + 1}
-                </div>
-                <h3 className="font-reckless font-bold text-liberty-background text-lg mb-3">
-                  {step.title}
-                </h3>
-                <p className="text-liberty-background/70 text-sm leading-relaxed">
-                  {step.description}
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
+                  How We Help<span className="text-liberty-accent"> You Take Control</span>
+                </h2>
+                <p className="text-xl text-liberty-background/70 mb-6">
+                  We work with you every step of the way. As qualified members of The Property Institute, 
+                  we provide expert guidance you can trust.
                 </p>
+                <div className="flex justify-start">
+                  <Button variant="outline" size="sm" asChild className="border-liberty-accent text-liberty-accent hover:bg-liberty-accent hover:text-liberty-base">
+                    <Link href="https://www.tpi.org.uk" target="_blank" className="flex items-center gap-2">
+                      Verified Property Institute Members
+                      <ExternalLink size={16} />
+                    </Link>
+                  </Button>
+                </div>
               </motion.div>
-            ))}
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                {solutionSteps.map((step, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+                    viewport={{ once: true }}
+                    className="flex items-start gap-3 p-4 bg-liberty-accent/5 border border-liberty-accent/20 rounded-lg hover:bg-liberty-accent/10 transition-colors duration-300"
+                  >
+                    <div className="flex-shrink-0 w-8 h-8 bg-liberty-accent text-liberty-base rounded-full flex items-center justify-center text-sm font-bold">
+                      {index + 1}
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-liberty-background mb-1">
+                        {step.title}
+                      </h3>
+                      <p className="text-liberty-background/70 text-sm leading-relaxed">
+                        {step.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right: Solution Image */}
+
           </div>
 
           {/* Additional Resources */}
