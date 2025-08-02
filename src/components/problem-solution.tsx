@@ -81,7 +81,7 @@ export default function ProblemSolution() {
                 className="mb-8"
               >
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
-                  The Problems <span className="text-red-600">Leaseholders Face</span>
+                  The Problems<br/> <span className="text-red-600">Leaseholders Face</span>
                 </h2>
                 <p className="text-xl text-liberty-background/70">
                   Sound familiar? You're not alone - millions of leaseholders experience these frustrations daily.
@@ -201,7 +201,7 @@ export default function ProblemSolution() {
                 className="mb-8"
               >
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
-                  How We Help<span className="text-liberty-accent"> You Take Control</span>
+                  How We Help<br/><span className="text-liberty-accent"> You Take Control</span>
                 </h2>
                 <p className="text-xl text-liberty-background/70 mb-6">
                   We work with you every step of the way. As qualified members of The Property Institute, 
