@@ -168,7 +168,7 @@ export default function WhoWeAre() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="text-center"
+          className="text-center mb-16"
         >
           <div className="bg-gradient-to-r from-liberty-accent/20 to-liberty-primary/20 rounded-xl p-8 border border-liberty-accent/30">
             <div className="flex items-center justify-center gap-3 mb-6">
@@ -195,6 +195,26 @@ export default function WhoWeAre() {
               </Button>
             </div>
           </div>
+        </motion.div>
+
+        {/* Big Eligibility CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-reckless font-bold !text-white mb-8 leading-tight">
+            Check Your Eligibility &<br/> <span className="text-liberty-accent">Potential Savings</span>
+          </h2>
+          
+          <Button size="xl" asChild className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-standard px-12 py-6 text-xl font-semibold">
+            <Link href="/eligibility-check" className="flex items-center gap-4 group">
+              Check Your Eligibility
+              <ArrowRight size={28} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </Button>
         </motion.div>
       </div>
     </section>
