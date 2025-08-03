@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { 
   PoundSterling, 
@@ -177,7 +178,7 @@ export default function PricingSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="text-center"
+          className="text-center mb-16"
         >
           <div className="bg-gradient-to-r from-liberty-primary/10 to-liberty-accent/10 rounded-xl p-8 border border-liberty-primary/20">
             <h3 className="text-2xl font-reckless font-bold text-liberty-background mb-4">
@@ -199,6 +200,37 @@ export default function PricingSection() {
                   Calculate Your Savings
                 </Link>
               </Button>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Happy Couple Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="relative rounded-2xl overflow-hidden shadow-xl"
+        >
+          <div className="relative h-[300px] lg:h-[500px]">
+            <Image
+              src="/couple-happy.jpeg"
+              alt="Happy couple celebrating their property ownership success"
+              fill
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-liberty-primary/80 via-liberty-primary/60 to-transparent" />
+            
+            {/* Banner Content */}
+            <div className="absolute inset-0 flex items-center">
+              <div className="max-w-2xl px-8 lg:px-16">
+                <h3 className="text-3xl lg:text-4xl font-reckless font-bold !text-white mb-4 leading-tight">
+                  Join Thousands of Happy Property Owners
+                </h3>
+                <p className="text-white/90 text-lg lg:text-xl leading-relaxed mb-6">
+                  Take control of your building management and start saving on service charges today.
+                </p>
+              </div>
             </div>
           </div>
         </motion.div>
