@@ -2,6 +2,7 @@ import Navbar from '@/components/navbar'
 import Hero from '@/components/hero'
 import ProblemSolution from '@/components/problem-solution'
 import WhoWeAre from '@/components/who-we-are'
+import PricingSection from '@/components/pricing-section'
 import FAQSection from '@/components/faq-section'
 import ContactForm from '@/components/contact-form'
 import Footer from '@/components/footer'
@@ -13,6 +14,7 @@ export default function Home() {
       <Hero />
       <ProblemSolution />
       <WhoWeAre />
+      <PricingSection />
       <FAQSection />
       <ContactForm />
       <Footer />
