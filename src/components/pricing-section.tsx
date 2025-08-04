@@ -6,8 +6,7 @@ import { motion } from 'framer-motion'
 import { 
   PoundSterling, 
   Shield, 
-  TrendingDown, 
-  ArrowRight,
+  TrendingDown,
   CheckCircle,
   MessageCircle,
   Calculator,

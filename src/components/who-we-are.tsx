@@ -8,7 +8,6 @@ import {
   Shield, 
   TrendingDown, 
   ArrowRight,
-  ExternalLink,
   CheckCircle,
   Heart,
   MessageCircle
