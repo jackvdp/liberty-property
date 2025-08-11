@@ -143,7 +143,7 @@ export default function ProblemSolution() {
             className="bg-liberty-secondary/30 border border-liberty-secondary/50 rounded-lg p-6 text-center"
           >
             <p className="text-liberty-background/80 mb-4">
-              <strong>Even the Government recognises the system needs to change.</strong> 
+              <strong>Even the Government recognises the system needs to change. </strong>
               The time to act is now - take control before new regulations make the process more complex.
             </p>
             <Button variant="outline" size="sm" asChild className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-liberty-base">
