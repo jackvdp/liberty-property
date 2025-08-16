@@ -30,8 +30,8 @@ export default function Hero() {
                 transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
                 className="text-4xl lg:text-5xl xl:text-6xl font-reckless font-bold text-liberty-background mb-6 leading-tight"
               >
-                Let us help you take back{' '}
-                <span className="text-liberty-accent">control</span>
+                Take Back Control of Your{' '}
+                <span className="text-liberty-accent">Building</span>
               </motion.h1>
               
               <motion.p 
@@ -40,7 +40,7 @@ export default function Hero() {
                 transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                 className="text-lg lg:text-xl text-liberty-background/70 mb-8 leading-relaxed"
               >
-                Reduce your service charges, save you money and stress. We help leaseholders exercise their Right to Manage or buy their freehold – empowering property ownership.
+                Stop battling unfair charges and poor service every day. We help leaseholders across England & Wales gain legal control, cut costs, and finally live in and enjoy your home stress-free.
               </motion.p>
               
               <motion.div 
