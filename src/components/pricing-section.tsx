@@ -1,45 +1,42 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { 
   PoundSterling, 
-  Shield, 
-  TrendingDown,
   CheckCircle,
-  MessageCircle,
   Calculator,
-  Users
+  Building,
+  Users,
+  ArrowRight
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 
-const benefits = [
+const pricingItems = [
   {
-    icon: TrendingDown,
-    title: "Save at least 20%",
-    description: "We estimate we can save you at least 20% on your service charges"
-  },
-  {
-    icon: Shield,
-    title: "Transparent Pricing",
-    description: "Always upfront about costs - you'll know what you're paying for and what you're getting"
+    icon: Building,
+    title: "RTM Process",
+    price: "£2,000 + VAT",
+    description: "Complete Right to Manage process to take control of your building"
   },
   {
     icon: PoundSterling,
-    title: "Flexible Payment Options",
-    description: "Range of payment options including no upfront payment but a share of future savings"
+    title: "Enfranchisement",
+    price: "£500-£2,000 per flat",
+    description: "Collective purchase of your freehold - varies by building complexity"
   },
   {
-    icon: CheckCircle,
-    title: "Long-term Partnership",
-    description: "We want a lasting relationship with leaseholders, not just a one-off transaction"
+    icon: Users,
+    title: "Aftercare",
+    price: "Optional monthly pricing",
+    description: "Want to live hassle free? Leave it with our professional building management and release your savings"
   }
 ]
 
 export default function PricingSection() {
   return (
-    <section className="py-16 sm:py-24 lg:py-32 bg-liberty-secondary/10">
+    <section className="py-16 sm:py-24 lg:py-32 bg-liberty-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -48,130 +45,17 @@ export default function PricingSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
-            Pricing and <span className="text-liberty-primary">Working With Us</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold !text-liberty-base mb-6">
+            No Surprises, <span className="text-liberty-accent">No Hidden Costs</span>
           </h2>
-          <p className="text-xl text-liberty-background/70 max-w-3xl mx-auto">
-            We understand that people can be put off from fighting their freeholder and management agent by expensive legal bills.
+          <p className="text-xl text-liberty-base/70 max-w-3xl mx-auto">
+            Transparent, fixed-fee pricing with our savings-based model
           </p>
         </motion.div>
 
-        {/* Benefits Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {benefits.map((benefit, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
-              viewport={{ once: true }}
-              className="bg-liberty-base rounded-xl p-6 shadow-sm border border-liberty-secondary/30 hover:shadow-md transition-shadow duration-300"
-            >
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-liberty-primary/10 rounded-full flex items-center justify-center">
-                  <benefit.icon className="w-6 h-6 text-liberty-primary" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-liberty-background mb-2">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-liberty-background/70 text-sm leading-relaxed">
-                    {benefit.description}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Main Content */}
-        <div className="grid lg:grid-cols-2 gap-12 items-start mb-16">
-          {/* Left: Our Commitments */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true }}
-            className="space-y-6"
-          >
-            <div className="bg-liberty-base rounded-xl p-8 border border-liberty-secondary/30">
-              <h3 className="text-2xl font-reckless font-bold text-liberty-background mb-6">
-                Our Commitments to You
-              </h3>
-              
-              <div className="space-y-4 text-liberty-background/80 leading-relaxed">
-                <p>
-                  <strong>We know that people want to know in advance what they might have to pay.</strong>
-                </p>
-                <p>
-                  We are committed to making working with us as affordable as possible.
-                </p>
-                <p>
-                  We will always be upfront and transparent about our costs and charges. You will always know what you are paying for and what you are getting for your money.
-                </p>
-                <p>
-                  We want to have a long term relationship with leaseholders and offer a range of payment options based on your circumstances. This can include no upfront payment but a share of future savings.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right: Pricing Information */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true }}
-            className="space-y-6"
-          >
-            {/* Standard Pricing */}
-            <div className="bg-liberty-primary/5 rounded-xl p-8 border border-liberty-primary/20">
-              <h3 className="text-2xl font-reckless font-bold text-liberty-background mb-6">
-                Right to Manage Pricing
-              </h3>
-              
-              <div className="space-y-4">
-                <div className="flex items-center gap-4 p-4 bg-liberty-base rounded-lg border border-liberty-secondary/30">
-                  <Calculator className="w-6 h-6 text-liberty-primary" />
-                  <div>
-                    <p className="font-semibold text-liberty-background">Standard Fee</p>
-                    <p className="text-liberty-background/70 text-sm">£2,000 + VAT to secure Right to Manage</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Special Offer */}
-            <div className="bg-liberty-accent/5 rounded-xl p-8 border border-liberty-accent/30 relative overflow-hidden">
-              <div className="absolute top-4 right-4 bg-liberty-accent text-white px-3 py-1 rounded-full text-sm font-semibold">
-                Limited Time
-              </div>
-              
-              <h3 className="text-2xl font-reckless font-bold text-liberty-background mb-4">
-                Special Launch Offer
-              </h3>
-              
-              <div className="space-y-4 text-liberty-background/80 leading-relaxed">
-                <p>
-                  <strong className="text-liberty-accent">Because we are new</strong>, and we want to build up our knowledge base of service charges, we are currently offering a <strong>'pay what you feel is reasonable'</strong> for securing Right To Manage.
-                </p>
-                <p>
-                  In return, you provide free use of your service charge information to help us build a national knowledge base that benefits all leaseholders.
-                </p>
-                <div className="flex items-center gap-2 pt-4">
-                  <Users className="w-5 h-5 text-liberty-accent" />
-                  <Link href="/about" className="text-liberty-accent hover:text-liberty-accent/80 font-medium underline">
-                    Learn more about who we are
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* CTA */}
+        {/* Savings Model - Moved above cards */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -179,58 +63,74 @@ export default function PricingSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="bg-gradient-to-r from-liberty-primary/10 to-liberty-accent/10 rounded-xl p-8 border border-liberty-primary/20">
-            <h3 className="text-2xl font-reckless font-bold text-liberty-background mb-4">
-              Ready to Get Started?
-            </h3>
-            <p className="text-liberty-background/70 text-lg mb-6 max-w-2xl mx-auto">
-              Contact us today for a discussion about how we can help and a personalized quotation.
+          <div className="max-w-4xl mx-auto space-y-4 text-liberty-base/80 text-lg">
+            <p>
+              <strong className="!text-liberty-base">You pay the upfront fee to help you get control. We take a cut of the savings.</strong>
+              {' '}
+              The upfront fee covers all the legal work and processes. Our revenue comes from the savings we create for you through better management.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button size="lg" asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base">
-                <Link href="mailto:hello@libertybell.co.uk" className="flex items-center gap-3">
-                  <MessageCircle size={20} />
-                  Get Your Quote Today
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg" asChild className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-liberty-base">
-                <Link href="/cost-calculator" className="flex items-center gap-3">
-                  <Calculator size={20} />
-                  Calculate Your Savings
-                </Link>
-              </Button>
-            </div>
           </div>
         </motion.div>
 
-        {/* Happy Couple Banner */}
+        {/* Pricing Cards */}
+        <div className="grid md:grid-cols-3 gap-8 mb-16">
+          {pricingItems.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+              viewport={{ once: true }}
+            >
+              <Card className="h-full bg-liberty-accent/5 border-liberty-accent/20 hover:border-liberty-accent/40 transition-colors duration-300">
+                <CardContent className="p-8 text-center">
+                  <div className="w-16 h-16 bg-liberty-accent/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <item.icon className="w-8 h-8 text-liberty-accent" />
+                  </div>
+                  <h3 className="text-xl font-reckless font-bold !text-liberty-base mb-3">
+                    {item.title}
+                  </h3>
+                  <div className="text-2xl font-bold text-liberty-accent mb-4">
+                    {item.price}
+                  </div>
+                  <p className="!text-liberty-base/70 leading-relaxed">
+                    {item.description}
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* CTA Section - Simplified */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="relative rounded-2xl overflow-hidden shadow-xl"
+          className="text-center"
         >
-          <div className="relative h-[300px] lg:h-[500px]">
-            <Image
-              src="/couple-happy.jpeg"
-              alt="Happy couple celebrating their property ownership success"
-              fill
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-liberty-primary/80 via-liberty-primary/60 to-transparent" />
-            
-            {/* Banner Content */}
-            <div className="absolute inset-0 flex items-center">
-              <div className="max-w-2xl px-8 lg:px-16">
-                <h3 className="text-3xl lg:text-4xl font-reckless font-bold !text-white mb-4 leading-tight">
-                  Join Thousands of Happy Property Owners
-                </h3>
-                <p className="text-white/90 text-lg lg:text-xl leading-relaxed mb-6">
-                  Take control of your building management and start saving on service charges today.
-                </p>
-              </div>
-            </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              size="xl" 
+              asChild 
+              className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-background"
+            >
+              <Link href="/get-quote" className="flex items-center gap-3 group">
+                Get A Quote
+                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </Button>
+            <Button 
+              size="xl" 
+              variant="outline"
+              asChild 
+              className="border-liberty-base text-liberty-base hover:bg-liberty-base hover:text-liberty-background"
+            >
+              <Link href="/register-building">
+                Register Your Building
+              </Link>
+            </Button>
           </div>
         </motion.div>
       </div>
