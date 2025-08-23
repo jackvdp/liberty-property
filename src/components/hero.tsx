@@ -56,8 +56,8 @@ export default function Hero() {
                   </Link>
                 </Button>
                 <Button size="xl" variant="outline" asChild className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-liberty-base">
-                  <Link href="/ai-advisor">
-                    Talk to Our AI Advisor
+                  <Link href="/about">
+                    Our Story
                   </Link>
                 </Button>
               </motion.div>
