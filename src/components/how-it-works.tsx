@@ -9,100 +9,47 @@ import { Card, CardContent } from '@/components/ui/card'
 const steps = [
   {
     id: 1,
-    title: "Discover Your Options",
+    title: "Check Your Eligibility",
     icon: Search,
-    description: "Learn about your rights as a leaseholder",
-    details: "Most leaseholders don't know they have powerful legal rights. You can take control through Right to Manage, Collective Enfranchisement, or transition to Commonhold.",
-    timeEstimate: "5 minutes",
-    didYouKnow: "Over 3.6 million leaseholders in the UK don't know about their legal rights to control their buildings.",
+    description: "Quick online assessment to see if you qualify for RTM or freehold purchase",
+    details: "We determine what legal rights and options are open to you. Our simple questionnaire covers your building composition, lease details, and qualifying tenant status. Most buildings with 2+ flats and long leases qualify for some form of action.",
+    timeEstimate: "60 seconds",
+    didYouKnow: "Over 80% of leaseholders qualify for some form of action, but less than 5% ever take it.",
     keyPoints: [
-      "Right to Manage - Take control of building management",
-      "Collective Enfranchisement - Buy your freehold together", 
-      "Commonhold - Own your flat forever with shared management"
+      "Instant eligibility assessment for RTM and freehold purchase",
+      "Building composition and lease length analysis", 
+      "Qualifying tenant status verification",
+      "Clear explanation of your legal rights and options"
     ]
   },
   {
     id: 2,
-    title: "Check Your Eligibility",
-    icon: Calculator,
-    description: "Simple assessment of your building and lease situation",
-    details: "Not every building qualifies, but most do. We'll check your building composition, lease length, and qualifying tenant status using simple questions.",
-    timeEstimate: "10 minutes",
-    didYouKnow: "Over 80% of leaseholders qualify for some form of action, but less than 5% ever take it.",
+    title: "We Do The Legal Work",
+    icon: FileText,
+    description: "Professional handling of all statutory notices, negotiations and paperwork",
+    details: "As Property Institute members, we provide expert guidance you can trust - not amateur advice. We handle all the complex legal procedures, statutory notices, freeholder negotiations, and compliance requirements with fixed-fee pricing.",
+    timeEstimate: "Fixed fee",
+    didYouKnow: "Traditional lawyers charge £15,000-£30,000 per building, but our automated approach reduces costs by 70% while providing robust legal protection.",
     keyPoints: [
-      "Building must have 2+ flats with long leases",
-      "Less than 25% can be commercial space",
-      "You need detailed lease information"
+      "Property Institute accredited professionals handling your case",
+      "All statutory notices and legal documentation managed",
+      "Professional freeholder negotiations on your behalf",
+      "Full legal compliance and procedural framework management"
     ]
   },
   {
     id: 3,
-    title: "Gather Your Neighbors",
-    icon: Users,
-    description: "Build consensus among fellow leaseholders",
-    details: "The biggest barrier isn't legal—it's getting people organized. You need 50%+ participation for collective action, but we help you approach and convince your neighbors.",
-    timeEstimate: "2-4 weeks",
-    didYouKnow: "The biggest barrier to enfranchisement isn't legal complexity—it's getting neighbors to work together.",
+    title: "Choose Your Path",
+    icon: Calculator,
+    description: "Self-manage for maximum savings, or hands-free professional management",
+    details: "We advise what's best for your building and circumstances, with ongoing support. You can take full control and self-manage to maximize your savings, or choose our hands-free management service where we handle everything for you.",
+    timeEstimate: "Your choice",
+    didYouKnow: "You can save thousands annually by self-managing, or enjoy complete peace of mind with professional management - the choice is always yours.",
     keyPoints: [
-      "Need 50%+ participation for collective enfranchisement",
-      "100% needed for commonhold conversion",
-      "We provide templates and guidance for neighbor outreach"
-    ]
-  },
-  {
-    id: 4,
-    title: "Understand the Costs",
-    icon: FileText,
-    description: "Get transparent pricing for your specific situation",
-    details: "Traditional lawyers charge £15,000-£30,000 per building. With our automated approach we can reduce costs by 70% while providing robust legal protection.",
-    timeEstimate: "1 day",
-    didYouKnow: "Technology can reduce legal costs by 70% because these are procedural frameworks, not complex litigation.",
-    keyPoints: [
-      "Traditional legal costs: £15,000-£30,000",
-      "With automation: £3,000-£8,000",
-      "Plus valuation and freeholder costs"
-    ]
-  },
-  {
-    id: 5,
-    title: "Navigate the Legal Process",
-    icon: Building,
-    description: "Handle statutory notices, documentation, and compliance",
-    details: "These are procedural frameworks—perfect for automation. We have done this many times before and so are able to generate the statutory notices, manage timelines, and handle freeholder responses automatically.",
-    timeEstimate: "3-6 months",
-    didYouKnow: "The legal process is mostly procedural paperwork — ideal for automation rather than expensive lawyers.",
-    keyPoints: [
-      "Statutory notices generated automatically",
-      "Timeline management and reminders",
-      "Freeholder negotiation support"
-    ]
-  },
-  {
-    id: 6,
-    title: "Complete the Transfer",
-    icon: Award,
-    description: "Company formation, legal completion, ownership transfer",
-    details: "You're not just buying property—you're joining a community. We handle company formation, legal completion, and set up your new ownership structure.",
-    timeEstimate: "2-4 weeks",
-    didYouKnow: "Once you own your freehold, you become part of an exclusive community with higher property values and lower costs.",
-    keyPoints: [
-      "RTM or freehold company formation",
-      "Legal completion and ownership transfer",
-      "New lease extensions (often 999 years)"
-    ]
-  },
-  {
-    id: 7,
-    title: "Enjoy Your Freedom",
-    icon: Heart,
-    description: "Manage your building, control costs, increase value",
-    details: "Commonhold properties appreciate while leasehold properties depreciate. You now control your building management, eliminate ground rent, and increase your property value.",
-    timeEstimate: "Forever",
-    didYouKnow: "Commonhold properties appreciate in value while leasehold properties with short leases depreciate.",
-    keyPoints: [
-      "No more ground rent payments",
-      "Control over building management",
-      "Increased property values"
+      "Expert advice on the best approach for your specific building",
+      "Self-management option for maximum cost savings",
+      "Hands-free professional management services available",
+      "Ongoing support and guidance regardless of your choice"
     ]
   }
 ]
@@ -183,10 +130,10 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-4">
-            How it <span className="text-liberty-accent">Works</span>
+            We Make It <span className="text-liberty-accent">Simple</span>
           </h2>
           <p className="text-xl sm:text-2xl text-liberty-background/70 max-w-3xl mx-auto">
-            The proven path from frustrated leaseholder to empowered commonholder
+            Three simple steps to take back control of your building and start saving money
           </p>
         </motion.div>
 
@@ -194,7 +141,7 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
           {/* Step Navigation */}
           <div className="space-y-4">
             <h3 className="text-2xl font-reckless font-bold text-liberty-background mb-6">
-              The 7-Step Journey
+              The 3-Step Process
             </h3>
             
             {steps.map((step, index) => (
