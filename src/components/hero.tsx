@@ -135,7 +135,7 @@ export default function Hero() {
                   key={partner.name}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.6 + index * 0.1, ease: "easeOut" }}
+                  transition={{ duration: 0.6, delay: 0.6 + index * 0.2, ease: "easeOut" }}
                   className="relative"
                 >
                   <Link
