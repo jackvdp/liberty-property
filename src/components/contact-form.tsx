@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Download, Mail, Phone, MapPin, User, Building, ArrowRight } from 'lucide-react'
+import { Mail, Phone, MapPin, User, Building, ArrowRight, MessageCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
@@ -19,7 +19,7 @@ export default function ContactForm() {
     e.preventDefault()
     // TODO: Integrate with Formspree
     console.log('Form submitted:', formData)
-    alert('Thank you! We\'ll send you the free guide and be in touch soon.')
+    alert('Thank you! Our expert team will be in touch soon.')
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -31,7 +31,6 @@ export default function ContactForm() {
 
   return (
     <section className="py-16 sm:py-24 lg:py-32 bg-liberty-secondary/40 relative overflow-hidden">
-
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -42,10 +41,10 @@ export default function ContactForm() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold !text-liberty-background mb-4">
-            Join the Property <span className="text-liberty-accent">Freedom Movement</span>
+            Still Got <span className="text-liberty-accent">Questions?</span>
           </h2>
           <p className="text-xl sm:text-2xl !text-liberty-background/70 max-w-3xl mx-auto">
-            Get your free guide to commonhold and take the first step toward true property ownership
+            Speak to our expert team.
           </p>
         </motion.div>
 
@@ -61,18 +60,18 @@ export default function ContactForm() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-liberty-background">
                   <div className="w-12 h-12 bg-liberty-accent/10 rounded-full flex items-center justify-center">
-                    <Download className="w-6 h-6 text-liberty-accent" />
+                    <MessageCircle className="w-6 h-6 text-liberty-accent" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-reckless font-bold">Get Your Free Guide</h3>
+                    <h3 className="text-2xl font-reckless font-bold">Get in Touch</h3>
                     <p className="text-liberty-background/60 font-normal">
-                      "How to Turn Your Leasehold into Commonhold"
+                      We're here to help with your property questions
                     </p>
                   </div>
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
                   {/* Name Field */}
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-liberty-background mb-2">
@@ -154,7 +153,7 @@ export default function ContactForm() {
                   {/* Message Field */}
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-liberty-background mb-2">
-                      Tell us about your situation (optional)
+                      Your Question or Message
                     </label>
                     <textarea
                       id="message"
@@ -163,7 +162,7 @@ export default function ContactForm() {
                       value={formData.message}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-liberty-secondary/30 rounded-lg focus:ring-2 focus:ring-liberty-accent focus:border-liberty-accent transition-colors resize-none"
-                      placeholder="What challenges are you facing with your leasehold property?"
+                      placeholder="Tell us about your situation or ask your question..."
                     />
                   </div>
 
@@ -174,14 +173,14 @@ export default function ContactForm() {
                     className="w-full bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-background"
                   >
                     <span className="flex items-center gap-3 group">
-                      Get Guide & Join the Movement
+                      Send Message
                       <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                     </span>
                   </Button>
 
                   {/* Privacy Notice */}
                   <p className="text-xs text-liberty-background/60 text-center">
-                    By submitting this form, you agree to receive helpful information about commonhold and property rights. 
+                    By submitting this form, you agree to receive helpful information about your property rights. 
                     We never share your data and you can unsubscribe at any time.
                   </p>
                 </form>
@@ -189,7 +188,7 @@ export default function ContactForm() {
             </Card>
           </motion.div>
 
-          {/* Benefits & Info */}
+          {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -197,56 +196,19 @@ export default function ContactForm() {
             viewport={{ once: true }}
             className="space-y-8"
           >
-            {/* What You'll Get */}
+            {/* Direct Contact */}
             <Card className="bg-liberty-base/95 backdrop-blur-sm border-liberty-secondary/20">
-              <CardContent className="p-8">
-                <h3 className="text-2xl font-reckless font-bold !text-liberty-background mb-6">
-                  What You'll Receive
-                </h3>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 bg-liberty-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Download className="w-5 h-5 text-liberty-accent" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold !text-liberty-background mb-1">Free Commonhold Guide</h4>
-                      <p className="text-liberty-background/70 text-sm">
-                        Complete step-by-step guide to understanding and achieving commonhold ownership
-                      </p>
-                    </div>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3 text-liberty-background">
+                  <div className="w-12 h-12 bg-liberty-accent/10 rounded-full flex items-center justify-center">
+                    <Phone className="w-6 h-6 text-liberty-accent" />
                   </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 bg-liberty-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Mail className="w-5 h-5 text-liberty-accent" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold !text-liberty-background mb-1">Weekly Property Freedom Tips</h4>
-                      <p className="text-liberty-background/70 text-sm">
-                        Practical advice, success stories, and legal updates delivered to your inbox
-                      </p>
-                    </div>
+                  <div>
+                    <h3 className="text-2xl font-reckless font-bold">Contact Information</h3>
                   </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 bg-liberty-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Phone className="w-5 h-5 text-liberty-accent" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold !text-liberty-background mb-1">Free Initial Consultation</h4>
-                      <p className="text-liberty-background/70 text-sm">
-                        15-minute call to discuss your specific situation and next steps
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Contact Info */}
-            <Card className="bg-liberty-base/95 backdrop-blur-sm border-liberty-secondary/20">
-              <CardContent className="p-8">
-                <h3 className="text-2xl font-reckless font-bold !text-liberty-background mb-6">
-                  Get in Touch
-                </h3>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
                     <Mail className="w-6 h-6 text-liberty-accent" />
@@ -269,6 +231,42 @@ export default function ContactForm() {
                   <div className="flex items-center gap-4">
                     <MapPin className="w-6 h-6 text-liberty-accent" />
                     <span className="text-liberty-background/70">Serving leaseholders across England & Wales</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Why Choose Us */}
+            <Card className="bg-liberty-base/95 backdrop-blur-sm border-liberty-secondary/20">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3 text-liberty-background">
+                  <div className="w-12 h-12 bg-liberty-accent/10 rounded-full flex items-center justify-center">
+                    <MessageCircle className="w-6 h-6 text-liberty-accent" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-reckless font-bold">Why Choose Liberty Bell?</h3>
+                  </div>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-liberty-accent rounded-full mt-2 flex-shrink-0"></div>
+                    <p className="text-liberty-background/70 text-sm">
+                      <strong className="text-liberty-background">Property Institute accredited</strong> professionals
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-liberty-accent rounded-full mt-2 flex-shrink-0"></div>
+                    <p className="text-liberty-background/70 text-sm">
+                      <strong className="text-liberty-background">Fixed-fee pricing</strong> with no hidden costs
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-liberty-accent rounded-full mt-2 flex-shrink-0"></div>
+                    <p className="text-liberty-background/70 text-sm">
+                      <strong className="text-liberty-background">We're leaseholders too</strong> - we understand your frustration
+                    </p>
                   </div>
                 </div>
               </CardContent>
