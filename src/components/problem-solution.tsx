@@ -82,7 +82,7 @@ export default function ProblemSolution() {
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
               The Leasehold System<br/> <span className="text-red-600">is Broken</span>
             </h2>
-            <p className="text-lg text-liberty-background/80 max-w-4xl mx-auto">
+            <p className="text-lg text-liberty-background/70 max-w-4xl mx-auto">
               Millions of leaseholders across England & Wales are facing the same frustrating issues you're experiencing every day. From escalating service charges to poor management and feeling powerless in your own home, the current system is fundamentally unfair.
             </p>
           </motion.div>
@@ -174,7 +174,7 @@ export default function ProblemSolution() {
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
               We Built the Solution<br/> <span className="text-liberty-accent">You Need</span>
             </h2>
-            <p className="text-lg text-liberty-background/80 max-w-4xl mx-auto">
+            <p className="text-lg text-liberty-background/70 max-w-4xl mx-auto">
               Drawing from our own experience as leaseholders, we've created a comprehensive solution. Supported by leading organizations like the Property Institute and powered by AI technology, we deliver the benefits you deserve.
             </p>
           </motion.div>
