@@ -155,6 +155,14 @@ export default function ProblemSolution() {
                     </div>
                     <p className="text-liberty-background/70 leading-relaxed">
                       {step.description}
+                      {index === 0 && (
+                        <>
+                          {' '}
+                          <Link href="/what-is-rtm" className="text-liberty-primary hover:text-liberty-primary/80 underline text-sm">
+                            What is RTM?
+                          </Link>
+                        </>
+                      )}
                     </p>
                   </div>
                 </motion.div>
