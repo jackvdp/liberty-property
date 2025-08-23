@@ -129,7 +129,7 @@ export default function Hero() {
             <p className="text-sm text-liberty-background/60 mb-4 text-center">
               Trusted by leading institutions and professional bodies
             </p>
-            <div className="flex items-center justify-center gap-8 lg:gap-12 flex-wrap">
+            <div className="flex items-center justify-center gap-8 lg:gap-24 flex-wrap">
               {partners.map((partner, index) => (
                 <motion.div
                   key={partner.name}
@@ -148,10 +148,7 @@ export default function Hero() {
                       src={partner.image}
                       alt={partner.alt}
                       fill
-                      className="object-contain transition-all duration-300 group-hover:scale-105"
-                      style={{
-                        filter: 'brightness(0) saturate(100%) invert(33%) sepia(45%) saturate(1000%) hue-rotate(196deg) brightness(95%) contrast(85%)'
-                      }}
+                      className="object-contain transition-all duration-300 group-hover:scale-105 filter grayscale brightness-0 opacity-75 group-hover:grayscale-0 group-hover:brightness-100 group-hover:opacity-100"
                     />
                   </Link>
                 </motion.div>
