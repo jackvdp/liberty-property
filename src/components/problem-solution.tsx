@@ -172,7 +172,7 @@ export default function ProblemSolution() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
-              We Built the Solution<br/> <span className="text-liberty-accent">You Need</span>
+              We Built the <span className="text-liberty-accent">Solution</span>
             </h2>
             <p className="text-lg text-liberty-background/70 max-w-4xl mx-auto">
               Drawing from our own experience as leaseholders, we've created a comprehensive solution. Supported by leading organizations like the Property Institute and powered by AI technology, we deliver the benefits you deserve.
