@@ -1,8 +1,9 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Users, Calculator, FileText, Building, Award, Heart, ChevronRight, Lightbulb } from 'lucide-react'
+import { Search, Users, Calculator, FileText, Building, Award, Heart, ChevronRight, Lightbulb, ExternalLink } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 
@@ -12,44 +13,44 @@ const steps = [
     title: "Check Your Eligibility",
     icon: Search,
     description: "Quick online assessment to see if you qualify for RTM or freehold purchase",
-    details: "We determine what legal rights and options are open to you. Our simple questionnaire covers your building composition, lease details, and qualifying tenant status. Most buildings with 2+ flats and long leases qualify for some form of action.",
-    timeEstimate: "60 seconds",
-    didYouKnow: "Over 80% of leaseholders qualify for some form of action, but less than 5% ever take it.",
+    details: "We determine what legal rights and options are open to you. Our simple questionnaire covers your building composition, lease details, and qualifying tenant status. Most buildings with 2+ flats and long leases qualify for some form of action - either Right to Manage or Collective Enfranchisement.",
+    timeEstimate: "2 minutes",
+    didYouKnow: "Over 80% of leaseholders qualify for some form of action, but most don't know their rights exist.",
     keyPoints: [
-      "Instant eligibility assessment for RTM and freehold purchase",
-      "Building composition and lease length analysis", 
-      "Qualifying tenant status verification",
-      "Clear explanation of your legal rights and options"
+      "Instant assessment for Right to Manage eligibility",
+      "Check if you qualify for Collective Enfranchisement", 
+      "Building composition and lease length analysis",
+      "Clear explanation of your legal options"
     ]
   },
   {
     id: 2,
     title: "We Do The Legal Work",
     icon: FileText,
-    description: "Professional handling of all statutory notices, negotiations and paperwork",
-    details: "As Property Institute members, we provide expert guidance you can trust - not amateur advice. We handle all the complex legal procedures, statutory notices, freeholder negotiations, and compliance requirements with fixed-fee pricing.",
+    description: "Professional handling of all statutory notices, negotiations and paperwork - for a fixed fee",
+    details: "As Property Institute accredited professionals, we provide expert guidance you can trust. We handle all the complex legal procedures, statutory notices, freeholder negotiations, and compliance requirements. We're not lawyers, but we are professionals who specialize in these procedural frameworks.",
     timeEstimate: "Fixed fee",
-    didYouKnow: "Traditional lawyers charge £15,000-£30,000 per building, but our automated approach reduces costs by 70% while providing robust legal protection.",
+    didYouKnow: "These are largely procedural frameworks - perfect for professional automation rather than expensive legal fees.",
     keyPoints: [
-      "Property Institute accredited professionals handling your case",
-      "All statutory notices and legal documentation managed",
-      "Professional freeholder negotiations on your behalf",
-      "Full legal compliance and procedural framework management"
+      "Property Institute accredited team handling your case",
+      "All statutory notices and documentation managed professionally",
+      "Fixed-fee pricing - no hourly lawyer charges",
+      "We help every step of the way with expert guidance"
     ]
   },
   {
     id: 3,
-    title: "Choose Your Path",
+    title: "Choose Your Management Path",
     icon: Calculator,
     description: "Self-manage for maximum savings, or hands-free professional management",
-    details: "We advise what's best for your building and circumstances, with ongoing support. You can take full control and self-manage to maximize your savings, or choose our hands-free management service where we handle everything for you.",
+    details: "We advise what's best for your building and circumstances. You have choices: take full control and self-manage to maximize savings, or let us handle everything with our professional management service. We help you understand the options and support whatever path works best for your situation.",
     timeEstimate: "Your choice",
-    didYouKnow: "You can save thousands annually by self-managing, or enjoy complete peace of mind with professional management - the choice is always yours.",
+    didYouKnow: "You can save thousands annually by self-managing, or enjoy complete peace of mind with professional management - we advise on what works best for your building.",
     keyPoints: [
-      "Expert advice on the best approach for your specific building",
-      "Self-management option for maximum cost savings",
-      "Hands-free professional management services available",
-      "Ongoing support and guidance regardless of your choice"
+      "Expert advice on the best approach for your specific situation",
+      "Self-management option for maximum cost control and savings",
+      "Hands-free professional management if you prefer no hassle",
+      "Ongoing support and guidance regardless of your chosen path"
     ]
   }
 ]
@@ -132,7 +133,7 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-4">
             We Make It <span className="text-liberty-accent">Simple</span>
           </h2>
-          <p className="text-xl sm:text-2xl text-liberty-background/70 max-w-3xl mx-auto">
+          <p className="text-lg text-liberty-background/70 max-w-3xl mx-auto">
             Three simple steps to take back control of your building and start saving money
           </p>
         </motion.div>
@@ -229,7 +230,26 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
                               {step.keyPoints.map((point, pointIndex) => (
                                 <li key={pointIndex} className="flex items-start gap-3">
                                   <div className="w-2 h-2 bg-liberty-accent rounded-full mt-2 flex-shrink-0"></div>
-                                  <span className="text-liberty-background/70">{point}</span>
+                                  <span className="text-liberty-background/70">
+                                    {point.includes('Right to Manage') ? (
+                                      <>
+                                        Instant assessment for{' '}
+                                        <Link href="/what-is-rtm" className="text-liberty-primary hover:text-liberty-primary/80 underline">
+                                          Right to Manage
+                                        </Link>{' '}
+                                        eligibility
+                                      </>
+                                    ) : point.includes('Collective Enfranchisement') ? (
+                                      <>
+                                        Check if you qualify for{' '}
+                                        <Link href="/collective-enfranchisement" className="text-liberty-primary hover:text-liberty-primary/80 underline">
+                                          Collective Enfranchisement
+                                        </Link>
+                                      </>
+                                    ) : (
+                                      point
+                                    )}
+                                  </span>
                                 </li>
                               ))}
                             </ul>
@@ -301,7 +321,26 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
                         {currentStep.keyPoints.map((point, index) => (
                           <li key={index} className="flex items-start gap-3">
                             <div className="w-2 h-2 bg-liberty-accent rounded-full mt-2 flex-shrink-0"></div>
-                            <span className="text-liberty-background/70">{point}</span>
+                            <span className="text-liberty-background/70">
+                              {point.includes('Right to Manage') ? (
+                                <>
+                                  Instant assessment for{' '}
+                                  <Link href="/what-is-rtm" className="text-liberty-primary hover:text-liberty-primary/80 underline">
+                                    Right to Manage
+                                  </Link>{' '}
+                                  eligibility
+                                </>
+                              ) : point.includes('Collective Enfranchisement') ? (
+                                <>
+                                  Check if you qualify for{' '}
+                                  <Link href="/collective-enfranchisement" className="text-liberty-primary hover:text-liberty-primary/80 underline">
+                                    Collective Enfranchisement
+                                  </Link>
+                                </>
+                              ) : (
+                                point
+                              )}
+                            </span>
                           </li>
                         ))}
                       </ul>
@@ -348,9 +387,12 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
               </p>
               <Button 
                 size="xl" 
+                asChild
                 className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-background"
               >
-                Check Your Eligibility Now
+                <Link href="/eligibility-check">
+                  Check Your Eligibility Now
+                </Link>
               </Button>
             </CardContent>
           </Card>
