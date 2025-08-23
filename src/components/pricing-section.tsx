@@ -73,14 +73,20 @@ export default function PricingSection() {
         </motion.div>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="grid md:grid-cols-3 gap-8 mb-16"
+        >
           {pricingItems.map((item, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
-              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-50px" }}
             >
               <Card className="h-full bg-liberty-accent/5 border-liberty-accent/20 hover:border-liberty-accent/40 transition-colors duration-300">
                 <CardContent className="p-8 text-center">
@@ -100,7 +106,7 @@ export default function PricingSection() {
               </Card>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* CTA Section - Simplified */}
         <motion.div
