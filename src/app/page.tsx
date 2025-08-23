@@ -6,6 +6,7 @@ import FAQSection from '@/components/faq-section'
 import ContactForm from '@/components/contact-form'
 import Footer from '@/components/footer'
 import HowItWorks from "@/components/how-it-works";
+import WhyLibertyBell from "@/components/why-liberty-bell";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
         <ProblemSolution />
         <HowItWorks />
         <PricingSection />
+        <WhyLibertyBell />
         <FAQSection />
         <ContactForm />
         <Footer />
