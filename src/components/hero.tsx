@@ -57,8 +57,8 @@ export default function Hero() {
                 transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
                 className="text-4xl lg:text-5xl xl:text-6xl font-reckless font-bold text-liberty-background mb-6 leading-tight"
               >
-                Take Back Control of Your{' '}
-                <span className="text-liberty-accent">Building</span>
+                Take Back Control of{' '}
+                <span className="text-liberty-accent">Your Building</span>
               </motion.h1>
               
               <motion.p 
