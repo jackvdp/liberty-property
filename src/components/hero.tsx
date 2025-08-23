@@ -39,10 +39,16 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="inline-flex items-center gap-2 bg-liberty-accent/10 text-liberty-accent px-4 py-2 rounded-full text-sm font-medium mb-6 border border-liberty-accent/20"
               >
-                <CheckCircle size={16} />
+                <Link
+                  href="https://www.tpi.org.uk/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-liberty-accent/10 text-liberty-accent px-4 py-2 rounded-full text-sm font-medium mb-6 border border-liberty-accent/20 hover:bg-liberty-accent/20 hover:scale-105 transition-all duration-300"
+                >
+                  <CheckCircle size={16} />
                   <strong>The Property Institute Accredited</strong>
+                </Link>
               </motion.div>
 
               <motion.h1 
