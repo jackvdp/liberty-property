@@ -140,7 +140,7 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Step Navigation */}
-          <div className="space-y-4">
+          <div className="space-y-4 lg:h-screen">
             <h3 className="text-2xl font-reckless font-bold text-liberty-background mb-6">
               The 3-Step Process
             </h3>
