@@ -71,19 +71,35 @@ export default function ProblemSolution() {
         
         {/* Problems Section */}
         <div className="mb-20">
+          {/* Title and intro - Full width */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
+              The Leasehold System<br/> <span className="text-red-600">is Broken</span>
+            </h2>
+            <p className="text-lg text-liberty-background/80 max-w-4xl mx-auto">
+              Millions of leaseholders across England & Wales are facing the same frustrating issues you're experiencing every day. From escalating service charges to poor management and feeling powerless in your own home, the current system is fundamentally unfair.
+            </p>
+          </motion.div>
+
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Problems */}
             <div>
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
                 viewport={{ once: true }}
-                className="mb-8"
+                className="mb-6"
               >
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
-                  The Leasehold System<br/> <span className="text-red-600">is Broken</span>
-                </h2>
+                <p className="text-xl font-semibold text-liberty-background mb-4">
+                  The Problems You Face:
+                </p>
               </motion.div>
 
               <div className="space-y-4">
@@ -133,7 +149,7 @@ export default function ProblemSolution() {
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="relative h-[500px] rounded-xl overflow-hidden shadow-xl">
+              <div className="relative h-[400px] rounded-xl overflow-hidden shadow-xl">
                 <Image
                   src="/couple-pain.jpeg"
                   alt="Frustrated couple dealing with leasehold problems in their home"
@@ -148,6 +164,22 @@ export default function ProblemSolution() {
 
         {/* Solution Section */}
         <div className="mb-20">
+          {/* Title and intro - Full width */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
+              We Built the Solution<br/> <span className="text-liberty-accent">You Need</span>
+            </h2>
+            <p className="text-lg text-liberty-background/80 max-w-4xl mx-auto">
+              Drawing from our own experience as leaseholders, we've created a comprehensive solution. Supported by leading organizations like the Property Institute and powered by AI technology, we deliver the benefits you deserve.
+            </p>
+          </motion.div>
+
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Image */}
             <motion.div
@@ -157,7 +189,7 @@ export default function ProblemSolution() {
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="relative h-[500px] rounded-xl overflow-hidden shadow-xl">
+              <div className="relative h-[400px] rounded-xl overflow-hidden shadow-xl">
                 <Image
                   src="/family-home.jpeg"
                   alt="Happy family enjoying control of their property after successful enfranchisement"
@@ -186,15 +218,15 @@ export default function ProblemSolution() {
             {/* Right: Benefits */}
             <div>
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
                 viewport={{ once: true }}
-                className="mb-8"
+                className="mb-6"
               >
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
-                  We Built the Solution<br/> <span className="text-liberty-accent">You Need</span>
-                </h2>
+                <p className="text-xl font-semibold text-liberty-background mb-4">
+                  Our Service Benefits:
+                </p>
               </motion.div>
 
               <div className="space-y-4">
@@ -224,26 +256,6 @@ export default function ProblemSolution() {
             </div>
           </div>
         </div>
-
-        {/* Government Recognition Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true }}
-          className="bg-liberty-secondary/30 border border-liberty-secondary/50 rounded-lg p-6 text-center mb-12"
-        >
-          <p className="text-liberty-background/80 mb-4">
-            <strong>Even the Government recognises the system needs to change. </strong>
-            The time to act is now - take control before new regulations make the process more complex.
-          </p>
-          <Button variant="outline" size="sm" asChild className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-liberty-base">
-            <Link href="https://commonslibrary.parliament.uk/leasehold-reform-in-england-and-wales/" target="_blank" className="flex items-center gap-2">
-              Read Government Plans
-              <ExternalLink size={16} />
-            </Link>
-          </Button>
-        </motion.div>
 
         {/* CTA Button */}
         <motion.div
