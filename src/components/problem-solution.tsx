@@ -126,19 +126,6 @@ export default function ProblemSolution() {
                   </motion.div>
                 ))}
               </div>
-
-              {/* Quote */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-                viewport={{ once: true }}
-                className="mt-8 p-6 bg-red-50 border-l-4 border-red-400 rounded-r-lg"
-              >
-                <p className="text-liberty-background italic text-lg">
-                  "Even when you're unhappy, you're stuck paying whatever they charge."
-                </p>
-              </motion.div>
             </div>
 
             {/* Right: Image */}
@@ -156,7 +143,19 @@ export default function ProblemSolution() {
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                
+                {/* Quote overlay */}
+                <div className="absolute bottom-4 left-4 right-4 bg-liberty-base/95 backdrop-blur-sm p-4 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <AlertTriangle className="text-red-600 w-6 h-6" />
+                    <div>
+                      <p className="text-liberty-background italic text-sm font-medium">
+                        "Even when you're unhappy, you're stuck paying whatever they charge."
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </div>
