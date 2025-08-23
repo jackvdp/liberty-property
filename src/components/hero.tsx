@@ -6,6 +6,27 @@ import { ArrowRight, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
 
+const partners = [
+  {
+    name: 'Property Institute',
+    image: '/partners/property-institute.png',
+    alt: 'Property Institute - Professional accreditation',
+    url: 'https://www.tpi.org.uk/'
+  },
+  {
+    name: 'Santander',
+    image: '/partners/santander.png',
+    alt: 'Santander - Trusted financial partner',
+    url: 'https://www.santander.co.uk/'
+  },
+  {
+    name: 'MHLCG',
+    image: '/partners/mhlcg.png',
+    alt: 'Ministry of Housing, Communities & Local Government',
+    url: 'https://www.gov.uk/government/organisations/ministry-of-housing-communities-local-government'
+  }
+]
+
 export default function Hero() {
   return (
     <section className="h-[calc(100vh-64px)] bg-liberty-base relative overflow-hidden flex flex-col">
@@ -105,51 +126,36 @@ export default function Hero() {
       >
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center">
-            <p className="text-sm text-liberty-background/60 mb-8 text-center">
+            <p className="text-sm text-liberty-background/60 mb-4 text-center">
               Trusted by leading institutions and professional bodies
             </p>
-            <div className="flex items-center justify-center gap-8 lg:gap-32 flex-wrap">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
-                className="relative h-8 w-24 sm:h-10 sm:w-32 opacity-60 hover:opacity-80 transition-opacity duration-300"
-              >
-                <Image
-                  src="/partners/property-institute.png"
-                  alt="Property Institute - Professional accreditation"
-                  fill
-                  className="object-contain filter grayscale"
-                />
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.7, ease: "easeOut" }}
-                className="relative h-8 w-24 sm:h-10 sm:w-32 opacity-60 hover:opacity-80 transition-opacity duration-300"
-              >
-                <Image
-                  src="/partners/santander.png"
-                  alt="Santander - Trusted financial partner"
-                  fill
-                  className="object-contain filter grayscale"
-                />
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
-                className="relative h-8 w-24 sm:h-10 sm:w-32 opacity-60 hover:opacity-80 transition-opacity duration-300"
-              >
-                <Image
-                  src="/partners/mhlcg.png"
-                  alt="MHLCG - Professional services partner"
-                  fill
-                  className="object-contain filter grayscale"
-                />
-              </motion.div>
+            <div className="flex items-center justify-center gap-8 lg:gap-12 flex-wrap">
+              {partners.map((partner, index) => (
+                <motion.div
+                  key={partner.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.6 + index * 0.1, ease: "easeOut" }}
+                  className="relative"
+                >
+                  <Link
+                    href={partner.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block relative h-8 w-24 sm:h-10 sm:w-32 group transition-all duration-300"
+                  >
+                    <Image
+                      src={partner.image}
+                      alt={partner.alt}
+                      fill
+                      className="object-contain transition-all duration-300 group-hover:scale-105"
+                      style={{
+                        filter: 'brightness(0) saturate(100%) invert(33%) sepia(45%) saturate(1000%) hue-rotate(196deg) brightness(95%) contrast(85%)'
+                      }}
+                    />
+                  </Link>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
