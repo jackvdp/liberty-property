@@ -8,11 +8,11 @@ import { motion } from 'framer-motion'
 
 export default function Hero() {
   return (
-    <section className="h-[calc(100vh-64px)] bg-liberty-base relative overflow-hidden">
-      <div className="h-full flex">
+    <section className="h-[calc(100vh-64px)] bg-liberty-base relative overflow-hidden flex flex-col">
+      <div className="flex-1 flex">
         {/* Left Content - Text extending into diagonal white space */}
         <div className="w-full lg:w-1/2 flex items-center relative z-10">
-          <div className="w-full max-w-xl ml-auto pr-4 pl-8 sm:pl-12 lg:pl-16 py-16 mb-16">
+          <div className="w-full max-w-xl ml-auto pr-4 pl-8 sm:pl-12 lg:pl-16 py-16">
               {/* Success Badge */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -95,6 +95,65 @@ export default function Hero() {
           </motion.div>
         </div>
       </div>
+
+      {/* Social Proof - Partners */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+        className="relative z-10 bg-liberty-base/95 backdrop-blur-sm border-t border-liberty-secondary/30 px-4 sm:px-6 lg:px-8 py-6"
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col items-center">
+            <p className="text-sm text-liberty-background/60 mb-8 text-center">
+              Trusted by leading institutions and professional bodies
+            </p>
+            <div className="flex items-center justify-center gap-8 lg:gap-32 flex-wrap">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+                className="relative h-8 w-24 sm:h-10 sm:w-32 opacity-60 hover:opacity-80 transition-opacity duration-300"
+              >
+                <Image
+                  src="/partners/property-institute.png"
+                  alt="Property Institute - Professional accreditation"
+                  fill
+                  className="object-contain filter grayscale"
+                />
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.7, ease: "easeOut" }}
+                className="relative h-8 w-24 sm:h-10 sm:w-32 opacity-60 hover:opacity-80 transition-opacity duration-300"
+              >
+                <Image
+                  src="/partners/santander.png"
+                  alt="Santander - Trusted financial partner"
+                  fill
+                  className="object-contain filter grayscale"
+                />
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
+                className="relative h-8 w-24 sm:h-10 sm:w-32 opacity-60 hover:opacity-80 transition-opacity duration-300"
+              >
+                <Image
+                  src="/partners/mhlcg.png"
+                  alt="MHLCG - Professional services partner"
+                  fill
+                  className="object-contain filter grayscale"
+                />
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
     </section>
   )
 }
