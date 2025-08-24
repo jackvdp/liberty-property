@@ -183,7 +183,7 @@ export default function ProblemSolution() {
               We Have the <span className="text-liberty-accent">Solution</span>
             </h2>
             <p className="text-lg text-liberty-background/70 max-w-4xl mx-auto">
-              Drawing from our own experience as leaseholders, we provide a comprehensive solution. Supported by leading organisations like the Property Institute and powered by AI technology, we deliver the benefits you deserve.
+              Drawing from our own experience as leaseholders, we provide the solution. As a Property Institute Accredited organisation, we support you on your path to control whether that is Right to Manage or Collective Enfranchisement.
             </p>
           </motion.div>
 
