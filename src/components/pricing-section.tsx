@@ -3,9 +3,7 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { 
-  PoundSterling, 
-  CheckCircle,
-  Calculator,
+  PoundSterling,
   Building,
   Users,
   ArrowRight
