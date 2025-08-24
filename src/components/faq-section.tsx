@@ -94,7 +94,7 @@ const faqs = [
     category: 'process',
     question: "What happens if some neighbors change their minds halfway through?",
     answer: "This is why we secure commitments early and use legally binding agreements. If you drop below 50% participation, you may need to restart. We help manage group dynamics and have strategies to maintain commitment throughout the process.",
-    educationalNote: "Group organization is often the biggest challenge - more than the legal complexity."
+    educationalNote: "Group organisation is often the biggest challenge - more than the legal complexity."
   },
   {
     category: 'legal',
@@ -137,7 +137,7 @@ export default function FAQSection() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-4">
             Your Questions <span className="text-liberty-accent">Answered</span>
           </h2>
-          <p className="text-xl sm:text-2xl text-liberty-background/70 max-w-3xl mx-auto">
+          <p className="text-xl text-liberty-background/70 max-w-3xl mx-auto">
             Everything you need to know about transforming from leaseholder to commonholder
           </p>
         </motion.div>

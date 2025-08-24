@@ -4,13 +4,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { 
-  MessageCircleX, 
-  CreditCard, 
+  MessageCircleX,
   Wrench, 
   AlertTriangle, 
   CheckCircle, 
   ArrowRight,
-  ExternalLink,
   PoundSterling,
   TrendingUp,
   Shield,
@@ -43,24 +41,45 @@ const problems = [
 
 const benefits = [
   {
-    icon: PoundSterling,
-    title: "Eliminate Ground Rent",
-    description: "Stop paying for nothing and keep that money in your pocket"
-  },
-  {
-    icon: TrendingUp,
-    title: "Increase Property Value", 
-    description: "Commonhold properties appreciate, leasehold properties depreciate"
-  },
-  {
     icon: Shield,
-    title: "Choose Your Management",
-    description: "Pick managing agents who work for you, not against you"
+    title: "Select Your Path to Control",
+    description: (
+      <div className="space-y-2">
+        <p className="text-liberty-background/70 text-sm leading-relaxed mb-3">
+          We'll help you choose the right approach for your building and situation:
+        </p>
+        <div className="space-y-1">
+          <Link 
+            href="/what-is-rtm" 
+            className="block text-liberty-primary hover:text-liberty-primary/80 text-sm font-medium underline"
+          >
+            Right to Manage (RTM)
+          </Link>
+          <Link 
+            href="/collective-enfranchisement" 
+            className="block text-liberty-primary hover:text-liberty-primary/80 text-sm font-medium underline"
+          >
+            Collective Enfranchisement
+          </Link>
+          <Link 
+            href="/commonhold" 
+            className="block text-liberty-primary hover:text-liberty-primary/80 text-sm font-medium underline"
+          >
+            Commonhold Conversion
+          </Link>
+        </div>
+      </div>
+    )
+  },
+  {
+    icon: PoundSterling,
+    title: "Eliminate Ground Rent & Increase Property Value",
+    description: "Stop paying for nothing, keep that money in your pocket, and watch your property appreciate as commonhold properties outperform leasehold"
   },
   {
     icon: Users,
-    title: "Join a Community",
-    description: "Connect with other empowered property owners"
+    title: "Choose Your Management",
+    description: "Pick managing agents who work for you, not against you, and join a community of empowered property owners"
   }
 ]
 
@@ -90,17 +109,6 @@ export default function ProblemSolution() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Problems */}
             <div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                viewport={{ once: true }}
-                className="mb-6"
-              >
-                <p className="text-xl font-semibold text-liberty-background mb-4">
-                  The Problems You Face:
-                </p>
-              </motion.div>
 
               <div className="space-y-4">
                 {problems.map((problem, index) => (
@@ -172,10 +180,10 @@ export default function ProblemSolution() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
-              We Built the <span className="text-liberty-accent">Solution</span>
+              We Have the <span className="text-liberty-accent">Solution</span>
             </h2>
             <p className="text-lg text-liberty-background/70 max-w-4xl mx-auto">
-              Drawing from our own experience as leaseholders, we've created a comprehensive solution. Supported by leading organizations like the Property Institute and powered by AI technology, we deliver the benefits you deserve.
+              Drawing from our own experience as leaseholders, we provide a comprehensive solution. Supported by leading organisations like the Property Institute and powered by AI technology, we deliver the benefits you deserve.
             </p>
           </motion.div>
 
@@ -216,18 +224,6 @@ export default function ProblemSolution() {
 
             {/* Right: Benefits */}
             <div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                viewport={{ once: true }}
-                className="mb-6"
-              >
-                <p className="text-xl font-semibold text-liberty-background mb-4">
-                  Our Service Benefits:
-                </p>
-              </motion.div>
-
               <div className="space-y-4">
                 {benefits.map((benefit, index) => (
                   <motion.div
@@ -245,9 +241,13 @@ export default function ProblemSolution() {
                       <h3 className="font-semibold text-liberty-background mb-1 text-sm">
                         {benefit.title}
                       </h3>
-                      <p className="text-liberty-background/70 text-sm leading-relaxed">
-                        {benefit.description}
-                      </p>
+                      <div className="text-liberty-background/70 text-sm leading-relaxed">
+                        {typeof benefit.description === 'string' ? (
+                          <p>{benefit.description}</p>
+                        ) : (
+                          benefit.description
+                        )}
+                      </div>
                     </div>
                   </motion.div>
                 ))}

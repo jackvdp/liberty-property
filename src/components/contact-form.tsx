@@ -43,8 +43,8 @@ export default function ContactForm() {
           <h2 className="text-4xl lg:text-5xl font-reckless font-bold !text-liberty-background mb-4">
             Still Got <span className="text-liberty-accent">Questions?</span>
           </h2>
-          <p className="text-xl !text-liberty-background/60">
-            Speak to our expert team.
+          <p className="text-xl !text-liberty-background/60 max-w-2xl mx-auto">
+            Whether you've got more questions or are ready to take the first step to control your building, talk to our expert team.
           </p>
         </motion.div>
 
