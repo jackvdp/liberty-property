@@ -42,33 +42,21 @@ const benefits = [
   {
     icon: Shield,
     title: "Select Your Path to Control",
-    description: (
-      <div className="space-y-2">
-        <p className="text-liberty-background/70 text-sm leading-relaxed mb-3">
-          We'll help you choose the right approach for your building and situation:
-        </p>
-        <div className="space-y-1">
-          <Link 
-            href="/what-is-rtm" 
-            className="block text-liberty-primary hover:text-liberty-primary/80 text-sm font-medium underline"
-          >
-            Right to Manage (RTM)
-          </Link>
-          <Link 
-            href="/collective-enfranchisement" 
-            className="block text-liberty-primary hover:text-liberty-primary/80 text-sm font-medium underline"
-          >
-            Collective Enfranchisement
-          </Link>
-          <Link 
-            href="/commonhold" 
-            className="block text-liberty-primary hover:text-liberty-primary/80 text-sm font-medium underline"
-          >
-            Commonhold Conversion
-          </Link>
-        </div>
-      </div>
-    )
+    description: "We'll help you choose the right approach for your building and situation:",
+    links: [
+      {
+        text: "Right to Manage (RTM)",
+        href: "/what-is-rtm"
+      },
+      {
+        text: "Collective Enfranchisement", 
+        href: "/collective-enfranchisement"
+      },
+      {
+        text: "Commonhold Conversion",
+        href: "/commonhold"
+      }
+    ]
   },
   {
     icon: PoundSterling,
@@ -77,7 +65,7 @@ const benefits = [
   },
   {
     icon: Users,
-    title: "Choose Your Management",
+    title: "Choose Your Management", 
     description: "Pick managing agents who work for you, not against you, and join a community of empowered property owners"
   }
 ]
@@ -241,10 +229,21 @@ export default function ProblemSolution() {
                         {benefit.title}
                       </h3>
                       <div className="text-liberty-background/70 text-sm leading-relaxed">
-                        {typeof benefit.description === 'string' ? (
-                          <p>{benefit.description}</p>
-                        ) : (
-                          benefit.description
+                        {benefit.description && (
+                          <p className="mb-3">{benefit.description}</p>
+                        )}
+                        {benefit.links && (
+                          <div className="space-y-1">
+                            {benefit.links.map((link, linkIndex) => (
+                              <Link 
+                                key={linkIndex}
+                                href={link.href}
+                                className="block text-liberty-primary hover:text-liberty-primary/80 text-sm font-medium underline"
+                              >
+                                {link.text}
+                              </Link>
+                            ))}
+                          </div>
                         )}
                       </div>
                     </div>
