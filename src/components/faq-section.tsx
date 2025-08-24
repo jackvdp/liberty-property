@@ -6,6 +6,13 @@ import { ChevronDown, HelpCircle, Clock, PoundSterling, Scale, AlertCircle } fro
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
+const faqContent = {
+  header: {
+    title: "Your Questions Answered",
+    subtitle: "Everything you need to know about transforming from leaseholder to commonholder"
+  }
+}
+
 const faqCategories = [
   {
     id: 'basics',
@@ -135,10 +142,10 @@ export default function FAQSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-4">
-            Your Questions <span className="text-liberty-accent">Answered</span>
+            {faqContent.header.title.split(' ').slice(0, 2).join(' ')} <span className="text-liberty-accent">{faqContent.header.title.split(' ').slice(2).join(' ')}</span>
           </h2>
           <p className="text-xl text-liberty-background/70 max-w-3xl mx-auto">
-            Everything you need to know about transforming from leaseholder to commonholder
+            {faqContent.header.subtitle}
           </p>
         </motion.div>
 

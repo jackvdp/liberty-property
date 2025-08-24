@@ -5,6 +5,23 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 
+const whyLibertyBellContent = {
+  title: "Why Liberty Bell?",
+  messages: [
+    "We're leaseholders too. We've been through this.",
+    "We've felt powerless, overcharged, and ignored.",
+    "Now we've built the tools to change that, for everyone."
+  ],
+  cta: {
+    text: "Our Story",
+    link: "/about"
+  },
+  image: {
+    src: "/couple-happy.jpeg",
+    alt: "Happy couple celebrating their property ownership success"
+  }
+}
+
 export default function WhyLibertyBell() {
   return (
     <section className="pt-16 sm:pt-24 lg:pt-32 bg-liberty-secondary/10">
@@ -18,8 +35,8 @@ export default function WhyLibertyBell() {
         >
           <div className="relative h-[300px] lg:h-[500px]">
             <Image
-              src="/couple-happy.jpeg"
-              alt="Happy couple celebrating their property ownership success"
+              src={whyLibertyBellContent.image.src}
+              alt={whyLibertyBellContent.image.alt}
               fill
               className="object-cover"
             />
@@ -29,12 +46,12 @@ export default function WhyLibertyBell() {
             <div className="absolute inset-0 flex items-center">
               <div className="max-w-2xl px-8 lg:px-16">
                 <h2 className="text-3xl lg:text-4xl font-reckless font-bold !text-white mb-4 leading-tight">
-                  Why Liberty Bell?
+                  {whyLibertyBellContent.title}
                 </h2>
                 <div className="space-y-2 text-white/90 text-base lg:text-lg mb-6 tex-bold">
-                  <p>We're leaseholders too. We've been through this.</p>
-                  <p>We've felt powerless, overcharged, and ignored.</p>
-                  <p>Now we've built the tools to change that, for everyone.</p>
+                  {whyLibertyBellContent.messages.map((message, index) => (
+                    <p key={index}>{message}</p>
+                  ))}
                 </div>
                 <Button 
                   size="lg" 
@@ -42,8 +59,8 @@ export default function WhyLibertyBell() {
                   asChild 
                   className="border-white text-white hover:bg-white hover:text-liberty-background"
                 >
-                  <Link href="/about">
-                    Our Story
+                  <Link href={whyLibertyBellContent.cta.link}>
+                    {whyLibertyBellContent.cta.text}
                   </Link>
                 </Button>
               </div>

@@ -11,6 +11,21 @@ import {
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 
+const pricingContent = {
+  header: {
+    title: "No Surprises, No Hidden Costs",
+    subtitle: "Transparent, fixed-fee pricing with our savings-based model"
+  },
+  savingsModel: {
+    strongText: "You pay the upfront fee to help you get control. We take a cut of the savings.",
+    description: "The upfront fee covers all the legal work and processes. Our revenue comes from the savings we create for you through better management."
+  },
+  cta: {
+    primaryButton: "Get A Quote",
+    secondaryButton: "Register Your Building"
+  }
+}
+
 const pricingItems = [
   {
     icon: Building,
@@ -46,10 +61,10 @@ export default function PricingSection() {
           className="text-center mb-8"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold !text-liberty-base mb-6">
-            No Surprises, <span className="text-liberty-accent">No Hidden Costs</span>
+            {pricingContent.header.title.split(', ')[0]}, <span className="text-liberty-accent">{pricingContent.header.title.split(', ')[1]}</span>
           </h2>
           <p className="text-xl text-liberty-base/70 max-w-3xl mx-auto">
-            Transparent, fixed-fee pricing with our savings-based model
+            {pricingContent.header.subtitle}
           </p>
         </motion.div>
 
@@ -63,9 +78,9 @@ export default function PricingSection() {
         >
           <div className="max-w-4xl mx-auto space-y-4 text-liberty-base/80 text-lg">
             <p>
-              <strong className="!text-liberty-base">You pay the upfront fee to help you get control. We take a cut of the savings.</strong>
+              <strong className="!text-liberty-base">{pricingContent.savingsModel.strongText}</strong>
               {' '}
-              The upfront fee covers all the legal work and processes. Our revenue comes from the savings we create for you through better management.
+              {pricingContent.savingsModel.description}
             </p>
           </div>
         </motion.div>
@@ -121,7 +136,7 @@ export default function PricingSection() {
               className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-background"
             >
               <Link href="/get-quote" className="flex items-center gap-3 group">
-                Get A Quote
+                {pricingContent.cta.primaryButton}
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
@@ -132,7 +147,7 @@ export default function PricingSection() {
               className="border-liberty-base text-liberty-base hover:bg-liberty-base hover:text-liberty-background"
             >
               <Link href="/register-building">
-                Register Your Building
+                {pricingContent.cta.secondaryButton}
               </Link>
             </Button>
           </div>
