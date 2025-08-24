@@ -6,26 +6,54 @@ import { ArrowRight, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
 
-const partners = [
-  {
-    name: 'Property Institute',
-    image: '/partners/property-institute.png',
-    alt: 'Property Institute - Professional accreditation',
-    url: 'https://www.tpi.org.uk/'
+const content = {
+  badge: {
+    text: "The Property Institute Accredited",
+    href: "https://www.tpi.org.uk/"
   },
-  {
-    name: 'Santander',
-    image: '/partners/santander.png',
-    alt: 'Santander - Trusted financial partner',
-    url: 'https://www.santander.co.uk/'
+  headline: {
+    main: "Take Back Control of",
+    highlight: "Your Building"
   },
-  {
-    name: 'MHLCG',
-    image: '/partners/mhlcg.png',
-    alt: 'Ministry of Housing, Communities & Local Government',
-    url: 'https://www.gov.uk/government/organisations/ministry-of-housing-communities-local-government'
+  description: "Stop battling unfair charges and poor service every day. We help leaseholders across England & Wales gain legal control, cut costs, and finally live in and enjoy your home stress-free.",
+  buttons: {
+    primary: {
+      text: "Check Your Eligibility",
+      href: "/eligibility-check"
+    },
+    secondary: {
+      text: "Our Story", 
+      href: "/about"
+    }
+  },
+  image: {
+    src: "/family.jpeg",
+    alt: "Modern apartment building representing property ownership freedom"
+  },
+  partners: {
+    subtitle: "Trusted by leading institutions and professional bodies",
+    items: [
+      {
+        name: 'Property Institute',
+        image: '/partners/property-institute.png',
+        alt: 'Property Institute - Professional accreditation',
+        url: 'https://www.tpi.org.uk/'
+      },
+      {
+        name: 'Santander',
+        image: '/partners/santander.png',
+        alt: 'Santander - Trusted financial partner',
+        url: 'https://www.santander.co.uk/'
+      },
+      {
+        name: 'MHLCG',
+        image: '/partners/mhlcg.png',
+        alt: 'Ministry of Housing, Communities & Local Government',
+        url: 'https://www.gov.uk/government/organisations/ministry-of-housing-communities-local-government'
+      }
+    ]
   }
-]
+}
 
 export default function Hero() {
   return (
@@ -41,13 +69,13 @@ export default function Hero() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
               >
                 <Link
-                  href="https://www.tpi.org.uk/"
+                  href={content.badge.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-liberty-accent/10 text-liberty-accent px-4 py-2 rounded-full text-sm font-medium mb-6 border border-liberty-accent/20 hover:bg-liberty-accent/20 hover:scale-105 transition-all duration-300"
                 >
                   <CheckCircle size={16} />
-                  <strong>The Property Institute Accredited</strong>
+                  <strong>{content.badge.text}</strong>
                 </Link>
               </motion.div>
 
@@ -57,8 +85,8 @@ export default function Hero() {
                 transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
                 className="text-4xl lg:text-5xl xl:text-6xl font-reckless font-bold text-liberty-background mb-6 leading-tight"
               >
-                Take Back Control of{' '}
-                <span className="text-liberty-accent">Your Building</span>
+                {content.headline.main}{' '}
+                <span className="text-liberty-accent">{content.headline.highlight}</span>
               </motion.h1>
               
               <motion.p 
@@ -67,7 +95,7 @@ export default function Hero() {
                 transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                 className="text-lg lg:text-xl text-liberty-background/70 mb-8 leading-relaxed"
               >
-                Stop battling unfair charges and poor service every day. We help leaseholders across England & Wales gain legal control, cut costs, and finally live in and enjoy your home stress-free.
+                {content.description}
               </motion.p>
               
               <motion.div 
@@ -77,14 +105,14 @@ export default function Hero() {
                 className="flex flex-col sm:flex-row gap-4"
               >
                 <Button size="xl" asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base">
-                  <Link href="/eligibility-check" className="flex items-center gap-3 group">
-                    Check Your Eligibility
+                  <Link href={content.buttons.primary.href} className="flex items-center gap-3 group">
+                    {content.buttons.primary.text}
                     <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </Button>
                 <Button size="xl" variant="outline" asChild className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-liberty-base">
-                  <Link href="/about">
-                    Our Story
+                  <Link href={content.buttons.secondary.href}>
+                    {content.buttons.secondary.text}
                   </Link>
                 </Button>
               </motion.div>
@@ -108,8 +136,8 @@ export default function Hero() {
                 className="w-full h-full"
               >
                 <Image
-                  src="/family.jpeg"
-                  alt="Modern apartment building representing property ownership freedom"
+                  src={content.image.src}
+                  alt={content.image.alt}
                   fill
                   className="object-cover"
                   priority
@@ -133,10 +161,10 @@ export default function Hero() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center">
             <p className="text-sm text-liberty-background/60 mb-4 text-center">
-              Trusted by leading institutions and professional bodies
+              {content.partners.subtitle}
             </p>
             <div className="flex items-center justify-center gap-8 lg:gap-24 flex-wrap">
-              {partners.map((partner, index) => (
+              {content.partners.items.map((partner, index) => (
                 <motion.div
                   key={partner.name}
                   initial={{ opacity: 0, y: 20 }}

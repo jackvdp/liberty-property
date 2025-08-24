@@ -7,53 +7,79 @@ import { Search, Calculator, FileText, ChevronRight, Lightbulb } from 'lucide-re
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 
-const steps = [
-  {
-    id: 1,
-    title: "Check Your Eligibility",
-    icon: Search,
-    description: "Quick online assessment to see if you qualify for RTM or freehold purchase",
-    details: "We determine what legal rights and options are open to you. Our simple questionnaire covers your building composition, lease details, and qualifying tenant status. Most buildings with 2+ flats and long leases qualify for some form of action - either Right to Manage or Collective Enfranchisement.",
-    timeEstimate: "2 minutes",
-    didYouKnow: "Over 80% of leaseholders qualify for some form of action, but most don't know their rights exist.",
-    keyPoints: [
-      "Instant assessment for Right to Manage eligibility",
-      "Check if you qualify for Collective Enfranchisement", 
-      "Building composition and lease length analysis",
-      "Clear explanation of your legal options"
-    ]
+const content = {
+  header: {
+    title: "We Make It",
+    titleHighlight: "Simple",
+    subtitle: "Three simple steps to take back control of your building and start saving money"
   },
-  {
-    id: 2,
-    title: "We Do The Legal Work",
-    icon: FileText,
-    description: "Professional handling of all statutory notices, negotiations and paperwork - for a fixed fee",
-    details: "As Property Institute accredited professionals, we provide expert guidance you can trust. We handle all the complex legal procedures, statutory notices, freeholder negotiations, and compliance requirements. We're not lawyers, but we are professionals who specialize in these procedural frameworks.",
-    timeEstimate: "Fixed fee",
-    didYouKnow: "These are largely procedural frameworks - perfect for professional automation rather than expensive legal fees.",
-    keyPoints: [
-      "Property Institute accredited team handling your case",
-      "All statutory notices and documentation managed professionally",
-      "Fixed-fee pricing - no hourly lawyer charges",
-      "We help every step of the way with expert guidance"
-    ]
-  },
-  {
-    id: 3,
-    title: "Choose Your Management Path",
-    icon: Calculator,
-    description: "Self-manage for maximum savings, or hands-free professional management",
-    details: "We advise what's best for your building and circumstances. You have choices: take full control and self-manage to maximize savings, or let us handle everything with our professional management service. We help you understand the options and support whatever path works best for your situation.",
-    timeEstimate: "Your choice",
-    didYouKnow: "You can save thousands annually by self-managing, or enjoy complete peace of mind with professional management - we advise on what works best for your building.",
-    keyPoints: [
-      "Expert advice on the best approach for your specific situation",
-      "Self-management option for maximum cost control and savings",
-      "Hands-free professional management if you prefer no hassle",
-      "Ongoing support and guidance regardless of your chosen path"
-    ]
+  processTitle: "The 3-Step Process",
+  steps: [
+    {
+      id: 1,
+      title: "Check Your Eligibility",
+      icon: Search,
+      description: "Quick online assessment to see if you qualify for RTM or freehold purchase",
+      details: "We determine what legal rights and options are open to you. Our simple questionnaire covers your building composition, lease details, and qualifying tenant status. Most buildings with 2+ flats and long leases qualify for some form of action - either Right to Manage or Collective Enfranchisement.",
+      timeEstimate: "2 minutes",
+      didYouKnow: "Over 80% of leaseholders qualify for some form of action, but most don't know their rights exist.",
+      keyPoints: [
+        "Instant assessment for Right to Manage eligibility",
+        "Check if you qualify for Collective Enfranchisement", 
+        "Building composition and lease length analysis",
+        "Clear explanation of your legal options"
+      ],
+      links: [
+        {
+          text: "Right to Manage",
+          href: "/what-is-rtm"
+        },
+        {
+          text: "Collective Enfranchisement",
+          href: "/collective-enfranchisement"
+        }
+      ]
+    },
+    {
+      id: 2,
+      title: "We Do The Legal Work",
+      icon: FileText,
+      description: "Professional handling of all statutory notices, negotiations and paperwork - for a fixed fee",
+      details: "As Property Institute accredited professionals, we provide expert guidance you can trust. We handle all the complex legal procedures, statutory notices, freeholder negotiations, and compliance requirements. We're not lawyers, but we are professionals who specialize in these procedural frameworks.",
+      timeEstimate: "Fixed fee",
+      didYouKnow: "These are largely procedural frameworks - perfect for professional automation rather than expensive legal fees.",
+      keyPoints: [
+        "Property Institute accredited team handling your case",
+        "All statutory notices and documentation managed professionally",
+        "Fixed-fee pricing - no hourly lawyer charges",
+        "We help every step of the way with expert guidance"
+      ]
+    },
+    {
+      id: 3,
+      title: "Choose Your Management Path",
+      icon: Calculator,
+      description: "Self-manage for maximum savings, or hands-free professional management",
+      details: "We advise what's best for your building and circumstances. You have choices: take full control and self-manage to maximize savings, or let us handle everything with our professional management service. We help you understand the options and support whatever path works best for your situation.",
+      timeEstimate: "Your choice",
+      didYouKnow: "You can save thousands annually by self-managing, or enjoy complete peace of mind with professional management - we advise on what works best for your building.",
+      keyPoints: [
+        "Expert advice on the best approach for your specific situation",
+        "Self-management option for maximum cost control and savings",
+        "Hands-free professional management if you prefer no hassle",
+        "Ongoing support and guidance regardless of your chosen path"
+      ]
+    }
+  ],
+  cta: {
+    title: "Ready to Start Your Journey?",
+    subtitle: "Join thousands who've already taken control of their property destiny",
+    button: {
+      text: "Check Your Eligibility Now",
+      href: "/eligibility-check"
+    }
   }
-]
+}
 
 // Common component that contains all the shared logic
 interface HowItWorksContentProps {
@@ -65,7 +91,7 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
   const stepRefs = useRef<(HTMLDivElement | null)[]>([])
   const sectionRef = useRef<HTMLDivElement>(null)
 
-  const currentStep = steps.find(step => step.id === activeStep) || steps[0]
+  const currentStep = content.steps.find(step => step.id === activeStep) || content.steps[0]
 
   useEffect(() => {
     if (!enableScrollTracking) return
@@ -131,10 +157,10 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-4">
-            We Make It <span className="text-liberty-accent">Simple</span>
+            {content.header.title} <span className="text-liberty-accent">{content.header.titleHighlight}</span>
           </h2>
           <p className="text-lg text-liberty-background/70 max-w-3xl mx-auto">
-            Three simple steps to take back control of your building and start saving money
+            {content.header.subtitle}
           </p>
         </motion.div>
 
@@ -142,10 +168,10 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
           {/* Step Navigation */}
           <div className="space-y-4 lg:h-screen">
             <h3 className="text-2xl font-reckless font-bold text-liberty-background mb-6">
-              The 3-Step Process
+              {content.processTitle}
             </h3>
             
-            {steps.map((step, index) => (
+            {content.steps.map((step, index) => (
               <motion.div
                 key={step.id}
                 id={`step-${step.id}`}
@@ -380,18 +406,18 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
           <Card className="bg-liberty-background text-liberty-base max-w-2xl mx-auto">
             <CardContent className="p-8">
               <h3 className="text-2xl font-reckless font-bold mb-4">
-                Ready to Start Your Journey?
+                {content.cta.title}
               </h3>
               <p className="text-liberty-secondary mb-6">
-                Join thousands who've already taken control of their property destiny
+                {content.cta.subtitle}
               </p>
               <Button 
                 size="xl" 
                 asChild
                 className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-background"
               >
-                <Link href="/eligibility-check">
-                  Check Your Eligibility Now
+                <Link href={content.cta.button.href}>
+                  {content.cta.button.text}
                 </Link>
               </Button>
             </CardContent>
