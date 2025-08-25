@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { Mail, Phone, MapPin, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { websiteContent } from '@/data/website-content'
+import { content } from '@/data/home/content'
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -20,7 +20,7 @@ export default function ContactForm() {
     e.preventDefault()
     // TODO: Integrate with Formspree
     console.log('Form submitted:', formData)
-    alert(websiteContent.contact.form.successMessage)
+    alert(content.contact.form.successMessage)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -42,10 +42,10 @@ export default function ContactForm() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl lg:text-5xl font-reckless font-bold !text-liberty-background mb-4">
-            {websiteContent.contact.header.title.split(' ').slice(0, 2).join(' ')} <span className="text-liberty-accent">{websiteContent.contact.header.title.split(' ').slice(2).join(' ')}</span>
+            {content.contact.header.title.split(' ').slice(0, 2).join(' ')} <span className="text-liberty-accent">{content.contact.header.title.split(' ').slice(2).join(' ')}</span>
           </h2>
           <p className="text-xl !text-liberty-background/60 max-w-2xl mx-auto">
-            {websiteContent.contact.header.subtitle}
+            {content.contact.header.subtitle}
           </p>
         </motion.div>
 
@@ -59,7 +59,7 @@ export default function ContactForm() {
           >
             <Card className="bg-liberty-base shadow-lg border-liberty-secondary/20">
               <CardContent className="p-8 lg:p-12">
-                <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-6" action={websiteContent.contact.form.action} method="POST">
+                <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-6" action={content.contact.form.action} method="POST">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <input
@@ -70,7 +70,7 @@ export default function ContactForm() {
                         value={formData.name}
                         onChange={handleChange}
                         className="w-full px-0 py-4 border-0 border-b-2 border-liberty-secondary/30 focus:border-liberty-accent focus:outline-none transition-colors bg-transparent placeholder:text-liberty-background/40 text-lg"
-                        placeholder={websiteContent.contact.form.fields.name}
+                        placeholder={content.contact.form.fields.name}
                       />
                     </div>
 
@@ -83,7 +83,7 @@ export default function ContactForm() {
                         value={formData.email}
                         onChange={handleChange}
                         className="w-full px-0 py-4 border-0 border-b-2 border-liberty-secondary/30 focus:border-liberty-accent focus:outline-none transition-colors bg-transparent placeholder:text-liberty-background/40 text-lg"
-                        placeholder={websiteContent.contact.form.fields.email}
+                        placeholder={content.contact.form.fields.email}
                       />
                     </div>
                   </div>
@@ -97,7 +97,7 @@ export default function ContactForm() {
                         value={formData.phone}
                         onChange={handleChange}
                         className="w-full px-0 py-4 border-0 border-b-2 border-liberty-secondary/30 focus:border-liberty-accent focus:outline-none transition-colors bg-transparent placeholder:text-liberty-background/40 text-lg"
-                        placeholder={websiteContent.contact.form.fields.phone}
+                        placeholder={content.contact.form.fields.phone}
                       />
                     </div>
 
@@ -109,7 +109,7 @@ export default function ContactForm() {
                         value={formData.address}
                         onChange={handleChange}
                         className="w-full px-0 py-4 border-0 border-b-2 border-liberty-secondary/30 focus:border-liberty-accent focus:outline-none transition-colors bg-transparent placeholder:text-liberty-background/40 text-lg"
-                        placeholder={websiteContent.contact.form.fields.address}
+                        placeholder={content.contact.form.fields.address}
                       />
                     </div>
                   </div>
@@ -122,7 +122,7 @@ export default function ContactForm() {
                       value={formData.message}
                       onChange={handleChange}
                       className="w-full px-0 py-4 border-0 border-b-2 border-liberty-secondary/30 focus:border-liberty-accent focus:outline-none transition-colors resize-none bg-transparent placeholder:text-liberty-background/40 text-lg"
-                      placeholder={websiteContent.contact.form.fields.message}
+                      placeholder={content.contact.form.fields.message}
                     />
                   </div>
 
@@ -132,13 +132,13 @@ export default function ContactForm() {
                       type="submit"
                       className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-background px-12 py-4 rounded-full font-medium group"
                     >
-                      {websiteContent.contact.form.submitButton}
+                      {content.contact.form.submitButton}
                       <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </div>
 
                   <p className="text-sm text-liberty-background/50 text-center pt-4">
-                    {websiteContent.contact.form.privacyText}
+                    {content.contact.form.privacyText}
                   </p>
                 </form>
               </CardContent>

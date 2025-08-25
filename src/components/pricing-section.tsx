@@ -10,26 +10,26 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { websiteContent } from '@/data/website-content'
+import { content } from '@/data/home/content'
 
 const pricingItems = [
   {
     icon: Building,
-    title: websiteContent.pricing.items[0].title,
-    price: websiteContent.pricing.items[0].price,
-    description: websiteContent.pricing.items[0].description
+    title: content.pricing.items[0].title,
+    price: content.pricing.items[0].price,
+    description: content.pricing.items[0].description
   },
   {
     icon: PoundSterling,
-    title: websiteContent.pricing.items[1].title,
-    price: websiteContent.pricing.items[1].price,
-    description: websiteContent.pricing.items[1].description
+    title: content.pricing.items[1].title,
+    price: content.pricing.items[1].price,
+    description: content.pricing.items[1].description
   },
   {
     icon: Users,
-    title: websiteContent.pricing.items[2].title,
-    price: websiteContent.pricing.items[2].price,
-    description: websiteContent.pricing.items[2].description
+    title: content.pricing.items[2].title,
+    price: content.pricing.items[2].price,
+    description: content.pricing.items[2].description
   }
 ]
 
@@ -47,10 +47,10 @@ export default function PricingSection() {
           className="text-center mb-8"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold !text-liberty-base mb-6">
-            {websiteContent.pricing.header.title.split(', ')[0]}, <span className="text-liberty-accent">{websiteContent.pricing.header.title.split(', ')[1]}</span>
+            {content.pricing.header.title.split(', ')[0]}, <span className="text-liberty-accent">{content.pricing.header.title.split(', ')[1]}</span>
           </h2>
           <p className="text-xl text-liberty-base/70 max-w-3xl mx-auto">
-            {websiteContent.pricing.header.subtitle}
+            {content.pricing.header.subtitle}
           </p>
         </motion.div>
 
@@ -64,9 +64,9 @@ export default function PricingSection() {
         >
           <div className="max-w-4xl mx-auto space-y-4 text-liberty-base/80 text-lg">
             <p>
-              <strong className="!text-liberty-base">{websiteContent.pricing.savingsModel.strongText}</strong>
+              <strong className="!text-liberty-base">{content.pricing.savingsModel.strongText}</strong>
               {' '}
-              {websiteContent.pricing.savingsModel.description}
+              {content.pricing.savingsModel.description}
             </p>
           </div>
         </motion.div>
@@ -122,7 +122,7 @@ export default function PricingSection() {
               className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-background"
             >
               <Link href="/get-quote" className="flex items-center gap-3 group">
-                {websiteContent.pricing.cta.primaryButton}
+                {content.pricing.cta.primaryButton}
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
@@ -133,7 +133,7 @@ export default function PricingSection() {
               className="border-liberty-base text-liberty-base hover:bg-liberty-base hover:text-liberty-background"
             >
               <Link href="/register-building">
-                {websiteContent.pricing.cta.secondaryButton}
+                {content.pricing.cta.secondaryButton}
               </Link>
             </Button>
           </div>

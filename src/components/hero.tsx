@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { ArrowRight, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
-import { websiteContent } from '@/data/website-content'
+import { content } from '@/data/home/content'
 
 export default function Hero() {
   return (
@@ -21,13 +21,13 @@ export default function Hero() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
               >
                 <Link
-                  href={websiteContent.hero.badge.href}
+                  href={content.hero.badge.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-liberty-accent/10 text-liberty-accent px-4 py-2 rounded-full text-sm font-medium mb-6 border border-liberty-accent/20 hover:bg-liberty-accent/20 hover:scale-105 transition-all duration-300"
                 >
                   <CheckCircle size={16} />
-                  <strong>{websiteContent.hero.badge.text}</strong>
+                  <strong>{content.hero.badge.text}</strong>
                 </Link>
               </motion.div>
 
@@ -37,8 +37,8 @@ export default function Hero() {
                 transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
                 className="text-4xl lg:text-5xl xl:text-6xl font-reckless font-bold text-liberty-background mb-6 leading-tight"
               >
-                {websiteContent.hero.headline.main}{' '}
-                <span className="text-liberty-accent">{websiteContent.hero.headline.highlight}</span>
+                {content.hero.headline.main}{' '}
+                <span className="text-liberty-accent">{content.hero.headline.highlight}</span>
               </motion.h1>
               
               <motion.p 
@@ -47,7 +47,7 @@ export default function Hero() {
                 transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                 className="text-lg lg:text-xl text-liberty-background/70 mb-8 leading-relaxed"
               >
-                {websiteContent.hero.description}
+                {content.hero.description}
               </motion.p>
               
               <motion.div 
@@ -57,14 +57,14 @@ export default function Hero() {
                 className="flex flex-col sm:flex-row gap-4"
               >
                 <Button size="xl" asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base">
-                  <Link href={websiteContent.hero.buttons.primary.href} className="flex items-center gap-3 group">
-                    {websiteContent.hero.buttons.primary.text}
+                  <Link href={content.hero.buttons.primary.href} className="flex items-center gap-3 group">
+                    {content.hero.buttons.primary.text}
                     <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </Button>
                 <Button size="xl" variant="outline" asChild className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-liberty-base">
-                  <Link href={websiteContent.hero.buttons.secondary.href}>
-                    {websiteContent.hero.buttons.secondary.text}
+                  <Link href={content.hero.buttons.secondary.href}>
+                    {content.hero.buttons.secondary.text}
                   </Link>
                 </Button>
               </motion.div>
@@ -88,8 +88,8 @@ export default function Hero() {
                 className="w-full h-full"
               >
                 <Image
-                  src={websiteContent.hero.image.src}
-                  alt={websiteContent.hero.image.alt}
+                  src={content.hero.image.src}
+                  alt={content.hero.image.alt}
                   fill
                   className="object-cover"
                   priority
@@ -113,10 +113,10 @@ export default function Hero() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center">
             <p className="text-sm text-liberty-background/60 mb-4 text-center">
-              {websiteContent.hero.partners.subtitle}
+              {content.hero.partners.subtitle}
             </p>
             <div className="flex items-center justify-center gap-8 lg:gap-24 flex-wrap">
-              {websiteContent.hero.partners.items.map((partner, index) => (
+              {content.hero.partners.items.map((partner, index) => (
                 <motion.div
                   key={partner.name}
                   initial={{ opacity: 0, y: 20 }}

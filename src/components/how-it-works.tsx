@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Calculator, FileText, ChevronRight, Lightbulb } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { websiteContent } from '@/data/website-content'
+import { content } from '@/data/home/content'
 
 const iconMap = [
   Search,    // Step 1: Check Your Eligibility
@@ -24,7 +24,7 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
   const stepRefs = useRef<(HTMLDivElement | null)[]>([])
   const sectionRef = useRef<HTMLDivElement>(null)
 
-  const currentStep = websiteContent.howItWorks.steps.find(step => step.id === activeStep) || websiteContent.howItWorks.steps[0]
+  const currentStep = content.howItWorks.steps.find(step => step.id === activeStep) || content.howItWorks.steps[0]
 
   useEffect(() => {
     if (!enableScrollTracking) return
@@ -90,10 +90,10 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-4">
-            {websiteContent.howItWorks.header.title} <span className="text-liberty-accent">{websiteContent.howItWorks.header.titleHighlight}</span>
+            {content.howItWorks.header.title} <span className="text-liberty-accent">{content.howItWorks.header.titleHighlight}</span>
           </h2>
           <p className="text-lg text-liberty-background/70 max-w-3xl mx-auto">
-            {websiteContent.howItWorks.header.subtitle}
+            {content.howItWorks.header.subtitle}
           </p>
         </motion.div>
 
@@ -101,10 +101,10 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
           {/* Step Navigation */}
           <div className="space-y-4 lg:h-screen">
             <h3 className="text-2xl font-reckless font-bold text-liberty-background mb-6">
-              {websiteContent.howItWorks.processTitle}
+              {content.howItWorks.processTitle}
             </h3>
             
-            {websiteContent.howItWorks.steps.map((step, index) => {
+            {content.howItWorks.steps.map((step, index) => {
               const StepIcon = iconMap[index]
               return (
                 <motion.div
@@ -342,18 +342,18 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
           <Card className="bg-liberty-background text-liberty-base max-w-2xl mx-auto">
             <CardContent className="p-8">
               <h3 className="text-2xl font-reckless font-bold mb-4">
-                {websiteContent.howItWorks.cta.title}
+                {content.howItWorks.cta.title}
               </h3>
               <p className="text-liberty-secondary mb-6">
-                {websiteContent.howItWorks.cta.subtitle}
+                {content.howItWorks.cta.subtitle}
               </p>
               <Button 
                 size="xl" 
                 asChild
                 className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-background"
               >
-                <Link href={websiteContent.howItWorks.cta.button.href}>
-                  {websiteContent.howItWorks.cta.button.text}
+                <Link href={content.howItWorks.cta.button.href}>
+                  {content.howItWorks.cta.button.text}
                 </Link>
               </Button>
             </CardContent>

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { websiteContent } from '@/data/website-content'
+import { content } from '@/data/home/content'
 
 export default function WhyLibertyBell() {
   return (
@@ -19,8 +19,8 @@ export default function WhyLibertyBell() {
         >
           <div className="relative h-[300px] lg:h-[500px]">
             <Image
-              src={websiteContent.whyLibertyBell.image.src}
-              alt={websiteContent.whyLibertyBell.image.alt}
+              src={content.whyLibertyBell.image.src}
+              alt={content.whyLibertyBell.image.alt}
               fill
               className="object-cover"
             />
@@ -30,10 +30,10 @@ export default function WhyLibertyBell() {
             <div className="absolute inset-0 flex items-center">
               <div className="max-w-2xl px-8 lg:px-16">
                 <h2 className="text-3xl lg:text-4xl font-reckless font-bold !text-white mb-4 leading-tight">
-                  {websiteContent.whyLibertyBell.title}
+                  {content.whyLibertyBell.title}
                 </h2>
                 <div className="space-y-2 text-white/90 text-base lg:text-lg mb-6 tex-bold">
-                  {websiteContent.whyLibertyBell.messages.map((message, index) => (
+                  {content.whyLibertyBell.messages.map((message, index) => (
                     <p key={index}>{message}</p>
                   ))}
                 </div>
@@ -43,8 +43,8 @@ export default function WhyLibertyBell() {
                   asChild 
                   className="border-white text-white hover:bg-white hover:text-liberty-background"
                 >
-                  <Link href={websiteContent.whyLibertyBell.cta.link}>
-                    {websiteContent.whyLibertyBell.cta.text}
+                  <Link href={content.whyLibertyBell.cta.link}>
+                    {content.whyLibertyBell.cta.text}
                   </Link>
                 </Button>
               </div>

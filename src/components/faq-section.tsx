@@ -4,45 +4,44 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, HelpCircle, Clock, PoundSterling, Scale, AlertCircle } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { websiteContent } from '@/data/website-content'
+import { content } from '@/data/home/content'
 
 const faqCategories = [
   {
     id: 'basics',
-    title: websiteContent.faq.categories[0].title,
+    title: content.faq.categories[0].title,
     icon: HelpCircle,
-    color: websiteContent.faq.categories[0].color,
-    bgColor: websiteContent.faq.categories[0].bgColor,
-    borderColor: websiteContent.faq.categories[0].borderColor
+    color: content.faq.categories[0].color,
+    bgColor: content.faq.categories[0].bgColor,
+    borderColor: content.faq.categories[0].borderColor
   },
   {
     id: 'costs',
-    title: websiteContent.faq.categories[1].title,
+    title: content.faq.categories[1].title,
     icon: PoundSterling,
-    color: websiteContent.faq.categories[1].color,
-    bgColor: websiteContent.faq.categories[1].bgColor,
-    borderColor: websiteContent.faq.categories[1].borderColor
+    color: content.faq.categories[1].color,
+    bgColor: content.faq.categories[1].bgColor,
+    borderColor: content.faq.categories[1].borderColor
   },
   {
     id: 'process',
-    title: websiteContent.faq.categories[2].title,
+    title: content.faq.categories[2].title,
     icon: Clock,
-    color: websiteContent.faq.categories[2].color,
-    bgColor: websiteContent.faq.categories[2].bgColor,
-    borderColor: websiteContent.faq.categories[2].borderColor
+    color: content.faq.categories[2].color,
+    bgColor: content.faq.categories[2].bgColor,
+    borderColor: content.faq.categories[2].borderColor
   },
   {
     id: 'legal',
-    title: websiteContent.faq.categories[3].title,
+    title: content.faq.categories[3].title,
     icon: Scale,
-    color: websiteContent.faq.categories[3].color,
-    bgColor: websiteContent.faq.categories[3].bgColor,
-    borderColor: websiteContent.faq.categories[3].borderColor
+    color: content.faq.categories[3].color,
+    bgColor: content.faq.categories[3].bgColor,
+    borderColor: content.faq.categories[3].borderColor
   }
 ]
 
-const faqs = websiteContent.faq.questions
+const faqs = content.faq.questions
 
 export default function FAQSection() {
   const [activeCategory, setActiveCategory] = useState('basics')
@@ -63,10 +62,10 @@ export default function FAQSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-4">
-            {websiteContent.faq.header.title.split(' ').slice(0, 2).join(' ')} <span className="text-liberty-accent">{websiteContent.faq.header.title.split(' ').slice(2).join(' ')}</span>
+            {content.faq.header.title.split(' ').slice(0, 2).join(' ')} <span className="text-liberty-accent">{content.faq.header.title.split(' ').slice(2).join(' ')}</span>
           </h2>
           <p className="text-xl text-liberty-background/70 max-w-3xl mx-auto">
-            {websiteContent.faq.header.subtitle}
+            {content.faq.header.subtitle}
           </p>
         </motion.div>
 

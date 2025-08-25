@@ -1,4 +1,4 @@
-export const websiteContent = {
+export const content = {
   hero: {
     badge: {
       text: "The Property Institute Accredited",

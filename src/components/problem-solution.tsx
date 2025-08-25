@@ -14,7 +14,7 @@ import {
   Users
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { websiteContent } from '@/data/website-content'
+import { content } from '@/data/home/content'
 
 const iconMap = {
   "Average service charge: £2,300/year per flat": PoundSterling,
@@ -42,10 +42,10 @@ export default function ProblemSolution() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
-              {websiteContent.problemSolution.problems.title}<br/> <span className="text-red-600">{websiteContent.problemSolution.problems.titleHighlight}</span>
+              {content.problemSolution.problems.title}<br/> <span className="text-red-600">{content.problemSolution.problems.titleHighlight}</span>
             </h2>
             <p className="text-lg text-liberty-background/70 max-w-4xl mx-auto">
-              {websiteContent.problemSolution.problems.subtitle}
+              {content.problemSolution.problems.subtitle}
             </p>
           </motion.div>
 
@@ -53,7 +53,7 @@ export default function ProblemSolution() {
             {/* Left: Problems */}
             <div>
               <div className="space-y-4">
-                {websiteContent.problemSolution.problems.items.map((problem, index) => {
+                {content.problemSolution.problems.items.map((problem, index) => {
                   const IconComponent = iconMap[problem.title as keyof typeof iconMap]
                   return (
                     <motion.div
@@ -91,8 +91,8 @@ export default function ProblemSolution() {
             >
               <div className="relative h-[400px] rounded-xl overflow-hidden shadow-xl">
                 <Image
-                  src={websiteContent.problemSolution.problems.image.src}
-                  alt={websiteContent.problemSolution.problems.image.alt}
+                  src={content.problemSolution.problems.image.src}
+                  alt={content.problemSolution.problems.image.alt}
                   fill
                   className="object-cover"
                 />
@@ -104,7 +104,7 @@ export default function ProblemSolution() {
                     <AlertTriangle className="text-red-600 w-6 h-6" />
                     <div>
                       <p className="text-liberty-background italic text-sm font-medium">
-                        "{websiteContent.problemSolution.problems.quote}"
+                        "{content.problemSolution.problems.quote}"
                       </p>
                     </div>
                   </div>
@@ -125,10 +125,10 @@ export default function ProblemSolution() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
-              {websiteContent.problemSolution.solution.title} <span className="text-liberty-accent">{websiteContent.problemSolution.solution.titleHighlight}</span>
+              {content.problemSolution.solution.title} <span className="text-liberty-accent">{content.problemSolution.solution.titleHighlight}</span>
             </h2>
             <p className="text-lg text-liberty-background/70 max-w-4xl mx-auto">
-              {websiteContent.problemSolution.solution.subtitle}
+              {content.problemSolution.solution.subtitle}
             </p>
           </motion.div>
 
@@ -143,8 +143,8 @@ export default function ProblemSolution() {
             >
               <div className="relative h-[400px] rounded-xl overflow-hidden shadow-xl">
                 <Image
-                  src={websiteContent.problemSolution.solution.image.src}
-                  alt={websiteContent.problemSolution.solution.image.alt}
+                  src={content.problemSolution.solution.image.src}
+                  alt={content.problemSolution.solution.image.alt}
                   fill
                   className="object-cover"
                 />
@@ -156,10 +156,10 @@ export default function ProblemSolution() {
                     <CheckCircle className="text-liberty-accent w-6 h-6" />
                     <div>
                       <p className="font-semibold text-liberty-background text-sm">
-                        {websiteContent.problemSolution.solution.successStory.title}
+                        {content.problemSolution.solution.successStory.title}
                       </p>
                       <p className="text-liberty-background/70 text-xs">
-                        "{websiteContent.problemSolution.solution.successStory.description}"
+                        "{content.problemSolution.solution.successStory.description}"
                       </p>
                     </div>
                   </div>
@@ -170,7 +170,7 @@ export default function ProblemSolution() {
             {/* Right: Benefits */}
             <div>
               <div className="space-y-4">
-                {websiteContent.problemSolution.solution.items.map((benefit, index) => {
+                {content.problemSolution.solution.items.map((benefit, index) => {
                   const IconComponent = iconMap[benefit.title as keyof typeof iconMap]
                   return (
                     <motion.div
@@ -228,8 +228,8 @@ export default function ProblemSolution() {
             asChild 
             className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base"
           >
-            <Link href={websiteContent.problemSolution.cta.href} className="flex items-center gap-3 group">
-              {websiteContent.problemSolution.cta.text}
+            <Link href={content.problemSolution.cta.href} className="flex items-center gap-3 group">
+              {content.problemSolution.cta.text}
               <ArrowRight size={20} className="group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300 ease-out" />
             </Link>
           </Button>
