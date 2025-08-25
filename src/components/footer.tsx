@@ -51,9 +51,12 @@ export default function Footer() {
               </div>
             </div>
 
+            {/* Empty div for spacing */}
+            <div></div>
+
             {/* Services */}
             <div>
-              <h3 className="text-lg font-reckless font-bold text-liberty-base mb-4">
+              <h3 className="text-lg font-reckless font-bold !text-liberty-base mb-4">
                 Services
               </h3>
               <ul className="space-y-3">
@@ -73,57 +76,8 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/lease-extensions" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
-                    Lease Extensions
-                  </Link>
-                </li>
-                <li>
                   <Link href="/property-management" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
                     Property Management
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/ai-advisor" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
-                    AI Legal Advisor
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Resources */}
-            <div>
-              <h3 className="text-lg font-reckless font-bold text-liberty-base mb-4">
-                Resources
-              </h3>
-              <ul className="space-y-3">
-                <li>
-                  <Link href="/commonhold-guide" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
-                    Free Commonhold Guide
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/cost-calculator" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
-                    Cost Calculator
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/eligibility-checker" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
-                    Eligibility Checker
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/case-studies" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
-                    Case Studies
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/blog" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
-                    Blog & Updates
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/faqs" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
-                    FAQs
                   </Link>
                 </li>
               </ul>
@@ -131,7 +85,7 @@ export default function Footer() {
 
             {/* Company */}
             <div>
-              <h3 className="text-lg font-reckless font-bold text-liberty-base mb-4">
+              <h3 className="text-lg font-reckless font-bold !text-liberty-base mb-4">
                 Company
               </h3>
               <ul className="space-y-3">
@@ -141,23 +95,13 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/our-story" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
-                    Our Story
+                  <Link href="/how-it-works" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
+                    How it Works
                   </Link>
                 </li>
                 <li>
                   <Link href="/contact" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
                     Contact
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/careers" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
-                    Careers
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/partner-with-us" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
-                    Partner With Us
                   </Link>
                 </li>
               </ul>
