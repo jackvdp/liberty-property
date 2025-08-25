@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Mail, Phone, MapPin } from 'lucide-react'
+import { content } from '@/data/home/content'
+import { contactInfo } from '@/data/contact-info'
 
 export default function Footer() {
   return (
@@ -13,39 +15,39 @@ export default function Footer() {
             <div className="lg:col-span-1">
               <div className="mb-6">
                 <Image
-                  src="/logo-wide.png"
-                  alt="Liberty Bell Property Management"
-                  width={320}
-                  height={107}
+                  src={content.footer.logo.src}
+                  alt={content.footer.logo.alt}
+                  width={content.footer.logo.width}
+                  height={content.footer.logo.height}
                   className="h-24 w-auto"
                 />
               </div>
               <p className="text-liberty-secondary text-sm leading-relaxed mb-6">
-                A property management company working for leaseholders. We help frustrated leaseholders become empowered commonholders through technology, transparency, and legal empowerment.
+                {content.footer.companyDescription}
               </p>
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <Mail className="w-4 h-4 text-liberty-accent flex-shrink-0" />
                   <a 
-                    href="mailto:lbpm@libertybell.co.uk" 
+                    href={contactInfo.email.href}
                     className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm"
                   >
-                    lbpm@libertybell.co.uk
+                    {contactInfo.email.address}
                   </a>
                 </div>
                 <div className="flex items-center gap-3">
                   <Phone className="w-4 h-4 text-liberty-accent flex-shrink-0" />
                   <a 
-                    href="tel:+447894309321" 
+                    href={contactInfo.phone.href}
                     className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm"
                   >
-                    +44 (0) 7894 309 321
+                    {contactInfo.phone.display}
                   </a>
                 </div>
                 <div className="flex items-center gap-3">
                   <MapPin className="w-4 h-4 text-liberty-accent flex-shrink-0" />
                   <span className="text-liberty-secondary text-sm">
-                    England & Wales
+                    {contactInfo.location.display}
                   </span>
                 </div>
               </div>
@@ -60,26 +62,13 @@ export default function Footer() {
                 Services
               </h3>
               <ul className="space-y-3">
-                <li>
-                  <Link href="/right-to-manage" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
-                    Right to Manage
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/collective-enfranchisement" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
-                    Collective Enfranchisement
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/commonhold-conversion" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
-                    Commonhold Conversion
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/property-management" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
-                    Property Management
-                  </Link>
-                </li>
+                {content.footer.services.map((service, index) => (
+                  <li key={index}>
+                    <Link href={service.href} className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
+                      {service.title}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -89,21 +78,13 @@ export default function Footer() {
                 Company
               </h3>
               <ul className="space-y-3">
-                <li>
-                  <Link href="/about" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/how-it-works" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
-                    How it Works
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contact" className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
-                    Contact
-                  </Link>
-                </li>
+                {content.footer.company.map((item, index) => (
+                  <li key={index}>
+                    <Link href={item.href} className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm">
+                      {item.title}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -113,20 +94,16 @@ export default function Footer() {
         <div className="border-t border-liberty-secondary/20 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex flex-col sm:flex-row items-center gap-4 text-sm text-liberty-secondary">
-              <span>© 2025 Liberty Bell Property Management</span>
+              <span>{content.footer.copyright}</span>
               <span className="hidden sm:inline">•</span>
-              <span>All rights reserved</span>
+              <span>{content.footer.rightsReserved}</span>
             </div>
             <div className="flex items-center gap-6 text-sm">
-              <Link href="/privacy-policy" className="text-liberty-secondary hover:text-liberty-accent transition-colors">
-                Privacy Policy
-              </Link>
-              <Link href="/terms-of-service" className="text-liberty-secondary hover:text-liberty-accent transition-colors">
-                Terms of Service
-              </Link>
-              <Link href="/cookie-policy" className="text-liberty-secondary hover:text-liberty-accent transition-colors">
-                Cookie Policy
-              </Link>
+              {content.footer.legal.map((item, index) => (
+                <Link key={index} href={item.href} className="text-liberty-secondary hover:text-liberty-accent transition-colors">
+                  {item.title}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
@@ -135,7 +112,7 @@ export default function Footer() {
         <div className="border-t border-liberty-secondary/20 py-8">
           <div className="text-center">
             <p className="text-liberty-secondary text-sm italic max-w-4xl mx-auto">
-              "First and foremost, we are leaseholders just like you. We suffered seven years of despair at the hands of unscrupulous managing agents and found there was little help out there aimed at leaseholders. It felt like the whole leasehold system was stacked against us despite it being us that held most of the value and paid all of the costs. We knew we could offer a better service at a much better price. That was when Liberty Bell Property Management was born."
+              "{content.footer.missionStatement}"
             </p>
           </div>
         </div>

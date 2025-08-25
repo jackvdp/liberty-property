@@ -373,5 +373,64 @@ export const content = {
       successMessage: "Thank you! Our expert team will be in touch soon.",
       action: "https://formspree.io/f/YOUR_FORM_ID"
     }
+  },
+
+  footer: {
+    companyDescription: "A property management company working for leaseholders. We help frustrated leaseholders become empowered commonholders through technology, transparency, and legal empowerment.",
+    missionStatement: "First and foremost, we are leaseholders just like you. We suffered seven years of despair at the hands of unscrupulous managing agents and found there was little help out there aimed at leaseholders. It felt like the whole leasehold system was stacked against us despite it being us that held most of the value and paid all of the costs. We knew we could offer a better service at a much better price. That was when Liberty Bell Property Management was born.",
+    logo: {
+      src: "/logo-wide.png",
+      alt: "Liberty Bell Property Management",
+      width: 320,
+      height: 107
+    },
+    services: [
+      {
+        title: "Right to Manage",
+        href: "/right-to-manage"
+      },
+      {
+        title: "Collective Enfranchisement", 
+        href: "/collective-enfranchisement"
+      },
+      {
+        title: "Commonhold Conversion",
+        href: "/commonhold-conversion"
+      },
+      {
+        title: "Property Management",
+        href: "/property-management"
+      }
+    ],
+    company: [
+      {
+        title: "About Us",
+        href: "/about"
+      },
+      {
+        title: "How it Works",
+        href: "/how-it-works"
+      },
+      {
+        title: "Contact",
+        href: "/contact"
+      }
+    ],
+    legal: [
+      {
+        title: "Privacy Policy",
+        href: "/privacy-policy"
+      },
+      {
+        title: "Terms of Service",
+        href: "/terms-of-service"
+      },
+      {
+        title: "Cookie Policy",
+        href: "/cookie-policy"
+      }
+    ],
+    copyright: "© 2025 Liberty Bell Property Management",
+    rightsReserved: "All rights reserved"
   }
 }
