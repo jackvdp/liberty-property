@@ -36,104 +36,103 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-liberty-base">
       <Navbar />
-      {/* Hero Section with Image */}
-      <section className="relative py-20 lg:py-32 bg-liberty-secondary/40">
+      
+      {/* Hero Section */}
+      <section className="py-20 bg-liberty-secondary/40">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Content */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-center mb-16"
+          >
+            <h1 className="text-5xl lg:text-7xl font-reckless font-bold !text-liberty-background mb-6">
+              Get In <span className="text-liberty-accent">Touch</span>
+            </h1>
+            <p className="text-xl !text-liberty-background/60">
+              Want to discuss your situation? Get in touch and we'll book in a free consultation call.
+            </p>
+          </motion.div>
+
+          {/* Contact Info Cards */}
+          <div className="grid md:grid-cols-3 gap-6 mb-16">
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.5 }}
             >
-              <h1 className="text-4xl lg:text-6xl font-reckless font-bold !text-liberty-background mb-6">
-                Get In <span className="text-liberty-accent">Touch</span>
-              </h1>
-              <p className="text-xl !text-liberty-background/60 mb-8">
-                Ready to take control of your building? We're here to help you navigate your journey to property empowerment.
-              </p>
-
-              {/* Contact Details */}
-              <div className="space-y-4">
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.5 }}
-                  className="flex items-center gap-4"
+              <Card className="bg-liberty-base shadow-lg border-liberty-secondary/20 text-center p-6">
+                <div className="p-3 bg-liberty-accent/10 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
+                  <Mail className="w-6 h-6 text-liberty-accent" />
+                </div>
+                <h3 className="font-semibold text-liberty-background mb-1 text-sm">Email Us</h3>
+                <a 
+                  href={contactInfo.email.href}
+                  className="text-liberty-background/60 hover:text-liberty-accent transition-colors text-sm"
                 >
-                  <div className="p-3 bg-liberty-accent/10 rounded-full">
-                    <Mail className="w-5 h-5 text-liberty-accent" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-liberty-background">Email</p>
-                    <a 
-                      href={contactInfo.email.href}
-                      className="text-liberty-background/60 hover:text-liberty-accent transition-colors"
-                    >
-                      {contactInfo.email.address}
-                    </a>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.5 }}
-                  className="flex items-center gap-4"
-                >
-                  <div className="p-3 bg-liberty-accent/10 rounded-full">
-                    <Phone className="w-5 h-5 text-liberty-accent" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-liberty-background">Phone</p>
-                    <a 
-                      href={contactInfo.phone.href}
-                      className="text-liberty-background/60 hover:text-liberty-accent transition-colors"
-                    >
-                      {contactInfo.phone.display}
-                    </a>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.5 }}
-                  className="flex items-center gap-4"
-                >
-                  <div className="p-3 bg-liberty-accent/10 rounded-full">
-                    <MapPin className="w-5 h-5 text-liberty-accent" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-liberty-background">Coverage</p>
-                    <p className="text-liberty-background/60">{contactInfo.location.display}</p>
-                  </div>
-                </motion.div>
-              </div>
+                  {contactInfo.email.address}
+                </a>
+              </Card>
             </motion.div>
 
-            {/* Image */}
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-              className="relative"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
             >
-              <Image
-                src="/london.png"
-                alt="London skyline"
-                width={600}
-                height={400}
-                className="rounded-2xl shadow-2xl"
-                priority
-              />
+              <Card className="bg-liberty-base shadow-lg border-liberty-secondary/20 text-center p-6">
+                <div className="p-3 bg-liberty-accent/10 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
+                  <Phone className="w-6 h-6 text-liberty-accent" />
+                </div>
+                <h3 className="font-semibold text-liberty-background mb-1 text-sm">Call Us</h3>
+                <a 
+                  href={contactInfo.phone.href}
+                  className="text-liberty-background/60 hover:text-liberty-accent transition-colors text-sm"
+                >
+                  {contactInfo.phone.display}
+                </a>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              <Card className="bg-liberty-base shadow-lg border-liberty-secondary/20 text-center p-6">
+                <div className="p-3 bg-liberty-accent/10 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
+                  <MapPin className="w-6 h-6 text-liberty-accent" />
+                </div>
+                <h3 className="font-semibold text-liberty-background mb-1 text-sm">Coverage</h3>
+                <p className="text-liberty-background/60 text-sm">{contactInfo.location.display}</p>
+              </Card>
             </motion.div>
           </div>
         </div>
       </section>
 
+      {/* London Image Section */}
+      <section className="relative">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="relative"
+        >
+          <Image
+            src="/london.png"
+            alt="London skyline"
+            width={1200}
+            height={600}
+            className="w-full h-[400px] lg:h-[600px] object-cover"
+            priority
+          />
+        </motion.div>
+      </section>
+
       {/* Contact Form */}
-      <section className="py-20">
+      <section className="py-20 bg-liberty-secondary/40">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -144,11 +143,11 @@ export default function ContactPage() {
             <Card className="bg-liberty-base shadow-lg border-liberty-secondary/20">
               <CardContent className="p-8 lg:p-12">
                 <div className="text-center mb-8">
-                  <h2 className="text-3xl font-reckless font-bold text-liberty-background mb-4">
-                    Send Us a Message
+                  <h2 className="text-3xl lg:text-4xl font-reckless font-bold text-liberty-background mb-4">
+                    Let's Talk
                   </h2>
-                  <p className="text-liberty-background/60">
-                    Tell us about your situation and we'll get back to you with tailored advice.
+                  <p className="text-xl text-liberty-background/60">
+                    Tell us about your situation and we'll schedule a consultation to discuss your options
                   </p>
                 </div>
 
@@ -215,7 +214,7 @@ export default function ContactPage() {
                       value={formData.message}
                       onChange={handleChange}
                       className="w-full px-0 py-4 border-0 border-b-2 border-liberty-secondary/30 focus:border-liberty-accent focus:outline-none transition-colors resize-none bg-transparent placeholder:text-liberty-background/40 text-lg"
-                      placeholder="Tell us about your situation..."
+                      placeholder="Tell us about your situation and what you'd like to discuss..."
                     />
                   </div>
 
@@ -223,10 +222,10 @@ export default function ContactPage() {
                     <Button
                       size="xl"
                       type="submit"
-                      className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-background px-12 py-4 rounded-full font-medium group"
+                      className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-background px-12 py-4 rounded-full font-medium group text-lg"
                     >
-                      Send Message
-                      <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                      Let's Talk
+                      <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform ml-2" />
                     </Button>
                   </div>
 
