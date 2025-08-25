@@ -48,7 +48,7 @@ export default function WhoWeAre() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
-            Who We Are &<br/> <span className="text-liberty-accent">What We Stand For</span>
+            What We <span className="text-liberty-accent">Stand For</span>
           </h2>
         </motion.div>
 

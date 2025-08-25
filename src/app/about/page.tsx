@@ -1,8 +1,10 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import AboutUs from "@/components/about-us";
 import WhoWeAre from "@/components/who-we-are";
 
 export default function AboutPage() {
@@ -20,14 +22,59 @@ export default function AboutPage() {
             className="text-center"
           >
             <h1 className="text-5xl lg:text-7xl font-reckless font-bold !text-liberty-background mb-6">
-              About <span className="text-liberty-accent">Liberty Bell</span>
+              About <span className="text-liberty-accent">Us</span>
             </h1>
-            <p className="text-xl !text-liberty-background/60 max-w-3xl mx-auto">
-              We're leaseholders too. We know the struggle, and we've built the solution.
+            <p className="text-xl !text-liberty-background/60 max-w-3xl mx-auto mb-8">
+              We're leaseholders too, but with accredited expertise and institutional backing to deliver real change.
             </p>
+            
+            <p className="text-sm font-medium text-liberty-background/70 mb-6">
+              Trusted by leading institutions and professional bodies
+            </p>
+            
+            {/* Partner Logos */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+              className="flex flex-wrap justify-center items-center gap-8 lg:gap-12 opacity-70"
+            >
+              <div className="h-12 flex items-center">
+                <Image 
+                  src="/partners/property-institute.png" 
+                  alt="Property Institute" 
+                  width={100} 
+                  height={40} 
+                  className="object-contain"
+                />
+              </div>
+              
+              <div className="h-12 flex items-center">
+                <Image 
+                  src="/partners/santander.png" 
+                  alt="Santander Buildings" 
+                  width={120} 
+                  height={40} 
+                  className="object-contain"
+                />
+              </div>
+              
+              <div className="h-12 flex items-center">
+                <Image 
+                  src="/partners/mhlcg.png" 
+                  alt="Ministry of Housing, Communities & Local Government" 
+                  width={80} 
+                  height={40} 
+                  className="object-contain"
+                />
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
+
+      {/* About Us Section */}
+      <AboutUs />
 
       {/* Who We Are Section */}
       <WhoWeAre />
