@@ -67,29 +67,29 @@ export default function ContactPage() {
             transition={{ delay: 0.1, duration: 0.5 }}
             className="flex flex-wrap justify-center gap-8 mb-12"
           >
-            <div className="flex items-center gap-3 border border-liberty-accent/60 p-8">
-              <Mail className="w-5 h-5 text-liberty-accent" />
-              <a 
-                href={contactInfo.email.href}
-                className="text-liberty-background hover:text-liberty-accent transition-colors"
-              >
+            <a 
+              href={contactInfo.email.href}
+              className="group flex items-center gap-3 border border-liberty-primary p-8 hover:border-liberty-accent transition-all duration-300"
+            >
+              <Mail className="w-5 h-5 text-liberty-primary group-hover:text-liberty-accent transition-colors" />
+              <span className="text-liberty-primary group-hover:text-liberty-accent transition-colors">
                 {contactInfo.email.address}
-              </a>
-            </div>
+              </span>
+            </a>
             
-            <div className="flex items-center gap-3 border border-liberty-accent/60 p-8">
-              <Phone className="w-5 h-5 text-liberty-accent" />
-              <a 
-                href={contactInfo.phone.href}
-                className="text-liberty-background hover:text-liberty-accent transition-colors"
-              >
+            <a 
+              href={contactInfo.phone.href}
+              className="group flex items-center gap-3 border border-liberty-primary p-8 hover:border-liberty-accent transition-all duration-300"
+            >
+              <Phone className="w-5 h-5 text-liberty-primary group-hover:text-liberty-accent transition-colors" />
+              <span className="text-liberty-primary group-hover:text-liberty-accent transition-colors">
                 {contactInfo.phone.display}
-              </a>
-            </div>
+              </span>
+            </a>
             
-            <div className="flex items-center gap-3 border border-liberty-accent/60 p-8">
-              <MapPin className="w-5 h-5 text-liberty-accent" />
-              <span className="text-liberty-background">{contactInfo.location.display}</span>
+            <div className="flex items-center gap-3 border border-liberty-primary p-8">
+              <MapPin className="w-5 h-5 text-liberty-primary" />
+              <span className="text-liberty-primary">{contactInfo.location.display}</span>
             </div>
           </motion.div>
 
@@ -103,10 +103,10 @@ export default function ContactPage() {
             <Button
               onClick={scrollToForm}
               variant="outline"
-              size="lg"
-              className="border-liberty-accent text-liberty-accent hover:bg-liberty-accent hover:text-liberty-background transition-colors rounded-full px-8 py-3"
+              size="xl"
+              className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-liberty-secondary transition-colors rounded-full px-8 py-3"
             >
-              Get Started
+              Send us a message
               <ChevronDown className="w-5 h-5 ml-2 animate-bounce" />
             </Button>
           </motion.div>
@@ -125,7 +125,7 @@ export default function ContactPage() {
           <Image
             src="/london.png"
             alt="London skyline"
-            width={1200}
+            width={1500}
             height={600}
             className="w-full h-[400px] lg:h-[600px] object-cover"
             priority
@@ -224,7 +224,7 @@ export default function ContactPage() {
                     <Button
                       size="xl"
                       type="submit"
-                      className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-background px-12 py-4 rounded-full font-medium group text-lg"
+                      className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-secondary px-12 py-4 rounded-full font-medium group text-lg"
                     >
                       Let's Talk
                       <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform ml-2" />
