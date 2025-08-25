@@ -1,10 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { 
-  ArrowLeft, 
+import {
   CheckCircle, 
   Users, 
   Building,
@@ -337,8 +335,8 @@ export default function WhatIsRTM() {
               Not sure which option is right for you? We can help you decide.
             </p>
             <Button variant="outline" asChild className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-liberty-base">
-              <Link href="/eligibility-check">
-                Get Personalized Advice
+              <Link href="/contact">
+                Get Personalised Advice
               </Link>
             </Button>
           </motion.div>

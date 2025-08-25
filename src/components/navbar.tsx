@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
-import { Menu, ArrowRight, Calculator, FileText, Users, Building } from 'lucide-react'
+import { Menu, ArrowRight, FileText, Users, Building } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet'
 import {
@@ -100,7 +100,7 @@ export default function Navbar() {
           {/* Desktop CTA Button - Right side */}
           <div className="hidden lg:flex justify-end">
             <Button asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base">
-              <Link href="/get-started" className="flex items-center gap-2">
+              <Link href="/eligibility-check" className="flex items-center gap-2">
                 Get Started
               </Link>
             </Button>
@@ -233,7 +233,7 @@ export default function Navbar() {
                 {/* Fixed footer with CTA */}
                 <SheetFooter className="flex-shrink-0 px-2 pb-4">
                   <Button asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base w-full h-12">
-                    <Link href="/get-started" onClick={() => setIsOpen(false)} className="flex items-center justify-center gap-2">
+                    <Link href="/eligibility-check" onClick={() => setIsOpen(false)} className="flex items-center justify-center gap-2">
                       Get Started
                       <ArrowRight className="h-4 w-4" />
                     </Link>
