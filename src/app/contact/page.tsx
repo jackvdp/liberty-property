@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Mail, Phone, MapPin } from 'lucide-react'
+import { ArrowRight, Mail, Phone, MapPin, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { contactInfo } from '@/data/contact-info'
@@ -33,6 +33,12 @@ export default function ContactPage() {
     }))
   }
 
+  const scrollToForm = () => {
+    document.getElementById('contact-form')?.scrollIntoView({
+      behavior: 'smooth'
+    })
+  }
+
   return (
     <div className="min-h-screen bg-liberty-base">
       <Navbar />
@@ -54,60 +60,56 @@ export default function ContactPage() {
             </p>
           </motion.div>
 
-          {/* Contact Info Cards */}
-          <div className="grid md:grid-cols-3 gap-6 mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.5 }}
-            >
-              <Card className="bg-liberty-base shadow-lg border-liberty-secondary/20 text-center p-6">
-                <div className="p-3 bg-liberty-accent/10 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
-                  <Mail className="w-6 h-6 text-liberty-accent" />
-                </div>
-                <h3 className="font-semibold text-liberty-background mb-1 text-sm">Email Us</h3>
-                <a 
-                  href={contactInfo.email.href}
-                  className="text-liberty-background/60 hover:text-liberty-accent transition-colors text-sm"
-                >
-                  {contactInfo.email.address}
-                </a>
-              </Card>
-            </motion.div>
+          {/* Contact Info */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.5 }}
+            className="flex flex-wrap justify-center gap-8 mb-12"
+          >
+            <div className="flex items-center gap-3 border border-liberty-accent/60 p-8">
+              <Mail className="w-5 h-5 text-liberty-accent" />
+              <a 
+                href={contactInfo.email.href}
+                className="text-liberty-background hover:text-liberty-accent transition-colors"
+              >
+                {contactInfo.email.address}
+              </a>
+            </div>
+            
+            <div className="flex items-center gap-3 border border-liberty-accent/60 p-8">
+              <Phone className="w-5 h-5 text-liberty-accent" />
+              <a 
+                href={contactInfo.phone.href}
+                className="text-liberty-background hover:text-liberty-accent transition-colors"
+              >
+                {contactInfo.phone.display}
+              </a>
+            </div>
+            
+            <div className="flex items-center gap-3 border border-liberty-accent/60 p-8">
+              <MapPin className="w-5 h-5 text-liberty-accent" />
+              <span className="text-liberty-background">{contactInfo.location.display}</span>
+            </div>
+          </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
+          {/* Scroll to Form Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="text-center"
+          >
+            <Button
+              onClick={scrollToForm}
+              variant="outline"
+              size="lg"
+              className="border-liberty-accent text-liberty-accent hover:bg-liberty-accent hover:text-liberty-background transition-colors rounded-full px-8 py-3"
             >
-              <Card className="bg-liberty-base shadow-lg border-liberty-secondary/20 text-center p-6">
-                <div className="p-3 bg-liberty-accent/10 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
-                  <Phone className="w-6 h-6 text-liberty-accent" />
-                </div>
-                <h3 className="font-semibold text-liberty-background mb-1 text-sm">Call Us</h3>
-                <a 
-                  href={contactInfo.phone.href}
-                  className="text-liberty-background/60 hover:text-liberty-accent transition-colors text-sm"
-                >
-                  {contactInfo.phone.display}
-                </a>
-              </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-            >
-              <Card className="bg-liberty-base shadow-lg border-liberty-secondary/20 text-center p-6">
-                <div className="p-3 bg-liberty-accent/10 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
-                  <MapPin className="w-6 h-6 text-liberty-accent" />
-                </div>
-                <h3 className="font-semibold text-liberty-background mb-1 text-sm">Coverage</h3>
-                <p className="text-liberty-background/60 text-sm">{contactInfo.location.display}</p>
-              </Card>
-            </motion.div>
-          </div>
+              Get Started
+              <ChevronDown className="w-5 h-5 ml-2 animate-bounce" />
+            </Button>
+          </motion.div>
         </div>
       </section>
 
@@ -132,7 +134,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form */}
-      <section className="py-20 bg-liberty-secondary/40">
+      <section id="contact-form" className="py-20 bg-liberty-secondary/40">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -144,7 +146,7 @@ export default function ContactPage() {
               <CardContent className="p-8 lg:p-12">
                 <div className="text-center mb-8">
                   <h2 className="text-3xl lg:text-4xl font-reckless font-bold text-liberty-background mb-4">
-                    Let's Talk
+                    Let's <span className="text-liberty-accent">Talk</span>
                   </h2>
                   <p className="text-xl text-liberty-background/60">
                     Tell us about your situation and we'll schedule a consultation to discuss your options
