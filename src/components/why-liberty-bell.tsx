@@ -4,23 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-
-const whyLibertyBellContent = {
-  title: "Why Liberty Bell?",
-  messages: [
-    "We're leaseholders too. We've been through this.",
-    "We've felt powerless, overcharged, and ignored.",
-    "Now we've built the tools to change that, for everyone."
-  ],
-  cta: {
-    text: "Our Story",
-    link: "/about"
-  },
-  image: {
-    src: "/couple-happy.jpeg",
-    alt: "Happy couple celebrating their property ownership success"
-  }
-}
+import { websiteContent } from '@/data/website-content'
 
 export default function WhyLibertyBell() {
   return (
@@ -35,8 +19,8 @@ export default function WhyLibertyBell() {
         >
           <div className="relative h-[300px] lg:h-[500px]">
             <Image
-              src={whyLibertyBellContent.image.src}
-              alt={whyLibertyBellContent.image.alt}
+              src={websiteContent.whyLibertyBell.image.src}
+              alt={websiteContent.whyLibertyBell.image.alt}
               fill
               className="object-cover"
             />
@@ -46,10 +30,10 @@ export default function WhyLibertyBell() {
             <div className="absolute inset-0 flex items-center">
               <div className="max-w-2xl px-8 lg:px-16">
                 <h2 className="text-3xl lg:text-4xl font-reckless font-bold !text-white mb-4 leading-tight">
-                  {whyLibertyBellContent.title}
+                  {websiteContent.whyLibertyBell.title}
                 </h2>
                 <div className="space-y-2 text-white/90 text-base lg:text-lg mb-6 tex-bold">
-                  {whyLibertyBellContent.messages.map((message, index) => (
+                  {websiteContent.whyLibertyBell.messages.map((message, index) => (
                     <p key={index}>{message}</p>
                   ))}
                 </div>
@@ -59,8 +43,8 @@ export default function WhyLibertyBell() {
                   asChild 
                   className="border-white text-white hover:bg-white hover:text-liberty-background"
                 >
-                  <Link href={whyLibertyBellContent.cta.link}>
-                    {whyLibertyBellContent.cta.text}
+                  <Link href={websiteContent.whyLibertyBell.cta.link}>
+                    {websiteContent.whyLibertyBell.cta.text}
                   </Link>
                 </Button>
               </div>

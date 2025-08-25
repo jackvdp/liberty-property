@@ -10,40 +10,26 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-
-const pricingContent = {
-  header: {
-    title: "No Surprises, No Hidden Costs",
-    subtitle: "Transparent, fixed-fee pricing with our savings-based model"
-  },
-  savingsModel: {
-    strongText: "You pay the upfront fee to help you get control. We take a cut of the savings.",
-    description: "The upfront fee covers all the legal work and processes. Our revenue comes from the savings we create for you through better management."
-  },
-  cta: {
-    primaryButton: "Get A Quote",
-    secondaryButton: "Register Your Building"
-  }
-}
+import { websiteContent } from '@/data/website-content'
 
 const pricingItems = [
   {
     icon: Building,
-    title: "RTM Process",
-    price: "£2,000 + VAT",
-    description: "Complete Right to Manage process to take control of your building"
+    title: websiteContent.pricing.items[0].title,
+    price: websiteContent.pricing.items[0].price,
+    description: websiteContent.pricing.items[0].description
   },
   {
     icon: PoundSterling,
-    title: "Enfranchisement",
-    price: "£500-£2,000 per flat",
-    description: "Collective purchase of your freehold - varies by building complexity"
+    title: websiteContent.pricing.items[1].title,
+    price: websiteContent.pricing.items[1].price,
+    description: websiteContent.pricing.items[1].description
   },
   {
     icon: Users,
-    title: "Aftercare",
-    price: "Optional monthly pricing",
-    description: "Want to live hassle free? Leave it with our professional building management and release your savings"
+    title: websiteContent.pricing.items[2].title,
+    price: websiteContent.pricing.items[2].price,
+    description: websiteContent.pricing.items[2].description
   }
 ]
 
@@ -61,10 +47,10 @@ export default function PricingSection() {
           className="text-center mb-8"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold !text-liberty-base mb-6">
-            {pricingContent.header.title.split(', ')[0]}, <span className="text-liberty-accent">{pricingContent.header.title.split(', ')[1]}</span>
+            {websiteContent.pricing.header.title.split(', ')[0]}, <span className="text-liberty-accent">{websiteContent.pricing.header.title.split(', ')[1]}</span>
           </h2>
           <p className="text-xl text-liberty-base/70 max-w-3xl mx-auto">
-            {pricingContent.header.subtitle}
+            {websiteContent.pricing.header.subtitle}
           </p>
         </motion.div>
 
@@ -78,9 +64,9 @@ export default function PricingSection() {
         >
           <div className="max-w-4xl mx-auto space-y-4 text-liberty-base/80 text-lg">
             <p>
-              <strong className="!text-liberty-base">{pricingContent.savingsModel.strongText}</strong>
+              <strong className="!text-liberty-base">{websiteContent.pricing.savingsModel.strongText}</strong>
               {' '}
-              {pricingContent.savingsModel.description}
+              {websiteContent.pricing.savingsModel.description}
             </p>
           </div>
         </motion.div>
@@ -136,7 +122,7 @@ export default function PricingSection() {
               className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-background"
             >
               <Link href="/get-quote" className="flex items-center gap-3 group">
-                {pricingContent.cta.primaryButton}
+                {websiteContent.pricing.cta.primaryButton}
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
@@ -147,7 +133,7 @@ export default function PricingSection() {
               className="border-liberty-base text-liberty-base hover:bg-liberty-base hover:text-liberty-background"
             >
               <Link href="/register-building">
-                {pricingContent.cta.secondaryButton}
+                {websiteContent.pricing.cta.secondaryButton}
               </Link>
             </Button>
           </div>

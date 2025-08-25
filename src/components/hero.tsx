@@ -5,55 +5,7 @@ import Image from 'next/image'
 import { ArrowRight, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
-
-const content = {
-  badge: {
-    text: "The Property Institute Accredited",
-    href: "https://www.tpi.org.uk/"
-  },
-  headline: {
-    main: "Take Back Control of",
-    highlight: "Your Building"
-  },
-  description: "Stop battling unfair charges and poor service every day. We help leaseholders across England & Wales gain legal control, cut costs, and finally live in and enjoy your home stress-free.",
-  buttons: {
-    primary: {
-      text: "Check Your Eligibility",
-      href: "/eligibility-check"
-    },
-    secondary: {
-      text: "Our Story", 
-      href: "/about"
-    }
-  },
-  image: {
-    src: "/family.jpeg",
-    alt: "Modern apartment building representing property ownership freedom"
-  },
-  partners: {
-    subtitle: "Trusted by leading institutions and professional bodies",
-    items: [
-      {
-        name: 'Property Institute',
-        image: '/partners/property-institute.png',
-        alt: 'Property Institute - Professional accreditation',
-        url: 'https://www.tpi.org.uk/'
-      },
-      {
-        name: 'Santander',
-        image: '/partners/santander.png',
-        alt: 'Santander - Trusted financial partner',
-        url: 'https://www.santander.co.uk/'
-      },
-      {
-        name: 'MHLCG',
-        image: '/partners/mhlcg.png',
-        alt: 'Ministry of Housing, Communities & Local Government',
-        url: 'https://www.gov.uk/government/organisations/ministry-of-housing-communities-local-government'
-      }
-    ]
-  }
-}
+import { websiteContent } from '@/data/website-content'
 
 export default function Hero() {
   return (
@@ -69,13 +21,13 @@ export default function Hero() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
               >
                 <Link
-                  href={content.badge.href}
+                  href={websiteContent.hero.badge.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-liberty-accent/10 text-liberty-accent px-4 py-2 rounded-full text-sm font-medium mb-6 border border-liberty-accent/20 hover:bg-liberty-accent/20 hover:scale-105 transition-all duration-300"
                 >
                   <CheckCircle size={16} />
-                  <strong>{content.badge.text}</strong>
+                  <strong>{websiteContent.hero.badge.text}</strong>
                 </Link>
               </motion.div>
 
@@ -85,8 +37,8 @@ export default function Hero() {
                 transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
                 className="text-4xl lg:text-5xl xl:text-6xl font-reckless font-bold text-liberty-background mb-6 leading-tight"
               >
-                {content.headline.main}{' '}
-                <span className="text-liberty-accent">{content.headline.highlight}</span>
+                {websiteContent.hero.headline.main}{' '}
+                <span className="text-liberty-accent">{websiteContent.hero.headline.highlight}</span>
               </motion.h1>
               
               <motion.p 
@@ -95,7 +47,7 @@ export default function Hero() {
                 transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                 className="text-lg lg:text-xl text-liberty-background/70 mb-8 leading-relaxed"
               >
-                {content.description}
+                {websiteContent.hero.description}
               </motion.p>
               
               <motion.div 
@@ -105,14 +57,14 @@ export default function Hero() {
                 className="flex flex-col sm:flex-row gap-4"
               >
                 <Button size="xl" asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base">
-                  <Link href={content.buttons.primary.href} className="flex items-center gap-3 group">
-                    {content.buttons.primary.text}
+                  <Link href={websiteContent.hero.buttons.primary.href} className="flex items-center gap-3 group">
+                    {websiteContent.hero.buttons.primary.text}
                     <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </Button>
                 <Button size="xl" variant="outline" asChild className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-liberty-base">
-                  <Link href={content.buttons.secondary.href}>
-                    {content.buttons.secondary.text}
+                  <Link href={websiteContent.hero.buttons.secondary.href}>
+                    {websiteContent.hero.buttons.secondary.text}
                   </Link>
                 </Button>
               </motion.div>
@@ -136,8 +88,8 @@ export default function Hero() {
                 className="w-full h-full"
               >
                 <Image
-                  src={content.image.src}
-                  alt={content.image.alt}
+                  src={websiteContent.hero.image.src}
+                  alt={websiteContent.hero.image.alt}
                   fill
                   className="object-cover"
                   priority
@@ -161,10 +113,10 @@ export default function Hero() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center">
             <p className="text-sm text-liberty-background/60 mb-4 text-center">
-              {content.partners.subtitle}
+              {websiteContent.hero.partners.subtitle}
             </p>
             <div className="flex items-center justify-center gap-8 lg:gap-24 flex-wrap">
-              {content.partners.items.map((partner, index) => (
+              {websiteContent.hero.partners.items.map((partner, index) => (
                 <motion.div
                   key={partner.name}
                   initial={{ opacity: 0, y: 20 }}
