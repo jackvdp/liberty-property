@@ -88,7 +88,7 @@ export const content = {
           links: [
             {
               text: "Right to Manage (RTM)",
-              href: "/what-is-rtm"
+              href: "/right-to-manage"
             },
             {
               text: "Collective Enfranchisement", 
@@ -148,7 +148,7 @@ export const content = {
         links: [
           {
             text: "Right to Manage",
-            href: "/what-is-rtm"
+            href: "/right-to-manage"
           },
           {
             text: "Collective Enfranchisement",
@@ -191,6 +191,10 @@ export const content = {
       button: {
         text: "Check Your Eligibility Now",
         href: "/eligibility-check"
+      },
+      secondaryButton: {
+        text: "Find Out More",
+        href: "/how-it-works"
       }
     }
   },

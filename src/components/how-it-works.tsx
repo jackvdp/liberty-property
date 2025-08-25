@@ -195,7 +195,7 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
                                       {point.includes('Right to Manage') ? (
                                         <>
                                           Instant assessment for{' '}
-                                          <Link href="/what-is-rtm" className="text-liberty-primary hover:text-liberty-primary/80 underline">
+                                          <Link href="/right-to-manage" className="text-liberty-primary hover:text-liberty-primary/80 underline">
                                             Right to Manage
                                           </Link>{' '}
                                           eligibility
@@ -287,7 +287,7 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
                               {point.includes('Right to Manage') ? (
                                 <>
                                   Instant assessment for{' '}
-                                  <Link href="/what-is-rtm" className="text-liberty-primary hover:text-liberty-primary/80 underline">
+                                  <Link href="/right-to-manage" className="text-liberty-primary hover:text-liberty-primary/80 underline">
                                     Right to Manage
                                   </Link>{' '}
                                   eligibility
@@ -347,15 +347,27 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
               <p className="text-liberty-secondary mb-6">
                 {content.howItWorks.cta.subtitle}
               </p>
-              <Button 
-                size="xl" 
-                asChild
-                className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-background"
-              >
-                <Link href={content.howItWorks.cta.button.href}>
-                  {content.howItWorks.cta.button.text}
-                </Link>
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button 
+                  size="xl" 
+                  asChild
+                  className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-background"
+                >
+                  <Link href={content.howItWorks.cta.button.href}>
+                    {content.howItWorks.cta.button.text}
+                  </Link>
+                </Button>
+                <Button 
+                  size="xl" 
+                  variant="outline"
+                  asChild
+                  className="border-liberty-base text-liberty-base hover:bg-liberty-base hover:text-liberty-background"
+                >
+                  <Link href={content.howItWorks.cta.secondaryButton.href}>
+                    {content.howItWorks.cta.secondaryButton.text}
+                  </Link>
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </motion.div>
