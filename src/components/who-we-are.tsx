@@ -31,7 +31,7 @@ const communityBenefits = [
 
 export default function WhoWeAre() {
   return (
-    <section className="py-16 sm:py-24 lg:py-32 bg-liberty-background relative overflow-hidden">
+    <section className="py-16 sm:py-24 lg:py-32 bg-liberty-base relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         {/*<div className="absolute inset-0 bg-" width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]" />*/}
@@ -47,8 +47,8 @@ export default function WhoWeAre() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold !text-white mb-6">
-            Who We Are and <span className="text-liberty-accent">What We Stand For</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
+            Who We Are &<br/> <span className="text-liberty-accent">What We Stand For</span>
           </h2>
         </motion.div>
 
@@ -63,15 +63,15 @@ export default function WhoWeAre() {
               className="space-y-6"
             >
 
-              <div className="space-y-4 text-white/90 leading-relaxed">
+              <div className="space-y-4 text-liberty-background/80 leading-relaxed">
                 <p>
-                  <strong><strong className="text-liberty-accent">Hello, I'm James – a leaseholder like you.</strong> I co-set up Liberty Bell Ethical Enfranchisement Ltd to help other leaseholders</strong> because the system is broken and I couldn't find anyone to help me except expensive lawyers.
+                  <strong><strong className="text-liberty-primary">Hello, I'm James – a leaseholder like you.</strong> I co-set up Liberty Bell Ethical Enfranchisement Ltd to help other leaseholders</strong> because the system is broken and I couldn't find anyone to help me except expensive lawyers.
                 </p>
                 <p>
                   I want to use the knowledge and experience I have gained battling my own management company and freeholder to help you.
                 </p>
                 <p>
-                  Here at Liberty Bell our approach is <strong className="text-liberty-accent">'by leaseholders for leaseholders'</strong> and not only do we want to help people take back control of their building but we also want to create a community where we all help each other afterwards.
+                  Here at Liberty Bell our approach is <strong className="text-liberty-primary">'by leaseholders for leaseholders'</strong> and not only do we want to help people take back control of their building but we also want to create a community where we all help each other afterwards.
                 </p>
               </div>
             </motion.div>
@@ -92,7 +92,7 @@ export default function WhoWeAre() {
                 fill
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent" />
+              <div className="absolute inset-0 bg-slate-900/20" />
               
               {/* Parliament Badge */}
               <div className="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-sm p-3 rounded-lg">
@@ -120,12 +120,12 @@ export default function WhoWeAre() {
           viewport={{ once: true }}
           className="mb-12"
         >
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 lg:p-12 border border-white/10">
+          <div className="bg-liberty-secondary/20 rounded-2xl p-8 lg:p-12 border border-liberty-secondary/40">
             <div className="text-center mb-8">
-              <h3 className="text-2xl lg:text-3xl font-reckless font-bold !text-white mb-4">
+              <h3 className="text-2xl lg:text-3xl font-reckless font-bold text-liberty-background mb-4">
                 Building a <span className="text-liberty-accent">Community Together</span>
               </h3>
-              <p className="text-white/90 text-lg leading-relaxed max-w-4xl mx-auto">
+              <p className="text-liberty-background/80 text-lg leading-relaxed max-w-4xl mx-auto">
                 We want to help leaseholders and commonholders pool their information about costs and charges and build a knowledge base to:
               </p>
             </div>
@@ -138,12 +138,12 @@ export default function WhoWeAre() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
                   viewport={{ once: true }}
-                  className="flex items-start gap-4 p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 hover:bg-white/15 transition-colors duration-300"
+                  className="flex items-start gap-4 p-6 bg-white rounded-xl border border-liberty-secondary/30 hover:border-liberty-accent/50 transition-colors duration-300 shadow-sm"
                 >
                   <div className="flex-shrink-0 w-10 h-10 bg-liberty-accent/20 rounded-full flex items-center justify-center">
                     <benefit.icon className="w-5 h-5 text-liberty-accent" />
                   </div>
-                  <p className="text-white/90 leading-relaxed">
+                  <p className="text-liberty-background/80 leading-relaxed">
                     {benefit.text}
                   </p>
                 </motion.div>
@@ -151,10 +151,10 @@ export default function WhoWeAre() {
             </div>
 
             <div className="text-center">
-              <p className="text-white/90 text-lg mb-6">
+              <p className="text-liberty-background/80 text-lg mb-6">
                 <strong>We want to change the way the market works</strong> giving knowledge and power to us as buyers.
               </p>
-              <p className="text-liberty-accent text-xl font-semibold mb-8">
+              <p className="text-liberty-primary text-xl font-semibold mb-8">
                 Join us because as a community together we are better and stronger!
               </p>
             </div>
@@ -169,14 +169,14 @@ export default function WhoWeAre() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="bg-gradient-to-r from-liberty-accent/20 to-liberty-primary/20 rounded-xl p-8 border border-liberty-accent/30">
+          <div className="bg-liberty-secondary/30 rounded-xl p-8 border border-liberty-accent/30">
             <div className="flex items-center justify-center gap-3 mb-6">
               <Heart className="text-liberty-accent w-8 h-8" />
-              <h3 className="text-2xl font-reckless font-bold !text-white">
+              <h3 className="text-2xl font-reckless font-bold text-liberty-background">
                 Join Our Community
               </h3>
             </div>
-            <p className="text-white/90 mb-6 text-lg">
+            <p className="text-liberty-background/80 mb-6 text-lg">
               Contact us if you'd like to be part of the community and help other leaseholders take control.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -186,7 +186,7 @@ export default function WhoWeAre() {
                   Contact Us Today
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" asChild className="border-white/40 text-white hover:bg-white/10">
+              <Button variant="outline" size="lg" asChild className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white">
                 <Link href="/about" className="flex items-center gap-3">
                   Learn More About Us
                   <ArrowRight size={20} />
@@ -204,7 +204,7 @@ export default function WhoWeAre() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-reckless font-bold !text-white mb-8 leading-tight">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-reckless font-bold text-liberty-background mb-8 leading-tight">
             Check Your Eligibility &<br/> <span className="text-liberty-accent">Potential Savings</span>
           </h2>
           
