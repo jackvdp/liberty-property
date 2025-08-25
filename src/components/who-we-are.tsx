@@ -180,10 +180,10 @@ export default function WhoWeAre() {
               Contact us if you'd like to be part of the community and help other leaseholders take control.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button size="lg" asChild className="bg-liberty-accent hover:bg-liberty-accent/90 text-white">
+              <Button size="lg" asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-white">
                 <Link href="mailto:hello@libertybell.co.uk" className="flex items-center gap-3">
                   <MessageCircle size={20} />
-                  Contact Us Today
+                  Contact Us
                 </Link>
               </Button>
               <Button variant="outline" size="lg" asChild className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white">
@@ -208,7 +208,7 @@ export default function WhoWeAre() {
             Check Your Eligibility &<br/> <span className="text-liberty-accent">Potential Savings</span>
           </h2>
           
-          <Button size="xl" asChild className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-standard px-12 py-6 text-xl font-semibold">
+          <Button size="xl" asChild className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-standard px-12 py-6">
             <Link href="/eligibility-check" className="flex items-center gap-4 group">
               Check Your Eligibility
               <ArrowRight size={28} className="group-hover:translate-x-1 transition-transform" />

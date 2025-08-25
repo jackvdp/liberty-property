@@ -78,9 +78,9 @@ export default function AboutUs() {
               </div>
 
               <div className="pt-4">
-                <Button asChild size="lg" className="bg-liberty-primary hover:bg-liberty-primary/90 text-white">
+                <Button asChild size="xl" className="bg-liberty-primary hover:bg-liberty-primary/90 text-white">
                   <Link href="/how-it-works" className="flex items-center gap-3 group">
-                    See How It Works
+                    How It Works
                     <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </Button>
@@ -104,21 +104,6 @@ export default function AboutUs() {
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-liberty-primary/10" />
-              
-              {/* Success Badge */}
-              <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm p-4 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <Users className="text-liberty-accent w-6 h-6" />
-                  <div>
-                    <p className="font-semibold text-liberty-background text-sm">
-                      Successful Enfranchisement
-                    </p>
-                    <p className="text-liberty-background/70 text-xs">
-                      "Finally in control of our home"
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
           </motion.div>
         </div>
