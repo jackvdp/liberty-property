@@ -1,0 +1,237 @@
+{
+  "wizardFlow": {
+    "title": "Liberty Bell RTM & CE Eligibility Wizard",
+    "description": "Determine your eligibility for Right to Manage (RTM) and Collective Enfranchisement (CE)",
+    "questions": {
+      "q1": {
+        "id": "property_type",
+        "question": "Is your property a flat or a house?",
+        "description": "This helps us work out what types of legal rights might apply.",
+        "type": "radio",
+        "options": [
+          { "value": "flat", "label": "Flat" },
+          { "value": "house", "label": "House" }
+        ],
+        "nextQuestion": {
+          "flat": "q2_flat",
+          "house": "q2_house"
+        }
+      },
+      "q2_flat": {
+        "id": "flat_leasehold",
+        "question": "Is your flat leasehold?",
+        "description": "Most flats in England and Wales are leasehold",
+        "type": "radio",
+        "options": [
+          { "value": "yes", "label": "Yes" },
+          { "value": "no", "label": "No" }
+        ],
+        "nextQuestion": {
+          "yes": "q3",
+          "no": "ineligible_not_leasehold"
+        }
+      },
+      "q2_house": {
+        "id": "house_rmc",
+        "question": "Is there a Residents' Management Company (RMC) in place?",
+        "description": "If so, we can help you take it over or improve services. You can usually find this information in your lease or on your most recent service charge invoice.",
+        "type": "radio",
+        "options": [
+          { "value": "yes", "label": "Yes" },
+          { "value": "no", "label": "No" },
+          { "value": "dont_know", "label": "Don't know" }
+        ],
+        "nextQuestion": {
+          "yes": "rmc_process",
+          "no": "ineligible_house_no_rmc",
+          "dont_know": "rmc_process"
+        }
+      },
+      "q3": {
+        "id": "existing_rmc_rtm",
+        "question": "Is there a Residents' Management Company (RMC) or RTM company already in place?",
+        "description": "If so, we can help you take it over or improve services. You can usually find this information in your lease or on your most recent service charge invoice.",
+        "type": "radio",
+        "options": [
+          { "value": "yes", "label": "Yes" },
+          { "value": "no", "label": "No" },
+          { "value": "dont_know", "label": "Don't know" }
+        ],
+        "nextQuestion": {
+          "yes": "rmc_process",
+          "no": "q4",
+          "dont_know": "rmc_process"
+        }
+      },
+      "q4": {
+        "id": "flat_count",
+        "question": "How many flats are there in your building?",
+        "description": "Please enter a number – we need at least 2 to proceed.",
+        "type": "number",
+        "validation": {
+          "min": 2,
+          "required": true
+        },
+        "nextQuestion": "q5"
+      },
+      "q5": {
+        "id": "long_leaseholders",
+        "question": "Are at least two thirds of the flats owned by long leaseholders (original leases longer than 21 years)?",
+        "type": "radio",
+        "options": [
+          { "value": "yes", "label": "Yes" },
+          { "value": "no", "label": "No" },
+          { "value": "dont_know", "label": "Don't know" }
+        ],
+        "nextQuestion": "q6"
+      },
+      "q6": {
+        "id": "single_owner_multiple_flats",
+        "question": "Does any one person or company own more than two flats in the building?",
+        "description": "If they do, their flats can't be counted for certain legal thresholds.",
+        "type": "radio",
+        "options": [
+          { "value": "yes", "label": "Yes" },
+          { "value": "no", "label": "No" },
+          { "value": "dont_know", "label": "Don't know" }
+        ],
+        "nextQuestion": "q7a"
+      },
+      "q7a": {
+        "id": "non_residential_space",
+        "question": "Does your building contain any non residential space?",
+        "description": "e.g. shops, restaurants, offices, commercial units, or storage not used by residents",
+        "type": "radio",
+        "options": [
+          { "value": "yes", "label": "Yes" },
+          { "value": "no", "label": "No" },
+          { "value": "dont_know", "label": "Don't know" }
+        ],
+        "nextQuestion": {
+          "yes": "q7b",
+          "no": "q8",
+          "dont_know": "q7b"
+        }
+      },
+      "q7b": {
+        "id": "non_residential_proportion",
+        "question": "Roughly what proportion of the building is non residential?",
+        "description": "Exclude communal areas like stairs or bin stores.",
+        "type": "radio",
+        "options": [
+          { "value": "25_or_less", "label": "25% or less" },
+          { "value": "25_to_50", "label": "More than 25% but no more than 50%" },
+          { "value": "more_than_50", "label": "More than 50%" },
+          { "value": "dont_know", "label": "Don't know" }
+        ],
+        "nextQuestion": {
+          "25_or_less": "q8",
+          "25_to_50": "q8",
+          "more_than_50": "ineligible_too_much_commercial",
+          "dont_know": "q8"
+        }
+      },
+      "q8": {
+        "id": "converted_house",
+        "question": "Was the building originally a house that was later converted into flats?",
+        "type": "radio",
+        "options": [
+          { "value": "yes", "label": "Yes" },
+          { "value": "no", "label": "No" },
+          { "value": "dont_know", "label": "Don't know" }
+        ],
+        "nextQuestion": {
+          "yes": "q9",
+          "no": "q10",
+          "dont_know": "q10"
+        }
+      },
+      "q9": {
+        "id": "freeholder_lives_in_building",
+        "question": "Does the freeholder or one of their family members live in the building now?",
+        "description": "This affects exemptions for small conversions only.",
+        "type": "radio",
+        "options": [
+          { "value": "yes", "label": "Yes" },
+          { "value": "no", "label": "No" },
+          { "value": "dont_know", "label": "Don't know" }
+        ],
+        "nextQuestion": "q10"
+      },
+      "q10": {
+        "id": "leaseholder_support",
+        "question": "Do at least half of the leaseholders in your building support taking back control – or are likely to once they understand the benefits?",
+        "description": "We'll show you exactly how to engage your neighbours if you're not sure yet.",
+        "type": "radio",
+        "options": [
+          { "value": "yes", "label": "Yes" },
+          { "value": "no", "label": "No" },
+          { "value": "dont_know", "label": "Don't know" }
+        ],
+        "nextQuestion": {
+          "yes": "eligible_registration",
+          "no": "leaseholder_engagement",
+          "dont_know": "leaseholder_engagement"
+        }
+      }
+    },
+    "outcomes": {
+      "eligible_registration": {
+        "type": "success",
+        "title": "Fantastic! You're eligible and ready to move forward.",
+        "message": "Let's get you registered.",
+        "action": "registration",
+        "color": "success"
+      },
+      "leaseholder_engagement": {
+        "type": "info",
+        "title": "No worries – we'll show you how to build support and get your neighbours on board.",
+        "message": "We can help you engage with other leaseholders in your building.",
+        "action": "leaseholder_engagement_module",
+        "color": "info"
+      },
+      "rmc_process": {
+        "type": "info",
+        "title": "Sounds like there's already a structure in place.",
+        "message": "We can help you take control of it or make it work better for leaseholders.",
+        "action": "rmc_process",
+        "color": "info"
+      },
+      "ineligible_not_leasehold": {
+        "type": "error",
+        "title": "Unfortunately only leasehold flats can acquire the right to manage.",
+        "message": "RTM and CE rights only apply to leasehold properties.",
+        "color": "error"
+      },
+      "ineligible_house_no_rmc": {
+        "type": "error",
+        "title": "Unfortunately we are unable to help as there are no pathways to acquire control of your building.",
+        "message": "Right to Manage and Collective Enfranchisement only apply to flats. But if you contribute to an estate charge there could be a Residents Management Company in place.",
+        "color": "error"
+      },
+      "ineligible_too_much_commercial": {
+        "type": "error",
+        "title": "Unfortunately, buildings with over 50% commercial space aren't eligible for RTM or CE.",
+        "message": "The commercial space proportion exceeds the legal limits for these rights.",
+        "color": "error"
+      }
+    },
+    "modules": {
+      "leaseholder_engagement_module": {
+        "title": "Leaseholder Engagement Module",
+        "description": "Tools and guidance to help you build support among your neighbours",
+        "actions": ["education_materials", "neighbor_outreach_templates", "benefits_calculator"]
+      },
+      "rmc_process": {
+        "title": "RMC Process",
+        "description": "Help with taking over or improving existing management structures",
+        "actions": ["rmc_takeover", "service_improvement", "governance_review"]
+      },
+      "registration": {
+        "title": "Registration",
+        "description": "Begin your journey to take control of your building",
+        "actions": ["start_rtm_process", "start_ce_process", "book_consultation"]
+      }
+    }
+  }
+}
