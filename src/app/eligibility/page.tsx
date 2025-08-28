@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -25,6 +26,7 @@ export default function EligibilityWizard() {
   const [progress, setProgress] = useState<number>(0);
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [outcome, setOutcome] = useState<any>(null);
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
   const { questions, outcomes } = wizardData.wizardFlow;
   const currentQuestion = questions[currentQuestionId as keyof typeof questions];
@@ -53,8 +55,13 @@ export default function EligibilityWizard() {
     return null;
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (!currentAnswer) return;
+
+    setIsAnimating(true);
+
+    // Small delay for exit animation
+    await new Promise(resolve => setTimeout(resolve, 150));
 
     // Save the current answer
     const newAnswers = [...answers, { questionId: currentQuestionId, value: currentAnswer }];
@@ -71,10 +78,17 @@ export default function EligibilityWizard() {
       setOutcome(outcomes[nextQuestionId as keyof typeof outcomes]);
       setIsComplete(true);
     }
+
+    setIsAnimating(false);
   };
 
-  const handleBack = () => {
+  const handleBack = async () => {
     if (answers.length === 0) return;
+
+    setIsAnimating(true);
+
+    // Small delay for exit animation
+    await new Promise(resolve => setTimeout(resolve, 150));
 
     const previousAnswers = answers.slice(0, -1);
     setAnswers(previousAnswers);
@@ -89,6 +103,7 @@ export default function EligibilityWizard() {
 
     setIsComplete(false);
     setOutcome(null);
+    setIsAnimating(false);
   };
 
   const handleRestart = () => {
@@ -125,16 +140,37 @@ export default function EligibilityWizard() {
   if (isComplete && outcome) {
     return (
       <div className="min-h-screen bg-liberty-background flex items-center justify-center p-4">
-        <div className="w-full max-w-2xl">
+        <motion.div 
+          className="w-full max-w-2xl"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
           <Card className="bg-liberty-base border-liberty-secondary/20">
             <CardHeader className="text-center">
-              <div className="mx-auto mb-6 w-16 h-16 bg-liberty-primary/10 rounded-full flex items-center justify-center">
+              <motion.div 
+                className="mx-auto mb-6 w-16 h-16 bg-liberty-primary/10 rounded-full flex items-center justify-center"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2, duration: 0.4, ease: "easeOut" }}
+              >
                 {getAlertIcon(outcome.type)}
-              </div>
-              <CardTitle className="text-2xl font-reckless text-liberty-standard mb-2">
-                Assessment Complete
-              </CardTitle>
-              <div className="space-y-4 mb-4">
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.4 }}
+              >
+                <CardTitle className="text-2xl font-reckless text-liberty-standard mb-2">
+                  Assessment Complete
+                </CardTitle>
+              </motion.div>
+              <motion.div 
+                className="space-y-4 mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.4 }}
+              >
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-sm max-w-md mx-auto">
                     <span className="text-liberty-standard/70">Progress</span>
@@ -142,189 +178,286 @@ export default function EligibilityWizard() {
                   </div>
                   <div className="relative max-w-md mx-auto">
                     <Progress value={100} className="h-3 bg-liberty-secondary/30" />
-                    <div 
+                    <motion.div 
                       className="absolute top-0 left-0 h-3 w-full bg-liberty-primary rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: "100%" }}
+                      transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
                     />
                   </div>
                 </div>
-              </div>
-              <CardDescription className="text-liberty-standard/70">
-                Based on your answers, here's what we found
-              </CardDescription>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6, duration: 0.4 }}
+              >
+                <CardDescription className="text-liberty-standard/70">
+                  Based on your answers, here's what we found
+                </CardDescription>
+              </motion.div>
             </CardHeader>
             <CardContent>
-              <Alert variant={getAlertVariant(outcome.type)}>
-                {getAlertIcon(outcome.type)}
-                <AlertTitle className="text-lg">{outcome.title}</AlertTitle>
-                <AlertDescription className="mt-2 text-base">
-                  {outcome.message}
-                </AlertDescription>
-              </Alert>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7, duration: 0.4 }}
+              >
+                <Alert variant={getAlertVariant(outcome.type)}>
+                  {getAlertIcon(outcome.type)}
+                  <AlertTitle className="text-lg">{outcome.title}</AlertTitle>
+                  <AlertDescription className="mt-2 text-base">
+                    {outcome.message}
+                  </AlertDescription>
+                </Alert>
+              </motion.div>
             </CardContent>
             <CardFooter className="flex gap-3 justify-center">
-              <Button 
-                variant="outline" 
-                onClick={handleRestart}
-                className="border-liberty-secondary text-liberty-standard hover:bg-liberty-secondary/10"
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8, duration: 0.4 }}
+                className="flex gap-3"
               >
-                <ArrowLeft className="w-4 h-4" />
-                Start Over
-              </Button>
-              {outcome.type === "success" && (
-                <Button className="bg-liberty-primary hover:bg-liberty-primary/90 text-white">
-                  Get Started
-                  <ArrowRight className="w-4 h-4" />
+                <Button 
+                  variant="outline" 
+                  onClick={handleRestart}
+                  className="border-liberty-secondary text-liberty-standard hover:bg-liberty-secondary/10"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Start Over
                 </Button>
-              )}
-              {outcome.type === "info" && (
-                <Button className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-standard">
-                  Learn More
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-              )}
+                {outcome.type === "success" && (
+                  <Button className="bg-liberty-primary hover:bg-liberty-primary/90 text-white">
+                    Get Started
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                )}
+                {outcome.type === "info" && (
+                  <Button className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-standard">
+                    Learn More
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                )}
+              </motion.div>
             </CardFooter>
           </Card>
-        </div>
+        </motion.div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-liberty-background flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl">
+      <motion.div 
+        className="w-full max-w-2xl"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
         <Card className="bg-liberty-base border-liberty-secondary/20">
           <CardHeader>
-            <div className="flex items-center justify-between mb-6">
+            <motion.div 
+              className="flex items-center justify-between mb-6"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            >
               <CardTitle className="text-2xl font-reckless text-liberty-standard">
                 Eligibility Check
               </CardTitle>
-              <div className="text-sm text-liberty-standard/60 font-medium bg-liberty-secondary/20 px-3 py-1 rounded-full">
+              <motion.div 
+                className="text-sm text-liberty-standard/60 font-medium bg-liberty-secondary/20 px-3 py-1 rounded-full"
+                key={`question-${answeredQuestions}`}
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              >
                 Question {answeredQuestions + 1} of {totalQuestions}
-              </div>
-            </div>
-            <div className="space-y-4">
+              </motion.div>
+            </motion.div>
+            <motion.div 
+              className="space-y-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.1, duration: 0.4 }}
+            >
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-liberty-standard/70">Progress</span>
-                  <span className="text-liberty-primary font-medium">{Math.round(progress)}%</span>
+                  <motion.span 
+                    className="text-liberty-primary font-medium"
+                    key={progress}
+                    initial={{ scale: 0.8 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {Math.round(progress)}%
+                  </motion.span>
                 </div>
                 <div className="relative">
                   <Progress 
                     value={progress} 
                     className="h-3 bg-liberty-secondary/30" 
                   />
-                  <div 
+                  <motion.div 
                     className="absolute top-0 left-0 h-3 bg-liberty-primary rounded-full transition-all duration-500 ease-out"
-                    style={{ width: `${progress}%` }}
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progress}%` }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
                   />
                 </div>
               </div>
               <CardDescription className="text-liberty-standard/70">
                 Let's determine if your building qualifies for Right to Manage or Collective Enfranchisement
               </CardDescription>
-            </div>
+            </motion.div>
           </CardHeader>
 
           <CardContent className="space-y-6">
-            <div className="space-y-4">
-              <div>
-                <h3 className="text-lg font-semibold text-liberty-standard mb-2">
-                  {currentQuestion.question}
-                </h3>
-                {currentQuestion.description && (
-                  <p className="text-sm text-liberty-standard/70 mb-4">
-                    {currentQuestion.description}
-                  </p>
-                )}
-              </div>
-
-              {currentQuestion.type === "radio" && (
-                <RadioGroup 
-                  value={currentAnswer.toString()} 
-                  onValueChange={handleAnswerChange}
-                  className="space-y-3"
-                >
-                  {currentQuestion.options.map((option: any) => {
-                    const isSelected = currentAnswer.toString() === option.value;
-                    return (
-                      <div 
-                        key={option.value} 
-                        className={`flex items-center space-x-4 p-4 rounded-lg border-2 transition-all cursor-pointer ${
-                          isSelected 
-                            ? 'border-liberty-primary bg-liberty-primary/5 shadow-md' 
-                            : 'border-liberty-secondary/30 hover:border-liberty-secondary hover:bg-liberty-secondary/5'
-                        }`}
-                        onClick={() => handleAnswerChange(option.value)}
-                      >
-                        <RadioGroupItem 
-                          value={option.value} 
-                          id={option.value}
-                          className={`${
-                            isSelected 
-                              ? 'border-liberty-primary text-liberty-primary shadow-sm' 
-                              : 'border-liberty-secondary/50 text-liberty-standard/40'
-                          }`}
-                        />
-                        <Label 
-                          htmlFor={option.value}
-                          className={`cursor-pointer flex-1 font-medium transition-colors ${
-                            isSelected 
-                              ? 'text-liberty-primary' 
-                              : 'text-liberty-standard hover:text-liberty-standard/80'
-                          }`}
-                        >
-                          {option.label}
-                        </Label>
-                      </div>
-                    );
-                  })}
-                </RadioGroup>
-              )}
-
-              {currentQuestion.type === "number" && (
+            <AnimatePresence mode="wait">
+              <motion.div 
+                key={currentQuestionId}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="space-y-4"
+              >
                 <div>
-                  <Label className="text-liberty-standard mb-2 block">
-                    Number of flats
-                  </Label>
-                  <Input
-                    type="number"
-                    value={currentAnswer}
-                    onChange={(e) => handleAnswerChange(Number(e.target.value))}
-                    min={currentQuestion.validation?.min || 0}
-                    placeholder="Enter number of flats"
-                    className="border-liberty-secondary focus:border-liberty-primary"
-                  />
-                  {currentQuestion.validation?.min && (
-                    <p className="text-sm text-liberty-standard/60 mt-1">
-                      Minimum {currentQuestion.validation.min} flats required
-                    </p>
+                  <motion.h3 
+                    className="text-lg font-semibold text-liberty-standard mb-2"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1, duration: 0.3 }}
+                  >
+                    {currentQuestion.question}
+                  </motion.h3>
+                  {currentQuestion.description && (
+                    <motion.p 
+                      className="text-sm text-liberty-standard/70 mb-4"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2, duration: 0.3 }}
+                    >
+                      {currentQuestion.description}
+                    </motion.p>
                   )}
                 </div>
-              )}
-            </div>
+
+                {currentQuestion.type === "radio" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.4 }}
+                  >
+                    <RadioGroup 
+                      value={currentAnswer.toString()} 
+                      onValueChange={handleAnswerChange}
+                      className="space-y-3"
+                    >
+                      {currentQuestion.options.map((option: any, index: number) => {
+                        const isSelected = currentAnswer.toString() === option.value;
+                        return (
+                          <motion.div 
+                            key={option.value} 
+                            className={`flex items-center space-x-4 p-4 rounded-lg border-2 transition-all cursor-pointer ${
+                              isSelected 
+                                ? 'border-liberty-primary bg-liberty-primary/5 shadow-md' 
+                                : 'border-liberty-secondary/30 hover:border-liberty-secondary hover:bg-liberty-secondary/5'
+                            }`}
+                            onClick={() => handleAnswerChange(option.value)}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.05, duration: 0.2, ease: "easeOut" }}
+                            whileHover={{ scale: 1.005 }}
+                            whileTap={{ scale: 0.995 }}
+                          >
+                            <RadioGroupItem 
+                              value={option.value} 
+                              id={option.value}
+                              className={`${
+                                isSelected 
+                                  ? 'border-liberty-primary text-liberty-primary shadow-sm' 
+                                  : 'border-liberty-secondary/50 text-liberty-standard/40'
+                              }`}
+                            />
+                            <Label 
+                              htmlFor={option.value}
+                              className={`cursor-pointer flex-1 font-medium transition-colors ${
+                                isSelected 
+                                  ? 'text-liberty-primary' 
+                                  : 'text-liberty-standard hover:text-liberty-standard/80'
+                              }`}
+                            >
+                              {option.label}
+                            </Label>
+                          </motion.div>
+                        );
+                      })}
+                    </RadioGroup>
+                  </motion.div>
+                )}
+
+                {currentQuestion.type === "number" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.4 }}
+                  >
+                    <Label className="text-liberty-standard mb-2 block">
+                      Number of flats
+                    </Label>
+                    <Input
+                      type="number"
+                      value={currentAnswer}
+                      onChange={(e) => handleAnswerChange(Number(e.target.value))}
+                      min={currentQuestion.validation?.min || 0}
+                      placeholder="Enter number of flats"
+                      className="border-liberty-secondary focus:border-liberty-primary"
+                    />
+                    {currentQuestion.validation?.min && (
+                      <p className="text-sm text-liberty-standard/60 mt-1">
+                        Minimum {currentQuestion.validation.min} flats required
+                      </p>
+                    )}
+                  </motion.div>
+                )}
+              </motion.div>
+            </AnimatePresence>
           </CardContent>
 
           <CardFooter className="flex justify-between">
-            <Button 
-              variant="outline" 
-              onClick={handleBack} 
-              disabled={answers.length === 0}
-              className="border-liberty-secondary text-liberty-standard hover:bg-liberty-secondary/10"
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <ArrowLeft className="w-4 h-4" />
-              Back
-            </Button>
-            <Button 
-              onClick={handleNext} 
-              disabled={!currentAnswer}
-              className="bg-liberty-primary hover:bg-liberty-primary/90 text-white"
+              <Button 
+                variant="outline" 
+                onClick={handleBack} 
+                disabled={answers.length === 0}
+                className="border-liberty-secondary text-liberty-standard hover:bg-liberty-secondary/10"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back
+              </Button>
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              Continue
-              <ArrowRight className="w-4 h-4" />
-            </Button>
+              <Button 
+                onClick={handleNext} 
+                disabled={!currentAnswer || isAnimating}
+                className="bg-liberty-primary hover:bg-liberty-primary/90 text-white"
+              >
+                Continue
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            </motion.div>
           </CardFooter>
         </Card>
-      </div>
+      </motion.div>
     </div>
   );
 }
