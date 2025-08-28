@@ -133,9 +133,9 @@ export default function EligibilityWizard() {
       case "error":
         return <AlertCircle className="text-red-600" />;
       case "info":
-        return <Info className="text-blue-600" />;
+        return <Info className="text-liberty-primary" />;
       default:
-        return <Info className="text-blue-600" />;
+        return <Info className="text-liberty-primary" />;
     }
   };
 
@@ -209,8 +209,8 @@ export default function EligibilityWizard() {
               >
                 <Alert variant={getAlertVariant(outcome.type)}>
                   {getAlertIcon(outcome.type)}
-                  <AlertTitle className="text-lg">{outcome.title}</AlertTitle>
-                  <AlertDescription className="mt-2 text-base">
+                  <AlertTitle className="font-family-reckless text-lg">{outcome.title}</AlertTitle>
+                  <AlertDescription className="mt-2">
                     {outcome.message}
                   </AlertDescription>
                 </Alert>
@@ -238,7 +238,7 @@ export default function EligibilityWizard() {
                   </Button>
                 )}
                 {outcome.type === "info" && (
-                  <Button className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-standard">
+                  <Button className="bg-liberty-primary hover:bg-liberty-primary/90 text-white">
                     Learn More
                     <ArrowRight className="w-4 h-4" />
                   </Button>
