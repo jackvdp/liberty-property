@@ -117,6 +117,8 @@ export default function EligibilityWizard() {
 
   const getAlertVariant = (type: string) => {
     switch (type) {
+      case "success":
+        return "success";
       case "error":
         return "destructive";
       default:
@@ -127,7 +129,7 @@ export default function EligibilityWizard() {
   const getAlertIcon = (type: string) => {
     switch (type) {
       case "success":
-        return <CheckCircle2 className="text-green-600" />;
+        return <CheckCircle2 className="text-liberty-primary" />;
       case "error":
         return <AlertCircle className="text-red-600" />;
       case "info":
@@ -149,7 +151,7 @@ export default function EligibilityWizard() {
           <Card className="bg-liberty-base border-liberty-secondary/20">
             <CardHeader className="text-center">
               <motion.div 
-                className="mx-auto mb-6 w-16 h-16 bg-liberty-primary/10 rounded-full flex items-center justify-center"
+                className="mx-auto mb-6 w-16 h-16 bg-liberty-primary/10 rounded-full flex items-center justify-center border border-liberty-primary/20"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, duration: 0.4, ease: "easeOut" }}
@@ -172,14 +174,16 @@ export default function EligibilityWizard() {
                 transition={{ delay: 0.4, duration: 0.4 }}
               >
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between text-sm max-w-md mx-auto">
-                    <span className="text-liberty-standard/70">Progress</span>
-                    <span className="text-liberty-primary font-medium">100%</span>
+                  <div className="relative max-w-md mx-auto">
+                    <div className="flex items-center justify-between text-sm max-w-md mx-auto">
+                      <span className="text-liberty-standard/70">Progress</span>
+                      <span className="text-liberty-standard/80 font-medium">100%</span>
+                    </div>
                   </div>
                   <div className="relative max-w-md mx-auto">
-                    <Progress value={100} className="h-3 bg-liberty-secondary/30" />
+                    <Progress value={100} className="h-3 bg-liberty-secondary/30 border border-liberty-accent/30" />
                     <motion.div 
-                      className="absolute top-0 left-0 h-3 w-full bg-liberty-primary rounded-full"
+                      className="absolute top-0 left-0 h-3 w-full bg-liberty-accent rounded-full border border-liberty-accent"
                       initial={{ width: 0 }}
                       animate={{ width: "100%" }}
                       transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
@@ -286,7 +290,7 @@ export default function EligibilityWizard() {
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-liberty-standard/70">Progress</span>
                   <motion.span 
-                    className="text-liberty-primary font-medium"
+                    className="text-liberty-standard/80 font-medium"
                     key={progress}
                     initial={{ scale: 0.8 }}
                     animate={{ scale: 1 }}
@@ -298,10 +302,10 @@ export default function EligibilityWizard() {
                 <div className="relative">
                   <Progress 
                     value={progress} 
-                    className="h-3 bg-liberty-secondary/30" 
+                    className="h-3 bg-liberty-secondary/30 border border-liberty-accent/30" 
                   />
                   <motion.div 
-                    className="absolute top-0 left-0 h-3 bg-liberty-primary rounded-full transition-all duration-500 ease-out"
+                    className="absolute top-0 left-0 h-3 bg-liberty-accent rounded-full transition-all duration-500 ease-out border border-liberty-accent"
                     initial={{ width: 0 }}
                     animate={{ width: `${progress}%` }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
