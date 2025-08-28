@@ -417,7 +417,7 @@ export default function EligibilityWizard() {
                       onChange={(e) => handleAnswerChange(Number(e.target.value))}
                       min={currentQuestion.validation?.min || 0}
                       placeholder="Enter number of flats"
-                      className="border-liberty-secondary focus:border-liberty-primary"
+                      className="border-liberty-secondary focus-visible:border-liberty-primary focus-visible:ring-liberty-primary/20"
                     />
                     {currentQuestion.validation?.min && (
                       <p className="text-sm text-liberty-standard/60 mt-1">
