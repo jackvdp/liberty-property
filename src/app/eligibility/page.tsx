@@ -128,12 +128,26 @@ export default function EligibilityWizard() {
         <div className="w-full max-w-2xl">
           <Card className="bg-liberty-base border-liberty-secondary/20">
             <CardHeader className="text-center">
-              <div className="mx-auto mb-4 w-16 h-16 bg-liberty-primary/10 rounded-full flex items-center justify-center">
+              <div className="mx-auto mb-6 w-16 h-16 bg-liberty-primary/10 rounded-full flex items-center justify-center">
                 {getAlertIcon(outcome.type)}
               </div>
-              <CardTitle className="text-2xl font-reckless text-liberty-standard">
+              <CardTitle className="text-2xl font-reckless text-liberty-standard mb-2">
                 Assessment Complete
               </CardTitle>
+              <div className="space-y-4 mb-4">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-sm max-w-md mx-auto">
+                    <span className="text-liberty-standard/70">Progress</span>
+                    <span className="text-liberty-primary font-medium">100%</span>
+                  </div>
+                  <div className="relative max-w-md mx-auto">
+                    <Progress value={100} className="h-3 bg-liberty-secondary/30" />
+                    <div 
+                      className="absolute top-0 left-0 h-3 w-full bg-liberty-primary rounded-full"
+                    />
+                  </div>
+                </div>
+              </div>
               <CardDescription className="text-liberty-standard/70">
                 Based on your answers, here's what we found
               </CardDescription>
@@ -180,16 +194,31 @@ export default function EligibilityWizard() {
       <div className="w-full max-w-2xl">
         <Card className="bg-liberty-base border-liberty-secondary/20">
           <CardHeader>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-6">
               <CardTitle className="text-2xl font-reckless text-liberty-standard">
                 Eligibility Check
               </CardTitle>
-              <div className="text-sm text-liberty-standard/60 font-medium">
-                {answeredQuestions} of {totalQuestions}
+              <div className="text-sm text-liberty-standard/60 font-medium bg-liberty-secondary/20 px-3 py-1 rounded-full">
+                Question {answeredQuestions + 1} of {totalQuestions}
               </div>
             </div>
-            <div className="space-y-2">
-              <Progress value={progress} className="h-3" />
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-liberty-standard/70">Progress</span>
+                  <span className="text-liberty-primary font-medium">{Math.round(progress)}%</span>
+                </div>
+                <div className="relative">
+                  <Progress 
+                    value={progress} 
+                    className="h-3 bg-liberty-secondary/30" 
+                  />
+                  <div 
+                    className="absolute top-0 left-0 h-3 bg-liberty-primary rounded-full transition-all duration-500 ease-out"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              </div>
               <CardDescription className="text-liberty-standard/70">
                 Let's determine if your building qualifies for Right to Manage or Collective Enfranchisement
               </CardDescription>
