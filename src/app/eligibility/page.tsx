@@ -139,7 +139,7 @@ export default function EligibilityWizard() {
 
   if (isComplete && outcome) {
     return (
-      <div className="min-h-screen bg-liberty-background flex items-center justify-center p-4">
+      <div className="min-h-screen bg-liberty-secondary/40 flex items-center justify-center p-4">
         <motion.div 
           className="w-full max-w-2xl"
           initial={{ opacity: 0, scale: 0.95 }}
@@ -248,7 +248,7 @@ export default function EligibilityWizard() {
   }
 
   return (
-    <div className="min-h-screen bg-liberty-background flex items-center justify-center p-4">
+    <div className="min-h-screen bg-liberty-secondary/40 flex items-center justify-center p-4">
       <motion.div 
         className="w-full max-w-2xl"
         initial={{ opacity: 0, y: 20 }}
@@ -354,7 +354,6 @@ export default function EligibilityWizard() {
                     <RadioGroup 
                       value={currentAnswer.toString()} 
                       onValueChange={handleAnswerChange}
-                      className="space-y-3"
                     >
                       {currentQuestion.options.map((option: any, index: number) => {
                         const isSelected = currentAnswer.toString() === option.value;
