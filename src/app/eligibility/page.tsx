@@ -13,6 +13,7 @@ import { CheckCircle2, AlertCircle, Info, ArrowLeft, ArrowRight } from "lucide-r
 
 // Import the wizard flow data
 import wizardData from "@/data/eligibility-wizard-flow.json";
+import {Separator} from "@/components/ui/separator";
 
 interface Answer {
   questionId: string;
@@ -141,7 +142,7 @@ export default function EligibilityWizard() {
 
   if (isComplete && outcome) {
     return (
-      <div className="min-h-screen bg-liberty-secondary/40 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-liberty-secondary/20 flex items-center justify-center p-4">
         <motion.div 
           className="w-full max-w-2xl"
           initial={{ opacity: 0, scale: 0.95 }}
@@ -163,7 +164,7 @@ export default function EligibilityWizard() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.4 }}
               >
-                <CardTitle className="text-2xl font-reckless text-liberty-standard mb-2">
+                <CardTitle className="text-3xl sm:text-4xl font-family-reckless font-light text-liberty-standard mb-4">
                   Assessment Complete
                 </CardTitle>
               </motion.div>
@@ -196,7 +197,7 @@ export default function EligibilityWizard() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.4 }}
               >
-                <CardDescription className="text-liberty-standard/70">
+                <CardDescription className="text-lg text-liberty-standard/70 leading-relaxed">
                   Based on your answers, here's what we found
                 </CardDescription>
               </motion.div>
@@ -210,7 +211,7 @@ export default function EligibilityWizard() {
                 <Alert variant={getAlertVariant(outcome.type)}>
                   {getAlertIcon(outcome.type)}
                   <AlertTitle className="font-family-reckless text-lg">{outcome.title}</AlertTitle>
-                  <AlertDescription className="mt-2">
+                  <AlertDescription className="text-base leading-relaxed">
                     {outcome.message}
                   </AlertDescription>
                 </Alert>
@@ -252,7 +253,7 @@ export default function EligibilityWizard() {
   }
 
   return (
-    <div className="min-h-screen bg-liberty-secondary/40 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-liberty-secondary/20 flex items-center justify-center p-4">
       <motion.div 
         className="w-full max-w-2xl"
         initial={{ opacity: 0, y: 20 }}
@@ -267,7 +268,7 @@ export default function EligibilityWizard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
             >
-              <CardTitle className="text-2xl font-reckless text-liberty-standard">
+              <CardTitle className="text-2xl font-family-reckless font-light text-liberty-standard">
                 Eligibility Check
               </CardTitle>
               <motion.div 
@@ -312,11 +313,13 @@ export default function EligibilityWizard() {
                   />
                 </div>
               </div>
-              <CardDescription className="text-liberty-standard/70">
+              <CardDescription className="text-lg text-liberty-standard/70 leading-relaxed">
                 Let's determine if your building qualifies for Right to Manage or Collective Enfranchisement
               </CardDescription>
             </motion.div>
           </CardHeader>
+
+          <Separator />
 
           <CardContent className="space-y-6">
             <AnimatePresence mode="wait">
@@ -330,7 +333,7 @@ export default function EligibilityWizard() {
               >
                 <div>
                   <motion.h3 
-                    className="text-lg font-semibold text-liberty-standard mb-2"
+                    className="text-2xl font-family-reckless font-bold text-liberty-standard mb-4"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1, duration: 0.3 }}
@@ -339,7 +342,7 @@ export default function EligibilityWizard() {
                   </motion.h3>
                   {currentQuestion.description && (
                     <motion.p 
-                      className="text-sm text-liberty-standard/70 mb-4"
+                      className="text-base text-liberty-standard/70 mb-6 leading-relaxed"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2, duration: 0.3 }}
@@ -358,6 +361,7 @@ export default function EligibilityWizard() {
                     <RadioGroup 
                       value={currentAnswer.toString()} 
                       onValueChange={handleAnswerChange}
+                      className="space-y-2"
                     >
                       {currentQuestion.options.map((option: any, index: number) => {
                         const isSelected = currentAnswer.toString() === option.value;
@@ -387,7 +391,7 @@ export default function EligibilityWizard() {
                             />
                             <Label 
                               htmlFor={option.value}
-                              className={`cursor-pointer flex-1 font-medium transition-colors ${
+                              className={`cursor-pointer flex-1 font-medium text-base transition-colors ${
                                 isSelected 
                                   ? 'text-liberty-primary' 
                                   : 'text-liberty-standard hover:text-liberty-standard/80'
@@ -408,7 +412,7 @@ export default function EligibilityWizard() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.4 }}
                   >
-                    <Label className="text-liberty-standard mb-2 block">
+                    <Label className="text-base font-medium text-liberty-standard mb-3 block">
                       Number of flats
                     </Label>
                     <Input
@@ -420,7 +424,7 @@ export default function EligibilityWizard() {
                       className="border-liberty-secondary focus-visible:border-liberty-primary focus-visible:ring-liberty-primary/20"
                     />
                     {currentQuestion.validation?.min && (
-                      <p className="text-sm text-liberty-standard/60 mt-1">
+                      <p className="text-sm text-liberty-standard/60 mt-2 leading-relaxed">
                         Minimum {currentQuestion.validation.min} flats required
                       </p>
                     )}
