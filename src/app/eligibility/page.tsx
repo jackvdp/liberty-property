@@ -244,21 +244,43 @@ export default function EligibilityWizard() {
                   onValueChange={handleAnswerChange}
                   className="space-y-3"
                 >
-                  {currentQuestion.options.map((option: any) => (
-                    <div key={option.value} className="flex items-center space-x-3">
-                      <RadioGroupItem 
-                        value={option.value} 
-                        id={option.value}
-                        className="border-liberty-secondary text-liberty-primary"
-                      />
-                      <Label 
-                        htmlFor={option.value}
-                        className="text-liberty-standard cursor-pointer flex-1 py-3 px-4 rounded-lg border border-transparent hover:border-liberty-secondary/50 hover:bg-liberty-secondary/5 transition-all"
+                  {currentQuestion.options.map((option: any) => {
+                    const isSelected = currentAnswer.toString() === option.value;
+                    return (
+                      <div 
+                        key={option.value} 
+                        className={`flex items-center space-x-4 p-4 rounded-lg border-2 transition-all cursor-pointer ${
+                          isSelected 
+                            ? 'border-liberty-primary bg-liberty-primary/5 shadow-md' 
+                            : 'border-liberty-secondary/30 hover:border-liberty-secondary hover:bg-liberty-secondary/5'
+                        }`}
+                        onClick={() => handleAnswerChange(option.value)}
                       >
-                        {option.label}
-                      </Label>
-                    </div>
-                  ))}
+                        <RadioGroupItem 
+                          value={option.value} 
+                          id={option.value}
+                          className={`${
+                            isSelected 
+                              ? 'border-liberty-primary text-liberty-primary shadow-sm' 
+                              : 'border-liberty-secondary/50 text-liberty-standard/40'
+                          }`}
+                        />
+                        <Label 
+                          htmlFor={option.value}
+                          className={`cursor-pointer flex-1 font-medium transition-colors ${
+                            isSelected 
+                              ? 'text-liberty-primary' 
+                              : 'text-liberty-standard hover:text-liberty-standard/80'
+                          }`}
+                        >
+                          {option.label}
+                        </Label>
+                        {isSelected && (
+                          <div className="w-2 h-2 bg-liberty-primary rounded-full"></div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </RadioGroup>
               )}
 
