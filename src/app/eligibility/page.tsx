@@ -275,9 +275,6 @@ export default function EligibilityWizard() {
                         >
                           {option.label}
                         </Label>
-                        {isSelected && (
-                          <div className="w-2 h-2 bg-liberty-primary rounded-full"></div>
-                        )}
                       </div>
                     );
                   })}
