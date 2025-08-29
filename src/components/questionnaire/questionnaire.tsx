@@ -299,8 +299,8 @@ export default function Questionnaire({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
             >
-              <CardTitle className="text-3xl sm:text-4xl font-reckless font-bold text-liberty-standard">
-                {data.title}
+              <CardTitle className="text-3xl text-liberty-standard">
+                <h3>{data.title}</h3>
               </CardTitle>
               <motion.div 
                 className="text-sm text-liberty-standard/60 font-medium bg-liberty-secondary/20 px-3 py-1 rounded-full"
@@ -366,7 +366,7 @@ export default function Questionnaire({
               >
                 <div>
                   <motion.h3 
-                    className="text-2xl font-reckless font-bold text-liberty-standard mb-4"
+                    className="text-2xl font-bold text-liberty-standard mb-4"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1, duration: 0.3 }}
