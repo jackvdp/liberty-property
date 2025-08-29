@@ -20,17 +20,43 @@ interface Answer {
   value: string | number;
 }
 
+interface QuestionOption {
+  value: string;
+  label: string;
+}
+
+interface Question {
+  id: string;
+  question: string;
+  description?: string;
+  type: string;
+  options?: QuestionOption[];
+  validation?: {
+    min?: number;
+    required?: boolean;
+  };
+  nextQuestion: string | Record<string, string>;
+}
+
+interface Outcome {
+  type: string;
+  title: string;
+  message: string;
+  action?: string;
+  color: string;
+}
+
 export default function EligibilityWizard() {
   const [currentQuestionId, setCurrentQuestionId] = useState<string>("q1");
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [currentAnswer, setCurrentAnswer] = useState<string | number>("");
   const [progress, setProgress] = useState<number>(0);
   const [isComplete, setIsComplete] = useState<boolean>(false);
-  const [outcome, setOutcome] = useState<any>(null);
+  const [outcome, setOutcome] = useState<Outcome | null>(null);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
   const { questions, outcomes } = wizardData.wizardFlow;
-  const currentQuestion = questions[currentQuestionId as keyof typeof questions];
+  const currentQuestion = questions[currentQuestionId as keyof typeof questions] as Question;
   const totalQuestions = Object.keys(questions).length;
   const answeredQuestions = answers.length;
 
@@ -45,11 +71,11 @@ export default function EligibilityWizard() {
   };
 
   const getNextQuestion = (questionId: string, answer: string | number) => {
-    const question = questions[questionId as keyof typeof questions];
+    const question = questions[questionId as keyof typeof questions] as Question;
     
     if (typeof question.nextQuestion === "string") {
       return question.nextQuestion;
-    } else if (typeof question.nextQuestion === "object") {
+    } else if (typeof question.nextQuestion === "object" && question.nextQuestion) {
       return question.nextQuestion[answer as string];
     }
     
@@ -91,15 +117,29 @@ export default function EligibilityWizard() {
     // Small delay for exit animation
     await new Promise(resolve => setTimeout(resolve, 150));
 
+    // Remove the last answer
     const previousAnswers = answers.slice(0, -1);
     setAnswers(previousAnswers);
 
+    // Clear the current answer first
+    setCurrentAnswer("");
+
+    // If no previous answers, go back to first question
     if (previousAnswers.length === 0) {
       setCurrentQuestionId("q1");
     } else {
-      const lastAnswer = previousAnswers[previousAnswers.length - 1];
-      setCurrentQuestionId(lastAnswer.questionId);
-      setCurrentAnswer(lastAnswer.value);
+      // Get the question ID we should be on based on the previous answers
+      let currentId = "q1";
+      
+      // Replay the answers to determine the correct current question
+      for (const answer of previousAnswers) {
+        const nextId = getNextQuestion(currentId, answer.value);
+        if (nextId && questions[nextId as keyof typeof questions]) {
+          currentId = nextId;
+        }
+      }
+      
+      setCurrentQuestionId(currentId);
     }
 
     setIsComplete(false);
@@ -368,7 +408,7 @@ export default function EligibilityWizard() {
                       value={currentAnswer.toString()} 
                       onValueChange={handleAnswerChange}
                     >
-                      {currentQuestion.options.map((option: any, index: number) => {
+                      {currentQuestion.options?.map((option: QuestionOption, index: number) => {
                         const isSelected = currentAnswer.toString() === option.value;
                         return (
                           <motion.div 
