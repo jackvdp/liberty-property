@@ -176,7 +176,7 @@ export default function Questionnaire({
     const action = getCompletionAction(outcome.type);
     
     return (
-      <div className={cn("min-h-screen bg-liberty-secondary/20 flex items-center justify-center p-4", className)}>
+      <div className={cn("min-h-[calc(100vh-64px)] bg-liberty-secondary/20 flex items-center justify-center p-4", className)}>
         <motion.div 
           className="w-full max-w-2xl"
           initial={{ opacity: 0, scale: 0.95 }}
@@ -284,7 +284,7 @@ export default function Questionnaire({
   }
 
   return (
-    <div className={cn("min-h-screen bg-liberty-secondary/20 flex items-center justify-center p-4", className)}>
+    <div className={cn("min-h-[calc(100vh-64px)] bg-liberty-secondary/20 flex items-center justify-center p-4", className)}>
       <motion.div 
         className="w-full max-w-2xl"
         initial={{ opacity: 0, y: 20 }}
