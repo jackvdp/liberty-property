@@ -181,39 +181,63 @@
         "title": "Fantastic! You're eligible and ready to move forward.",
         "message": "Let's get you registered.",
         "action": "registration",
-        "color": "success"
+        "color": "success",
+        "button": {
+          "text": "Register Now",
+          "href": "/register"
+        }
       },
       "leaseholder_engagement": {
         "type": "info",
         "title": "No worries – we'll show you how to build support and get your neighbours on board.",
         "message": "We can help you engage with other leaseholders in your building.",
         "action": "leaseholder_engagement_module",
-        "color": "info"
+        "color": "info",
+        "button": {
+          "text": "Get Engagement Tools",
+          "href": "/leaseholder-engagement"
+        }
       },
       "rmc_process": {
         "type": "info",
         "title": "Sounds like there's already a structure in place.",
         "message": "We can help you take control of it or make it work better for leaseholders.",
         "action": "rmc_process",
-        "color": "info"
+        "color": "info",
+        "button": {
+          "text": "Explore RMC Options",
+          "href": "/rmc-process"
+        }
       },
       "ineligible_not_leasehold": {
         "type": "error",
         "title": "Unfortunately only leasehold flats can acquire the right to manage.",
         "message": "RTM and CE rights only apply to leasehold properties.",
-        "color": "error"
+        "color": "error",
+        "button": {
+          "text": "Back to Home",
+          "href": "/"
+        }
       },
       "ineligible_house_no_rmc": {
         "type": "error",
         "title": "Unfortunately we are unable to help as there are no pathways to acquire control of your building.",
         "message": "Right to Manage and Collective Enfranchisement only apply to flats. But if you contribute to an estate charge there could be a Residents Management Company in place.",
-        "color": "error"
+        "color": "error",
+        "button": {
+          "text": "Back to Home",
+          "href": "/"
+        }
       },
       "ineligible_too_much_commercial": {
         "type": "error",
         "title": "Unfortunately, buildings with over 50% commercial space aren't eligible for RTM or CE.",
         "message": "The commercial space proportion exceeds the legal limits for these rights.",
-        "color": "error"
+        "color": "error",
+        "button": {
+          "text": "Back to Home",
+          "href": "/"
+        }
       }
     },
     "modules": {

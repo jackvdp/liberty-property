@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -28,6 +29,7 @@ export default function Questionnaire({
   showSeparator = false,
   completionActions
 }: QuestionnaireProps) {
+  const router = useRouter();
   const [currentQuestionId, setCurrentQuestionId] = useState<string>("q1");
   const [answers, setAnswers] = useState<QuestionnaireAnswer[]>([]);
   const [currentAnswer, setCurrentAnswer] = useState<string | number>("");
@@ -168,6 +170,15 @@ export default function Questionnaire({
     }
   };
 
+  const handleOutcomeButtonClick = () => {
+    if (outcome?.button?.href) {
+      router.push(outcome.button.href);
+    } else if (outcome?.button?.action) {
+      // Handle custom actions if needed
+      console.log("Custom action:", outcome.button.action);
+    }
+  };
+
   const getCompletionAction = (type: string) => {
     return completionActions?.[type as keyof typeof completionActions];
   };
@@ -266,7 +277,16 @@ export default function Questionnaire({
                   <ArrowLeft className="w-4 h-4" />
                   Start Over
                 </Button>
-                {action && (
+                {outcome.button && (
+                  <Button 
+                    className="bg-liberty-primary hover:bg-liberty-primary/90 text-white"
+                    onClick={handleOutcomeButtonClick}
+                  >
+                    {outcome.button.text}
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                )}
+                {!outcome.button && action && (
                   <Button 
                     className="bg-liberty-primary hover:bg-liberty-primary/90 text-white"
                     onClick={action.onClick}

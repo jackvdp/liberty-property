@@ -23,6 +23,11 @@ export interface QuestionnaireOutcome {
   message: string;
   action?: string;
   color: string;
+  button?: {
+    text: string;
+    href?: string;
+    action?: string;
+  };
 }
 
 export interface QuestionnaireAnswer {
