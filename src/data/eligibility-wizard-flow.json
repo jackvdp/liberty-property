@@ -1,7 +1,5 @@
 {
   "wizardFlow": {
-    "title": "Liberty Bell RTM & CE Eligibility Wizard",
-    "description": "Determine your eligibility for Right to Manage (RTM) and Collective Enfranchisement (CE)",
     "questions": {
       "q1": {
         "id": "property_type",
@@ -238,23 +236,6 @@
           "text": "Back to Home",
           "href": "/"
         }
-      }
-    },
-    "modules": {
-      "leaseholder_engagement_module": {
-        "title": "Leaseholder Engagement Module",
-        "description": "Tools and guidance to help you build support among your neighbours",
-        "actions": ["education_materials", "neighbor_outreach_templates", "benefits_calculator"]
-      },
-      "rmc_process": {
-        "title": "RMC Process",
-        "description": "Help with taking over or improving existing management structures",
-        "actions": ["rmc_takeover", "service_improvement", "governance_review"]
-      },
-      "registration": {
-        "title": "Registration",
-        "description": "Begin your journey to take control of your building",
-        "actions": ["start_rtm_process", "start_ce_process", "book_consultation"]
       }
     }
   }
