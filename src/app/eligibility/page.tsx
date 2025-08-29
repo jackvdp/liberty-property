@@ -307,12 +307,16 @@ export default function EligibilityWizard() {
                     value={progress} 
                     className="h-3 bg-liberty-secondary/30 border border-liberty-accent/30" 
                   />
-                  <motion.div 
-                    className="absolute top-0 left-0 h-3 bg-liberty-accent rounded-full transition-all duration-500 ease-out border border-liberty-accent"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${progress}%` }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                  />
+                  {
+                    progress > 0 && (
+                        <motion.div
+                          className="absolute top-0 left-0 h-3 bg-liberty-accent rounded-full transition-all duration-500 ease-out border border-liberty-accent"
+                          initial={{ width: 0 }}
+                          animate={{ width: `${progress}%` }}
+                          transition={{ duration: 0.8, ease: "easeOut" }}
+                        />
+                      )
+                  }
                 </div>
               </div>
               <CardDescription className="text-lg text-liberty-standard/70 leading-relaxed">
