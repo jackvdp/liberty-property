@@ -10,8 +10,10 @@ const alertVariants = cva(
       variant: {
         default: "bg-card text-card-foreground",
         destructive:
-          "text-destructive bg-card [&>svg]:text-current *:data-[slot=alert-description]:text-destructive/90",
+          "text-red-700 bg-red-50 border-red-200 [&>svg]:text-current *:data-[slot=alert-description]:text-red-700/90",
         success:
+          "text-liberty-primary bg-liberty-primary/5 border-liberty-primary/20 [&>svg]:text-current *:data-[slot=alert-description]:text-liberty-primary/90",
+        info:
           "text-liberty-primary bg-liberty-primary/5 border-liberty-primary/20 [&>svg]:text-current *:data-[slot=alert-description]:text-liberty-primary/90",
       },
     },

@@ -122,6 +122,8 @@ export default function EligibilityWizard() {
         return "success";
       case "error":
         return "destructive";
+      case "info":
+        return "info";
       default:
         return "default";
     }
@@ -361,7 +363,6 @@ export default function EligibilityWizard() {
                     <RadioGroup 
                       value={currentAnswer.toString()} 
                       onValueChange={handleAnswerChange}
-                      className="space-y-2"
                     >
                       {currentQuestion.options.map((option: any, index: number) => {
                         const isSelected = currentAnswer.toString() === option.value;
