@@ -143,20 +143,20 @@ export default function Questionnaire({
   };
 
   const getAlertVariant = (type: string) => {
-    switch (type) {
+    switch (type.toLowerCase()) {
       case "success":
-        return "success";
+        return "success" as const;
       case "error":
-        return "destructive";
+        return "destructive" as const;
       case "info":
-        return "info";
+        return "info" as const;
       default:
-        return "default";
+        return "default" as const;
     }
   };
 
   const getAlertIcon = (type: string) => {
-    switch (type) {
+    switch (type.toLowerCase()) {
       case "success":
         return <CheckCircle2 className="text-liberty-primary" />;
       case "error":
@@ -169,7 +169,8 @@ export default function Questionnaire({
   };
 
   const getCompletionAction = (type: string) => {
-    return completionActions?.[type as keyof typeof completionActions];
+    const normalizedType = type.toLowerCase() as 'success' | 'error' | 'info';
+    return completionActions?.[normalizedType];
   };
 
   if (isComplete && outcome) {

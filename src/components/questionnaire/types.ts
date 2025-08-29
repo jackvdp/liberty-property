@@ -7,7 +7,7 @@ export interface QuestionnaireQuestion {
   id: string;
   question: string;
   description?: string;
-  type: 'radio' | 'number' | 'text';
+  type: string; // Changed from strict union to string
   options?: QuestionnaireOption[];
   validation?: {
     min?: number;
@@ -18,7 +18,7 @@ export interface QuestionnaireQuestion {
 }
 
 export interface QuestionnaireOutcome {
-  type: 'success' | 'error' | 'info';
+  type: string; // Changed from strict union to string
   title: string;
   message: string;
   action?: string;
