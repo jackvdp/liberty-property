@@ -143,7 +143,7 @@ export default function Questionnaire({
   };
 
   const getAlertVariant = (type: string) => {
-    switch (type.toLowerCase()) {
+    switch (type) {
       case "success":
         return "success" as const;
       case "error":
@@ -156,7 +156,7 @@ export default function Questionnaire({
   };
 
   const getAlertIcon = (type: string) => {
-    switch (type.toLowerCase()) {
+    switch (type) {
       case "success":
         return <CheckCircle2 className="text-liberty-primary" />;
       case "error":
@@ -169,8 +169,7 @@ export default function Questionnaire({
   };
 
   const getCompletionAction = (type: string) => {
-    const normalizedType = type.toLowerCase() as 'success' | 'error' | 'info';
-    return completionActions?.[normalizedType];
+    return completionActions?.[type as keyof typeof completionActions];
   };
 
   if (isComplete && outcome) {
