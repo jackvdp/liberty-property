@@ -1,0 +1,368 @@
+{
+  "registrationWizard": {
+    "title": "Property Registration",
+    "description": "Let's get your building registered and start the process of taking control",
+    "sections": {
+      "step1": {
+        "id": "contact_details",
+        "title": "Create / Confirm Contact",
+        "description": "We need your contact details to get started",
+        "color": "blue",
+        "questions": [
+          {
+            "id": "full_name",
+            "question": "What is your full name?",
+            "type": "text",
+            "required": true,
+            "validation": {
+              "required": true
+            }
+          },
+          {
+            "id": "email_address",
+            "question": "What is your email address?",
+            "type": "email",
+            "required": true,
+            "validation": {
+              "required": true,
+              "email": true
+            }
+          },
+          {
+            "id": "mobile_number",
+            "question": "What is your mobile number?",
+            "description": "Optional - helps us contact you more quickly",
+            "type": "tel",
+            "required": false
+          },
+          {
+            "id": "role",
+            "question": "What is your role?",
+            "type": "radio",
+            "required": true,
+            "options": [
+              { "value": "owner", "label": "I own a flat in this building" },
+              { "value": "representative", "label": "I'm acting on behalf of leaseholders" },
+              { "value": "other", "label": "Other" }
+            ]
+          },
+          {
+            "id": "consent_contact",
+            "question": "Do you agree to be contacted about your eligibility and next steps?",
+            "type": "checkbox",
+            "required": true,
+            "validation": {
+              "required": true
+            }
+          }
+        ],
+        "nextSection": "step2"
+      },
+      "step2": {
+        "id": "building_basics",
+        "title": "Building Basics",
+        "description": "Tell us about your building",
+        "color": "blue",
+        "questions": [
+          {
+            "id": "building_address",
+            "question": "Building name/number + street",
+            "type": "text",
+            "required": true,
+            "validation": {
+              "required": true
+            }
+          },
+          {
+            "id": "postcode",
+            "question": "Postcode",
+            "type": "text",
+            "required": true,
+            "validation": {
+              "required": true,
+              "pattern": "^[A-Z]{1,2}[0-9]{1,2}[A-Z]?\\s?[0-9][A-Z]{2}$"
+            }
+          },
+          {
+            "id": "local_authority",
+            "question": "Local authority",
+            "description": "Optional - helps us understand local regulations",
+            "type": "text",
+            "required": false
+          },
+          {
+            "id": "number_of_flats",
+            "question": "Number of flats",
+            "description": "This will be prefilled from your eligibility check",
+            "type": "number",
+            "required": true,
+            "validation": {
+              "min": 2,
+              "required": true
+            },
+            "prefillFromEligibility": true
+          }
+        ],
+        "displayChips": [
+          {
+            "label": "RMC/RTM status",
+            "value": "No RMC/RTM recorded",
+            "source": "eligibility_q3",
+            "correctionAction": "rmc_takeover_redirect"
+          },
+          {
+            "label": "Provisional path",
+            "value": "Derived from eligibility",
+            "source": "eligibility_derived",
+            "description": "e.g., RTM or CE if ≤25% non-res; RTM if >25% and ≤50%. Final choice is made later."
+          }
+        ],
+        "nextSection": "step3"
+      },
+      "step3": {
+        "id": "authority_supporters",
+        "title": "Authority to Act & Supporters",
+        "description": "Confirm your authority and add supporters",
+        "color": "blue",
+        "questions": [
+          {
+            "id": "authority_to_act",
+            "question": "Do you have authority to act?",
+            "type": "radio",
+            "required": true,
+            "options": [
+              { "value": "yes", "label": "Yes" },
+              { "value": "not_yet", "label": "Not yet" }
+            ]
+          },
+          {
+            "id": "add_supporters",
+            "question": "Would you like to add leaseholder supporters now?",
+            "type": "radio",
+            "required": true,
+            "options": [
+              { "value": "yes", "label": "Yes" },
+              { "value": "no", "label": "No, proceed without adding supporters" }
+            ]
+          }
+        ],
+        "conditionalQuestions": {
+          "add_supporters": {
+            "yes": [
+              {
+                "id": "supporters_list",
+                "question": "Add supporter details",
+                "description": "Add names and email addresses of supporting leaseholders",
+                "type": "repeater",
+                "fields": [
+                  {
+                    "id": "supporter_name",
+                    "label": "Name",
+                    "type": "text",
+                    "required": true
+                  },
+                  {
+                    "id": "supporter_email", 
+                    "label": "Email",
+                    "type": "email",
+                    "required": true
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "nextSection": "step4"
+      },
+      "step4": {
+        "id": "documents",
+        "title": "Documents",
+        "description": "Upload any relevant documents",
+        "color": "blue",
+        "questions": [
+          {
+            "id": "lease_documents",
+            "question": "Upload your lease documents",
+            "description": "Optional - but helps us provide better advice",
+            "type": "file",
+            "required": false,
+            "validation": {
+              "acceptedTypes": [".pdf", ".jpg", ".png", ".doc", ".docx"],
+              "maxSize": "10MB"
+            }
+          },
+          {
+            "id": "service_charge_documents",
+            "question": "Upload recent service charge statements",
+            "description": "Optional - helps us understand your current costs",
+            "type": "file",
+            "required": false,
+            "validation": {
+              "acceptedTypes": [".pdf", ".jpg", ".png", ".doc", ".docx"],
+              "maxSize": "10MB"
+            }
+          },
+          {
+            "id": "other_documents",
+            "question": "Any other relevant documents",
+            "description": "Optional - management accounts, correspondence, etc.",
+            "type": "file",
+            "required": false,
+            "validation": {
+              "acceptedTypes": [".pdf", ".jpg", ".png", ".doc", ".docx"],
+              "maxSize": "10MB"
+            }
+          }
+        ],
+        "nextSection": "step5"
+      },
+      "step5": {
+        "id": "meeting_preferences",
+        "title": "Meeting & Preferences",
+        "description": "Let us know your preferences for next steps",
+        "color": "blue",
+        "questions": [
+          {
+            "id": "preferred_contact_method",
+            "question": "How would you prefer to be contacted?",
+            "type": "radio",
+            "required": true,
+            "options": [
+              { "value": "email", "label": "Email" },
+              { "value": "phone", "label": "Phone call" },
+              { "value": "video", "label": "Video call" },
+              { "value": "in_person", "label": "In-person meeting" }
+            ]
+          },
+          {
+            "id": "best_contact_time",
+            "question": "When is the best time to contact you?",
+            "type": "checkbox",
+            "required": true,
+            "options": [
+              { "value": "weekday_morning", "label": "Weekday mornings" },
+              { "value": "weekday_afternoon", "label": "Weekday afternoons" },
+              { "value": "weekday_evening", "label": "Weekday evenings" },
+              { "value": "weekend", "label": "Weekends" }
+            ]
+          },
+          {
+            "id": "urgency",
+            "question": "How urgently do you want to proceed?",
+            "type": "radio",
+            "required": true,
+            "options": [
+              { "value": "asap", "label": "As soon as possible" },
+              { "value": "few_weeks", "label": "Within a few weeks" },
+              { "value": "few_months", "label": "Within a few months" },
+              { "value": "exploring", "label": "Just exploring options for now" }
+            ]
+          }
+        ],
+        "nextSection": "step6a"
+      },
+      "step6a": {
+        "id": "choose_process",
+        "title": "Choose your preferred process",
+        "description": "Based on your eligibility, you have multiple options",
+        "color": "blue",
+        "showIf": "eligibility_allows_both_rtm_and_ce",
+        "questions": [
+          {
+            "id": "preferred_process",
+            "question": "Which process would you prefer to pursue?",
+            "description": "You can change this later if needed",
+            "type": "radio",
+            "required": true,
+            "options": [
+              { 
+                "value": "rtm", 
+                "label": "Right to Manage (RTM)",
+                "description": "Take control of building management without buying the freehold"
+              },
+              { 
+                "value": "ce", 
+                "label": "Collective Enfranchisement (CE)",
+                "description": "Purchase the freehold and gain full ownership control"
+              }
+            ]
+          }
+        ],
+        "nextSection": "step7"
+      },
+      "step7": {
+        "id": "legal_submit",
+        "title": "Legal & Submit",
+        "description": "Final legal confirmations and submission",
+        "color": "blue",
+        "questions": [
+          {
+            "id": "terms_conditions",
+            "question": "I agree to the Terms & Conditions",
+            "type": "checkbox",
+            "required": true,
+            "validation": {
+              "required": true
+            }
+          },
+          {
+            "id": "privacy_policy",
+            "question": "I agree to the Privacy Policy",
+            "type": "checkbox",
+            "required": true,
+            "validation": {
+              "required": true
+            }
+          },
+          {
+            "id": "data_processing",
+            "question": "I consent to my data being processed for the purpose of this application",
+            "type": "checkbox",
+            "required": true,
+            "validation": {
+              "required": true
+            }
+          },
+          {
+            "id": "marketing_consent",
+            "question": "I would like to receive updates about Liberty Bell services and leasehold reform news",
+            "description": "Optional - you can unsubscribe at any time",
+            "type": "checkbox",
+            "required": false
+          }
+        ],
+        "nextSection": "success"
+      }
+    },
+    "outcomes": {
+      "success": {
+        "type": "success",
+        "title": "You have successfully registered!",
+        "message": "Your case has been created and you'll receive a secure link via email with your Case ID.",
+        "actions": [
+          {
+            "text": "Go to Dashboard",
+            "href": "/dashboard",
+            "primary": true
+          },
+          {
+            "text": "Invite Co-lead",
+            "href": "/invite-co-lead",
+            "secondary": true
+          },
+          {
+            "text": "Upload Documents",
+            "href": "/upload-documents",
+            "secondary": true
+          }
+        ]
+      },
+      "consent_required": {
+        "type": "error",
+        "title": "Consent Required",
+        "message": "We cannot proceed without your consent to be contacted about your eligibility and next steps.",
+        "color": "red"
+      }
+    }
+  }
+}

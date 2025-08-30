@@ -185,7 +185,36 @@ export default function Questionnaire({
 
   const handleOutcomeButtonClick = () => {
     if (outcome?.button?.href) {
-      router.push(outcome.button.href);
+      let href = outcome.button.href;
+      
+      // If navigating to register page, add query parameters with eligibility data
+      if (href === "/register") {
+        const params = new URLSearchParams();
+        
+        // Extract flat count from answers
+        const flatCountAnswer = answers.find(a => a.questionId === "flat_count");
+        if (flatCountAnswer) {
+          params.set('flatCount', flatCountAnswer.value.toString());
+        }
+        
+        // Determine if both RTM and CE are available based on answers
+        const nonResAnswer = answers.find(a => a.questionId === "non_residential_proportion");
+        const allowsBoth = !nonResAnswer || nonResAnswer.value === "25_or_less";
+        params.set('allowsBoth', allowsBoth.toString());
+        
+        // Set RMC status
+        const rmcAnswer = answers.find(a => a.questionId === "existing_rmc_rtm");
+        const rmcStatus = rmcAnswer?.value === "no" ? "No RMC/RTM recorded" : "RMC/RTM may exist";
+        params.set('rmcStatus', rmcStatus);
+        
+        // Set provisional path
+        const provisionalPath = allowsBoth ? "RTM or CE available" : "RTM available";
+        params.set('path', provisionalPath);
+        
+        href = `${href}?${params.toString()}`;
+      }
+      
+      router.push(href);
     } else if (outcome?.button?.action) {
       // Handle custom actions if needed
       console.log("Custom action:", outcome.button.action);
