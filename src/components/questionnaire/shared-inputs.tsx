@@ -132,7 +132,7 @@ export function CheckboxInput({ question, value, onChange, onCheckboxChange }: S
                 onCheckedChange={(checked) => 
                   onCheckboxChange?.(question.id, option.value, checked as boolean)
                 }
-                className="mt-1 border-liberty-secondary data-[state=checked]:border-liberty-primary"
+                className="border-liberty-secondary/50 data-[state=checked]:border-liberty-primary data-[state=checked]:bg-liberty-primary data-[state=checked]:text-white"
               />
               <Label 
                 htmlFor={`${question.id}-${option.value}`}
@@ -154,7 +154,7 @@ export function CheckboxInput({ question, value, onChange, onCheckboxChange }: S
             id={question.id}
             checked={!!value}
             onCheckedChange={onChange}
-            className="mt-1 border-liberty-secondary data-[state=checked]:border-liberty-primary"
+            className="mt-1 border-liberty-secondary/50 data-[state=checked]:border-liberty-primary data-[state=checked]:bg-liberty-primary data-[state=checked]:text-white"
           />
           <div className="flex-1">
             <Label 
