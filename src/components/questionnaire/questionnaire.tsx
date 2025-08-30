@@ -27,8 +27,9 @@ export default function Questionnaire({
   showSeparator = false,
   completionActions,
   prefillData,
-  onOutcomeButtonClick
-}: QuestionnaireProps) {
+  onOutcomeButtonClick,
+  renderCompletionContent
+}: QuestionnaireProps & { renderCompletionContent?: (uuid: string, outcome: QuestionnaireOutcome) => React.ReactNode }) {
   const router = useRouter();
   const [currentQuestionId, setCurrentQuestionId] = useState<string>("q1");
   const [answers, setAnswers] = useState<QuestionnaireAnswer[]>([]);
@@ -38,6 +39,7 @@ export default function Questionnaire({
   const [outcome, setOutcome] = useState<QuestionnaireOutcome | null>(null);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
   const [isPrefilling, setIsPrefilling] = useState<boolean>(false);
+  const [completionUuid, setCompletionUuid] = useState<string | null>(null);
 
   const { questions, outcomes } = data;
   const currentQuestion = questions[currentQuestionId as keyof typeof questions] as QuestionnaireQuestion;
@@ -172,6 +174,16 @@ export default function Questionnaire({
       setOutcome(finalOutcome);
       setIsComplete(true);
       
+      // Generate UUID for completion content if needed
+      if (renderCompletionContent) {
+        const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          const r = Math.random() * 16 | 0;
+          const v = c === 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
+        setCompletionUuid(uuid);
+      }
+      
       // Call completion callback
       onComplete?.(finalOutcome, newAnswers);
     }
@@ -234,15 +246,16 @@ export default function Questionnaire({
     setProgress(0);
     setIsComplete(false);
     setOutcome(null);
+    setCompletionUuid(null);
     onRestart?.();
   };
 
   const handleOutcomeButtonClick = () => {
     if (onOutcomeButtonClick && outcome) {
       // Use injected logic if provided
-      const redirectUrl = onOutcomeButtonClick(outcome, answers);
-      if (redirectUrl) {
-        router.push(redirectUrl);
+      const redirectData = onOutcomeButtonClick(outcome, answers, completionUuid);
+      if (typeof redirectData === 'string' && redirectData) {
+        router.push(redirectData);
       }
     } else if (outcome?.button?.href) {
       // Default behavior - just navigate to the href
@@ -332,6 +345,13 @@ export default function Questionnaire({
                   <AlertTitle className="text-xl font-reckless font-bold">{outcome.title}</AlertTitle>
                   <AlertDescription className="text-base leading-relaxed">
                     {outcome.message}
+                    
+                    {/* Generic completion content inside the main alert */}
+                    {renderCompletionContent && completionUuid && outcome && (
+                      <div className="mt-4">
+                        {renderCompletionContent(completionUuid, outcome)}
+                      </div>
+                    )}
                   </AlertDescription>
                 </Alert>
               </motion.div>

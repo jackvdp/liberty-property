@@ -318,17 +318,14 @@ export default function RegistrationQuestionnaire({
                 {outcome.message}
               </CardDescription>
             </CardHeader>
-            <CardFooter className="flex gap-3 justify-center flex-wrap">
-              {outcome.actions?.map((action, index) => (
-                <Button 
-                  key={index}
-                  variant={action.primary ? "default" : "outline"}
-                  onClick={() => router.push(action.href)}
-                  className={action.primary ? "bg-liberty-primary hover:bg-liberty-primary/90 text-white" : "border-liberty-secondary text-liberty-standard hover:bg-liberty-secondary/10"}
-                >
-                  {action.text}
-                </Button>
-              ))}
+            <CardFooter className="flex justify-center">
+              <Button 
+                className="bg-liberty-primary hover:bg-liberty-primary/90 text-white"
+                onClick={() => router.push('/dashboard')}
+              >
+                Go to Dashboard
+                <ArrowRight className="w-4 h-4" />
+              </Button>
             </CardFooter>
           </Card>
         </motion.div>
