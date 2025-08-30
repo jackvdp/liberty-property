@@ -1,4 +1,4 @@
-import { QuestionnaireValue, SupporterData, QuestionnaireOutcome } from './types';
+import { QuestionnaireValue, QuestionnaireOutcome } from './types';
 
 export interface RegistrationOption {
   value: string;

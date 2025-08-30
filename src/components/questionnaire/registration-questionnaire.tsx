@@ -70,7 +70,9 @@ export default function RegistrationQuestionnaire({
 
   const handleCheckboxChange = (fieldId: string, optionValue: string, checked: boolean) => {
     setCurrentSectionData(prev => {
-      const currentValues = Array.isArray(prev[fieldId]) ? prev[fieldId] as string[] : [];
+      const currentValue = prev[fieldId];
+      const currentValues = Array.isArray(currentValue) ? currentValue as string[] : [];
+      
       if (checked) {
         return {
           ...prev,
@@ -79,7 +81,7 @@ export default function RegistrationQuestionnaire({
       } else {
         return {
           ...prev,
-          [fieldId]: currentValues.filter(v => v !== optionValue)
+          [fieldId]: currentValues.filter((v: string) => v !== optionValue)
         };
       }
     });

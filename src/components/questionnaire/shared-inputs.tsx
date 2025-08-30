@@ -118,7 +118,7 @@ export function TextInput({ question, value, onChange, type = "text" }: SharedIn
 export function CheckboxInput({ question, value, onChange, onCheckboxChange }: SharedInputProps) {
   if (question.options && question.options.length > 1) {
     // Multiple checkbox options - value should be string[]
-    const currentValues = Array.isArray(value) ? value : [];
+    const currentValues: string[] = Array.isArray(value) ? value.filter((v): v is string => typeof v === 'string') : [];
     
     return (
       <div className="space-y-4">

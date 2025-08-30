@@ -1,5 +1,11 @@
 // Shared value types for questionnaire responses
-export type QuestionnaireValue = string | number | boolean | string[] | File | SupporterData[];
+export type QuestionnaireValue = 
+  | string 
+  | number 
+  | boolean 
+  | string[] 
+  | File 
+  | SupporterData[];
 
 export interface SupporterData {
   name: string;
