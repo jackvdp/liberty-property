@@ -27,6 +27,7 @@ interface EligibilityCheckClientProps {
 
 export function EligibilityCheckClient({ prefillId, focusQuestion }: EligibilityCheckClientProps) {
   const [prefillData, setPrefillData] = useState<PrefillData | undefined>(undefined);
+  const [currentQuestionnaireUuid, setCurrentQuestionnaireUuid] = useState<string | null>(null);
 
   // Simple type assertion - much cleaner!
   const questionnaireData: QuestionnaireData = {
@@ -97,7 +98,7 @@ export function EligibilityCheckClient({ prefillId, focusQuestion }: Eligibility
     };
   };
 
-  // Eligibility-specific outcome button click handler
+  // Eligibility-specific outcome button click handler that uses the stored UUID
   const handleOutcomeButtonClick = (outcome: QuestionnaireOutcome, answers: QuestionnaireAnswer[], uuid?: string | null) => {
     console.log('handleOutcomeButtonClick called with:', { outcome, uuid, href: outcome.button?.href });
     
@@ -109,15 +110,17 @@ export function EligibilityCheckClient({ prefillId, focusQuestion }: Eligibility
     
     // If it's a success outcome, save eligibility data and append UUID to URL
     if (outcome.type === "success") {
-      // Generate a UUID if one wasn't provided
-      let actualUuid = uuid;
+      // Use the stored UUID from renderCompletionContent, fallback to provided UUID, or generate new one
+      let actualUuid = currentQuestionnaireUuid || uuid;
       if (!actualUuid) {
-        // Generate a simple UUID
+        // Generate a simple UUID as last resort
         actualUuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
           const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
           return v.toString(16);
         });
-        console.log('Generated new UUID since none was provided:', actualUuid);
+        console.log('Generated new UUID as fallback:', actualUuid);
+      } else {
+        console.log('Using stored UUID:', actualUuid);
       }
       
       const eligibilityFormData = {
@@ -145,9 +148,12 @@ export function EligibilityCheckClient({ prefillId, focusQuestion }: Eligibility
     return href;
   };
 
-  // Render completion content with case ID and return URL - only for registration outcomes
+  // Render completion content with case ID and return URL - stores UUID for button click
   const renderCompletionContent = (uuid: string, outcome: QuestionnaireOutcome) => {
     console.log('renderCompletionContent called with uuid:', uuid, 'outcome:', outcome);
+    
+    // Store the UUID so handleOutcomeButtonClick can use the same one
+    setCurrentQuestionnaireUuid(uuid);
     
     // Only show for registration outcomes (success type that leads to registration)
     if (outcome.type !== "success" || outcome.action !== "registration") {
@@ -183,7 +189,7 @@ export function EligibilityCheckClient({ prefillId, focusQuestion }: Eligibility
             }}
             onRestart={() => {
               console.log("Questionnaire restarted");
-              // Handle restart - could clear saved data, reset analytics, etc.
+              setCurrentQuestionnaireUuid(null); // Clear stored UUID on restart
             }}
         />
         <Footer />
