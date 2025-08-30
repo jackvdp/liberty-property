@@ -253,7 +253,7 @@ export default function Questionnaire({
   const handleOutcomeButtonClick = () => {
     if (onOutcomeButtonClick && outcome) {
       // Use injected logic if provided
-      const redirectData = onOutcomeButtonClick(outcome, answers, completionUuid);
+      const redirectData = onOutcomeButtonClick(outcome, answers);
       if (typeof redirectData === 'string' && redirectData) {
         router.push(redirectData);
       }

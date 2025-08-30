@@ -12,8 +12,6 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { Info } from "lucide-react";
 
 export default function EligibilityCheck() {
   const searchParams = useSearchParams();
@@ -50,15 +48,6 @@ export default function EligibilityCheck() {
       }
     }
   }, [searchParams]);
-
-  // Eligibility-specific logic for generating UUID
-  const generateUUID = () => {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      const r = Math.random() * 16 | 0;
-      const v = c === 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
-  };
 
   // Eligibility-specific logic for creating derived data
   const createDerivedData = (answers: QuestionnaireAnswer[], outcome: QuestionnaireOutcome) => {
