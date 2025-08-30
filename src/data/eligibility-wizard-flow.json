@@ -58,7 +58,7 @@
         "nextQuestion": {
           "yes": "rmc_process",
           "no": "q4",
-          "dont_know": "rmc_process"
+          "dont_know": "q4"
         }
       },
       "q4": {
