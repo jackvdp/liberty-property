@@ -50,16 +50,23 @@ export default function RegistrationQuestionnaire({
     setProgress(Math.min(progressPercentage, 100));
   }, [sectionAnswers, totalSections]);
 
-  // Prefill data from eligibility wizard
+  // Prefill data from eligibility wizard - only run once when section changes
   useEffect(() => {
     if (eligibilityData?.derivedData && currentSectionId === "step2") {
-      const prefillData = { ...currentSectionData };
-      if (eligibilityData.derivedData.flatCount) {
-        prefillData.number_of_flats = eligibilityData.derivedData.flatCount;
-      }
-      setCurrentSectionData(prefillData);
+      setCurrentSectionData(prev => {
+        // Only update if the value isn't already set
+        if (prev.number_of_flats) {
+          return prev; // Don't update if already has data
+        }
+        
+        const prefillData = { ...prev };
+        if (eligibilityData.derivedData.flatCount) {
+          prefillData.number_of_flats = eligibilityData.derivedData.flatCount;
+        }
+        return prefillData;
+      });
     }
-  }, [currentSectionId, eligibilityData, currentSectionData]);
+  }, [currentSectionId, eligibilityData?.derivedData?.flatCount]); // Remove currentSectionData from deps
 
   const handleFieldChange = (fieldId: string, value: QuestionnaireValue) => {
     setCurrentSectionData(prev => ({
@@ -418,7 +425,6 @@ export default function RegistrationQuestionnaire({
                           {(() => {
                             const status = eligibilityData?.derivedData?.rmcStatus;
                             const rmcAnswer = eligibilityData?.answers?.find(a => a.questionId === "existing_rmc_rtm")?.value;
-                            console.log('Debug - RMC Status:', status, 'RMC Answer:', rmcAnswer, 'All answers:', eligibilityData?.answers?.map(a => ({id: a.questionId, value: a.value})));
                             
                             if (status === "No RMC/RTM recorded") return "No existing management company";
                             if (status === "RMC/RTM exists") return "Management company already exists";  

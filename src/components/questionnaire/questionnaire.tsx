@@ -188,6 +188,7 @@ export default function Questionnaire({
           const v = c === 'x' ? r : (r & 0x3 | 0x8);
           return v.toString(16);
         });
+        console.log("UUID for completion content:", uuid);
         setCompletionUuid(uuid);
       }
       
