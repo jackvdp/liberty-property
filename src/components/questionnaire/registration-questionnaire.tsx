@@ -60,7 +60,7 @@ export default function RegistrationQuestionnaire({
         }
         
         const prefillData = { ...prev };
-        if (eligibilityData.derivedData.flatCount) {
+        if (eligibilityData.derivedData && eligibilityData.derivedData.flatCount) {
           prefillData.number_of_flats = eligibilityData.derivedData.flatCount;
         }
         return prefillData;

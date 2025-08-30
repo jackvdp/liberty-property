@@ -114,7 +114,7 @@ export function EligibilityCheckClient({ prefillId, focusQuestion }: Eligibility
       if (!actualUuid) {
         // Generate a simple UUID
         actualUuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-          var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+          const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
           return v.toString(16);
         });
         console.log('Generated new UUID since none was provided:', actualUuid);
@@ -177,8 +177,8 @@ export function EligibilityCheckClient({ prefillId, focusQuestion }: Eligibility
             prefillData={prefillData}
             onOutcomeButtonClick={handleOutcomeButtonClick}
             renderCompletionContent={renderCompletionContent}
-            onComplete={(outcome, answers, uuid) => {
-              console.log("Questionnaire onComplete called:", { outcome, answers, uuid });
+            onComplete={(outcome, answers) => {
+              console.log("Questionnaire onComplete called:", { outcome, answers });
               // Handle completion - could send data to analytics, redirect, etc.
             }}
             onRestart={() => {
