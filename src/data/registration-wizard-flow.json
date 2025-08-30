@@ -324,7 +324,7 @@
       "success": {
         "type": "success",
         "title": "You have successfully registered!",
-        "message": "Your case has been created and you'll receive a secure link via email with your Case ID.",
+        "message": "Your case has been created and you can sign in in future via your email address.",
         "actions": [
           {
             "text": "Go to Dashboard",
