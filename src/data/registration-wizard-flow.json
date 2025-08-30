@@ -103,20 +103,6 @@
             "prefillFromEligibility": true
           }
         ],
-        "displayChips": [
-          {
-            "label": "RMC/RTM status",
-            "value": "No RMC/RTM recorded",
-            "source": "eligibility_q3",
-            "correctionAction": "rmc_takeover_redirect"
-          },
-          {
-            "label": "Provisional path",
-            "value": "Derived from eligibility",
-            "source": "eligibility_derived",
-            "description": "e.g., RTM or CE if ≤25% non-res; RTM if >25% and ≤50%. Final choice is made later."
-          }
-        ],
         "nextSection": "step3"
       },
       "step3": {

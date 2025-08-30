@@ -53,11 +53,17 @@ export default function RegistrationQuestionnaire({
 
   // Prefill data from eligibility wizard
   useEffect(() => {
-    if (eligibilityData && currentSectionId === "step2") {
+    if (eligibilityData?.derivedData && currentSectionId === "step2") {
       const prefillData = { ...currentSectionData };
-      if (eligibilityData.flatCount) {
-        prefillData.number_of_flats = eligibilityData.flatCount;
+      if (eligibilityData.derivedData.flatCount) {
+        prefillData.number_of_flats = eligibilityData.derivedData.flatCount;
       }
+      setCurrentSectionData(prefillData);
+    }
+    // Legacy support
+    else if (eligibilityData?.flatCount && currentSectionId === "step2") {
+      const prefillData = { ...currentSectionData };
+      prefillData.number_of_flats = eligibilityData.flatCount;
       setCurrentSectionData(prefillData);
     }
   }, [currentSectionId, eligibilityData]);
@@ -206,7 +212,9 @@ export default function RegistrationQuestionnaire({
   };
 
   const shouldShowChooseProcess = () => {
-    return eligibilityData?.allowsBothRtmAndCe || false;
+    return eligibilityData?.derivedData?.allowsBothRtmAndCe || 
+           eligibilityData?.allowsBothRtmAndCe || 
+           false;
   };
 
   const shouldShowConditionalQuestions = (questionId: string, triggerValue: string) => {
@@ -557,20 +565,52 @@ export default function RegistrationQuestionnaire({
               </div>
 
               {/* Display chips for step2 */}
-              {currentSectionId === "step2" && currentSection.displayChips && (
+              {currentSectionId === "step2" && (
                 <div className="flex flex-wrap gap-2 p-4 bg-liberty-secondary/10 rounded-lg border border-liberty-secondary/20">
-                  {currentSection.displayChips.map((chip, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <Badge variant="secondary" className="bg-liberty-primary/10 text-liberty-primary">
-                        {chip.label}: {chip.value}
-                      </Badge>
-                      {chip.correctionAction && (
-                        <Button variant="link" size="sm" className="text-liberty-primary p-0 h-auto">
-                          Correct this →
-                        </Button>
-                      )}
+                  <div className="flex items-center gap-2">
+                    <Badge variant="secondary" className="bg-liberty-primary/10 text-liberty-primary">
+                      RMC/RTM status: {
+                        eligibilityData?.derivedData?.rmcStatus || 
+                        eligibilityData?.rmcStatus || 
+                        "Eligibility has not been determined yet"
+                      }
+                    </Badge>
+                    <Button 
+                      variant="link" 
+                      size="sm" 
+                      className="text-liberty-primary p-0 h-auto"
+                      onClick={() => router.push('/eligibility-check')}
+                    >
+                      {(eligibilityData?.derivedData?.rmcStatus || eligibilityData?.rmcStatus) ? "Correct this" : "Complete eligibility check"} →
+                    </Button>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="secondary" className="bg-liberty-primary/10 text-liberty-primary">
+                      Provisional path: {
+                        eligibilityData?.derivedData?.provisionalPath || 
+                        eligibilityData?.provisionalPath || 
+                        "Eligibility has not been determined yet"
+                      }
+                    </Badge>
+                    <Button 
+                      variant="link" 
+                      size="sm" 
+                      className="text-liberty-primary p-0 h-auto"
+                      onClick={() => router.push('/eligibility-check')}
+                    >
+                      {(eligibilityData?.derivedData?.provisionalPath || eligibilityData?.provisionalPath) ? "Correct this" : "Complete eligibility check"} →
+                    </Button>
+                  </div>
+                  
+                  {/* Debug info - show complete eligibility data if available */}
+                  {process.env.NODE_ENV === 'development' && eligibilityData?.answers && (
+                    <div className="w-full mt-4 p-3 bg-gray-100 rounded text-xs">
+                      <details>
+                        <summary className="cursor-pointer font-medium">Debug: Complete Eligibility Data</summary>
+                        <pre className="mt-2 overflow-auto">{JSON.stringify(eligibilityData, null, 2)}</pre>
+                      </details>
                     </div>
-                  ))}
+                  )}
                 </div>
               )}
             </div>

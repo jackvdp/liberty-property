@@ -15,13 +15,40 @@ import { useSearchParams } from "next/navigation";
 export default function Register() {
   const searchParams = useSearchParams();
   
-  // Get eligibility data from URL params or localStorage
-  const eligibilityData: EligibilityData = {
-    flatCount: searchParams.get('flatCount') ? parseInt(searchParams.get('flatCount')!) : undefined,
-    allowsBothRtmAndCe: searchParams.get('allowsBoth') === 'true',
-    rmcStatus: searchParams.get('rmcStatus') || 'No RMC/RTM recorded',
-    provisionalPath: searchParams.get('path') || 'RTM or CE available'
-  };
+  // Get eligibility data from localStorage (complete form data)
+  const eligibilityData: EligibilityData | undefined = (() => {
+    if (typeof window === 'undefined') return undefined;
+    
+    try {
+      const stored = localStorage.getItem('liberty-bell-eligibility-data');
+      if (stored) {
+        const parsedData = JSON.parse(stored);
+        console.log('Loaded eligibility data:', parsedData);
+        return parsedData as EligibilityData;
+      }
+    } catch (error) {
+      console.error('Failed to parse eligibility data from localStorage:', error);
+    }
+    
+    // Fallback to URL params for legacy support
+    const flatCount = searchParams.get('flatCount');
+    const allowsBoth = searchParams.get('allowsBoth');
+    const rmcStatus = searchParams.get('rmcStatus');
+    const path = searchParams.get('path');
+    
+    if (flatCount || allowsBoth || rmcStatus || path) {
+      return {
+        derivedData: {
+          flatCount: flatCount ? parseInt(flatCount) : undefined,
+          allowsBothRtmAndCe: allowsBoth === 'true',
+          rmcStatus: rmcStatus || undefined,
+          provisionalPath: path || undefined
+        }
+      };
+    }
+    
+    return undefined;
+  })();
 
   // Type assertion for the registration data
   const questionnaireData: RegistrationData = {

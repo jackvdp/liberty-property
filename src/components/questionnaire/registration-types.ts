@@ -76,6 +76,25 @@ export interface RegistrationData {
 }
 
 export interface EligibilityData {
+  // Complete form data
+  answers?: Array<{ questionId: string; value: any }>;
+  outcome?: any;
+  timestamp?: string;
+  
+  // Derived/computed data for easy access
+  derivedData?: {
+    flatCount?: number;
+    propertyType?: string;
+    isLeasehold?: string;
+    existingRmcRtm?: string;
+    nonResidentialProportion?: string;
+    leaseholderSupport?: string;
+    allowsBothRtmAndCe?: boolean;
+    rmcStatus?: string;
+    provisionalPath?: string;
+  };
+  
+  // Legacy support (deprecated)
   flatCount?: number;
   allowsBothRtmAndCe?: boolean;
   rmcStatus?: string;
