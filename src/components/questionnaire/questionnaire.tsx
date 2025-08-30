@@ -6,13 +6,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
-import { CheckCircle2, AlertCircle, Info, ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getAlertVariant, getAlertIcon } from "./shared-utils";
+import { RadioInput, TextInput } from "./shared-inputs";
 import { 
   QuestionnaireProps, 
   QuestionnaireQuestion, 
@@ -237,32 +236,6 @@ export default function Questionnaire({
     setIsComplete(false);
     setOutcome(null);
     onRestart?.();
-  };
-
-  const getAlertVariant = (type: string) => {
-    switch (type) {
-      case "success":
-        return "success" as const;
-      case "error":
-        return "destructive" as const;
-      case "info":
-        return "info" as const;
-      default:
-        return "default" as const;
-    }
-  };
-
-  const getAlertIcon = (type: string) => {
-    switch (type) {
-      case "success":
-        return <CheckCircle2 className="text-liberty-primary" />;
-      case "error":
-        return <AlertCircle className="text-red-600" />;
-      case "info":
-        return <Info className="text-liberty-primary" />;
-      default:
-        return <Info className="text-liberty-primary" />;
-    }
   };
 
   const generateUUID = () => {
@@ -537,50 +510,11 @@ export default function Questionnaire({
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.4 }}
                   >
-                    <RadioGroup 
-                      value={currentAnswer.toString()} 
-                      onValueChange={handleAnswerChange}
-                    >
-                      {currentQuestion.options.map((option: QuestionnaireOption, index: number) => {
-                        const isSelected = currentAnswer.toString() === option.value;
-                        return (
-                          <motion.div 
-                            key={option.value} 
-                            className={`flex items-center space-x-4 p-4 rounded-lg border-2 transition-all cursor-pointer ${
-                              isSelected 
-                                ? 'border-liberty-primary bg-liberty-primary/5 shadow-md' 
-                                : 'border-liberty-secondary/30 hover:border-liberty-secondary hover:bg-liberty-secondary/5'
-                            }`}
-                            onClick={() => handleAnswerChange(option.value)}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.05, duration: 0.2, ease: "easeOut" }}
-                            whileHover={{ scale: 1.005 }}
-                            whileTap={{ scale: 0.995 }}
-                          >
-                            <RadioGroupItem 
-                              value={option.value} 
-                              id={option.value}
-                              className={`${
-                                isSelected 
-                                  ? 'border-liberty-primary text-liberty-primary shadow-sm' 
-                                  : 'border-liberty-secondary/50 text-liberty-standard/40'
-                              }`}
-                            />
-                            <Label 
-                              htmlFor={option.value}
-                              className={`cursor-pointer flex-1 font-medium text-base transition-colors ${
-                                isSelected 
-                                  ? 'text-liberty-primary' 
-                                  : 'text-liberty-standard hover:text-liberty-standard/80'
-                              }`}
-                            >
-                              {option.label}
-                            </Label>
-                          </motion.div>
-                        );
-                      })}
-                    </RadioGroup>
+                    <RadioInput 
+                      question={currentQuestion} 
+                      value={currentAnswer} 
+                      onChange={handleAnswerChange} 
+                    />
                   </motion.div>
                 )}
 
@@ -590,17 +524,11 @@ export default function Questionnaire({
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.4 }}
                   >
-                    <Label className="text-base font-medium text-liberty-standard mb-3 block">
-                      {currentQuestion.question}
-                    </Label>
-                    <Input
+                    <TextInput 
+                      question={currentQuestion} 
+                      value={currentAnswer} 
+                      onChange={handleAnswerChange}
                       type="number"
-                      value={currentAnswer}
-                      onChange={(e) => handleAnswerChange(Number(e.target.value))}
-                      min={currentQuestion.validation?.min || 0}
-                      max={currentQuestion.validation?.max}
-                      placeholder="Enter number"
-                      className="border-liberty-secondary focus-visible:border-liberty-primary focus-visible:ring-liberty-primary/20"
                     />
                   </motion.div>
                 )}
@@ -611,15 +539,11 @@ export default function Questionnaire({
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.4 }}
                   >
-                    <Label className="text-base font-medium text-liberty-standard mb-3 block">
-                      {currentQuestion.question}
-                    </Label>
-                    <Input
+                    <TextInput 
+                      question={currentQuestion} 
+                      value={currentAnswer} 
+                      onChange={handleAnswerChange}
                       type="text"
-                      value={currentAnswer}
-                      onChange={(e) => handleAnswerChange(e.target.value)}
-                      placeholder="Enter your answer"
-                      className="border-liberty-secondary focus-visible:border-liberty-primary focus-visible:ring-liberty-primary/20"
                     />
                   </motion.div>
                 )}

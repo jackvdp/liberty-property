@@ -12,8 +12,10 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { CheckCircle2, ArrowLeft, ArrowRight, Plus, Trash2, Upload } from "lucide-react";
+import { ArrowLeft, ArrowRight, Plus, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getAlertIcon } from "./shared-utils";
+import { RadioInput, TextInput, CheckboxInput, FileInput } from "./shared-inputs";
 import { 
   RegistrationQuestionnaireProps,
   RegistrationSection,
@@ -220,173 +222,15 @@ export default function RegistrationQuestionnaire({
       case "text":
       case "email":
       case "tel":
-        return (
-          <div key={question.id} className="space-y-2">
-            <Label className="text-base font-medium text-liberty-standard">
-              {question.question}
-              {question.required && <span className="text-red-500 ml-1">*</span>}
-            </Label>
-            {question.description && (
-              <p className="text-sm text-liberty-standard/60">{question.description}</p>
-            )}
-            <Input
-              type={question.type}
-              value={value}
-              onChange={(e) => handleFieldChange(question.id, e.target.value)}
-              className="border-liberty-secondary focus-visible:border-liberty-primary focus-visible:ring-liberty-primary/20"
-              required={question.required}
-            />
-          </div>
-        );
-
+        return <TextInput key={question.id} question={question} value={value} onChange={(val) => handleFieldChange(question.id, val)} type={question.type} />;
       case "number":
-        return (
-          <div key={question.id} className="space-y-2">
-            <Label className="text-base font-medium text-liberty-standard">
-              {question.question}
-              {question.required && <span className="text-red-500 ml-1">*</span>}
-            </Label>
-            {question.description && (
-              <p className="text-sm text-liberty-standard/60">{question.description}</p>
-            )}
-            <Input
-              type="number"
-              value={value}
-              onChange={(e) => handleFieldChange(question.id, Number(e.target.value))}
-              min={question.validation?.min}
-              className="border-liberty-secondary focus-visible:border-liberty-primary focus-visible:ring-liberty-primary/20"
-              required={question.required}
-            />
-          </div>
-        );
-
+        return <TextInput key={question.id} question={question} value={value} onChange={(val) => handleFieldChange(question.id, val)} type="number" />;
       case "radio":
-        return (
-          <div key={question.id} className="space-y-4">
-            <Label className="text-base font-medium text-liberty-standard">
-              {question.question}
-              {question.required && <span className="text-red-500 ml-1">*</span>}
-            </Label>
-            {question.description && (
-              <p className="text-sm text-liberty-standard/60">{question.description}</p>
-            )}
-            <RadioGroup 
-              value={value} 
-              onValueChange={(val) => handleFieldChange(question.id, val)}
-            >
-              {question.options?.map((option) => (
-                <div key={option.value} className="flex items-start space-x-3 p-3 rounded-lg border border-liberty-secondary/30 hover:border-liberty-secondary hover:bg-liberty-secondary/5">
-                  <RadioGroupItem 
-                    value={option.value} 
-                    id={`${question.id}-${option.value}`}
-                    className="mt-1"
-                  />
-                  <div className="flex-1">
-                    <Label 
-                      htmlFor={`${question.id}-${option.value}`}
-                      className="cursor-pointer font-medium text-base text-liberty-standard"
-                    >
-                      {option.label}
-                    </Label>
-                    {option.description && (
-                      <p className="text-sm text-liberty-standard/60 mt-1">{option.description}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </RadioGroup>
-          </div>
-        );
-
+        return <RadioInput key={question.id} question={question} value={value} onChange={(val) => handleFieldChange(question.id, val)} />;
       case "checkbox":
-        if (question.options && question.options.length > 1) {
-          // Multiple checkbox options
-          return (
-            <div key={question.id} className="space-y-4">
-              <Label className="text-base font-medium text-liberty-standard">
-                {question.question}
-                {question.required && <span className="text-red-500 ml-1">*</span>}
-              </Label>
-              {question.description && (
-                <p className="text-sm text-liberty-standard/60">{question.description}</p>
-              )}
-              <div className="space-y-3">
-                {question.options.map((option) => (
-                  <div key={option.value} className="flex items-center space-x-3">
-                    <Checkbox
-                      id={`${question.id}-${option.value}`}
-                      checked={(currentSectionData[question.id] || []).includes(option.value)}
-                      onCheckedChange={(checked) => 
-                        handleCheckboxChange(question.id, option.value, checked as boolean)
-                      }
-                    />
-                    <Label 
-                      htmlFor={`${question.id}-${option.value}`}
-                      className="cursor-pointer text-base text-liberty-standard"
-                    >
-                      {option.label}
-                    </Label>
-                  </div>
-                ))}
-              </div>
-            </div>
-          );
-        } else {
-          // Single checkbox
-          return (
-            <div key={question.id} className="space-y-3">
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id={question.id}
-                  checked={!!currentSectionData[question.id]}
-                  onCheckedChange={(checked) => handleFieldChange(question.id, checked)}
-                  className="mt-1"
-                />
-                <div className="flex-1">
-                  <Label 
-                    htmlFor={question.id}
-                    className="cursor-pointer text-base font-medium text-liberty-standard"
-                  >
-                    {question.question}
-                    {question.required && <span className="text-red-500 ml-1">*</span>}
-                  </Label>
-                  {question.description && (
-                    <p className="text-sm text-liberty-standard/60 mt-1">{question.description}</p>
-                  )}
-                </div>
-              </div>
-            </div>
-          );
-        }
-
+        return <CheckboxInput key={question.id} question={question} value={value} onChange={(val) => handleFieldChange(question.id, val)} onCheckboxChange={handleCheckboxChange} />;
       case "file":
-        return (
-          <div key={question.id} className="space-y-3">
-            <Label className="text-base font-medium text-liberty-standard">
-              {question.question}
-              {question.required && <span className="text-red-500 ml-1">*</span>}
-            </Label>
-            {question.description && (
-              <p className="text-sm text-liberty-standard/60">{question.description}</p>
-            )}
-            <div className="border-2 border-dashed border-liberty-secondary/30 rounded-lg p-6 text-center hover:border-liberty-secondary/50 transition-colors">
-              <Upload className="w-8 h-8 text-liberty-standard/40 mx-auto mb-3" />
-              <p className="text-sm text-liberty-standard/60 mb-2">
-                Click to upload or drag and drop
-              </p>
-              <p className="text-xs text-liberty-standard/40">
-                {question.validation?.acceptedTypes?.join(", ")} up to {question.validation?.maxSize}
-              </p>
-              <input
-                type="file"
-                className="hidden"
-                accept={question.validation?.acceptedTypes?.join(",")}
-                onChange={(e) => handleFieldChange(question.id, e.target.files?.[0])}
-              />
-            </div>
-          </div>
-        );
-
+        return <FileInput key={question.id} question={question} value={value} onChange={(val) => handleFieldChange(question.id, val)} />;
       default:
         return null;
     }
