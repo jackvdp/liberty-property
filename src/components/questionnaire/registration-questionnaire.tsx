@@ -568,17 +568,17 @@ export default function RegistrationQuestionnaire({
                         <p className="font-medium text-liberty-standard">
                           {(() => {
                             const status = eligibilityData?.derivedData?.rmcStatus;
-                            const q3Answer = eligibilityData?.answers?.find(a => a.questionId === "existing_rmc_rtm")?.value;
-                            console.log('Debug - RMC Status:', status, 'Q3 Answer:', q3Answer, 'All answers:', eligibilityData?.answers?.map(a => ({id: a.questionId, value: a.value})));
+                            const rmcAnswer = eligibilityData?.answers?.find(a => a.questionId === "existing_rmc_rtm")?.value;
+                            console.log('Debug - RMC Status:', status, 'RMC Answer:', rmcAnswer, 'All answers:', eligibilityData?.answers?.map(a => ({id: a.questionId, value: a.value})));
                             
                             if (status === "No RMC/RTM recorded") return "No existing management company";
                             if (status === "RMC/RTM exists") return "Management company already exists";  
                             if (status === "RMC/RTM status unknown") return "Management status unclear";
                             
-                            // Fallback check using Q3 answer directly if derivedData is wrong
-                            if (q3Answer === "no") return "No existing management company";
-                            if (q3Answer === "yes") return "Management company already exists";
-                            if (q3Answer === "dont_know") return "Management status unclear";
+                            // Fallback check using RMC answer directly if derivedData is wrong
+                            if (rmcAnswer === "no") return "No existing management company";
+                            if (rmcAnswer === "yes") return "Management company already exists";
+                            if (rmcAnswer === "dont_know") return "Management status unclear";
                             
                             return "Not yet determined";
                           })()}

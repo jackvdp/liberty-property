@@ -58,4 +58,6 @@ export interface QuestionnaireProps {
     uuid?: string;
     focusQuestion?: string;
   };
+  // New props for making questionnaire reusable
+  onOutcomeButtonClick?: (outcome: QuestionnaireOutcome, answers: QuestionnaireAnswer[]) => string | void;
 }

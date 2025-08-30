@@ -4,7 +4,8 @@ import {
   Questionnaire,
   QuestionnaireData,
   QuestionnaireOutcome,
-  QuestionnaireQuestion
+  QuestionnaireQuestion,
+  QuestionnaireAnswer
 } from "@/components/questionnaire";
 import eligibilityData from "@/data/eligibility-wizard-flow.json";
 import Navbar from "@/components/navbar";
@@ -48,6 +49,85 @@ export default function EligibilityCheck() {
     }
   }, [searchParams]);
 
+  // Eligibility-specific logic for generating UUID
+  const generateUUID = () => {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      const r = Math.random() * 16 | 0;
+      const v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  };
+
+  // Eligibility-specific logic for creating derived data
+  const createDerivedData = (answers: QuestionnaireAnswer[], outcome: QuestionnaireOutcome) => {
+    return {
+      flatCount: answers.find(a => a.questionId === "flat_count")?.value,
+      propertyType: answers.find(a => a.questionId === "property_type")?.value,
+      isLeasehold: answers.find(a => a.questionId === "flat_leasehold")?.value,
+      existingRmcRtm: answers.find(a => a.questionId === "existing_rmc_rtm")?.value,
+      nonResidentialProportion: answers.find(a => a.questionId === "non_residential_proportion")?.value,
+      leaseholderSupport: answers.find(a => a.questionId === "leaseholder_support")?.value,
+      // Determine if both RTM and CE are available
+      allowsBothRtmAndCe: (() => {
+        const nonResAnswer = answers.find(a => a.questionId === "non_residential_proportion");
+        return !nonResAnswer || nonResAnswer.value === "25_or_less";
+      })(),
+      // Set RMC status
+      rmcStatus: (() => {
+        const rmcAnswer = answers.find(a => a.questionId === "existing_rmc_rtm");
+        console.log('Debug - Creating rmcStatus from answer:', rmcAnswer);
+        if (rmcAnswer?.value === "no") return "No RMC/RTM recorded";
+        if (rmcAnswer?.value === "yes") return "RMC/RTM exists";
+        return "RMC/RTM status unknown";
+      })(),
+      // Set provisional path based on outcome
+      provisionalPath: (() => {
+        if (outcome.action === "registration") {
+          const nonResAnswer = answers.find(a => a.questionId === "non_residential_proportion");
+          const allowsBoth = !nonResAnswer || nonResAnswer.value === "25_or_less";
+          return allowsBoth ? "RTM or CE available" : "RTM available";
+        }
+        if (outcome.action === "leaseholder_engagement_module") {
+          return "Leaseholder engagement required";
+        }
+        if (outcome.action === "rmc_process") {
+          return "RMC takeover/improvement";
+        }
+        return "Path to be determined";
+      })()
+    };
+  };
+
+  // Eligibility-specific outcome button click handler
+  const handleOutcomeButtonClick = (outcome: QuestionnaireOutcome, answers: QuestionnaireAnswer[]): string => {
+    if (!outcome.button?.href) {
+      return "";
+    }
+
+    let href = outcome.button.href;
+    
+    // If it's a success outcome, save eligibility data with UUID and append to URL
+    if (outcome.type === "success") {
+      const eligibilityUuid = generateUUID();
+      
+      const eligibilityFormData = {
+        uuid: eligibilityUuid,
+        answers: answers,
+        outcome: outcome,
+        timestamp: new Date().toISOString(),
+        derivedData: createDerivedData(answers, outcome)
+      };
+      
+      localStorage.setItem(`liberty-bell-eligibility-${eligibilityUuid}`, JSON.stringify(eligibilityFormData));
+      console.log('Saved eligibility data with UUID:', eligibilityUuid, 'for outcome:', outcome.action);
+      
+      // Add UUID as query parameter to all success outcomes
+      href = `${href}?eligibilityId=${eligibilityUuid}`;
+    }
+    
+    return href;
+  };
+
   return (
       <div className="min-h-screen bg-liberty-base">
         <Navbar />
@@ -55,6 +135,7 @@ export default function EligibilityCheck() {
             data={questionnaireData}
             showSeparator={true}
             prefillData={prefillData}
+            onOutcomeButtonClick={handleOutcomeButtonClick}
             onComplete={(outcome, answers) => {
               console.log("Questionnaire completed:", { outcome, answers });
               // Handle completion - could send data to analytics, redirect, etc.

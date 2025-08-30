@@ -28,7 +28,8 @@ export default function Questionnaire({
   className,
   showSeparator = false,
   completionActions,
-  prefillData
+  prefillData,
+  onOutcomeButtonClick
 }: QuestionnaireProps) {
   const router = useRouter();
   const [currentQuestionId, setCurrentQuestionId] = useState<string>("q1");
@@ -273,65 +274,15 @@ export default function Questionnaire({
   };
 
   const handleOutcomeButtonClick = () => {
-    if (outcome?.button?.href) {
-      let href = outcome.button.href;
-      
-      // If it's a success outcome, save eligibility data with UUID and append to URL
-      if (outcome.type === "success") {
-        const eligibilityUuid = generateUUID();
-        
-        const eligibilityFormData = {
-          uuid: eligibilityUuid,
-          answers: answers,
-          outcome: outcome,
-          timestamp: new Date().toISOString(),
-          // Derived data for easy access
-          derivedData: {
-            flatCount: answers.find(a => a.questionId === "flat_count")?.value,
-            propertyType: answers.find(a => a.questionId === "property_type")?.value,
-            isLeasehold: answers.find(a => a.questionId === "flat_leasehold")?.value,
-            existingRmcRtm: answers.find(a => a.questionId === "existing_rmc_rtm")?.value,
-            nonResidentialProportion: answers.find(a => a.questionId === "non_residential_proportion")?.value,
-            leaseholderSupport: answers.find(a => a.questionId === "leaseholder_support")?.value,
-            // Determine if both RTM and CE are available
-            allowsBothRtmAndCe: (() => {
-              const nonResAnswer = answers.find(a => a.questionId === "non_residential_proportion");
-              return !nonResAnswer || nonResAnswer.value === "25_or_less";
-            })(),
-            // Set RMC status
-            rmcStatus: (() => {
-              const rmcAnswer = answers.find(a => a.questionId === "existing_rmc_rtm");
-              console.log('Debug - Creating rmcStatus from answer:', rmcAnswer);
-              if (rmcAnswer?.value === "no") return "No RMC/RTM recorded";
-              if (rmcAnswer?.value === "yes") return "RMC/RTM exists";
-              return "RMC/RTM status unknown";
-            })(),
-            // Set provisional path based on outcome
-            provisionalPath: (() => {
-              if (outcome.action === "registration") {
-                const nonResAnswer = answers.find(a => a.questionId === "non_residential_proportion");
-                const allowsBoth = !nonResAnswer || nonResAnswer.value === "25_or_less";
-                return allowsBoth ? "RTM or CE available" : "RTM available";
-              }
-              if (outcome.action === "leaseholder_engagement_module") {
-                return "Leaseholder engagement required";
-              }
-              if (outcome.action === "rmc_process") {
-                return "RMC takeover/improvement";
-              }
-              return "Path to be determined";
-            })()
-          }
-        };
-        
-        localStorage.setItem(`liberty-bell-eligibility-${eligibilityUuid}`, JSON.stringify(eligibilityFormData));
-        console.log('Saved eligibility data with UUID:', eligibilityUuid, 'for outcome:', outcome.action);
-        
-        // Add UUID as query parameter to all success outcomes
-        href = `${href}?eligibilityId=${eligibilityUuid}`;
+    if (onOutcomeButtonClick && outcome) {
+      // Use injected logic if provided
+      const redirectUrl = onOutcomeButtonClick(outcome, answers);
+      if (redirectUrl) {
+        router.push(redirectUrl);
       }
-      
-      router.push(href);
+    } else if (outcome?.button?.href) {
+      // Default behavior - just navigate to the href
+      router.push(outcome.button.href);
     } else if (outcome?.button?.action) {
       // Handle custom actions if needed
       console.log("Custom action:", outcome.button.action);
