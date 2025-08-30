@@ -53,4 +53,9 @@ export interface QuestionnaireProps {
     info?: { text: string; href?: string; onClick?: () => void };
     error?: { text: string; href?: string; onClick?: () => void };
   };
+  prefillData?: {
+    answers?: Array<{ questionId: string; value: any }>;
+    uuid?: string;
+    focusQuestion?: string;
+  };
 }

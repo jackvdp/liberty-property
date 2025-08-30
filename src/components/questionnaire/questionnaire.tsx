@@ -27,7 +27,8 @@ export default function Questionnaire({
   onRestart,
   className,
   showSeparator = false,
-  completionActions
+  completionActions,
+  prefillData
 }: QuestionnaireProps) {
   const router = useRouter();
   const [currentQuestionId, setCurrentQuestionId] = useState<string>("q1");
@@ -37,11 +38,61 @@ export default function Questionnaire({
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [outcome, setOutcome] = useState<QuestionnaireOutcome | null>(null);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const [isPrefilling, setIsPrefilling] = useState<boolean>(false);
 
   const { questions, outcomes } = data;
   const currentQuestion = questions[currentQuestionId as keyof typeof questions] as QuestionnaireQuestion;
   const totalQuestions = Object.keys(questions).length;
-  const answeredQuestions = answers.length;
+  
+  // Calculate unique questions answered
+  const uniqueQuestions = new Set(answers.map(a => a.questionId));
+  const answeredQuestions = uniqueQuestions.size;
+
+  // Handle prefilling from saved data
+  useEffect(() => {
+    if (prefillData?.answers && prefillData.answers.length > 0 && !isPrefilling) {
+      setIsPrefilling(true);
+      console.log('Prefilling questionnaire with data:', prefillData);
+      
+      if (prefillData.focusQuestion) {
+        // User wants to focus on a specific question
+        console.log('Focusing on question:', prefillData.focusQuestion);
+        
+        // Find answers up to (but not including) the focus question
+        const answersBeforeFocus = [];
+        const focusQuestionAnswer = prefillData.answers.find(a => a.questionId === prefillData.focusQuestion);
+        
+        // Navigate through the flow to get all answers before the focus question
+        let currentQuestionId = "q1";
+        for (const answer of prefillData.answers) {
+          if (answer.questionId === prefillData.focusQuestion) {
+            break; // Stop before the focus question
+          }
+          answersBeforeFocus.push(answer);
+          currentQuestionId = getNextQuestion(currentQuestionId, answer.value) || currentQuestionId;
+        }
+        
+        setAnswers(answersBeforeFocus);
+        setCurrentQuestionId(prefillData.focusQuestion);
+        setCurrentAnswer(focusQuestionAnswer?.value || "");
+        
+        console.log('Set up focus on', prefillData.focusQuestion, 'with', answersBeforeFocus.length, 'previous answers');
+      } else {
+        // Default behavior - position at last question
+        const previousAnswers = prefillData.answers.slice(0, -1);
+        const lastAnswer = prefillData.answers[prefillData.answers.length - 1];
+        
+        setAnswers(previousAnswers);
+        
+        if (lastAnswer) {
+          setCurrentQuestionId(lastAnswer.questionId);
+          setCurrentAnswer(lastAnswer.value);
+        }
+        
+        console.log('Prefilled with', previousAnswers.length, 'previous answers, positioned at question:', lastAnswer?.questionId);
+      }
+    }
+  }, [prefillData, isPrefilling]);
 
   // Calculate progress
   useEffect(() => {
@@ -86,8 +137,9 @@ export default function Questionnaire({
     // Small delay for exit animation
     await new Promise(resolve => setTimeout(resolve, 150));
 
-    // Save the current answer
-    const newAnswers = [...answers, { questionId: currentQuestionId, value: currentAnswer }];
+    // Save the current answer - remove any existing answer for this question first
+    const answersWithoutCurrent = answers.filter(a => a.questionId !== currentQuestionId);
+    const newAnswers = [...answersWithoutCurrent, { questionId: currentQuestionId, value: currentAnswer }];
     setAnswers(newAnswers);
 
     // Determine next question or outcome
@@ -140,6 +192,15 @@ export default function Questionnaire({
       }
       
       setCurrentQuestionId(currentId);
+      
+      // Set the current answer to what it was for this question
+      const currentQuestionAnswer = previousAnswers.find(a => a.questionId === currentId);
+      if (currentQuestionAnswer) {
+        setCurrentAnswer(currentQuestionAnswer.value);
+        // Remove this answer from the answers array since we're editing it again
+        const answersWithoutCurrent = previousAnswers.filter(a => a.questionId !== currentId);
+        setAnswers(answersWithoutCurrent);
+      }
     }
 
     setIsComplete(false);
@@ -206,20 +267,22 @@ export default function Questionnaire({
           timestamp: new Date().toISOString(),
           // Derived data for easy access
           derivedData: {
-            flatCount: answers.find(a => a.questionId === "flat_count")?.value,
-            propertyType: answers.find(a => a.questionId === "property_type")?.value,
-            isLeasehold: answers.find(a => a.questionId === "flat_leasehold")?.value,
-            existingRmcRtm: answers.find(a => a.questionId === "existing_rmc_rtm")?.value,
-            nonResidentialProportion: answers.find(a => a.questionId === "non_residential_proportion")?.value,
-            leaseholderSupport: answers.find(a => a.questionId === "leaseholder_support")?.value,
+            flatCount: answers.find(a => a.questionId === "q4")?.value,
+            propertyType: answers.find(a => a.questionId === "q1")?.value,
+            isLeasehold: answers.find(a => a.questionId === "q2_flat")?.value,
+            existingRmcRtm: answers.find(a => a.questionId === "q3")?.value,
+            nonResidentialProportion: answers.find(a => a.questionId === "q7b")?.value,
+            leaseholderSupport: answers.find(a => a.questionId === "q10")?.value,
             // Determine if both RTM and CE are available
             allowsBothRtmAndCe: (() => {
-              const nonResAnswer = answers.find(a => a.questionId === "non_residential_proportion");
+              const nonResAnswer = answers.find(a => a.questionId === "q7b");
               return !nonResAnswer || nonResAnswer.value === "25_or_less";
             })(),
             // Set RMC status
             rmcStatus: (() => {
-              const rmcAnswer = answers.find(a => a.questionId === "existing_rmc_rtm");
+              // Look for Q3 which asks about existing RMC/RTM
+              const rmcAnswer = answers.find(a => a.questionId === "q3");
+              console.log('Debug - Creating rmcStatus from Q3 answer:', rmcAnswer);
               if (rmcAnswer?.value === "no") return "No RMC/RTM recorded";
               if (rmcAnswer?.value === "yes") return "RMC/RTM exists";
               return "RMC/RTM status unknown";
@@ -227,7 +290,7 @@ export default function Questionnaire({
             // Set provisional path based on outcome
             provisionalPath: (() => {
               if (outcome.action === "registration") {
-                const nonResAnswer = answers.find(a => a.questionId === "non_residential_proportion");
+                const nonResAnswer = answers.find(a => a.questionId === "q7b");
                 const allowsBoth = !nonResAnswer || nonResAnswer.value === "25_or_less";
                 return allowsBoth ? "RTM or CE available" : "RTM available";
               }
@@ -390,6 +453,22 @@ export default function Questionnaire({
       >
         <Card className="bg-liberty-base border-liberty-secondary/20">
           <CardHeader>
+            {prefillData?.answers && (
+              <motion.div 
+                className="mb-4 p-3 bg-liberty-accent/10 border border-liberty-accent/20 rounded-lg"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="flex items-center gap-2">
+                  <Info className="w-4 h-4 text-liberty-accent" />
+                  <p className="text-sm font-medium text-liberty-standard">
+                    Updating your previous eligibility assessment. You can review and change any of your answers.
+                  </p>
+                </div>
+              </motion.div>
+            )}
+            
             <motion.div 
               className="flex items-center justify-between mb-6"
               initial={{ opacity: 0, y: -10 }}

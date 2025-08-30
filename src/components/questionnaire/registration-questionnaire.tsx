@@ -558,38 +558,75 @@ export default function RegistrationQuestionnaire({
 
               {/* Display chips for step2 */}
               {currentSectionId === "step2" && (
-                <div className="flex flex-wrap gap-2 p-4 bg-liberty-secondary/10 rounded-lg border border-liberty-secondary/20">
-                  <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="bg-liberty-primary/10 text-liberty-primary">
-                      RMC/RTM status: {
-                        eligibilityData?.derivedData?.rmcStatus || 
-                        "Eligibility has not been determined yet"
-                      }
-                    </Badge>
-                    <Button 
-                      variant="link" 
-                      size="sm" 
-                      className="text-liberty-primary p-0 h-auto"
-                      onClick={() => router.push('/eligibility-check')}
-                    >
-                      {eligibilityData?.derivedData?.rmcStatus ? "Correct this" : "Complete eligibility check"} →
-                    </Button>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Badge variant="secondary" className="bg-liberty-primary/10 text-liberty-primary">
-                      Provisional path: {
-                        eligibilityData?.derivedData?.provisionalPath || 
-                        "Eligibility has not been determined yet"
-                      }
-                    </Badge>
-                    <Button 
-                      variant="link" 
-                      size="sm" 
-                      className="text-liberty-primary p-0 h-auto"
-                      onClick={() => router.push('/eligibility-check')}
-                    >
-                      {eligibilityData?.derivedData?.provisionalPath ? "Correct this" : "Complete eligibility check"} →
-                    </Button>
+                <div className="space-y-4 p-4 bg-liberty-secondary/10 rounded-lg border border-liberty-secondary/20">
+                  <h4 className="font-semibold text-liberty-standard mb-3">Your Eligibility Summary</h4>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between p-3 bg-liberty-base rounded-lg border border-liberty-secondary/20">
+                      <div>
+                        <span className="text-sm font-medium text-liberty-standard/60">Management Status:</span>
+                        <p className="font-medium text-liberty-standard">
+                          {(() => {
+                            const status = eligibilityData?.derivedData?.rmcStatus;
+                            const q3Answer = eligibilityData?.answers?.find(a => a.questionId === "existing_rmc_rtm")?.value;
+                            console.log('Debug - RMC Status:', status, 'Q3 Answer:', q3Answer, 'All answers:', eligibilityData?.answers?.map(a => ({id: a.questionId, value: a.value})));
+                            
+                            if (status === "No RMC/RTM recorded") return "No existing management company";
+                            if (status === "RMC/RTM exists") return "Management company already exists";  
+                            if (status === "RMC/RTM status unknown") return "Management status unclear";
+                            
+                            // Fallback check using Q3 answer directly if derivedData is wrong
+                            if (q3Answer === "no") return "No existing management company";
+                            if (q3Answer === "yes") return "Management company already exists";
+                            if (q3Answer === "dont_know") return "Management status unclear";
+                            
+                            return "Not yet determined";
+                          })()}
+                        </p>
+                      </div>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="text-liberty-primary border-liberty-primary hover:bg-liberty-primary hover:text-white"
+                        onClick={() => {
+                          const url = eligibilityData?.uuid 
+                            ? `/eligibility-check?prefillId=${eligibilityData.uuid}&focusQuestion=existing_rmc_rtm`
+                            : '/eligibility-check';
+                          router.push(url);
+                        }}
+                      >
+                        {eligibilityData?.derivedData?.rmcStatus ? "Update this" : "Complete eligibility check"}
+                      </Button>
+                    </div>
+
+                    <div className="flex items-center justify-between p-3 bg-liberty-base rounded-lg border border-liberty-secondary/20">
+                      <div>
+                        <span className="text-sm font-medium text-liberty-standard/60">Recommended Path:</span>
+                        <p className="font-medium text-liberty-standard">
+                          {(() => {
+                            const path = eligibilityData?.derivedData?.provisionalPath;
+                            if (path === "RTM or CE available") return "Right to Manage or buy your freehold";
+                            if (path === "RTM available") return "Right to Manage (freehold not available)";
+                            if (path === "Leaseholder engagement required") return "Build neighbor support first";
+                            if (path === "RMC takeover/improvement") return "Improve existing management";
+                            return "Not yet determined";
+                          })()}
+                        </p>
+                      </div>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="text-liberty-primary border-liberty-primary hover:bg-liberty-primary hover:text-white"
+                        onClick={() => {
+                          const url = eligibilityData?.uuid 
+                            ? `/eligibility-check?prefillId=${eligibilityData.uuid}&focusQuestion=leaseholder_support`
+                            : '/eligibility-check';
+                          router.push(url);
+                        }}
+                      >
+                        {eligibilityData?.derivedData?.provisionalPath ? "Update this" : "Complete eligibility check"}
+                      </Button>
+                    </div>
                   </div>
                   
                   {/* Debug info - show complete eligibility data if available */}
