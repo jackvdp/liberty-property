@@ -76,6 +76,9 @@ export interface RegistrationData {
 }
 
 export interface EligibilityData {
+  // UUID identifier for this eligibility session
+  uuid?: string;
+  
   // Complete form data
   answers?: Array<{ questionId: string; value: any }>;
   outcome?: any;
@@ -93,12 +96,6 @@ export interface EligibilityData {
     rmcStatus?: string;
     provisionalPath?: string;
   };
-  
-  // Legacy support (deprecated)
-  flatCount?: number;
-  allowsBothRtmAndCe?: boolean;
-  rmcStatus?: string;
-  provisionalPath?: string;
 }
 
 export interface RegistrationQuestionnaireProps {

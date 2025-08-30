@@ -189,22 +189,22 @@
         }
       },
       "leaseholder_engagement": {
-        "type": "info",
+        "type": "success",
         "title": "No worries – we'll show you how to build support and get your neighbours on board.",
         "message": "We can help you engage with other leaseholders in your building.",
         "action": "leaseholder_engagement_module",
-        "color": "info",
+        "color": "success",
         "button": {
           "text": "Get Engagement Tools",
           "href": "/leaseholder-engagement"
         }
       },
       "rmc_process": {
-        "type": "info",
+        "type": "success",
         "title": "Sounds like there's already a structure in place.",
         "message": "We can help you take control of it or make it work better for leaseholders.",
         "action": "rmc_process",
-        "color": "info",
+        "color": "success",
         "button": {
           "text": "Explore RMC Options",
           "href": "/rmc-process"

@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function RMCProcess() {
+export default function LeaseholderEngagement() {
   const searchParams = useSearchParams();
   const [eligibilityData, setEligibilityData] = useState<any>(null);
   
@@ -16,7 +16,7 @@ export default function RMCProcess() {
         if (stored) {
           const parsedData = JSON.parse(stored);
           setEligibilityData(parsedData);
-          console.log('Loaded eligibility data for RMC process:', parsedData);
+          console.log('Loaded eligibility data for leaseholder engagement:', parsedData);
         }
       } catch (error) {
         console.error('Failed to load eligibility data:', error);
@@ -28,10 +28,10 @@ export default function RMCProcess() {
     <div className="min-h-screen bg-liberty-base flex items-center justify-center p-4">
       <div className="max-w-2xl mx-auto text-center">
         <h1 className="text-4xl font-reckless font-bold text-liberty-standard mb-6">
-          RMC Process
+          Leaseholder Engagement Tools
         </h1>
         <p className="text-lg text-liberty-standard/70 mb-8">
-          Since there's already a management structure in place, we can help you take control of it or make it work better for all leaseholders.
+          We'll help you build support among your neighbors and create a strong case for taking control of your building.
         </p>
         
         {eligibilityData && (
@@ -47,7 +47,7 @@ export default function RMCProcess() {
         
         <div className="bg-liberty-secondary/20 rounded-lg p-8 border border-liberty-secondary/30">
           <p className="text-liberty-standard/60">
-            RMC takeover and improvement tools coming soon...
+            Engagement tools and resources coming soon...
           </p>
           {process.env.NODE_ENV === 'development' && eligibilityData && (
             <details className="mt-4 text-left">

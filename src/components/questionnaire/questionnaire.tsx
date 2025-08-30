@@ -183,13 +183,24 @@ export default function Questionnaire({
     }
   };
 
+  const generateUUID = () => {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      const r = Math.random() * 16 | 0;
+      const v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  };
+
   const handleOutcomeButtonClick = () => {
     if (outcome?.button?.href) {
       let href = outcome.button.href;
       
-      // If navigating to register page, save complete eligibility data to localStorage
-      if (href === "/register") {
+      // If it's a success outcome, save eligibility data with UUID and append to URL
+      if (outcome.type === "success") {
+        const eligibilityUuid = generateUUID();
+        
         const eligibilityFormData = {
+          uuid: eligibilityUuid,
           answers: answers,
           outcome: outcome,
           timestamp: new Date().toISOString(),
@@ -209,18 +220,33 @@ export default function Questionnaire({
             // Set RMC status
             rmcStatus: (() => {
               const rmcAnswer = answers.find(a => a.questionId === "existing_rmc_rtm");
-              return rmcAnswer?.value === "no" ? "No RMC/RTM recorded" : "RMC/RTM may exist";
+              if (rmcAnswer?.value === "no") return "No RMC/RTM recorded";
+              if (rmcAnswer?.value === "yes") return "RMC/RTM exists";
+              return "RMC/RTM status unknown";
             })(),
-            // Set provisional path
+            // Set provisional path based on outcome
             provisionalPath: (() => {
-              const nonResAnswer = answers.find(a => a.questionId === "non_residential_proportion");
-              const allowsBoth = !nonResAnswer || nonResAnswer.value === "25_or_less";
-              return allowsBoth ? "RTM or CE available" : "RTM available";
+              if (outcome.action === "registration") {
+                const nonResAnswer = answers.find(a => a.questionId === "non_residential_proportion");
+                const allowsBoth = !nonResAnswer || nonResAnswer.value === "25_or_less";
+                return allowsBoth ? "RTM or CE available" : "RTM available";
+              }
+              if (outcome.action === "leaseholder_engagement_module") {
+                return "Leaseholder engagement required";
+              }
+              if (outcome.action === "rmc_process") {
+                return "RMC takeover/improvement";
+              }
+              return "Path to be determined";
             })()
           }
         };
         
-        localStorage.setItem('liberty-bell-eligibility-data', JSON.stringify(eligibilityFormData));
+        localStorage.setItem(`liberty-bell-eligibility-${eligibilityUuid}`, JSON.stringify(eligibilityFormData));
+        console.log('Saved eligibility data with UUID:', eligibilityUuid, 'for outcome:', outcome.action);
+        
+        // Add UUID as query parameter to all success outcomes
+        href = `${href}?eligibilityId=${eligibilityUuid}`;
       }
       
       router.push(href);

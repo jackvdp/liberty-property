@@ -15,36 +15,25 @@ import { useSearchParams } from "next/navigation";
 export default function Register() {
   const searchParams = useSearchParams();
   
-  // Get eligibility data from localStorage (complete form data)
+  // Get eligibility data from localStorage only if valid UUID is provided
   const eligibilityData: EligibilityData | undefined = (() => {
     if (typeof window === 'undefined') return undefined;
     
-    try {
-      const stored = localStorage.getItem('liberty-bell-eligibility-data');
-      if (stored) {
-        const parsedData = JSON.parse(stored);
-        console.log('Loaded eligibility data:', parsedData);
-        return parsedData as EligibilityData;
-      }
-    } catch (error) {
-      console.error('Failed to parse eligibility data from localStorage:', error);
-    }
+    const eligibilityId = searchParams.get('eligibilityId');
     
-    // Fallback to URL params for legacy support
-    const flatCount = searchParams.get('flatCount');
-    const allowsBoth = searchParams.get('allowsBoth');
-    const rmcStatus = searchParams.get('rmcStatus');
-    const path = searchParams.get('path');
-    
-    if (flatCount || allowsBoth || rmcStatus || path) {
-      return {
-        derivedData: {
-          flatCount: flatCount ? parseInt(flatCount) : undefined,
-          allowsBothRtmAndCe: allowsBoth === 'true',
-          rmcStatus: rmcStatus || undefined,
-          provisionalPath: path || undefined
+    if (eligibilityId) {
+      try {
+        const stored = localStorage.getItem(`liberty-bell-eligibility-${eligibilityId}`);
+        if (stored) {
+          const parsedData = JSON.parse(stored);
+          console.log('Loaded eligibility data from UUID:', eligibilityId, parsedData);
+          return parsedData as EligibilityData;
+        } else {
+          console.warn('No eligibility data found for UUID:', eligibilityId);
         }
-      };
+      } catch (error) {
+        console.error('Failed to parse eligibility data from localStorage:', error);
+      }
     }
     
     return undefined;

@@ -60,12 +60,6 @@ export default function RegistrationQuestionnaire({
       }
       setCurrentSectionData(prefillData);
     }
-    // Legacy support
-    else if (eligibilityData?.flatCount && currentSectionId === "step2") {
-      const prefillData = { ...currentSectionData };
-      prefillData.number_of_flats = eligibilityData.flatCount;
-      setCurrentSectionData(prefillData);
-    }
   }, [currentSectionId, eligibilityData]);
 
   const handleFieldChange = (fieldId: string, value: any) => {
@@ -212,9 +206,7 @@ export default function RegistrationQuestionnaire({
   };
 
   const shouldShowChooseProcess = () => {
-    return eligibilityData?.derivedData?.allowsBothRtmAndCe || 
-           eligibilityData?.allowsBothRtmAndCe || 
-           false;
+    return eligibilityData?.derivedData?.allowsBothRtmAndCe || false;
   };
 
   const shouldShowConditionalQuestions = (questionId: string, triggerValue: string) => {
@@ -571,7 +563,6 @@ export default function RegistrationQuestionnaire({
                     <Badge variant="secondary" className="bg-liberty-primary/10 text-liberty-primary">
                       RMC/RTM status: {
                         eligibilityData?.derivedData?.rmcStatus || 
-                        eligibilityData?.rmcStatus || 
                         "Eligibility has not been determined yet"
                       }
                     </Badge>
@@ -581,14 +572,13 @@ export default function RegistrationQuestionnaire({
                       className="text-liberty-primary p-0 h-auto"
                       onClick={() => router.push('/eligibility-check')}
                     >
-                      {(eligibilityData?.derivedData?.rmcStatus || eligibilityData?.rmcStatus) ? "Correct this" : "Complete eligibility check"} →
+                      {eligibilityData?.derivedData?.rmcStatus ? "Correct this" : "Complete eligibility check"} →
                     </Button>
                   </div>
                   <div className="flex items-center gap-2">
                     <Badge variant="secondary" className="bg-liberty-primary/10 text-liberty-primary">
                       Provisional path: {
                         eligibilityData?.derivedData?.provisionalPath || 
-                        eligibilityData?.provisionalPath || 
                         "Eligibility has not been determined yet"
                       }
                     </Badge>
@@ -598,7 +588,7 @@ export default function RegistrationQuestionnaire({
                       className="text-liberty-primary p-0 h-auto"
                       onClick={() => router.push('/eligibility-check')}
                     >
-                      {(eligibilityData?.derivedData?.provisionalPath || eligibilityData?.provisionalPath) ? "Correct this" : "Complete eligibility check"} →
+                      {eligibilityData?.derivedData?.provisionalPath ? "Correct this" : "Complete eligibility check"} →
                     </Button>
                   </div>
                   
@@ -606,8 +596,8 @@ export default function RegistrationQuestionnaire({
                   {process.env.NODE_ENV === 'development' && eligibilityData?.answers && (
                     <div className="w-full mt-4 p-3 bg-gray-100 rounded text-xs">
                       <details>
-                        <summary className="cursor-pointer font-medium">Debug: Complete Eligibility Data</summary>
-                        <pre className="mt-2 overflow-auto">{JSON.stringify(eligibilityData, null, 2)}</pre>
+                        <summary className="cursor-pointer font-medium">Debug: Complete Eligibility Data (UUID: {eligibilityData.uuid})</summary>
+                        <pre className="mt-2 overflow-auto text-[10px]">{JSON.stringify(eligibilityData, null, 2)}</pre>
                       </details>
                     </div>
                   )}
