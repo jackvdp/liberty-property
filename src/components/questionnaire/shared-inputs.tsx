@@ -45,8 +45,8 @@ export function RadioInput({ question, value, onChange }: SharedInputProps) {
               key={option.value} 
               className={`flex items-start space-x-3 p-3 rounded-lg border transition-all cursor-pointer ${
                 isSelected 
-                  ? 'border-liberty-primary bg-liberty-primary/5 shadow-sm' 
-                  : 'border-liberty-secondary/30 hover:border-liberty-secondary hover:bg-liberty-secondary/5'
+                  ? 'border-liberty-primary bg-liberty-primary/5 shadow-xs' 
+                  : 'border-liberty-secondary hover:border-liberty-secondary hover:bg-liberty-secondary/5 shadow-xs'
               }`}
               onClick={() => onChange(option.value)}
               initial={{ opacity: 0, y: 10 }}
