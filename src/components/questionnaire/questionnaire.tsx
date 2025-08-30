@@ -63,17 +63,26 @@ export default function Questionnaire({
         const focusQuestionAnswer = prefillData.answers.find(a => a.questionId === prefillData.focusQuestion);
         
         // Navigate through the flow to get all answers before the focus question
-        let currentQuestionId = "q1";
+        let currentQuestionKey = "q1";
         for (const answer of prefillData.answers) {
           if (answer.questionId === prefillData.focusQuestion) {
             break; // Stop before the focus question
           }
           answersBeforeFocus.push(answer);
-          currentQuestionId = getNextQuestion(currentQuestionId, answer.value) || currentQuestionId;
+          currentQuestionKey = getNextQuestion(currentQuestionKey, answer.value) || currentQuestionKey;
+        }
+        
+        // Find the question key that corresponds to the focus question ID
+        let focusQuestionKey = "q1";
+        for (const [key, question] of Object.entries(questions)) {
+          if ((question as QuestionnaireQuestion).id === prefillData.focusQuestion) {
+            focusQuestionKey = key;
+            break;
+          }
         }
         
         setAnswers(answersBeforeFocus);
-        setCurrentQuestionId(prefillData.focusQuestion);
+        setCurrentQuestionId(focusQuestionKey);
         setCurrentAnswer(focusQuestionAnswer?.value || "");
         
         console.log('Set up focus on', prefillData.focusQuestion, 'with', answersBeforeFocus.length, 'previous answers');
@@ -85,7 +94,16 @@ export default function Questionnaire({
         setAnswers(previousAnswers);
         
         if (lastAnswer) {
-          setCurrentQuestionId(lastAnswer.questionId);
+          // Find the question key that corresponds to the last answer's question ID
+          let lastQuestionKey = "q1";
+          for (const [key, question] of Object.entries(questions)) {
+            if ((question as QuestionnaireQuestion).id === lastAnswer.questionId) {
+              lastQuestionKey = key;
+              break;
+            }
+          }
+          
+          setCurrentQuestionId(lastQuestionKey);
           setCurrentAnswer(lastAnswer.value);
         }
         
@@ -138,8 +156,9 @@ export default function Questionnaire({
     await new Promise(resolve => setTimeout(resolve, 150));
 
     // Save the current answer - remove any existing answer for this question first
-    const answersWithoutCurrent = answers.filter(a => a.questionId !== currentQuestionId);
-    const newAnswers = [...answersWithoutCurrent, { questionId: currentQuestionId, value: currentAnswer }];
+    const questionId = currentQuestion.id; // Use the actual question ID, not the key
+    const answersWithoutCurrent = answers.filter(a => a.questionId !== questionId);
+    const newAnswers = [...answersWithoutCurrent, { questionId: questionId, value: currentAnswer }];
     setAnswers(newAnswers);
 
     // Determine next question or outcome
@@ -194,11 +213,12 @@ export default function Questionnaire({
       setCurrentQuestionId(currentId);
       
       // Set the current answer to what it was for this question
-      const currentQuestionAnswer = previousAnswers.find(a => a.questionId === currentId);
+      const currentQuestionObj = questions[currentId as keyof typeof questions] as QuestionnaireQuestion;
+      const currentQuestionAnswer = previousAnswers.find(a => a.questionId === currentQuestionObj?.id);
       if (currentQuestionAnswer) {
         setCurrentAnswer(currentQuestionAnswer.value);
         // Remove this answer from the answers array since we're editing it again
-        const answersWithoutCurrent = previousAnswers.filter(a => a.questionId !== currentId);
+        const answersWithoutCurrent = previousAnswers.filter(a => a.questionId !== currentQuestionObj.id);
         setAnswers(answersWithoutCurrent);
       }
     }
@@ -267,22 +287,21 @@ export default function Questionnaire({
           timestamp: new Date().toISOString(),
           // Derived data for easy access
           derivedData: {
-            flatCount: answers.find(a => a.questionId === "q4")?.value,
-            propertyType: answers.find(a => a.questionId === "q1")?.value,
-            isLeasehold: answers.find(a => a.questionId === "q2_flat")?.value,
-            existingRmcRtm: answers.find(a => a.questionId === "q3")?.value,
-            nonResidentialProportion: answers.find(a => a.questionId === "q7b")?.value,
-            leaseholderSupport: answers.find(a => a.questionId === "q10")?.value,
+            flatCount: answers.find(a => a.questionId === "flat_count")?.value,
+            propertyType: answers.find(a => a.questionId === "property_type")?.value,
+            isLeasehold: answers.find(a => a.questionId === "flat_leasehold")?.value,
+            existingRmcRtm: answers.find(a => a.questionId === "existing_rmc_rtm")?.value,
+            nonResidentialProportion: answers.find(a => a.questionId === "non_residential_proportion")?.value,
+            leaseholderSupport: answers.find(a => a.questionId === "leaseholder_support")?.value,
             // Determine if both RTM and CE are available
             allowsBothRtmAndCe: (() => {
-              const nonResAnswer = answers.find(a => a.questionId === "q7b");
+              const nonResAnswer = answers.find(a => a.questionId === "non_residential_proportion");
               return !nonResAnswer || nonResAnswer.value === "25_or_less";
             })(),
             // Set RMC status
             rmcStatus: (() => {
-              // Look for Q3 which asks about existing RMC/RTM
-              const rmcAnswer = answers.find(a => a.questionId === "q3");
-              console.log('Debug - Creating rmcStatus from Q3 answer:', rmcAnswer);
+              const rmcAnswer = answers.find(a => a.questionId === "existing_rmc_rtm");
+              console.log('Debug - Creating rmcStatus from answer:', rmcAnswer);
               if (rmcAnswer?.value === "no") return "No RMC/RTM recorded";
               if (rmcAnswer?.value === "yes") return "RMC/RTM exists";
               return "RMC/RTM status unknown";
@@ -290,7 +309,7 @@ export default function Questionnaire({
             // Set provisional path based on outcome
             provisionalPath: (() => {
               if (outcome.action === "registration") {
-                const nonResAnswer = answers.find(a => a.questionId === "q7b");
+                const nonResAnswer = answers.find(a => a.questionId === "non_residential_proportion");
                 const allowsBoth = !nonResAnswer || nonResAnswer.value === "25_or_less";
                 return allowsBoth ? "RTM or CE available" : "RTM available";
               }
