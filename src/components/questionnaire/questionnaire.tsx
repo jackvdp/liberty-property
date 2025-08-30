@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import {ArrowLeft, ArrowRight, Info} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getAlertVariant, getAlertIcon } from "./shared-utils";
 import { RadioInput, TextInput } from "./shared-inputs";
@@ -16,8 +16,7 @@ import {
   QuestionnaireProps, 
   QuestionnaireQuestion, 
   QuestionnaireOutcome, 
-  QuestionnaireAnswer,
-  QuestionnaireOption
+  QuestionnaireAnswer
 } from "./types";
 
 export default function Questionnaire({
@@ -236,14 +235,6 @@ export default function Questionnaire({
     setIsComplete(false);
     setOutcome(null);
     onRestart?.();
-  };
-
-  const generateUUID = () => {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      const r = Math.random() * 16 | 0;
-      const v = c === 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
   };
 
   const handleOutcomeButtonClick = () => {
@@ -483,27 +474,6 @@ export default function Questionnaire({
                 transition={{ duration: 0.3, ease: "easeInOut" }}
                 className="space-y-4"
               >
-                <div>
-                  <motion.h3 
-                    className="text-2xl font-bold text-liberty-standard mb-4"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1, duration: 0.3 }}
-                  >
-                    {currentQuestion.question}
-                  </motion.h3>
-                  {currentQuestion.description && (
-                    <motion.p 
-                      className="text-base text-liberty-standard/70 mb-6 leading-relaxed"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2, duration: 0.3 }}
-                    >
-                      {currentQuestion.description}
-                    </motion.p>
-                  )}
-                </div>
-
                 {currentQuestion.type === "radio" && currentQuestion.options && (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}

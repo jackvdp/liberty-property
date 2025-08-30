@@ -6,15 +6,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, ArrowRight, Plus, Trash2 } from "lucide-react";
+import {ArrowLeft, ArrowRight, CheckCircle2, Plus, Trash2} from "lucide-react";
 import { cn } from "@/lib/utils";
-import { getAlertIcon } from "./shared-utils";
 import { RadioInput, TextInput, CheckboxInput, FileInput } from "./shared-inputs";
 import { 
   RegistrationQuestionnaireProps,
@@ -360,7 +356,7 @@ export default function RegistrationQuestionnaire({
           <CardHeader>
             <div className="flex items-center justify-between mb-6">
               <CardTitle className="text-3xl text-liberty-standard font-reckless">
-                {data.title}
+                <h3>{data.title}</h3>
               </CardTitle>
               <div className="text-sm text-liberty-standard/60 font-medium bg-liberty-secondary/20 px-3 py-1 rounded-full">
                 Step {currentSectionIndex + 1} of {totalSections}
@@ -368,7 +364,7 @@ export default function RegistrationQuestionnaire({
             </div>
             
             <div className="space-y-4">
-              <div className="space-y-2">
+              <div className="space-y-2 mb-8">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-liberty-standard/70">Progress</span>
                   <span className="text-liberty-standard/80 font-medium">
@@ -392,9 +388,9 @@ export default function RegistrationQuestionnaire({
               </div>
               
               <div>
-                <h2 className="text-2xl font-bold text-liberty-standard mb-2">
+                <p className="text-xl font-bold text-liberty-standard mb-2">
                   {currentSection.title}
-                </h2>
+                </p>
                 <p className="text-liberty-standard/70 leading-relaxed">
                   {currentSection.description}
                 </p>
@@ -489,7 +485,7 @@ export default function RegistrationQuestionnaire({
 
           <Separator />
 
-          <CardContent className="space-y-8 py-8">
+          <CardContent className="space-y-8">
             <AnimatePresence mode="wait">
               <motion.div 
                 key={currentSectionId}
