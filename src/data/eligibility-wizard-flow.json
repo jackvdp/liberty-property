@@ -64,13 +64,16 @@
       "q4": {
         "id": "flat_count",
         "question": "How many flats are there in your building?",
-        "description": "Please enter a number – we need at least 2 to proceed.",
+        "description": "Please enter a number.",
         "type": "number",
         "validation": {
-          "min": 2,
+          "min": 1,
           "required": true
         },
-        "nextQuestion": "q5"
+        "nextQuestion": {
+          "1": "ineligible_single_flat",
+          "default": "q5"
+        }
       },
       "q5": {
         "id": "long_leaseholders",
@@ -205,6 +208,16 @@
         "button": {
           "text": "Explore RMC Options",
           "href": "/rmc-process"
+        }
+      },
+      "ineligible_single_flat": {
+        "type": "error",
+        "title": "Unfortunately, RTM and CE rights require at least 2 flats in the building.",
+        "message": "Right to Manage and Collective Enfranchisement are designed for buildings with multiple flats where leaseholders can work together.",
+        "color": "error",
+        "button": {
+          "text": "Back to Home",
+          "href": "/"
         }
       },
       "ineligible_not_leasehold": {

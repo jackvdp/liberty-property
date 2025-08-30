@@ -14,7 +14,7 @@ export interface QuestionnaireQuestion {
     max?: number;
     required?: boolean;
   };
-  nextQuestion: string | Record<string, string>;
+  nextQuestion: string | Record<string, string> | { [key: string]: string; default?: string };
 }
 
 export interface QuestionnaireOutcome {

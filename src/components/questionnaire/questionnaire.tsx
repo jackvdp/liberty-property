@@ -59,6 +59,19 @@ export default function Questionnaire({
     if (typeof question.nextQuestion === "string") {
       return question.nextQuestion;
     } else if (typeof question.nextQuestion === "object" && question.nextQuestion) {
+      // For number type questions, check for exact numeric matches first
+      if (question.type === "number" && typeof answer === "number") {
+        const numericKey = answer.toString();
+        if (question.nextQuestion[numericKey]) {
+          return question.nextQuestion[numericKey];
+        }
+        // If no exact match, check for 'default' key
+        if (question.nextQuestion["default"]) {
+          return question.nextQuestion["default"];
+        }
+      }
+      
+      // For string answers or fallback
       return question.nextQuestion[answer as string];
     }
     
@@ -476,11 +489,6 @@ export default function Questionnaire({
                       placeholder="Enter number"
                       className="border-liberty-secondary focus-visible:border-liberty-primary focus-visible:ring-liberty-primary/20"
                     />
-                    {currentQuestion.validation?.min && (
-                      <p className="text-sm text-liberty-standard/60 mt-2 leading-relaxed">
-                        Minimum {currentQuestion.validation.min} required
-                      </p>
-                    )}
                   </motion.div>
                 )}
 
