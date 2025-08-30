@@ -16,7 +16,8 @@ import {
   QuestionnaireProps, 
   QuestionnaireQuestion, 
   QuestionnaireOutcome, 
-  QuestionnaireAnswer
+  QuestionnaireAnswer,
+  QuestionnaireValue
 } from "./types";
 
 export default function Questionnaire({
@@ -33,7 +34,7 @@ export default function Questionnaire({
   const router = useRouter();
   const [currentQuestionId, setCurrentQuestionId] = useState<string>("q1");
   const [answers, setAnswers] = useState<QuestionnaireAnswer[]>([]);
-  const [currentAnswer, setCurrentAnswer] = useState<string | number>("");
+  const [currentAnswer, setCurrentAnswer] = useState<QuestionnaireValue>("");
   const [progress, setProgress] = useState<number>(0);
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [outcome, setOutcome] = useState<QuestionnaireOutcome | null>(null);
@@ -49,11 +50,36 @@ export default function Questionnaire({
   const uniqueQuestions = new Set(answers.map(a => a.questionId));
   const answeredQuestions = uniqueQuestions.size;
 
+  const getNextQuestion = (questionId: string, answer: QuestionnaireValue) => {
+    const question = questions[questionId as keyof typeof questions] as QuestionnaireQuestion;
+    
+    if (typeof question.nextQuestion === "string") {
+      return question.nextQuestion;
+    } else if (typeof question.nextQuestion === "object" && question.nextQuestion) {
+      // For number type questions, check for exact numeric matches first
+      if (question.type === "number" && typeof answer === "number") {
+        const numericKey = answer.toString();
+        if (numericKey in question.nextQuestion) {
+          return question.nextQuestion[numericKey];
+        }
+        // If no exact match, check for 'default' key
+        if ("default" in question.nextQuestion && question.nextQuestion.default) {
+          return question.nextQuestion.default;
+        }
+      }
+      
+      // For string/boolean answers or fallback
+      const stringValue = typeof answer === 'string' ? answer : String(answer);
+      return question.nextQuestion[stringValue];
+    }
+    
+    return null;
+  };
+
   // Handle prefilling from saved data
   useEffect(() => {
-    if (prefillData?.answers && prefillData.answers.length > 0 && !isPrefilling) {
-      setIsPrefilling(true);
-      console.log('Prefilling questionnaire with data:', prefillData);
+    const handlePrefill = (prefillData: NonNullable<QuestionnaireProps['prefillData']>) => {
+      if (!prefillData.answers) return;
       
       if (prefillData.focusQuestion) {
         // User wants to focus on a specific question
@@ -110,8 +136,14 @@ export default function Questionnaire({
         
         console.log('Prefilled with', previousAnswers.length, 'previous answers, positioned at question:', lastAnswer?.questionId);
       }
+    };
+
+    if (prefillData?.answers && prefillData.answers.length > 0 && !isPrefilling) {
+      setIsPrefilling(true);
+      console.log('Prefilling questionnaire with data:', prefillData);
+      handlePrefill(prefillData);
     }
-  }, [prefillData, isPrefilling]);
+  }, [prefillData, isPrefilling, questions, getNextQuestion]);
 
   // Calculate progress
   useEffect(() => {
@@ -119,33 +151,8 @@ export default function Questionnaire({
     setProgress(Math.min(progressPercentage, 100));
   }, [answeredQuestions, totalQuestions]);
 
-  const handleAnswerChange = (value: string | number) => {
+  const handleAnswerChange = (value: QuestionnaireValue) => {
     setCurrentAnswer(value);
-  };
-
-  const getNextQuestion = (questionId: string, answer: string | number) => {
-    const question = questions[questionId as keyof typeof questions] as QuestionnaireQuestion;
-    
-    if (typeof question.nextQuestion === "string") {
-      return question.nextQuestion;
-    } else if (typeof question.nextQuestion === "object" && question.nextQuestion) {
-      // For number type questions, check for exact numeric matches first
-      if (question.type === "number" && typeof answer === "number") {
-        const numericKey = answer.toString();
-        if (question.nextQuestion[numericKey]) {
-          return question.nextQuestion[numericKey];
-        }
-        // If no exact match, check for 'default' key
-        if (question.nextQuestion["default"]) {
-          return question.nextQuestion["default"];
-        }
-      }
-      
-      // For string answers or fallback
-      return question.nextQuestion[answer as string];
-    }
-    
-    return null;
   };
 
   const handleNext = async () => {
@@ -159,7 +166,7 @@ export default function Questionnaire({
     // Save the current answer - remove any existing answer for this question first
     const questionId = currentQuestion.id; // Use the actual question ID, not the key
     const answersWithoutCurrent = answers.filter(a => a.questionId !== questionId);
-    const newAnswers = [...answersWithoutCurrent, { questionId: questionId, value: currentAnswer }];
+    const newAnswers: QuestionnaireAnswer[] = [...answersWithoutCurrent, { questionId: questionId, value: currentAnswer }];
     setAnswers(newAnswers);
 
     // Determine next question or outcome

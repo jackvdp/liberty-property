@@ -12,6 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import {ArrowLeft, ArrowRight, CheckCircle2, Plus, Trash2} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RadioInput, TextInput, CheckboxInput, FileInput } from "./shared-inputs";
+import { QuestionnaireValue } from "./types";
 import { 
   RegistrationQuestionnaireProps,
   RegistrationSection,
@@ -30,7 +31,7 @@ export default function RegistrationQuestionnaire({
   const router = useRouter();
   const [currentSectionId, setCurrentSectionId] = useState<string>("step1");
   const [sectionAnswers, setSectionAnswers] = useState<Record<string, RegistrationAnswer[]>>({});
-  const [currentSectionData, setCurrentSectionData] = useState<Record<string, any>>({});
+  const [currentSectionData, setCurrentSectionData] = useState<Record<string, QuestionnaireValue>>({});
   const [progress, setProgress] = useState<number>(0);
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [outcome, setOutcome] = useState<RegistrationOutcome | null>(null);
@@ -58,9 +59,9 @@ export default function RegistrationQuestionnaire({
       }
       setCurrentSectionData(prefillData);
     }
-  }, [currentSectionId, eligibilityData]);
+  }, [currentSectionId, eligibilityData, currentSectionData]);
 
-  const handleFieldChange = (fieldId: string, value: any) => {
+  const handleFieldChange = (fieldId: string, value: QuestionnaireValue) => {
     setCurrentSectionData(prev => ({
       ...prev,
       [fieldId]: value
@@ -69,7 +70,7 @@ export default function RegistrationQuestionnaire({
 
   const handleCheckboxChange = (fieldId: string, optionValue: string, checked: boolean) => {
     setCurrentSectionData(prev => {
-      const currentValues = prev[fieldId] || [];
+      const currentValues = Array.isArray(prev[fieldId]) ? prev[fieldId] as string[] : [];
       if (checked) {
         return {
           ...prev,
@@ -78,7 +79,7 @@ export default function RegistrationQuestionnaire({
       } else {
         return {
           ...prev,
-          [fieldId]: currentValues.filter((v: string) => v !== optionValue)
+          [fieldId]: currentValues.filter(v => v !== optionValue)
         };
       }
     });
@@ -100,17 +101,21 @@ export default function RegistrationQuestionnaire({
 
   const validateSection = () => {
     for (const question of currentSection.questions) {
-      if (question.required && !currentSectionData[question.id]) {
+      const value = currentSectionData[question.id];
+      
+      if (question.required && (!value || (Array.isArray(value) && value.length === 0))) {
         return false;
       }
-      if (question.type === "email" && currentSectionData[question.id]) {
+      
+      if (question.type === "email" && value && typeof value === 'string') {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(currentSectionData[question.id])) {
+        if (!emailRegex.test(value)) {
           return false;
         }
       }
+      
       if (question.type === "checkbox" && question.validation?.required) {
-        if (!currentSectionData[question.id]) {
+        if (!value || (Array.isArray(value) && value.length === 0)) {
           return false;
         }
       }
@@ -139,7 +144,7 @@ export default function RegistrationQuestionnaire({
     // Save current section data
     const sectionAnswerData: RegistrationAnswer[] = currentSection.questions.map(question => ({
       questionId: question.id,
-      value: currentSectionData[question.id] || null,
+      value: currentSectionData[question.id] ?? "",
       sectionId: currentSectionId
     }));
 
@@ -191,7 +196,7 @@ export default function RegistrationQuestionnaire({
     // Restore previous section data
     const prevAnswers = sectionAnswers[prevSectionId];
     if (prevAnswers) {
-      const restoredData: Record<string, any> = {};
+      const restoredData: Record<string, QuestionnaireValue> = {};
       prevAnswers.forEach(answer => {
         if (answer.questionId === "supporters_list" && Array.isArray(answer.value)) {
           setSupportersList(answer.value as Array<{ name: string; email: string }>);
@@ -208,11 +213,12 @@ export default function RegistrationQuestionnaire({
   };
 
   const shouldShowConditionalQuestions = (questionId: string, triggerValue: string) => {
-    return currentSectionData[questionId] === triggerValue;
+    const value = currentSectionData[questionId];
+    return typeof value === 'string' && value === triggerValue;
   };
 
   const renderQuestion = (question: RegistrationQuestion) => {
-    const value = currentSectionData[question.id] || "";
+    const value = currentSectionData[question.id] ?? "";
 
     switch (question.type) {
       case "text":
@@ -292,6 +298,13 @@ export default function RegistrationQuestionnaire({
     );
   };
 
+  // Skip step6a if conditions not met
+  useEffect(() => {
+    if (currentSectionId === "step6a" && !shouldShowChooseProcess()) {
+      setCurrentSectionId("step7");
+    }
+  }, [currentSectionId]);
+
   if (isComplete && outcome) {
     return (
       <div className={cn("min-h-[calc(100vh-64px)] bg-liberty-secondary/20 flex items-center justify-center p-4", className)}>
@@ -335,9 +348,6 @@ export default function RegistrationQuestionnaire({
 
   // Skip step6a if conditions not met
   if (currentSectionId === "step6a" && !shouldShowChooseProcess()) {
-    useEffect(() => {
-      setCurrentSectionId("step7");
-    }, []);
     return null;
   }
 

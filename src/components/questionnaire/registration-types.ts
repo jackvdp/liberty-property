@@ -1,3 +1,5 @@
+import { QuestionnaireValue, SupporterData, QuestionnaireOutcome } from './types';
+
 export interface RegistrationOption {
   value: string;
   label: string;
@@ -64,7 +66,7 @@ export interface RegistrationOutcome {
 
 export interface RegistrationAnswer {
   questionId: string;
-  value: any;
+  value: QuestionnaireValue;
   sectionId: string;
 }
 
@@ -80,8 +82,8 @@ export interface EligibilityData {
   uuid?: string;
   
   // Complete form data
-  answers?: Array<{ questionId: string; value: any }>;
-  outcome?: any;
+  answers?: Array<{ questionId: string; value: QuestionnaireValue }>;
+  outcome?: QuestionnaireOutcome;
   timestamp?: string;
   
   // Derived/computed data for easy access

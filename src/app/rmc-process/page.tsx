@@ -3,9 +3,11 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { EligibilityData } from "@/components/questionnaire";
+
 export default function RMCProcess() {
   const searchParams = useSearchParams();
-  const [eligibilityData, setEligibilityData] = useState<any>(null);
+  const [eligibilityData, setEligibilityData] = useState<EligibilityData | null>(null);
   
   useEffect(() => {
     const eligibilityId = searchParams.get('eligibilityId');

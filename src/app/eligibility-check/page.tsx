@@ -13,9 +13,17 @@ import Footer from "@/components/footer";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { QuestionnaireValue } from "@/components/questionnaire/types";
+
+interface PrefillData {
+  answers?: Array<{ questionId: string; value: QuestionnaireValue }>;
+  uuid?: string;
+  focusQuestion?: string;
+}
+
 export default function EligibilityCheck() {
   const searchParams = useSearchParams();
-  const [prefillData, setPrefillData] = useState<any>(null);
+  const [prefillData, setPrefillData] = useState<PrefillData | undefined>(undefined);
 
   // Simple type assertion - much cleaner!
   const questionnaireData: QuestionnaireData = {

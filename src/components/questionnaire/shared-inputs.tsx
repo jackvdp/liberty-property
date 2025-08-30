@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Upload } from "lucide-react";
 
+import { QuestionnaireValue } from "./types";
+
 interface SharedInputProps {
   question: {
     id: string;
@@ -19,8 +21,8 @@ interface SharedInputProps {
       maxSize?: string;
     };
   };
-  value: any;
-  onChange: (value: any) => void;
+  value: QuestionnaireValue;
+  onChange: (value: QuestionnaireValue) => void;
   onCheckboxChange?: (fieldId: string, optionValue: string, checked: boolean) => void;
 }
 
@@ -88,6 +90,8 @@ export function RadioInput({ question, value, onChange }: SharedInputProps) {
 }
 
 export function TextInput({ question, value, onChange, type = "text" }: SharedInputProps & { type?: string }) {
+  const stringValue = typeof value === 'string' || typeof value === 'number' ? String(value) : '';
+  
   return (
     <div className="space-y-2">
       <Label className="text-base font-medium text-liberty-standard">
@@ -99,7 +103,7 @@ export function TextInput({ question, value, onChange, type = "text" }: SharedIn
       )}
       <Input
         type={type}
-        value={value || ""}
+        value={stringValue}
         onChange={(e) => onChange(type === "number" ? Number(e.target.value) : e.target.value)}
         min={question.validation?.min}
         max={question.validation?.max}
@@ -113,7 +117,9 @@ export function TextInput({ question, value, onChange, type = "text" }: SharedIn
 
 export function CheckboxInput({ question, value, onChange, onCheckboxChange }: SharedInputProps) {
   if (question.options && question.options.length > 1) {
-    // Multiple checkbox options
+    // Multiple checkbox options - value should be string[]
+    const currentValues = Array.isArray(value) ? value : [];
+    
     return (
       <div className="space-y-4">
         <Label className="text-base font-medium text-liberty-standard">
@@ -128,7 +134,7 @@ export function CheckboxInput({ question, value, onChange, onCheckboxChange }: S
             <div key={option.value} className="flex items-center space-x-3">
               <Checkbox
                 id={`${question.id}-${option.value}`}
-                checked={(value || []).includes(option.value)}
+                checked={currentValues.includes(option.value)}
                 onCheckedChange={(checked) => 
                   onCheckboxChange?.(question.id, option.value, checked as boolean)
                 }
@@ -146,14 +152,16 @@ export function CheckboxInput({ question, value, onChange, onCheckboxChange }: S
       </div>
     );
   } else {
-    // Single checkbox
+    // Single checkbox - value should be boolean
+    const isChecked = Boolean(value);
+    
     return (
       <div className="space-y-3">
         <div className="flex items-start space-x-3">
           <Checkbox
             id={question.id}
-            checked={!!value}
-            onCheckedChange={onChange}
+            checked={isChecked}
+            onCheckedChange={(checked) => onChange(Boolean(checked))}
             className="mt-1 border-liberty-secondary data-[state=checked]:border-liberty-primary data-[state=checked]:bg-liberty-primary data-[state=checked]:text-white shadow-xs"
           />
           <div className="flex-1">
@@ -196,7 +204,10 @@ export function FileInput({ question, onChange }: SharedInputProps) {
           type="file"
           className="hidden"
           accept={question.validation?.acceptedTypes?.join(",")}
-          onChange={(e) => onChange(e.target.files?.[0])}
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) onChange(file);
+          }}
         />
       </div>
     </div>

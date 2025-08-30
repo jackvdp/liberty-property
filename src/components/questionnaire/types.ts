@@ -1,3 +1,11 @@
+// Shared value types for questionnaire responses
+export type QuestionnaireValue = string | number | boolean | string[] | File | SupporterData[];
+
+export interface SupporterData {
+  name: string;
+  email: string;
+}
+
 export interface QuestionnaireOption {
   value: string;
   label: string;
@@ -14,7 +22,7 @@ export interface QuestionnaireQuestion {
     max?: number;
     required?: boolean;
   };
-  nextQuestion: string | Record<string, string> | { [key: string]: string; default?: string };
+  nextQuestion: string | Record<string, string> | Record<string, string | undefined>;
 }
 
 export interface QuestionnaireOutcome {
@@ -32,7 +40,7 @@ export interface QuestionnaireOutcome {
 
 export interface QuestionnaireAnswer {
   questionId: string;
-  value: string | number;
+  value: QuestionnaireValue;
 }
 
 export interface QuestionnaireData {
@@ -54,7 +62,7 @@ export interface QuestionnaireProps {
     error?: { text: string; href?: string; onClick?: () => void };
   };
   prefillData?: {
-    answers?: Array<{ questionId: string; value: any }>;
+    answers?: Array<{ questionId: string; value: QuestionnaireValue }>;
     uuid?: string;
     focusQuestion?: string;
   };
