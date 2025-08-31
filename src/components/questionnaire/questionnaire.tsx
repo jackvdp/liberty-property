@@ -40,7 +40,6 @@ export default function Questionnaire({
   const [outcome, setOutcome] = useState<QuestionnaireOutcome | null>(null);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
   const [isPrefilling, setIsPrefilling] = useState<boolean>(false);
-  const [completionUuid, setCompletionUuid] = useState<string | null>(null);
 
   const { questions, outcomes } = data;
   const currentQuestion = questions[currentQuestionId as keyof typeof questions] as QuestionnaireQuestion;
@@ -181,17 +180,6 @@ export default function Questionnaire({
       setOutcome(finalOutcome);
       setIsComplete(true);
       
-      // Generate UUID for completion content if needed
-      if (renderCompletionContent) {
-        const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-          const r = Math.random() * 16 | 0;
-          const v = c === 'x' ? r : (r & 0x3 | 0x8);
-          return v.toString(16);
-        });
-        console.log("UUID for completion content:", uuid);
-        setCompletionUuid(uuid);
-      }
-      
       // Call completion callback
       onComplete?.(finalOutcome, newAnswers);
     }
@@ -254,7 +242,6 @@ export default function Questionnaire({
     setProgress(0);
     setIsComplete(false);
     setOutcome(null);
-    setCompletionUuid(null);
     onRestart?.();
   };
 
@@ -355,9 +342,17 @@ export default function Questionnaire({
                     {outcome.message}
                     
                     {/* Generic completion content inside the main alert */}
-                    {renderCompletionContent && completionUuid && outcome && (
+                    {renderCompletionContent && outcome && (
                       <div className="mt-4">
-                        {renderCompletionContent(completionUuid, outcome)}
+                        {renderCompletionContent(
+                          // Generate a UUID for the completion content
+                          'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                            const r = Math.random() * 16 | 0;
+                            const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                            return v.toString(16);
+                          }),
+                          outcome
+                        )}
                       </div>
                     )}
                   </AlertDescription>

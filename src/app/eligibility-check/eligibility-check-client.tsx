@@ -10,15 +10,12 @@ import {
 import eligibilityData from "@/data/eligibility-wizard-flow.json";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
-import { useEffect, useState } from "react";
-
-import { QuestionnaireValue } from "@/components/questionnaire/types";
-
-interface PrefillData {
-  answers?: Array<{ questionId: string; value: QuestionnaireValue }>;
-  uuid?: string;
-  focusQuestion?: string;
-}
+import { useEffect, useState, useRef } from "react";
+import { 
+  useEligibilityStorage, 
+  EligibilityStorageHelper,
+  PrefillData
+} from "@/lib/storage";
 
 interface EligibilityCheckClientProps {
   prefillId?: string;
@@ -26,8 +23,10 @@ interface EligibilityCheckClientProps {
 }
 
 export function EligibilityCheckClient({ prefillId, focusQuestion }: EligibilityCheckClientProps) {
+  const storage = useEligibilityStorage(prefillId);
   const [prefillData, setPrefillData] = useState<PrefillData | undefined>(undefined);
-  const [currentQuestionnaireUuid, setCurrentQuestionnaireUuid] = useState<string | null>(null);
+  // Store the UUID that will be used for saving
+  const completionUuidRef = useRef<string | null>(null);
 
   // Simple type assertion - much cleaner!
   const questionnaireData: QuestionnaireData = {
@@ -37,70 +36,36 @@ export function EligibilityCheckClient({ prefillId, focusQuestion }: Eligibility
     outcomes: eligibilityData.wizardFlow.outcomes as Record<string, QuestionnaireOutcome>
   };
 
+  // Load prefill data if ID provided
   useEffect(() => {
-    if (prefillId && typeof window !== 'undefined') {
-      try {
-        const stored = localStorage.getItem(`liberty-bell-eligibility-${prefillId}`);
-        if (stored) {
-          const parsedData = JSON.parse(stored);
-          
-          // Add focusQuestion to the prefill data
-          if (focusQuestion) {
-            parsedData.focusQuestion = focusQuestion;
-          }
-          
-          setPrefillData(parsedData);
-          console.log('Loaded eligibility data for prefilling:', parsedData, 'focus question:', focusQuestion);
-        }
-      } catch (error) {
-        console.error('Failed to load prefill data:', error);
-      }
+    if (prefillId && storage.data) {
+      const eligData = EligibilityStorageHelper.toEligibilityData(storage.data);
+      
+      setPrefillData({
+        answers: eligData.answers || [],
+        uuid: eligData.uuid,
+        focusQuestion: focusQuestion
+      });
+      
+      console.log('Loaded eligibility data for prefilling:', eligData, 'focus question:', focusQuestion);
     }
-  }, [prefillId, focusQuestion]);
+  }, [prefillId, focusQuestion, storage.data]);
 
-  // Eligibility-specific logic for creating derived data
-  const createDerivedData = (answers: QuestionnaireAnswer[], outcome: QuestionnaireOutcome) => {
-    return {
-      flatCount: answers.find(a => a.questionId === "flat_count")?.value,
-      propertyType: answers.find(a => a.questionId === "property_type")?.value,
-      isLeasehold: answers.find(a => a.questionId === "flat_leasehold")?.value,
-      existingRmcRtm: answers.find(a => a.questionId === "existing_rmc_rtm")?.value,
-      nonResidentialProportion: answers.find(a => a.questionId === "non_residential_proportion")?.value,
-      leaseholderSupport: answers.find(a => a.questionId === "leaseholder_support")?.value,
-      // Determine if both RTM and CE are available
-      allowsBothRtmAndCe: (() => {
-        const nonResAnswer = answers.find(a => a.questionId === "non_residential_proportion");
-        return !nonResAnswer || nonResAnswer.value === "25_or_less";
-      })(),
-      // Set RMC status
-      rmcStatus: (() => {
-        const rmcAnswer = answers.find(a => a.questionId === "existing_rmc_rtm");
-        console.log('Debug - Creating rmcStatus from answer:', rmcAnswer);
-        if (rmcAnswer?.value === "no") return "No RMC/RTM recorded";
-        if (rmcAnswer?.value === "yes") return "RMC/RTM exists";
-        return "RMC/RTM status unknown";
-      })(),
-      // Set provisional path based on outcome
-      provisionalPath: (() => {
-        if (outcome.action === "registration") {
-          const nonResAnswer = answers.find(a => a.questionId === "non_residential_proportion");
-          const allowsBoth = !nonResAnswer || nonResAnswer.value === "25_or_less";
-          return allowsBoth ? "RTM or CE available" : "RTM available";
-        }
-        if (outcome.action === "leaseholder_engagement_module") {
-          return "Leaseholder engagement required";
-        }
-        if (outcome.action === "rmc_process") {
-          return "RMC takeover/improvement";
-        }
-        return "Path to be determined";
-      })()
-    };
+  // Generate UUID once when needed
+  const getOrCreateCompletionUuid = () => {
+    if (!completionUuidRef.current) {
+      completionUuidRef.current = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+    return completionUuidRef.current;
   };
 
-  // Eligibility-specific outcome button click handler that uses the stored UUID
-  const handleOutcomeButtonClick = (outcome: QuestionnaireOutcome, answers: QuestionnaireAnswer[], uuid?: string | null) => {
-    console.log('handleOutcomeButtonClick called with:', { outcome, uuid, href: outcome.button?.href });
+  // Handle outcome button click with proper storage
+  const handleOutcomeButtonClick = (outcome: QuestionnaireOutcome, answers: QuestionnaireAnswer[]) => {
+    console.log('handleOutcomeButtonClick called with:', { outcome, answers });
     
     if (!outcome.button?.href) {
       return "";
@@ -108,91 +73,87 @@ export function EligibilityCheckClient({ prefillId, focusQuestion }: Eligibility
 
     let href = outcome.button.href;
     
-    // If it's a success outcome, save eligibility data and append UUID to URL
+    // If it's a success outcome, save eligibility data
     if (outcome.type === "success") {
-      // Use the stored UUID from renderCompletionContent, fallback to provided UUID, or generate new one
-      let actualUuid = currentQuestionnaireUuid || uuid;
-      if (!actualUuid) {
-        // Generate a simple UUID as last resort
-        actualUuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-          const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-          return v.toString(16);
-        });
-        console.log('Generated new UUID as fallback:', actualUuid);
-      } else {
-        console.log('Using stored UUID:', actualUuid);
-      }
+      // Use the same UUID that was shown to the user
+      const uuid = getOrCreateCompletionUuid();
+      console.log('Using UUID for save:', uuid);
       
-      const eligibilityFormData = {
-        uuid: actualUuid,
-        answers: answers,
-        outcome: outcome,
-        timestamp: new Date().toISOString(),
-        derivedData: createDerivedData(answers, outcome)
-      };
+      // Create and save eligibility data with the specific UUID
+      const eligibilityData = EligibilityStorageHelper.createStorageData(
+        answers,
+        outcome,
+        uuid
+      );
       
-      console.log('Saving eligibility data with key:', `liberty-bell-eligibility-${actualUuid}`);
-      localStorage.setItem(`liberty-bell-eligibility-${actualUuid}`, JSON.stringify(eligibilityFormData));
-      console.log('Saved eligibility data with UUID:', actualUuid, 'for outcome:', outcome.action);
-      console.log('Eligibility data:', eligibilityFormData);
+      const savedUuid = storage.save(eligibilityData);
+      
+      console.log('Saved eligibility data with UUID:', savedUuid);
+      console.log('UUID matches displayed:', savedUuid === uuid);
+      console.log('Eligibility data:', eligibilityData);
       
       // Verify it was saved
-      const verification = localStorage.getItem(`liberty-bell-eligibility-${actualUuid}`);
-      console.log('Verification - data exists in localStorage:', verification ? 'Yes' : 'No');
+      const verification = storage.exists(savedUuid);
+      console.log('Verification - data exists in storage:', verification ? 'Yes' : 'No');
       
       // Add UUID as query parameter to all success outcomes
-      href = `${href}?eligibilityId=${actualUuid}`;
+      href = `${href}?eligibilityId=${savedUuid}`;
       console.log('Final href with UUID:', href);
     }
     
     return href;
   };
 
-  // Render completion content with case ID and return URL - stores UUID for button click
+  // Render completion content with case ID and return URL
   const renderCompletionContent = (uuid: string, outcome: QuestionnaireOutcome) => {
     console.log('renderCompletionContent called with uuid:', uuid, 'outcome:', outcome);
-    
-    // Store the UUID so handleOutcomeButtonClick can use the same one
-    setCurrentQuestionnaireUuid(uuid);
     
     // Only show for registration outcomes (success type that leads to registration)
     if (outcome.type !== "success" || outcome.action !== "registration") {
       return null;
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || window.location.origin;
-    const returnUrl = `${baseUrl}/register?eligibilityId=${uuid}`;
+    // Use the consistent UUID
+    const actualUuid = getOrCreateCompletionUuid();
+    console.log('Displaying UUID to user:', actualUuid);
+    const returnUrl = EligibilityStorageHelper.getRegistrationUrl(actualUuid);
     
     return (
       <div className="mt-4 pt-4 border-t border-liberty-accent/20">
         <div className="space-y-2">
-          <p className="font-semibold">Your Case ID: <code className="bg-liberty-base px-2 py-1 rounded font-mono text-sm">{uuid}</code></p>
+          <p className="font-semibold">
+            Your Case ID: <code className="bg-liberty-base px-2 py-1 rounded font-mono text-sm">{actualUuid}</code>
+          </p>
           <p className="text-sm">Save this ID for your records.</p>
-          <p className="text-sm">To return to registration later, use: <code className="bg-liberty-base px-1 rounded font-mono text-xs break-all">{returnUrl}</code></p>
+          <p className="text-sm">
+            To return to registration later, use: 
+            <code className="bg-liberty-base px-1 rounded font-mono text-xs break-all">{returnUrl}</code>
+          </p>
         </div>
       </div>
     );
   };
 
   return (
-      <div className="min-h-screen bg-liberty-base">
-        <Navbar />
-        <Questionnaire
-            data={questionnaireData}
-            showSeparator={true}
-            prefillData={prefillData}
-            onOutcomeButtonClick={handleOutcomeButtonClick}
-            renderCompletionContent={renderCompletionContent}
-            onComplete={(outcome, answers) => {
-              console.log("Questionnaire onComplete called:", { outcome, answers });
-              // Handle completion - could send data to analytics, redirect, etc.
-            }}
-            onRestart={() => {
-              console.log("Questionnaire restarted");
-              setCurrentQuestionnaireUuid(null); // Clear stored UUID on restart
-            }}
-        />
-        <Footer />
-      </div>
+    <div className="min-h-screen bg-liberty-base">
+      <Navbar />
+      <Questionnaire
+        data={questionnaireData}
+        showSeparator={true}
+        prefillData={prefillData}
+        onOutcomeButtonClick={handleOutcomeButtonClick}
+        renderCompletionContent={renderCompletionContent}
+        onComplete={(outcome, answers) => {
+          console.log("Questionnaire onComplete called:", { outcome, answers });
+          // Additional completion logic if needed
+        }}
+        onRestart={() => {
+          console.log("Questionnaire restarted");
+          storage.clear(); // Clear stored data on restart
+          completionUuidRef.current = null; // Reset UUID on restart
+        }}
+      />
+      <Footer />
+    </div>
   );
 }
