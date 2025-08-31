@@ -181,9 +181,9 @@ export default function WhoWeAre() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button size="lg" asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-white">
-                <Link href="mailto:hello@libertybell.co.uk" className="flex items-center gap-3">
+                <Link href="/register" className="flex items-center gap-3">
                   <MessageCircle size={20} />
-                  Contact Us
+                  Register
                 </Link>
               </Button>
               <Button variant="outline" size="lg" asChild className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white">

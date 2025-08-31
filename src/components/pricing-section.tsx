@@ -132,7 +132,7 @@ export default function PricingSection() {
               asChild 
               className="border-liberty-base text-liberty-base hover:bg-liberty-base hover:text-liberty-background"
             >
-              <Link href="/register-building">
+              <Link href="/register">
                 {content.pricing.cta.secondaryButton}
               </Link>
             </Button>
