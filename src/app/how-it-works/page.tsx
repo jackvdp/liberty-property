@@ -111,7 +111,34 @@ const pathways = [
 ];
 
 // Journey steps data
-const journeySteps = [
+import { LucideIcon } from 'lucide-react';
+
+interface Badge {
+  icon: LucideIcon;
+  text: string;
+  color?: string;
+}
+
+interface PathOption {
+  icon: LucideIcon;
+  label: string;
+  color: string;
+}
+
+interface JourneyStep {
+  number: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  icon: LucideIcon;
+  iconColor: string;
+  position: 'left' | 'right';
+  link: { text: string; href: string } | null;
+  badges?: Badge[];
+  pathOptions?: PathOption[];
+}
+
+const journeySteps: JourneyStep[] = [
   {
     number: 1,
     title: 'Check Your Eligibility',
@@ -162,6 +189,7 @@ const journeySteps = [
     iconColor: 'text-liberty-accent',
     position: 'right',
     link: null,
+    badges: [],
     pathOptions: [
       { icon: Key, label: 'RTM', color: 'text-liberty-primary' },
       { icon: Home, label: 'Enfranchise', color: 'text-liberty-accent' },
