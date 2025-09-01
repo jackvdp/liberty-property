@@ -26,7 +26,7 @@ const communityBenefits = [
   },
   {
     icon: CheckCircle,
-    text: "Save money"
+    text: "Save money through collective bargaining and shared knowledge of fair pricing"
   }
 ]
 
