@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import {
-  CheckCircle, 
   Users, 
   Building,
   Crown,
@@ -13,7 +12,6 @@ import {
   Home,
   Shield,
   TrendingUp,
-  Calendar,
   Star,
   AlertTriangle
 } from 'lucide-react'
