@@ -26,6 +26,7 @@ import Image from 'next/image';
 import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
 
+// Data for the three pathways
 const pathways = [
   {
     id: 'rtm',
@@ -49,7 +50,9 @@ const pathways = [
       'Ground rent continues'
     ],
     bestFor: 'Buildings wanting immediate management control without the complexity of ownership',
-    color: 'bg-liberty-primary'
+    color: 'bg-liberty-primary',
+    icon: Key,
+    iconColor: 'text-white'
   },
   {
     id: 'enfranchisement',
@@ -74,7 +77,9 @@ const pathways = [
       'More complex legal process'
     ],
     bestFor: 'Buildings ready to invest in long-term ownership and maximum control',
-    color: 'bg-liberty-accent'
+    color: 'bg-liberty-accent',
+    icon: Home,
+    iconColor: 'text-white'
   },
   {
     id: 'commonhold',
@@ -99,7 +104,120 @@ const pathways = [
       'Most complex transition'
     ],
     bestFor: 'Forward-thinking buildings ready to embrace the future of property ownership',
-    color: 'bg-liberty-secondary'
+    color: 'bg-liberty-secondary',
+    icon: Building2,
+    iconColor: 'text-liberty-standard'
+  }
+];
+
+// Journey steps data
+const journeySteps = [
+  {
+    number: 1,
+    title: 'Check Your Eligibility',
+    subtitle: 'Quick 2-minute assessment',
+    description: 'Answer a few simple questions about your building to discover which paths are available to you. Our smart wizard instantly tells you if you qualify for RTM, Enfranchisement, or both.',
+    icon: Shield,
+    iconColor: 'text-liberty-accent',
+    position: 'left',
+    link: {
+      text: 'Start Check',
+      href: '/eligibility-check'
+    },
+    badges: []
+  },
+  {
+    number: 2,
+    title: 'Register Your Building',
+    subtitle: 'Secure your spot',
+    description: 'Join our pilot programme and register your building details. We\'ll create your case file and connect you with neighbours who want to take control too. No commitment required at this stage.',
+    icon: Building2,
+    iconColor: 'text-liberty-primary',
+    position: 'right',
+    link: null,
+    badges: [
+      { icon: CheckCircle2, text: 'Free registration', color: 'text-liberty-accent' }
+    ]
+  },
+  {
+    number: 3,
+    title: 'We Analyze Your Situation',
+    subtitle: 'Expert assessment',
+    description: 'Our experts review your building\'s specifics, current service charges, and ownership structure. We calculate potential savings and identify the best path forward for your unique situation.',
+    icon: TrendingUp,
+    iconColor: 'text-liberty-accent',
+    position: 'left',
+    link: null,
+    badges: [
+      { icon: Users, text: 'Expert review' },
+      { icon: Coins, text: 'Savings calculated' }
+    ]
+  },
+  {
+    number: 4,
+    title: 'Choose Your Path Together',
+    subtitle: 'Tailored recommendation',
+    description: 'Based on our analysis, we\'ll recommend whether RTM, Enfranchisement, or Commonhold is best for you. We present the options clearly so you and your neighbours can make an informed decision.',
+    icon: Scale,
+    iconColor: 'text-liberty-accent',
+    position: 'right',
+    link: null,
+    pathOptions: [
+      { icon: Key, label: 'RTM', color: 'text-liberty-primary' },
+      { icon: Home, label: 'Enfranchise', color: 'text-liberty-accent' },
+      { icon: Building2, label: 'Commonhold', color: 'text-liberty-primary' }
+    ]
+  },
+  {
+    number: 5,
+    title: 'We Handle Everything',
+    subtitle: 'Full service support',
+    description: 'Once you decide, we manage the entire process. Legal notices, paperwork, negotiations - we handle it all. You stay informed with regular updates while we do the heavy lifting.',
+    icon: CheckCircle2,
+    iconColor: 'text-liberty-accent',
+    position: 'left',
+    link: null,
+    badges: [
+      { icon: Shield, text: 'Legal support' },
+      { icon: Clock, text: 'Regular updates' }
+    ]
+  }
+];
+
+// Decision helper cards data
+const decisionCards = [
+  {
+    icon: Zap,
+    title: 'Want Quick Results?',
+    description: 'RTM can give you management control in just 4-6 months',
+    suggestion: '→ Consider RTM',
+    link: {
+      href: '/right-to-manage',
+      text: 'Learn More'
+    },
+    delay: 0
+  },
+  {
+    icon: Trophy,
+    title: 'Want Maximum Control?',
+    description: 'Own your building and eliminate ground rent forever',
+    suggestion: '→ Consider Enfranchisement',
+    link: {
+      href: '/collective-enfranchisement',
+      text: 'Learn More'
+    },
+    delay: 0.2
+  },
+  {
+    icon: Rocket,
+    title: 'Want Future-Proof Ownership?',
+    description: 'Join the new era with perpetual ownership and no leases',
+    suggestion: '→ Consider Commonhold',
+    link: {
+      href: '/commonhold-conversion',
+      text: 'Learn More'
+    },
+    delay: 0.4
   }
 ];
 
@@ -289,249 +407,154 @@ export default function HowItWorksPage() {
                 
                 {/* Journey Steps */}
                 <div className="-space-y-16 relative pb-8">
-                {/* Step 1: Check Eligibility */}
-                <motion.div
-                  initial={{ opacity: 0, x: -100 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-                  className="relative"
-                  style={{ zIndex: 50 }}
-                >
-                  <div className="hidden md:flex items-center relative z-10">
-                    <div className="w-5/12 pr-8">
-                      <Card className="bg-white border-liberty-secondary p-6 shadow-sm transition-shadow hover:shadow-md">
-                        <div className="flex items-start justify-between mb-4">
-                          <div>
-                            <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
-                              Check Your Eligibility
-                            </h3>
-                            <p className="text-sm text-liberty-primary font-medium">
-                              Quick 2-minute assessment
-                            </p>
-                          </div>
-                          <Shield className="w-6 h-6 text-liberty-accent" />
-                        </div>
-                        <p className="text-sm text-gray-600 mb-4">
-                          Answer a few simple questions about your building to discover which paths are available to you. Our smart wizard instantly tells you if you qualify for RTM, Enfranchisement, or both.
-                        </p>
-                        <Button
-                          asChild
-                          size="sm"
-                          variant="outline"
-                          className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white"
-                        >
-                          <Link href="/eligibility-check">
-                            Start Check
-                            <ArrowRight className="w-3 h-3 ml-1" />
-                          </Link>
-                        </Button>
-                      </Card>
-                    </div>
+                  {journeySteps.map((step, index) => {
+                    const Icon = step.icon;
+                    const animationX = step.position === 'left' ? -100 : 100;
                     
-                    <div className="w-2/12 flex justify-center">
-                      <div className="w-16 h-16 bg-liberty-primary rounded-full flex items-center justify-center shadow-lg relative z-10">
-                        <span className="text-2xl font-bold text-white">1</span>
-                      </div>
-                    </div>
-                    
-                    <div className="w-5/12" />
-                  </div>
-                </motion.div>
+                    return (
+                      <motion.div
+                        key={step.number}
+                        initial={{ opacity: 0, x: animationX }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
+                        className="relative"
+                        style={{ zIndex: 50 - (index * 10) }}
+                      >
+                        <div className="hidden md:flex items-center relative z-10">
+                          {step.position === 'left' ? (
+                            <>
+                              <div className="w-5/12 pr-8">
+                                <Card className="bg-white border-liberty-secondary p-6 shadow-sm transition-shadow hover:shadow-md">
+                                  <div className="flex items-start justify-between mb-4">
+                                    <div>
+                                      <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
+                                        {step.title}
+                                      </h3>
+                                      <p className="text-sm text-liberty-primary font-medium">
+                                        {step.subtitle}
+                                      </p>
+                                    </div>
+                                    <Icon className={`w-6 h-6 ${step.iconColor}`} />
+                                  </div>
+                                  <p className="text-sm text-gray-600 mb-4">
+                                    {step.description}
+                                  </p>
+                                  
+                                  {step.link && (
+                                    <Button
+                                      asChild
+                                      size="sm"
+                                      variant="outline"
+                                      className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white"
+                                    >
+                                      <Link href={step.link.href}>
+                                        {step.link.text}
+                                        <ArrowRight className="w-3 h-3 ml-1" />
+                                      </Link>
+                                    </Button>
+                                  )}
+                                  
+                                  {step.badges && step.badges.length > 0 && (
+                                    <div className="flex gap-4 text-xs text-gray-500">
+                                      {step.badges.map((badge, i) => {
+                                        const BadgeIcon = badge.icon;
+                                        return (
+                                          <span key={i} className="flex items-center">
+                                            <BadgeIcon className={`w-3 h-3 mr-1 ${badge.color || ''}`} />
+                                            {badge.text}
+                                          </span>
+                                        );
+                                      })}
+                                    </div>
+                                  )}
+                                  
+                                  {step.pathOptions && (
+                                    <div className="grid grid-cols-3 gap-2 text-xs">
+                                      {step.pathOptions.map((option, i) => {
+                                        const OptionIcon = option.icon;
+                                        return (
+                                          <div key={i} className="text-center p-2 bg-gray-50 rounded">
+                                            <OptionIcon className={`w-4 h-4 mx-auto mb-1 ${option.color}`} />
+                                            {option.label}
+                                          </div>
+                                        );
+                                      })}
+                                    </div>
+                                  )}
+                                </Card>
+                              </div>
+                              
+                              <div className="w-2/12 flex justify-center">
+                                <div className="w-16 h-16 bg-liberty-primary rounded-full flex items-center justify-center shadow-lg relative z-10">
+                                  <span className="text-2xl font-bold text-white">{step.number}</span>
+                                </div>
+                              </div>
+                              
+                              <div className="w-5/12" />
+                            </>
+                          ) : (
+                            <>
+                              <div className="w-5/12" />
+                              
+                              <div className="w-2/12 flex justify-center">
+                                <div className="w-16 h-16 bg-liberty-primary rounded-full flex items-center justify-center shadow-lg relative z-10">
+                                  <span className="text-2xl font-bold text-white">{step.number}</span>
+                                </div>
+                              </div>
 
-                {/* Step 2: Register Your Building */}
-                <motion.div
-                  initial={{ opacity: 0, x: 100 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-                  className="relative"
-                  style={{ zIndex: 40 }}
-                >
-                  <div className="hidden md:flex items-center relative z-10">
-                    <div className="w-5/12" />
-                    
-                    <div className="w-2/12 flex justify-center">
-                      <div className="w-16 h-16 bg-liberty-primary rounded-full flex items-center justify-center shadow-lg relative z-10">
-                        <span className="text-2xl font-bold text-white">2</span>
-                      </div>
-                    </div>
-
-                    <div className="w-5/12 pl-8">
-                      <Card className="bg-white border-liberty-secondary p-6 shadow-sm transition-shadow hover:shadow-md">
-                        <div className="flex items-start justify-between mb-4">
-                          <div>
-                            <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
-                              Register Your Building
-                            </h3>
-                            <p className="text-sm text-liberty-primary font-medium">
-                              Secure your spot
-                            </p>
-                          </div>
-                          <Building2 className="w-6 h-6 text-liberty-accent" />
+                              <div className="w-5/12 pl-8">
+                                <Card className="bg-white border-liberty-secondary p-6 shadow-sm transition-shadow hover:shadow-md">
+                                  <div className="flex items-start justify-between mb-4">
+                                    <div>
+                                      <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
+                                        {step.title}
+                                      </h3>
+                                      <p className="text-sm text-liberty-primary font-medium">
+                                        {step.subtitle}
+                                      </p>
+                                    </div>
+                                    <Icon className={`w-6 h-6 ${step.iconColor}`} />
+                                  </div>
+                                  <p className="text-sm text-gray-600 mb-4">
+                                    {step.description}
+                                  </p>
+                                  
+                                  {step.badges && step.badges.length > 0 && (
+                                    <div className="flex gap-4 text-xs text-gray-500">
+                                      {step.badges.map((badge, i) => {
+                                        const BadgeIcon = badge.icon;
+                                        return (
+                                          <span key={i} className="flex items-center">
+                                            <BadgeIcon className={`w-3 h-3 mr-1 ${badge.color || ''}`} />
+                                            {badge.text}
+                                          </span>
+                                        );
+                                      })}
+                                    </div>
+                                  )}
+                                  
+                                  {step.pathOptions && (
+                                    <div className="grid grid-cols-3 gap-2 text-xs">
+                                      {step.pathOptions.map((option, i) => {
+                                        const OptionIcon = option.icon;
+                                        return (
+                                          <div key={i} className="text-center p-2 bg-gray-50 rounded">
+                                            <OptionIcon className={`w-4 h-4 mx-auto mb-1 ${option.color}`} />
+                                            {option.label}
+                                          </div>
+                                        );
+                                      })}
+                                    </div>
+                                  )}
+                                </Card>
+                              </div>
+                            </>
+                          )}
                         </div>
-                        <p className="text-sm text-gray-600 mb-4">
-                          Join our pilot programme and register your building details. We'll create your case file and connect you with neighbours who want to take control too. No commitment required at this stage.
-                        </p>
-                        <div className="flex gap-2 text-xs text-gray-500">
-                          <CheckCircle2 className="w-4 h-4 text-liberty-accent" />
-                          <span>Free registration</span>
-                        </div>
-                      </Card>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Step 3: We Analyze Your Situation */}
-                <motion.div
-                  initial={{ opacity: 0, x: -100 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-                  className="relative"
-                  style={{ zIndex: 40 }}
-                >
-                  <div className="hidden md:flex items-center relative z-10">
-                    <div className="w-5/12 pr-8">
-                      <Card className="bg-white border-liberty-secondary p-6 shadow-sm transition-shadow hover:shadow-md">
-                        <div className="flex items-start justify-between mb-4">
-                          <div>
-                            <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
-                              We Analyze Your Situation
-                            </h3>
-                            <p className="text-sm text-liberty-primary font-medium">
-                              Expert assessment
-                            </p>
-                          </div>
-                          <TrendingUp className="w-6 h-6 text-liberty-accent" />
-                        </div>
-                        <p className="text-sm text-gray-600 mb-4">
-                          Our experts review your building's specifics, current service charges, and ownership structure. We calculate potential savings and identify the best path forward for your unique situation.
-                        </p>
-                        <div className="flex gap-4 text-xs text-gray-500">
-                          <span className="flex items-center">
-                            <Users className="w-3 h-3 mr-1" />
-                            Expert review
-                          </span>
-                          <span className="flex items-center">
-                            <Coins className="w-3 h-3 mr-1" />
-                            Savings calculated
-                          </span>
-                        </div>
-                      </Card>
-                    </div>
-                    
-                    <div className="w-2/12 flex justify-center">
-                      <div className="w-16 h-16 bg-liberty-primary rounded-full flex items-center justify-center shadow-lg relative z-10">
-                        <span className="text-2xl font-bold text-white">3</span>
-                      </div>
-                    </div>
-                    
-                    <div className="w-5/12" />
-                  </div>
-                </motion.div>
-
-                {/* Step 4: Choose Your Path Together */}
-                <motion.div
-                  initial={{ opacity: 0, x: 100 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-                  className="relative"
-                  style={{ zIndex: 40 }}
-                >
-                  <div className="hidden md:flex items-center relative z-10">
-                    <div className="w-5/12" />
-                    
-                    <div className="w-2/12 flex justify-center">
-                      <div className="w-16 h-16 bg-liberty-primary rounded-full flex items-center justify-center shadow-lg relative z-10">
-                        <span className="text-2xl font-bold text-white">4</span>
-                      </div>
-                    </div>
-
-                    <div className="w-5/12 pl-8">
-                      <Card className="bg-white border-liberty-secondary p-6 shadow-sm transition-shadow hover:shadow-md">
-                        <div className="flex items-start justify-between mb-4">
-                          <div>
-                            <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
-                              Choose Your Path Together
-                            </h3>
-                            <p className="text-sm text-liberty-primary font-medium">
-                              Tailored recommendation
-                            </p>
-                          </div>
-                          <Scale className="w-6 h-6 text-liberty-accent" />
-                        </div>
-                        <p className="text-sm text-gray-600 mb-4">
-                          Based on our analysis, we'll recommend whether RTM, Enfranchisement, or Commonhold is best for you. We present the options clearly so you and your neighbours can make an informed decision.
-                        </p>
-                        <div className="grid grid-cols-3 gap-2 text-xs">
-                          <div className="text-center p-2 bg-gray-50 rounded">
-                            <Key className="w-4 h-4 mx-auto mb-1 text-liberty-primary" />
-                            RTM
-                          </div>
-                          <div className="text-center p-2 bg-gray-50 rounded">
-                            <Home className="w-4 h-4 mx-auto mb-1 text-liberty-accent" />
-                            Enfranchise
-                          </div>
-                          <div className="text-center p-2 bg-gray-50 rounded">
-                            <Building2 className="w-4 h-4 mx-auto mb-1 text-liberty-primary" />
-                            Commonhold
-                          </div>
-                        </div>
-                      </Card>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Step 5: We Handle Everything */}
-                <motion.div
-                  initial={{ opacity: 0, x: -100 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-                  className="relative"
-                  style={{ zIndex: 40 }}
-                >
-                  <div className="hidden md:flex items-center relative z-10">
-                    <div className="w-5/12 pr-8">
-                      <Card className="bg-white border-liberty-secondary p-6 shadow-sm transition-shadow hover:shadow-md">
-                        <div className="flex items-start justify-between mb-4">
-                          <div>
-                            <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
-                              We Handle Everything
-                            </h3>
-                            <p className="text-sm text-liberty-primary font-medium">
-                              Full service support
-                            </p>
-                          </div>
-                          <CheckCircle2 className="w-6 h-6 text-liberty-accent" />
-                        </div>
-                        <p className="text-sm text-gray-600 mb-4">
-                          Once you decide, we manage the entire process. Legal notices, paperwork, negotiations - we handle it all. You stay informed with regular updates while we do the heavy lifting.
-                        </p>
-                        <div className="flex gap-4 text-xs text-gray-500">
-                          <span className="flex items-center">
-                            <Shield className="w-3 h-3 mr-1" />
-                            Legal support
-                          </span>
-                          <span className="flex items-center">
-                            <Clock className="w-3 h-3 mr-1" />
-                            Regular updates
-                          </span>
-                        </div>
-                      </Card>
-                    </div>
-                    
-                    <div className="w-2/12 flex justify-center">
-                      <div className="w-16 h-16 bg-liberty-primary rounded-full flex items-center justify-center shadow-lg relative z-10">
-                        <span className="text-2xl font-bold text-white">5</span>
-                      </div>
-                    </div>
-                    
-                    <div className="w-5/12" />
-                  </div>
-                </motion.div>
+                      </motion.div>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -572,154 +595,156 @@ export default function HowItWorksPage() {
         >
           <div className="container mx-auto px-4">
             <div className="space-y-32">
-              {pathways.map((pathway, index) => (
-                <motion.div
-                  key={pathway.id}
-                  variants={itemVariants}
-                  className="relative"
-                >
-                  <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
-                    index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-                  }`}>
-                    {/* Content */}
-                    <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
-                      <motion.div
-                        initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                      >
-                        <div className={`inline-block px-4 py-2 rounded-full ${pathway.color} mb-4`}>
-                          <span className={`text-sm font-semibold ${pathway.id === 'rtm' ? 'text-white' : 'text-liberty-standard'}`}>
-                            Option {index + 1}
-                          </span>
-                        </div>
-                        
-                        <h2 className="!text-4xl font-reckless !text-liberty-standard mb-2">
-                          {pathway.title}
-                        </h2>
-                        <p className="text-xl text-liberty-primary mb-4">
-                          {pathway.subtitle}
-                        </p>
-                        <p className="text-lg text-gray-700 mb-8">
-                          {pathway.description}
-                        </p>
-
-                        {/* Key Info */}
-                        <div className="grid grid-cols-2 gap-6 mb-8">
-                          <div className="bg-liberty-secondary rounded-lg p-4">
-                            <Clock className="w-5 h-5 text-liberty-primary mb-2" />
-                            <p className="text-sm text-gray-600">Timeline</p>
-                            <p className="text-lg font-semibold text-liberty-standard">{pathway.timeframe}</p>
-                          </div>
-                          <div className="bg-liberty-secondary rounded-lg p-4">
-                            <Coins className="w-5 h-5 text-liberty-primary mb-2" />
-                            <p className="text-sm text-gray-600">Typical Cost</p>
-                            <p className="text-lg font-semibold text-liberty-standard">{pathway.cost}</p>
-                          </div>
-                        </div>
-
-                        {/* Benefits & Limitations */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                          <div>
-                            <h4 className="!font-semibold !text-liberty-standard mb-3 flex items-center">
-                              <CheckCircle2 className="w-5 h-5 text-liberty-accent mr-2" />
-                              Benefits
-                            </h4>
-                            <ul className="space-y-2">
-                              {pathway.benefits.map((benefit, i) => (
-                                <motion.li
-                                  key={i}
-                                  initial={{ opacity: 0, x: -20 }}
-                                  whileInView={{ opacity: 1, x: 0 }}
-                                  viewport={{ once: true }}
-                                  transition={{ delay: i * 0.1 }}
-                                  className="text-sm text-gray-700 flex items-start"
-                                >
-                                  <Sparkles className="w-4 h-4 text-liberty-accent mr-2 mt-0.5 flex-shrink-0" />
-                                  {benefit}
-                                </motion.li>
-                              ))}
-                            </ul>
-                          </div>
-                          <div>
-                            <h4 className="!font-semibold !text-liberty-standard mb-3">
-                              Considerations
-                            </h4>
-                            <ul className="space-y-2">
-                              {pathway.limitations.map((limitation, i) => (
-                                <motion.li
-                                  key={i}
-                                  initial={{ opacity: 0, x: -20 }}
-                                  whileInView={{ opacity: 1, x: 0 }}
-                                  viewport={{ once: true }}
-                                  transition={{ delay: i * 0.1 }}
-                                  className="text-sm text-gray-600"
-                                >
-                                  • {limitation}
-                                </motion.li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-
-                        {/* Best For */}
-                        <div className="bg-liberty-secondary rounded-lg p-4 mb-6">
-                          <p className="text-sm font-semibold text-liberty-primary mb-1">Best For:</p>
-                          <p className="text-gray-700">{pathway.bestFor}</p>
-                        </div>
-
-                        <Button
-                          onClick={() => setSelectedPathway(pathway.id)}
-                          className={`${pathway.color} ${pathway.id === 'rtm' ? 'text-white' : 'text-liberty-standard'} hover:opacity-90`}
+              {pathways.map((pathway, index) => {
+                const PathwayIcon = pathway.icon;
+                
+                return (
+                  <motion.div
+                    key={pathway.id}
+                    variants={itemVariants}
+                    className="relative"
+                  >
+                    <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
+                      index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+                    }`}>
+                      {/* Content */}
+                      <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
+                        <motion.div
+                          initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.6 }}
                         >
-                          Learn More About {pathway.title.split(' ')[0]}
-                          <ArrowRight className="w-4 h-4 ml-2" />
-                        </Button>
-                      </motion.div>
-                    </div>
-
-                    {/* Image */}
-                    <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        whileHover={{ scale: 1.05 }}
-                        className="relative"
-                      >
-                        <div className="relative bg-white rounded-2xl p-8 shadow-xl border border-gray-200">
-                          <Image
-                            src={pathway.image}
-                            alt={pathway.title}
-                            width={600}
-                            height={400}
-                            className="rounded-lg w-full h-auto"
-                          />
+                          <div className={`inline-block px-4 py-2 rounded-full ${pathway.color} mb-4`}>
+                            <span className={`text-sm font-semibold ${pathway.id === 'commonhold' ? 'text-liberty-standard' : 'text-white'}`}>
+                              Option {index + 1}
+                            </span>
+                          </div>
                           
-                          {/* Floating icon */}
-                          <motion.div
-                            animate={{
-                              y: [0, -10, 0],
-                            }}
-                            transition={{
-                              duration: 3,
-                              repeat: Infinity,
-                              ease: "easeInOut"
-                            }}
-                            className={`absolute -top-4 -right-4 ${pathway.color} p-3 rounded-full shadow-lg`}
+                          <h2 className="!text-4xl font-reckless !text-liberty-standard mb-2">
+                            {pathway.title}
+                          </h2>
+                          <p className="text-xl text-liberty-primary mb-4">
+                            {pathway.subtitle}
+                          </p>
+                          <p className="text-lg text-gray-700 mb-8">
+                            {pathway.description}
+                          </p>
+
+                          {/* Key Info */}
+                          <div className="grid grid-cols-2 gap-6 mb-8">
+                            <div className="bg-liberty-secondary rounded-lg p-4">
+                              <Clock className="w-5 h-5 text-liberty-primary mb-2" />
+                              <p className="text-sm text-gray-600">Timeline</p>
+                              <p className="text-lg font-semibold text-liberty-standard">{pathway.timeframe}</p>
+                            </div>
+                            <div className="bg-liberty-secondary rounded-lg p-4">
+                              <Coins className="w-5 h-5 text-liberty-primary mb-2" />
+                              <p className="text-sm text-gray-600">Typical Cost</p>
+                              <p className="text-lg font-semibold text-liberty-standard">{pathway.cost}</p>
+                            </div>
+                          </div>
+
+                          {/* Benefits & Limitations */}
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <div>
+                              <h4 className="!font-semibold !text-liberty-standard mb-3 flex items-center">
+                                <CheckCircle2 className="w-5 h-5 text-liberty-accent mr-2" />
+                                Benefits
+                              </h4>
+                              <ul className="space-y-2">
+                                {pathway.benefits.map((benefit, i) => (
+                                  <motion.li
+                                    key={i}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: i * 0.1 }}
+                                    className="text-sm text-gray-700 flex items-start"
+                                  >
+                                    <Sparkles className="w-4 h-4 text-liberty-accent mr-2 mt-0.5 flex-shrink-0" />
+                                    {benefit}
+                                  </motion.li>
+                                ))}
+                              </ul>
+                            </div>
+                            <div>
+                              <h4 className="!font-semibold !text-liberty-standard mb-3">
+                                Considerations
+                              </h4>
+                              <ul className="space-y-2">
+                                {pathway.limitations.map((limitation, i) => (
+                                  <motion.li
+                                    key={i}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: i * 0.1 }}
+                                    className="text-sm text-gray-600"
+                                  >
+                                    • {limitation}
+                                  </motion.li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
+
+                          {/* Best For */}
+                          <div className="bg-liberty-secondary rounded-lg p-4 mb-6">
+                            <p className="text-sm font-semibold text-liberty-primary mb-1">Best For:</p>
+                            <p className="text-gray-700">{pathway.bestFor}</p>
+                          </div>
+
+                          <Button
+                            onClick={() => setSelectedPathway(pathway.id)}
+                            className={`${pathway.color} ${pathway.id === 'commonhold' ? 'text-liberty-standard' : 'text-white'} hover:opacity-90`}
                           >
-                            {pathway.id === 'rtm' && <Key className={`w-6 h-6 ${pathway.id === 'rtm' ? 'text-white' : 'text-white'}`} />}
-                            {pathway.id === 'enfranchisement' && <Home className="w-6 h-6 text-white" />}
-                            {pathway.id === 'commonhold' && <Building2 className="w-6 h-6 text-liberty-standard" />}
-                          </motion.div>
-                        </div>
-                      </motion.div>
+                            Learn More About {pathway.title.split(' ')[0]}
+                            <ArrowRight className="w-4 h-4 ml-2" />
+                          </Button>
+                        </motion.div>
+                      </div>
+
+                      {/* Image */}
+                      <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.6 }}
+                          whileHover={{ scale: 1.05 }}
+                          className="relative"
+                        >
+                          <div className="relative bg-white rounded-2xl p-8 shadow-xl border border-gray-200">
+                            <Image
+                              src={pathway.image}
+                              alt={pathway.title}
+                              width={600}
+                              height={400}
+                              className="rounded-lg w-full h-auto"
+                            />
+                            
+                            {/* Floating icon */}
+                            <motion.div
+                              animate={{
+                                y: [0, -10, 0],
+                              }}
+                              transition={{
+                                duration: 3,
+                                repeat: Infinity,
+                                ease: "easeInOut"
+                              }}
+                              className={`absolute -top-4 -right-4 ${pathway.color} p-3 rounded-full shadow-lg`}
+                            >
+                              <PathwayIcon className={`w-6 h-6 ${pathway.iconColor}`} />
+                            </motion.div>
+                          </div>
+                        </motion.div>
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </motion.section>
@@ -738,89 +763,41 @@ export default function HowItWorksPage() {
               </h2>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <motion.div
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0 }}
-                >
-                  <Card className="bg-white p-6 shadow-lg border-0 flex flex-col h-full">
-                  <Zap className="w-12 h-12 text-liberty-accent mb-4" />
-                  <h3 className="!text-lg !font-semibold !text-liberty-standard mb-2">
-                    Want Quick Results?
-                  </h3>
-                  <p className="text-sm text-gray-600 mb-4 flex-grow">
-                    RTM can give you management control in just 4-6 months
-                  </p>
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="sm"
-                    className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white mt-auto"
-                  >
-                    <Link href="/right-to-manage">
-                      Consider RTM
-                      <ArrowRight className="w-3 h-3 ml-1" />
-                    </Link>
-                  </Button>
-                </Card>
-                </motion.div>
-                
-                <motion.div
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                <Card className="bg-white p-6 shadow-lg border-0 flex flex-col h-full">
-                  <Trophy className="w-12 h-12 text-liberty-accent mb-4" />
-                  <h3 className="!text-lg !font-semibold !text-liberty-standard mb-2">
-                    Want Maximum Control?
-                  </h3>
-                  <p className="text-sm text-gray-600 mb-4 flex-grow">
-                    Own your building and eliminate ground rent forever
-                  </p>
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="sm"
-                    className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white mt-auto"
-                  >
-                    <Link href="/collective-enfranchisement">
-                      Consider Enfranchisement
-                      <ArrowRight className="w-3 h-3 ml-1" />
-                    </Link>
-                  </Button>
-                </Card>
-                </motion.div>
-                
-                <motion.div
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                <Card className="bg-white p-6 shadow-lg border-0 flex flex-col h-full">
-                  <Rocket className="w-12 h-12 text-liberty-accent mb-4" />
-                  <h3 className="!text-lg !font-semibold !text-liberty-standard mb-2">
-                    Want Future-Proof Ownership?
-                  </h3>
-                  <p className="text-sm text-gray-600 mb-4 flex-grow">
-                    Join the new era with perpetual ownership and no leases
-                  </p>
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="sm"
-                    className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white mt-auto"
-                  >
-                    <Link href="/commonhold-conversion">
-                      Consider Commonhold
-                      <ArrowRight className="w-3 h-3 ml-1" />
-                    </Link>
-                  </Button>
-                </Card>
-                </motion.div>
+                {decisionCards.map((card, index) => {
+                  const CardIcon = card.icon;
+                  
+                  return (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 50 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: card.delay }}
+                    >
+                      <Card className="bg-white p-6 shadow-lg border-0 flex flex-col h-full">
+                        <CardIcon className="w-12 h-12 text-liberty-accent mb-4" />
+                        <h3 className="!text-lg !font-semibold !text-liberty-standard mb-2">
+                          {card.title}
+                        </h3>
+                        <p className="text-sm text-gray-600 mb-4 flex-grow">
+                          {card.description}
+                        </p>
+                        <div className="text-liberty-primary font-semibold mb-3">{card.suggestion}</div>
+                        <Button
+                          asChild
+                          variant="outline"
+                          size="sm"
+                          className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white mt-auto"
+                        >
+                          <Link href={card.link.href}>
+                            {card.link.text}
+                            <ArrowRight className="w-3 h-3 ml-1" />
+                          </Link>
+                        </Button>
+                      </Card>
+                    </motion.div>
+                  );
+                })}
               </div>
 
               <div className="flex flex-wrap gap-4 justify-center">
