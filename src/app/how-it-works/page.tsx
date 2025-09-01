@@ -368,13 +368,13 @@ export default function HowItWorksPage() {
                               Secure your spot
                             </p>
                           </div>
-                          <Building2 className="w-6 h-6 text-liberty-primary" />
+                          <Building2 className="w-6 h-6 text-liberty-accent" />
                         </div>
                         <p className="text-sm text-gray-600 mb-4">
                           Join our pilot programme and register your building details. We'll create your case file and connect you with neighbours who want to take control too. No commitment required at this stage.
                         </p>
                         <div className="flex gap-2 text-xs text-gray-500">
-                          <CheckCircle2 className="w-4 h-4 text-green-500" />
+                          <CheckCircle2 className="w-4 h-4 text-liberty-accent" />
                           <span>Free registration</span>
                         </div>
                       </Card>
@@ -505,7 +505,7 @@ export default function HowItWorksPage() {
                               Full service support
                             </p>
                           </div>
-                          <CheckCircle2 className="w-6 h-6 text-green-500" />
+                          <CheckCircle2 className="w-6 h-6 text-liberty-accent" />
                         </div>
                         <p className="text-sm text-gray-600 mb-4">
                           Once you decide, we manage the entire process. Legal notices, paperwork, negotiations - we handle it all. You stay informed with regular updates while we do the heavy lifting.
@@ -623,7 +623,7 @@ export default function HowItWorksPage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                           <div>
                             <h4 className="!font-semibold !text-liberty-standard mb-3 flex items-center">
-                              <CheckCircle2 className="w-5 h-5 text-green-500 mr-2" />
+                              <CheckCircle2 className="w-5 h-5 text-liberty-accent mr-2" />
                               Benefits
                             </h4>
                             <ul className="space-y-2">
