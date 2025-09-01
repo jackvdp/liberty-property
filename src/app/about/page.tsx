@@ -12,23 +12,23 @@ export default function AboutPage() {
     <div className="min-h-screen bg-liberty-base">
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="py-20 bg-liberty-secondary/40">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Hero Section - Clean solid background */}
+      <section className="py-20 bg-liberty-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="text-center"
           >
-            <h1 className="text-5xl lg:text-7xl font-reckless font-bold !text-liberty-background mb-6">
+            <h1 className="text-5xl lg:text-7xl font-reckless font-bold !text-liberty-base mb-6">
               About <span className="text-liberty-accent">Us</span>
             </h1>
-            <p className="text-xl !text-liberty-background/60 max-w-3xl mx-auto mb-8">
+            <p className="text-xl text-liberty-base/80 max-w-3xl mx-auto mb-8">
               We're leaseholders too, but with accredited expertise and institutional backing to deliver real change.
             </p>
             
-            <p className="text-sm font-medium text-liberty-background/70 mb-6">
+            <p className="text-sm font-medium text-liberty-base/60 mb-6">
               Trusted by leading institutions and professional bodies
             </p>
             
@@ -37,7 +37,7 @@ export default function AboutPage() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-              className="flex flex-wrap justify-center items-center gap-8 lg:gap-12 opacity-70"
+              className="flex flex-wrap justify-center items-center gap-8 lg:gap-12"
             >
               <div className="h-12 flex items-center">
                 <Image 
@@ -45,7 +45,7 @@ export default function AboutPage() {
                   alt="Property Institute" 
                   width={100} 
                   height={40} 
-                  className="object-contain"
+                  className="object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-300"
                 />
               </div>
               
@@ -55,7 +55,7 @@ export default function AboutPage() {
                   alt="Santander Buildings" 
                   width={120} 
                   height={40} 
-                  className="object-contain"
+                  className="object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-300"
                 />
               </div>
               
@@ -65,7 +65,7 @@ export default function AboutPage() {
                   alt="Ministry of Housing, Communities & Local Government" 
                   width={80} 
                   height={40} 
-                  className="object-contain"
+                  className="object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-300"
                 />
               </div>
             </motion.div>

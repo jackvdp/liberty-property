@@ -120,7 +120,7 @@ export default function PropertyManagement() {
             className="text-center mb-12"
           >
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-reckless font-bold text-liberty-background mb-6">
-              Property Management <span className="text-liberty-accent">That Actually Works</span>
+              Property Management<br/> <span className="text-liberty-accent">That Works</span>
             </h1>
             <p className="text-xl text-liberty-background/70 max-w-3xl mx-auto">
               Finally, a managing agent that understands what leaseholders need - because we are leaseholders. 

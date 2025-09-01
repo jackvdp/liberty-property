@@ -11,6 +11,7 @@ import {
   ExternalLink
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 
 const credentials = [
   {
@@ -35,7 +36,7 @@ const credentials = [
 
 export default function AboutUs() {
   return (
-    <section className="py-16 sm:py-24 lg:py-32 bg-liberty-secondary/20">
+    <section className="py-16 sm:py-24 lg:py-32 bg-liberty-base">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -49,12 +50,12 @@ export default function AboutUs() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
             Who We <span className="text-liberty-accent">Are</span>
           </h2>
-          <p className="text-xl text-liberty-background/80 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl text-liberty-background/70 max-w-4xl mx-auto leading-relaxed">
             Combining lived experience with professional accreditation, institutional backing, and government recognition to deliver real results.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
+        <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
           {/* Left: Content */}
           <div>
             <motion.div
@@ -64,7 +65,7 @@ export default function AboutUs() {
               viewport={{ once: true }}
               className="space-y-6"
             >
-              <div className="space-y-6 text-lg text-liberty-background/80 leading-relaxed">
+              <div className="space-y-6 text-lg text-liberty-background/70 leading-relaxed">
                 <p>
                   <strong className="text-liberty-primary">Liberty Bell Ethical Enfranchisement</strong> brings together the best of both worlds: the deep understanding that comes from being leaseholders ourselves, and the professional expertise backed by leading industry bodies.
                 </p>
@@ -77,7 +78,7 @@ export default function AboutUs() {
               </div>
 
               <div className="pt-4">
-                <Button asChild size="xl" className="bg-liberty-primary hover:bg-liberty-primary/90 text-white">
+                <Button asChild size="xl" className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base">
                   <Link href="/how-it-works" className="flex items-center gap-3 group">
                     How It Works
                     <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
@@ -95,14 +96,29 @@ export default function AboutUs() {
             viewport={{ once: true }}
             className="relative flex justify-center lg:justify-end"
           >
-            <div className="relative w-full max-w-md h-80 rounded-xl overflow-hidden shadow-2xl">
+            <div className="relative w-full max-w-md h-[400px] rounded-xl overflow-hidden shadow-xl">
               <Image
                 src="/couple-happy.jpeg"
                 alt="Happy couple who successfully gained control of their building"
                 fill
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-liberty-primary/10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+              
+              {/* Success Badge */}
+              <div className="absolute bottom-4 left-4 right-4 bg-liberty-base/95 backdrop-blur-sm p-4 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <Shield className="text-liberty-accent w-6 h-6" />
+                  <div>
+                    <p className="font-semibold text-liberty-background text-sm">
+                      Success Story
+                    </p>
+                    <p className="text-liberty-background/70 text-xs">
+                      "We saved £460 per year and finally got quality service"
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -113,18 +129,17 @@ export default function AboutUs() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="mb-16"
         >
           <div className="text-center mb-12">
             <h3 className="text-2xl lg:text-3xl font-reckless font-bold text-liberty-background mb-4">
               Our <span className="text-liberty-primary">Credentials & Partners</span>
             </h3>
-            <p className="text-lg text-liberty-background/80 max-w-3xl mx-auto">
+            <p className="text-lg text-liberty-background/70 max-w-3xl mx-auto">
               Backed by leading institutions and recognized by government as a trusted partner in leasehold reform.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <div className="grid md:grid-cols-3 gap-8">
             {credentials.map((credential, index) => (
               <motion.div
                 key={index}
@@ -132,60 +147,60 @@ export default function AboutUs() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
                 viewport={{ once: true }}
-                className="text-center"
               >
-                <div className="bg-white rounded-xl p-8 shadow-sm border border-liberty-secondary/30 hover:border-liberty-accent/50 transition-colors duration-300 h-full flex flex-col">
-                  <div className="h-16 flex items-center justify-center mx-auto mb-6">
-                    {index === 0 && (
-                      <Image 
-                        src="/partners/property-institute.png" 
-                        alt="Property Institute" 
-                        width={120} 
-                        height={50} 
-                        className="object-contain"
-                      />
+                <Card className="h-full bg-liberty-base border-liberty-secondary/30 hover:border-liberty-accent/50 transition-all duration-300 hover:shadow-lg">
+                  <CardContent className="p-8 text-center flex flex-col h-full">
+                    <div className="h-16 flex items-center justify-center mx-auto mb-6">
+                      {index === 0 && (
+                        <Image 
+                          src="/partners/property-institute.png" 
+                          alt="Property Institute" 
+                          width={120} 
+                          height={50} 
+                          className="object-contain"
+                        />
+                      )}
+                      {index === 1 && (
+                        <Image 
+                          src="/partners/santander.png" 
+                          alt="Santander Buildings" 
+                          width={140} 
+                          height={50} 
+                          className="object-contain"
+                        />
+                      )}
+                      {index === 2 && (
+                        <Image 
+                          src="/partners/mhlcg.png" 
+                          alt="Ministry of Housing, Communities & Local Government" 
+                          width={100} 
+                          height={50} 
+                          className="object-contain"
+                        />
+                      )}
+                    </div>
+                    <h4 className="text-xl font-reckless font-bold text-liberty-background mb-4">
+                      {credential.title}
+                    </h4>
+                    <p className="text-liberty-background/70 leading-relaxed mb-4 flex-grow">
+                      {credential.description}
+                    </p>
+                    {credential.link && (
+                      <a
+                        href={credential.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-liberty-primary hover:text-liberty-accent transition-colors text-sm font-medium"
+                      >
+                        Learn More
+                        <ExternalLink size={14} />
+                      </a>
                     )}
-                    {index === 1 && (
-                      <Image 
-                        src="/partners/santander.png" 
-                        alt="Santander Buildings" 
-                        width={140} 
-                        height={50} 
-                        className="object-contain"
-                      />
-                    )}
-                    {index === 2 && (
-                      <Image 
-                        src="/partners/mhlcg.png" 
-                        alt="Ministry of Housing, Communities & Local Government" 
-                        width={100} 
-                        height={50} 
-                        className="object-contain"
-                      />
-                    )}
-                  </div>
-                  <h4 className="text-xl font-reckless font-bold text-liberty-background mb-4">
-                    {credential.title}
-                  </h4>
-                  <p className="text-liberty-background/80 leading-relaxed mb-4 flex-grow">
-                    {credential.description}
-                  </p>
-                  {credential.link && (
-                    <a
-                      href={credential.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-liberty-primary hover:text-liberty-accent transition-colors text-sm font-medium"
-                    >
-                      Learn More
-                      <ExternalLink size={14} />
-                    </a>
-                  )}
-                </div>
+                  </CardContent>
+                </Card>
               </motion.div>
             ))}
           </div>
-
         </motion.div>
       </div>
     </section>

@@ -49,6 +49,13 @@ export default function Navbar() {
                   </Link>
                 </NavigationMenuItem>
 
+                {/* How It Works - Simple Link */}
+                <NavigationMenuItem>
+                  <Link href="/how-it-works" className="text-liberty-background/70 hover:text-liberty-primary px-4 py-2 text-sm font-medium transition-colors rounded-md hover:bg-liberty-secondary/20">
+                    How It Works
+                  </Link>
+                </NavigationMenuItem>
+
                 {/* Services Dropdown */}
                 <NavigationMenuItem>
                   <NavigationMenuTrigger className="text-liberty-background/70 hover:text-liberty-primary bg-transparent hover:bg-liberty-secondary/20">
@@ -70,13 +77,6 @@ export default function Navbar() {
                       </ListItem>
                     </div>
                   </NavigationMenuContent>
-                </NavigationMenuItem>
-
-                {/* How It Works - Simple Link */}
-                <NavigationMenuItem>
-                  <Link href="/how-it-works" className="text-liberty-background/70 hover:text-liberty-primary px-4 py-2 text-sm font-medium transition-colors rounded-md hover:bg-liberty-secondary/20">
-                    How It Works
-                  </Link>
                 </NavigationMenuItem>
                 
                 <NavigationMenuItem>
