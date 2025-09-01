@@ -750,19 +750,11 @@ export default function HowItWorksPage() {
                             />
                             
                             {/* Floating icon */}
-                            <motion.div
-                              animate={{
-                                y: [0, -10, 0],
-                              }}
-                              transition={{
-                                duration: 3,
-                                repeat: Infinity,
-                                ease: "easeInOut"
-                              }}
+                            <div
                               className={`absolute -top-4 -right-4 ${pathway.color} p-3 rounded-full shadow-lg`}
                             >
                               <PathwayIcon className={`w-6 h-6 ${pathway.iconColor}`} />
-                            </motion.div>
+                            </div>
                           </div>
                         </motion.div>
                       </div>
