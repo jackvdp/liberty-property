@@ -195,7 +195,7 @@ const journeySteps: JourneyStep[] = [
     badges: [],
     pathOptions: [
       { icon: Key, label: 'RTM', color: 'text-liberty-primary' },
-      { icon: Home, label: 'Enfranchise', color: 'text-liberty-accent' },
+      { icon: Home, label: 'Enfranchise', color: 'text-liberty-primary' },
       { icon: Building2, label: 'Commonhold', color: 'text-liberty-primary' }
     ]
   },
@@ -503,11 +503,18 @@ export default function HowItWorksPage() {
                                     <div className="grid grid-cols-3 gap-2 text-xs">
                                       {step.pathOptions.map((option, i) => {
                                         const OptionIcon = option.icon;
+                                        const pathwayId = option.label === 'RTM' ? 'rtm' : 
+                                                         option.label === 'Enfranchise' ? 'enfranchisement' : 
+                                                         'commonhold';
                                         return (
-                                          <div key={i} className="text-center p-2 bg-gray-50 rounded">
-                                            <OptionIcon className={`w-4 h-4 mx-auto mb-1 ${option.color}`} />
-                                            {option.label}
-                                          </div>
+                                          <button
+                                            key={i}
+                                            onClick={() => setSelectedPathway(pathwayId)}
+                                            className="text-center p-2 bg-gray-50 rounded hover:bg-gray-100 hover:shadow-sm transition-all cursor-pointer group"
+                                          >
+                                            <OptionIcon className={`w-4 h-4 mx-auto mb-1 ${option.color} group-hover:scale-110 transition-transform`} />
+                                            <span className="group-hover:text-liberty-primary transition-colors">{option.label}</span>
+                                          </button>
                                         );
                                       })}
                                     </div>
@@ -568,11 +575,18 @@ export default function HowItWorksPage() {
                                     <div className="grid grid-cols-3 gap-2 text-xs">
                                       {step.pathOptions.map((option, i) => {
                                         const OptionIcon = option.icon;
+                                        const pathwayId = option.label === 'RTM' ? 'rtm' : 
+                                                         option.label === 'Enfranchise' ? 'enfranchisement' : 
+                                                         'commonhold';
                                         return (
-                                          <div key={i} className="text-center p-2 bg-gray-50 rounded">
-                                            <OptionIcon className={`w-4 h-4 mx-auto mb-1 ${option.color}`} />
-                                            {option.label}
-                                          </div>
+                                          <button
+                                            key={i}
+                                            onClick={() => setSelectedPathway(pathwayId)}
+                                            className="text-center p-2 bg-gray-50 rounded hover:bg-gray-100 hover:shadow-sm transition-all cursor-pointer group"
+                                          >
+                                            <OptionIcon className={`w-4 h-4 mx-auto mb-1 ${option.color} group-hover:scale-110 transition-transform`} />
+                                            <span className="group-hover:text-liberty-primary transition-colors">{option.label}</span>
+                                          </button>
                                         );
                                       })}
                                     </div>
