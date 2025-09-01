@@ -291,10 +291,10 @@ export default function HowItWorksPage() {
                 <div className="-space-y-16 relative pb-8">
                 {/* Step 1: Check Eligibility */}
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
+                  initial={{ opacity: 0, x: -100 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5 }}
+                  transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
                   className="relative"
                   style={{ zIndex: 50 }}
                 >
@@ -341,10 +341,10 @@ export default function HowItWorksPage() {
 
                 {/* Step 2: Register Your Building */}
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
+                  initial={{ opacity: 0, x: 100 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5 }}
+                  transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
                   className="relative"
                   style={{ zIndex: 40 }}
                 >
@@ -384,10 +384,10 @@ export default function HowItWorksPage() {
 
                 {/* Step 3: We Analyze Your Situation */}
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
+                  initial={{ opacity: 0, x: -100 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5 }}
+                  transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
                   className="relative"
                   style={{ zIndex: 40 }}
                 >
@@ -433,10 +433,10 @@ export default function HowItWorksPage() {
 
                 {/* Step 4: Choose Your Path Together */}
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
+                  initial={{ opacity: 0, x: 100 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5 }}
+                  transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
                   className="relative"
                   style={{ zIndex: 40 }}
                 >
@@ -486,10 +486,10 @@ export default function HowItWorksPage() {
 
                 {/* Step 5: We Handle Everything */}
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
+                  initial={{ opacity: 0, x: -100 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5 }}
+                  transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
                   className="relative"
                   style={{ zIndex: 40 }}
                 >
@@ -738,7 +738,13 @@ export default function HowItWorksPage() {
               </h2>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <Card className="bg-white p-6 shadow-lg border-0 flex flex-col">
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0 }}
+                >
+                  <Card className="bg-white p-6 shadow-lg border-0 flex flex-col h-full">
                   <Zap className="w-12 h-12 text-liberty-accent mb-4" />
                   <h3 className="!text-lg !font-semibold !text-liberty-standard mb-2">
                     Want Quick Results?
@@ -746,10 +752,27 @@ export default function HowItWorksPage() {
                   <p className="text-sm text-gray-600 mb-4 flex-grow">
                     RTM can give you management control in just 4-6 months
                   </p>
-                  <div className="text-liberty-primary font-semibold mt-auto">→ Consider RTM</div>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="sm"
+                    className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white mt-auto"
+                  >
+                    <Link href="/right-to-manage">
+                      Consider RTM
+                      <ArrowRight className="w-3 h-3 ml-1" />
+                    </Link>
+                  </Button>
                 </Card>
+                </motion.div>
                 
-                <Card className="bg-white p-6 shadow-lg border-0 flex flex-col">
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                <Card className="bg-white p-6 shadow-lg border-0 flex flex-col h-full">
                   <Trophy className="w-12 h-12 text-liberty-accent mb-4" />
                   <h3 className="!text-lg !font-semibold !text-liberty-standard mb-2">
                     Want Maximum Control?
@@ -757,10 +780,27 @@ export default function HowItWorksPage() {
                   <p className="text-sm text-gray-600 mb-4 flex-grow">
                     Own your building and eliminate ground rent forever
                   </p>
-                  <div className="text-liberty-primary font-semibold mt-auto">→ Consider Enfranchisement</div>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="sm"
+                    className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white mt-auto"
+                  >
+                    <Link href="/collective-enfranchisement">
+                      Consider Enfranchisement
+                      <ArrowRight className="w-3 h-3 ml-1" />
+                    </Link>
+                  </Button>
                 </Card>
+                </motion.div>
                 
-                <Card className="bg-white p-6 shadow-lg border-0 flex flex-col">
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                <Card className="bg-white p-6 shadow-lg border-0 flex flex-col h-full">
                   <Rocket className="w-12 h-12 text-liberty-accent mb-4" />
                   <h3 className="!text-lg !font-semibold !text-liberty-standard mb-2">
                     Want Future-Proof Ownership?
@@ -768,8 +808,19 @@ export default function HowItWorksPage() {
                   <p className="text-sm text-gray-600 mb-4 flex-grow">
                     Join the new era with perpetual ownership and no leases
                   </p>
-                  <div className="text-liberty-primary font-semibold mt-auto">→ Consider Commonhold</div>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="sm"
+                    className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white mt-auto"
+                  >
+                    <Link href="/commonhold-conversion">
+                      Consider Commonhold
+                      <ArrowRight className="w-3 h-3 ml-1" />
+                    </Link>
+                  </Button>
                 </Card>
+                </motion.div>
               </div>
 
               <div className="flex flex-wrap gap-4 justify-center">
