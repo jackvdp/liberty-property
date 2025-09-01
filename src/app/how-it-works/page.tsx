@@ -79,7 +79,7 @@ const pathways = [
     bestFor: 'Buildings ready to invest in long-term ownership and maximum control',
     color: 'bg-liberty-accent',
     icon: Home,
-    iconColor: 'text-white'
+    iconColor: 'text-standard'
   },
   {
     id: 'commonhold',
@@ -159,7 +159,7 @@ const journeySteps: JourneyStep[] = [
     subtitle: 'Secure your spot',
     description: 'Join our pilot programme and register your building details. We\'ll create your case file and connect you with neighbours who want to take control too. No commitment required at this stage.',
     icon: Building2,
-    iconColor: 'text-liberty-primary',
+    iconColor: 'text-liberty-accent',
     position: 'right',
     link: null,
     badges: [
@@ -306,20 +306,19 @@ export default function HowItWorksPage() {
               
               <div className="flex flex-wrap gap-4 justify-center">
                 <Button
-                  onClick={() => setComparisonMode(!comparisonMode)}
-                  variant={comparisonMode ? "default" : "outline"}
-                  className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white"
+                    size="xl"
+                    onClick={() => setComparisonMode(!comparisonMode)}
+                    variant={comparisonMode ? "default" : "outline"}
+                    className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white"
                 >
                   <Scale className="w-4 h-4 mr-2" />
                   {comparisonMode ? 'Exit Comparison' : 'Compare Pathways'}
                 </Button>
-                <Button
-                  asChild
-                  className="bg-liberty-accent text-liberty-standard hover:bg-liberty-accent/90"
-                >
-                  <Link href="/eligibility-check">
+
+                <Button size="xl" asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base">
+                  <Link href="/eligibility-check" className="flex items-center gap-3 group">
                     Check Your Eligibility
-                    <ArrowRight className="w-4 h-4 ml-2" />
+                    <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </Button>
               </div>
@@ -598,14 +597,11 @@ export default function HowItWorksPage() {
                   <p className="text-gray-600 mb-6 max-w-md mx-auto">
                     You're now in control of your building. Enjoy reduced service charges, better management, and the freedom to make decisions that benefit all residents.
                   </p>
-                  <Button
-                    asChild
-                    size="lg"
-                    className="bg-liberty-accent text-liberty-standard hover:bg-liberty-accent/90"
-                  >
-                    <Link href="/eligibility-check">
+
+                  <Button size="xl" asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base">
+                    <Link href="/eligibility-check" className="flex items-center gap-3 group">
                       Start Your Journey
-                      <ArrowRight className="w-4 h-4 ml-2" />
+                      <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </Button>
                 </div>
@@ -644,7 +640,7 @@ export default function HowItWorksPage() {
                           transition={{ duration: 0.6 }}
                         >
                           <div className={`inline-block px-4 py-2 rounded-full ${pathway.color} mb-4`}>
-                            <span className={`text-sm font-semibold ${pathway.id === 'commonhold' ? 'text-liberty-standard' : 'text-white'}`}>
+                            <span className={`text-sm font-semibold ${pathway.id === 'rtm' ? 'text-white' : 'text-liberty-standard'}`}>
                               Option {index + 1}
                             </span>
                           </div>
@@ -723,12 +719,10 @@ export default function HowItWorksPage() {
                             <p className="text-gray-700">{pathway.bestFor}</p>
                           </div>
 
-                          <Button
-                            onClick={() => setSelectedPathway(pathway.id)}
-                            className={`${pathway.color} ${pathway.id === 'commonhold' ? 'text-liberty-standard' : 'text-white'} hover:opacity-90`}
-                          >
-                            Learn More About {pathway.title.split(' ')[0]}
-                            <ArrowRight className="w-4 h-4 ml-2" />
+                          <Button size="xl" onClick={() => setSelectedPathway(pathway.id)}
+                                  className={`${pathway.color} ${pathway.id === 'rtm' ? 'text-white' : 'text-liberty-standard'} hover:opacity-90 group`}>
+                              Learn More About {pathway.title}
+                              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                           </Button>
                         </motion.div>
                       </div>
@@ -831,17 +825,17 @@ export default function HowItWorksPage() {
               <div className="flex flex-wrap gap-4 justify-center">
                 <Button
                   asChild
-                  size="lg"
+                  size="xl"
                   className="bg-liberty-primary text-white hover:bg-liberty-primary/90"
                 >
-                  <Link href="/eligibility-check">
+                  <Link href="/eligibility-check" className={"group"}>
                     Check Your Eligibility
-                    <ArrowRight className="w-4 h-4 ml-2" />
+                    <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </Button>
                 <Button
                   asChild
-                  size="lg"
+                  size="xl"
                   variant="outline"
                   className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white"
                 >
