@@ -288,7 +288,7 @@ export default function HowItWorksPage() {
                 </div>
                 
                 {/* Journey Steps */}
-                <div className="space-y-16 relative pb-8">
+                <div className="-space-y-16 relative pb-8">
                 {/* Step 1: Check Eligibility */}
                 <motion.div
                   initial={{ opacity: 0 }}
