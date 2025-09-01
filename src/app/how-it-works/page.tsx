@@ -425,7 +425,7 @@ export default function HowItWorksPage() {
               {/* Journey Steps Container with Line */}
               <div className="relative">
                 {/* Progress Line with Scroll Effect */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-1 top-0 bottom-0 bg-liberty-secondary overflow-hidden">
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-1 top-0 bottom-0 bg-liberty-secondary overflow-hidden rounded-2xl">
                   <motion.div
                     className="w-full h-full bg-liberty-primary origin-top"
                     style={{ scaleY: scrollYProgress }}
