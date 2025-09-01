@@ -318,7 +318,7 @@ export default function HowItWorksPage() {
                           asChild
                           size="sm"
                           variant="outline"
-                          className="border-liberty-accent text-liberty-standard hover:bg-liberty-accent hover:text-white"
+                          className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white"
                         >
                           <Link href="/eligibility-check">
                             Start Check
@@ -771,7 +771,7 @@ export default function HowItWorksPage() {
                 <Button
                   asChild
                   size="lg"
-                  className="bg-liberty-primary text-liberty-primary hover:bg-liberty-primary/90"
+                  className="bg-liberty-primary text-white hover:bg-liberty-primary/90"
                 >
                   <Link href="/eligibility-check">
                     Check Your Eligibility
@@ -843,7 +843,7 @@ export default function HowItWorksPage() {
                         asChild
                         className="bg-liberty-accent text-liberty-standard hover:bg-liberty-accent/90"
                       >
-                        <Link href="/register">
+                        <Link href="/eligibility-check">
                           Start Your Journey
                         </Link>
                       </Button>
