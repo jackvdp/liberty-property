@@ -296,8 +296,9 @@ export default function HowItWorksPage() {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5 }}
                   className="relative"
+                  style={{ zIndex: 50 }}
                 >
-                  <div className="hidden md:flex items-center">
+                  <div className="hidden md:flex items-center relative z-10">
                     <div className="w-5/12 pr-8">
                       <Card className="bg-white border-liberty-secondary p-6 shadow-sm transition-shadow hover:shadow-md">
                         <div className="flex items-start justify-between mb-4">
@@ -345,8 +346,9 @@ export default function HowItWorksPage() {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5 }}
                   className="relative"
+                  style={{ zIndex: 40 }}
                 >
-                  <div className="hidden md:flex items-center">
+                  <div className="hidden md:flex items-center relative z-10">
                     <div className="w-5/12" />
                     
                     <div className="w-2/12 flex justify-center">
@@ -387,8 +389,9 @@ export default function HowItWorksPage() {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5 }}
                   className="relative"
+                  style={{ zIndex: 40 }}
                 >
-                  <div className="hidden md:flex items-center">
+                  <div className="hidden md:flex items-center relative z-10">
                     <div className="w-5/12 pr-8">
                       <Card className="bg-white border-liberty-secondary p-6 shadow-sm transition-shadow hover:shadow-md">
                         <div className="flex items-start justify-between mb-4">
@@ -435,8 +438,9 @@ export default function HowItWorksPage() {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5 }}
                   className="relative"
+                  style={{ zIndex: 40 }}
                 >
-                  <div className="hidden md:flex items-center">
+                  <div className="hidden md:flex items-center relative z-10">
                     <div className="w-5/12" />
                     
                     <div className="w-2/12 flex justify-center">
@@ -487,8 +491,9 @@ export default function HowItWorksPage() {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5 }}
                   className="relative"
+                  style={{ zIndex: 40 }}
                 >
-                  <div className="hidden md:flex items-center">
+                  <div className="hidden md:flex items-center relative z-10">
                     <div className="w-5/12 pr-8">
                       <Card className="bg-white border-liberty-secondary p-6 shadow-sm transition-shadow hover:shadow-md">
                         <div className="flex items-start justify-between mb-4">
