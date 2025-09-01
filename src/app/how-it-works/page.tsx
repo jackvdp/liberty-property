@@ -171,7 +171,7 @@ export default function HowItWorksPage() {
                   asChild
                   className="bg-liberty-accent text-liberty-standard hover:bg-liberty-accent/90"
                 >
-                  <Link href="/eligibility">
+                  <Link href="/eligibility-check">
                     Check Your Eligibility
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Link>
@@ -299,7 +299,7 @@ export default function HowItWorksPage() {
                 >
                   <div className="hidden md:flex items-center">
                     <div className="w-5/12 pr-8">
-                      <Card className="bg-white p-6 shadow-lg transition-shadow hover:shadow-xl">
+                      <Card className="bg-white border-liberty-secondary p-6 shadow-sm transition-shadow hover:shadow-md">
                         <div className="flex items-start justify-between mb-4">
                           <div>
                             <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
@@ -356,7 +356,7 @@ export default function HowItWorksPage() {
                     </div>
 
                     <div className="w-5/12 pl-8">
-                      <Card className="bg-white p-6 shadow-lg transition-shadow hover:shadow-xl">
+                      <Card className="bg-white border-liberty-secondary p-6 shadow-sm transition-shadow hover:shadow-md">
                         <div className="flex items-start justify-between mb-4">
                           <div>
                             <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
@@ -390,7 +390,7 @@ export default function HowItWorksPage() {
                 >
                   <div className="hidden md:flex items-center">
                     <div className="w-5/12 pr-8">
-                      <Card className="bg-white p-6 shadow-lg transition-shadow hover:shadow-xl">
+                      <Card className="bg-white border-liberty-secondary p-6 shadow-sm transition-shadow hover:shadow-md">
                         <div className="flex items-start justify-between mb-4">
                           <div>
                             <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
@@ -446,7 +446,7 @@ export default function HowItWorksPage() {
                     </div>
 
                     <div className="w-5/12 pl-8">
-                      <Card className="bg-white p-6 shadow-lg transition-shadow hover:shadow-xl">
+                      <Card className="bg-white border-liberty-secondary p-6 shadow-sm transition-shadow hover:shadow-md">
                         <div className="flex items-start justify-between mb-4">
                           <div>
                             <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
@@ -490,7 +490,7 @@ export default function HowItWorksPage() {
                 >
                   <div className="hidden md:flex items-center">
                     <div className="w-5/12 pr-8">
-                      <Card className="bg-white p-6 shadow-lg transition-shadow hover:shadow-xl">
+                      <Card className="bg-white border-liberty-secondary p-6 shadow-sm transition-shadow hover:shadow-md">
                         <div className="flex items-start justify-between mb-4">
                           <div>
                             <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
