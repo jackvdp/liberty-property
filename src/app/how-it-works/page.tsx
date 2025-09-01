@@ -130,7 +130,7 @@ export default function HowItWorksPage() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start center", "end center"]
+    offset: ["start 70%", "end 50%"]
   });
 
   return (
@@ -276,17 +276,19 @@ export default function HowItWorksPage() {
               </motion.p>
             </div>
 
-            <div className="max-w-5xl mx-auto relative">
-              {/* Progress Line with Scroll Effect */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-[calc(100%-120px)] bg-liberty-secondary">
-                <motion.div
-                  className="w-full bg-liberty-primary origin-top"
-                  style={{ scaleY: scrollYProgress }}
-                />
-              </div>
-              
-              {/* Journey Steps */}
-              <div className="space-y-16 relative pb-32">
+            <div className="max-w-5xl mx-auto">
+              {/* Journey Steps Container with Line */}
+              <div className="relative">
+                {/* Progress Line with Scroll Effect */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-1 top-0 bottom-0 bg-liberty-secondary overflow-hidden">
+                  <motion.div
+                    className="w-full h-full bg-liberty-primary origin-top"
+                    style={{ scaleY: scrollYProgress }}
+                  />
+                </div>
+                
+                {/* Journey Steps */}
+                <div className="space-y-16 relative pb-8">
                 {/* Step 1: Check Eligibility */}
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -525,12 +527,13 @@ export default function HowItWorksPage() {
                     <div className="w-5/12" />
                   </div>
                 </motion.div>
+                </div>
               </div>
 
-              {/* Final Step - Success (moved outside to avoid line overlap) */}
-              <div className="relative pt-8">
+              {/* Final Step - Success (completely separate from line) */}
+              <div className="relative pt-16 mt-8">
                 <div className="text-center">
-                  <div className="inline-flex items-center justify-center w-20 h-20 bg-liberty-accent rounded-full shadow-xl mb-4">
+                  <div className="inline-flex items-center justify-center w-20 h-20 bg-liberty-accent rounded-full shadow-xl mb-4 relative z-10">
                     <Trophy className="w-10 h-10 text-white" />
                   </div>
                   <h3 className="!text-2xl font-bold !text-liberty-standard mb-2">
