@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import { 
   ArrowRight, 
   Building2, 
@@ -23,8 +23,8 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Link from 'next/link';
 import Image from 'next/image';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import Navbar from '@/components/navbar';
+import Footer from '@/components/footer';
 
 const pathways = [
   {
@@ -127,6 +127,11 @@ const itemVariants = {
 export default function HowItWorksPage() {
   const [selectedPathway, setSelectedPathway] = useState<string | null>(null);
   const [comparisonMode, setComparisonMode] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start center", "end center"]
+  });
 
   return (
     <>
@@ -147,7 +152,7 @@ export default function HowItWorksPage() {
               className="text-center max-w-4xl mx-auto"
             >
               <h1 className="!text-5xl md:!text-6xl font-reckless !text-liberty-standard mb-6">
-                Your Path to Property <span className="text-liberty-accent">Freedom</span>
+                Your Path to<br/><span className="text-liberty-accent">Property Freedom</span>
               </h1>
               <p className="text-xl text-liberty-standard/80 mb-8">
                 Three proven routes to take control of your building. Choose the path that fits your goals, timeline, and community.
@@ -157,7 +162,7 @@ export default function HowItWorksPage() {
                 <Button
                   onClick={() => setComparisonMode(!comparisonMode)}
                   variant={comparisonMode ? "default" : "outline"}
-                  className="border-liberty-primary text-liberty-standard hover:bg-liberty-primary hover:text-white"
+                  className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white"
                 >
                   <Scale className="w-4 h-4 mr-2" />
                   {comparisonMode ? 'Exit Comparison' : 'Compare Pathways'}
@@ -247,6 +252,308 @@ export default function HowItWorksPage() {
             </motion.section>
           )}
         </AnimatePresence>
+
+        {/* Interactive Vertical Journey Section */}
+        <section ref={sectionRef} className="py-20 bg-gray-50 relative">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <motion.h2 
+                initial={{ opacity: 0, y: -20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="!text-3xl md:!text-4xl font-reckless !text-liberty-standard mb-4"
+              >
+                Your Journey with <span className="text-liberty-accent">Liberty Bell</span>
+              </motion.h2>
+              <motion.p 
+                initial={{ opacity: 0, y: -20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="text-lg text-gray-600"
+              >
+                We guide you every step of the way to find your perfect solution
+              </motion.p>
+            </div>
+
+            <div className="max-w-5xl mx-auto relative">
+              {/* Progress Line with Scroll Effect */}
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-[calc(100%-120px)] bg-liberty-secondary">
+                <motion.div
+                  className="w-full bg-liberty-primary origin-top"
+                  style={{ scaleY: scrollYProgress }}
+                />
+              </div>
+              
+              {/* Journey Steps */}
+              <div className="space-y-16 relative pb-32">
+                {/* Step 1: Check Eligibility */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5 }}
+                  className="relative"
+                >
+                  <div className="hidden md:flex items-center">
+                    <div className="w-5/12 pr-8">
+                      <Card className="bg-white p-6 shadow-lg transition-shadow hover:shadow-xl">
+                        <div className="flex items-start justify-between mb-4">
+                          <div>
+                            <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
+                              Check Your Eligibility
+                            </h3>
+                            <p className="text-sm text-liberty-primary font-medium">
+                              Quick 2-minute assessment
+                            </p>
+                          </div>
+                          <Shield className="w-6 h-6 text-liberty-accent" />
+                        </div>
+                        <p className="text-sm text-gray-600 mb-4">
+                          Answer a few simple questions about your building to discover which paths are available to you. Our smart wizard instantly tells you if you qualify for RTM, Enfranchisement, or both.
+                        </p>
+                        <Button
+                          asChild
+                          size="sm"
+                          variant="outline"
+                          className="border-liberty-accent text-liberty-standard hover:bg-liberty-accent hover:text-white"
+                        >
+                          <Link href="/eligibility-check">
+                            Start Check
+                            <ArrowRight className="w-3 h-3 ml-1" />
+                          </Link>
+                        </Button>
+                      </Card>
+                    </div>
+                    
+                    <div className="w-2/12 flex justify-center">
+                      <div className="w-16 h-16 bg-liberty-primary rounded-full flex items-center justify-center shadow-lg relative z-10">
+                        <span className="text-2xl font-bold text-white">1</span>
+                      </div>
+                    </div>
+                    
+                    <div className="w-5/12" />
+                  </div>
+                </motion.div>
+
+                {/* Step 2: Register Your Building */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5 }}
+                  className="relative"
+                >
+                  <div className="hidden md:flex items-center">
+                    <div className="w-5/12" />
+                    
+                    <div className="w-2/12 flex justify-center">
+                      <div className="w-16 h-16 bg-liberty-primary rounded-full flex items-center justify-center shadow-lg relative z-10">
+                        <span className="text-2xl font-bold text-white">2</span>
+                      </div>
+                    </div>
+
+                    <div className="w-5/12 pl-8">
+                      <Card className="bg-white p-6 shadow-lg transition-shadow hover:shadow-xl">
+                        <div className="flex items-start justify-between mb-4">
+                          <div>
+                            <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
+                              Register Your Building
+                            </h3>
+                            <p className="text-sm text-liberty-primary font-medium">
+                              Secure your spot
+                            </p>
+                          </div>
+                          <Building2 className="w-6 h-6 text-liberty-primary" />
+                        </div>
+                        <p className="text-sm text-gray-600 mb-4">
+                          Join our pilot programme and register your building details. We'll create your case file and connect you with neighbours who want to take control too. No commitment required at this stage.
+                        </p>
+                        <div className="flex gap-2 text-xs text-gray-500">
+                          <CheckCircle2 className="w-4 h-4 text-green-500" />
+                          <span>Free registration</span>
+                        </div>
+                      </Card>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Step 3: We Analyze Your Situation */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5 }}
+                  className="relative"
+                >
+                  <div className="hidden md:flex items-center">
+                    <div className="w-5/12 pr-8">
+                      <Card className="bg-white p-6 shadow-lg transition-shadow hover:shadow-xl">
+                        <div className="flex items-start justify-between mb-4">
+                          <div>
+                            <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
+                              We Analyze Your Situation
+                            </h3>
+                            <p className="text-sm text-liberty-primary font-medium">
+                              Expert assessment
+                            </p>
+                          </div>
+                          <TrendingUp className="w-6 h-6 text-liberty-accent" />
+                        </div>
+                        <p className="text-sm text-gray-600 mb-4">
+                          Our experts review your building's specifics, current service charges, and ownership structure. We calculate potential savings and identify the best path forward for your unique situation.
+                        </p>
+                        <div className="flex gap-4 text-xs text-gray-500">
+                          <span className="flex items-center">
+                            <Users className="w-3 h-3 mr-1" />
+                            Expert review
+                          </span>
+                          <span className="flex items-center">
+                            <Coins className="w-3 h-3 mr-1" />
+                            Savings calculated
+                          </span>
+                        </div>
+                      </Card>
+                    </div>
+                    
+                    <div className="w-2/12 flex justify-center">
+                      <div className="w-16 h-16 bg-liberty-primary rounded-full flex items-center justify-center shadow-lg relative z-10">
+                        <span className="text-2xl font-bold text-white">3</span>
+                      </div>
+                    </div>
+                    
+                    <div className="w-5/12" />
+                  </div>
+                </motion.div>
+
+                {/* Step 4: Choose Your Path Together */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5 }}
+                  className="relative"
+                >
+                  <div className="hidden md:flex items-center">
+                    <div className="w-5/12" />
+                    
+                    <div className="w-2/12 flex justify-center">
+                      <div className="w-16 h-16 bg-liberty-primary rounded-full flex items-center justify-center shadow-lg relative z-10">
+                        <span className="text-2xl font-bold text-white">4</span>
+                      </div>
+                    </div>
+
+                    <div className="w-5/12 pl-8">
+                      <Card className="bg-white p-6 shadow-lg transition-shadow hover:shadow-xl">
+                        <div className="flex items-start justify-between mb-4">
+                          <div>
+                            <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
+                              Choose Your Path Together
+                            </h3>
+                            <p className="text-sm text-liberty-primary font-medium">
+                              Tailored recommendation
+                            </p>
+                          </div>
+                          <Scale className="w-6 h-6 text-liberty-accent" />
+                        </div>
+                        <p className="text-sm text-gray-600 mb-4">
+                          Based on our analysis, we'll recommend whether RTM, Enfranchisement, or Commonhold is best for you. We present the options clearly so you and your neighbours can make an informed decision.
+                        </p>
+                        <div className="grid grid-cols-3 gap-2 text-xs">
+                          <div className="text-center p-2 bg-gray-50 rounded">
+                            <Key className="w-4 h-4 mx-auto mb-1 text-liberty-primary" />
+                            RTM
+                          </div>
+                          <div className="text-center p-2 bg-gray-50 rounded">
+                            <Home className="w-4 h-4 mx-auto mb-1 text-liberty-accent" />
+                            Enfranchise
+                          </div>
+                          <div className="text-center p-2 bg-gray-50 rounded">
+                            <Building2 className="w-4 h-4 mx-auto mb-1 text-liberty-primary" />
+                            Commonhold
+                          </div>
+                        </div>
+                      </Card>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Step 5: We Handle Everything */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5 }}
+                  className="relative"
+                >
+                  <div className="hidden md:flex items-center">
+                    <div className="w-5/12 pr-8">
+                      <Card className="bg-white p-6 shadow-lg transition-shadow hover:shadow-xl">
+                        <div className="flex items-start justify-between mb-4">
+                          <div>
+                            <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
+                              We Handle Everything
+                            </h3>
+                            <p className="text-sm text-liberty-primary font-medium">
+                              Full service support
+                            </p>
+                          </div>
+                          <CheckCircle2 className="w-6 h-6 text-green-500" />
+                        </div>
+                        <p className="text-sm text-gray-600 mb-4">
+                          Once you decide, we manage the entire process. Legal notices, paperwork, negotiations - we handle it all. You stay informed with regular updates while we do the heavy lifting.
+                        </p>
+                        <div className="flex gap-4 text-xs text-gray-500">
+                          <span className="flex items-center">
+                            <Shield className="w-3 h-3 mr-1" />
+                            Legal support
+                          </span>
+                          <span className="flex items-center">
+                            <Clock className="w-3 h-3 mr-1" />
+                            Regular updates
+                          </span>
+                        </div>
+                      </Card>
+                    </div>
+                    
+                    <div className="w-2/12 flex justify-center">
+                      <div className="w-16 h-16 bg-liberty-primary rounded-full flex items-center justify-center shadow-lg relative z-10">
+                        <span className="text-2xl font-bold text-white">5</span>
+                      </div>
+                    </div>
+                    
+                    <div className="w-5/12" />
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Final Step - Success (moved outside to avoid line overlap) */}
+              <div className="relative pt-8">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center w-20 h-20 bg-liberty-accent rounded-full shadow-xl mb-4">
+                    <Trophy className="w-10 h-10 text-white" />
+                  </div>
+                  <h3 className="!text-2xl font-bold !text-liberty-standard mb-2">
+                    Control Achieved!
+                  </h3>
+                  <p className="text-gray-600 mb-6 max-w-md mx-auto">
+                    You're now in control of your building. Enjoy reduced service charges, better management, and the freedom to make decisions that benefit all residents.
+                  </p>
+                  <Button
+                    asChild
+                    size="lg"
+                    className="bg-liberty-accent text-liberty-standard hover:bg-liberty-accent/90"
+                  >
+                    <Link href="/eligibility-check">
+                      Start Your Journey
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Pathways Section */}
         <motion.section
@@ -431,7 +738,7 @@ export default function HowItWorksPage() {
                   <p className="text-sm text-gray-600 mb-4 flex-grow">
                     RTM can give you management control in just 4-6 months
                   </p>
-                  <div className="text-liberty-accent font-semibold mt-auto">→ Consider RTM</div>
+                  <div className="text-liberty-primary font-semibold mt-auto">→ Consider RTM</div>
                 </Card>
                 
                 <Card className="bg-white p-6 shadow-lg border-0 flex flex-col">
@@ -442,7 +749,7 @@ export default function HowItWorksPage() {
                   <p className="text-sm text-gray-600 mb-4 flex-grow">
                     Own your building and eliminate ground rent forever
                   </p>
-                  <div className="text-liberty-accent font-semibold mt-auto">→ Consider Enfranchisement</div>
+                  <div className="text-liberty-primary font-semibold mt-auto">→ Consider Enfranchisement</div>
                 </Card>
                 
                 <Card className="bg-white p-6 shadow-lg border-0 flex flex-col">
@@ -453,7 +760,7 @@ export default function HowItWorksPage() {
                   <p className="text-sm text-gray-600 mb-4 flex-grow">
                     Join the new era with perpetual ownership and no leases
                   </p>
-                  <div className="text-liberty-accent font-semibold mt-auto">→ Consider Commonhold</div>
+                  <div className="text-liberty-primary font-semibold mt-auto">→ Consider Commonhold</div>
                 </Card>
               </div>
 
@@ -472,7 +779,7 @@ export default function HowItWorksPage() {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="border-liberty-primary text-liberty-standard hover:bg-liberty-primary hover:text-white"
+                  className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white"
                 >
                   <Link href="/contact">
                     Get Expert Advice
