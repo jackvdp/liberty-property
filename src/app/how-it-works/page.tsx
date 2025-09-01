@@ -130,7 +130,7 @@ export default function HowItWorksPage() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start 70%", "end 50%"]
+    offset: ["start 50%", "end 80%"]
   });
 
   return (
@@ -531,7 +531,7 @@ export default function HowItWorksPage() {
               </div>
 
               {/* Final Step - Success (completely separate from line) */}
-              <div className="relative pt-16 mt-8">
+              <div className="relative">
                 <div className="text-center">
                   <div className="inline-flex items-center justify-center w-20 h-20 bg-liberty-accent rounded-full shadow-xl mb-4 relative z-10">
                     <Trophy className="w-10 h-10 text-white" />
@@ -771,7 +771,7 @@ export default function HowItWorksPage() {
                 <Button
                   asChild
                   size="lg"
-                  className="bg-liberty-accent text-liberty-standard hover:bg-liberty-accent/90"
+                  className="bg-liberty-primary text-liberty-primary hover:bg-liberty-primary/90"
                 >
                   <Link href="/eligibility-check">
                     Check Your Eligibility
