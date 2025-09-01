@@ -38,6 +38,7 @@ const pathways = [
     cost: '£2,000 + VAT',
     control: 65,
     ease: 90,
+    detailPage: '/right-to-manage',
     benefits: [
       'No need to prove mismanagement',
       'Choose your own managing agent',
@@ -64,6 +65,7 @@ const pathways = [
     cost: '£500-2,000 per flat + purchase price',
     control: 85,
     ease: 60,
+    detailPage: '/collective-enfranchisement',
     benefits: [
       'Complete ownership of building',
       'Eliminate ground rent',
@@ -91,6 +93,7 @@ const pathways = [
     cost: 'Varies (includes freehold purchase)',
     control: 100,
     ease: 40,
+    detailPage: '/commonhold-conversion',
     benefits: [
       'Perpetual ownership - no expiring leases',
       'No ground rent ever',
@@ -896,16 +899,30 @@ export default function HowItWorksPage() {
                     <div className="flex gap-4 mt-8">
                       <Button
                         asChild
-                        className="bg-liberty-accent text-liberty-standard hover:bg-liberty-accent/90"
+                        size="lg"
+                        className="bg-liberty-accent text-liberty-standard hover:bg-liberty-accent/90 group"
                       >
                         <Link href="/eligibility-check">
                           Start Your Journey
+                          <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
                         </Link>
                       </Button>
                       <Button
+                        asChild
+                        size="lg"
+                        variant="outline"
+                        className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white group"
+                      >
+                        <Link href={pathways.find(p => p.id === selectedPathway)?.detailPage || '#'}>
+                          View Details
+                          <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                        </Link>
+                      </Button>
+                      <Button
+                        size="lg"
                         variant="outline"
                         onClick={() => setSelectedPathway(null)}
-                        className="border-liberty-primary text-liberty-standard"
+                        className="border-liberty-standard text-liberty-standard hover:bg-gray-100"
                       >
                         Close
                       </Button>
