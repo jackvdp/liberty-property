@@ -441,9 +441,9 @@ export default function HowItWorksPage() {
                     return (
                       <motion.div
                         key={step.number}
-                        initial={{ opacity: 0, x: animationX }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, margin: "-50px" }}
+                        initial={{ opacity: 0, x: animationX, y: 30 }}
+                        whileInView={{ opacity: 1, x: 0, y: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
                         className="relative"
                         style={{ zIndex: 50 - (index * 10) }}
