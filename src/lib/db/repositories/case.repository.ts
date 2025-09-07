@@ -85,20 +85,15 @@ export class CaseRepository {
   }
 
   /**
-   * Create or get a user by email
+   * Update a building's details (for providing real building info)
    */
-  static async createOrGetUser(data: NewUser): Promise<User> {
-    // Check if user exists
-    const existingUser = await db.query.users.findFirst({
-      where: eq(users.email, data.email)
-    });
-
-    if (existingUser) {
-      return existingUser;
-    }
-
-    // Create new user
-    const [newUser] = await db.insert(users).values(data).returning();
-    return newUser;
+  static async updateBuilding(id: string, data: Partial<NewBuilding>): Promise<Building | null> {
+    const [updatedBuilding] = await db
+      .update(buildings)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(buildings.id, id))
+      .returning();
+    
+    return updatedBuilding || null;
   }
 }

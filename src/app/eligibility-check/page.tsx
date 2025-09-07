@@ -1,4 +1,6 @@
-import { EligibilityCheckClient } from "./eligibility-check-client";
+import { EligibilityWrapper } from "@/components/eligibility-wrapper";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 
 type SearchParams = {
   searchParams?: Promise<{
@@ -14,8 +16,19 @@ export default async function EligibilityCheck({ searchParams }: SearchParams) {
     prefillId?: string;
     focusQuestion?: string;
   };
-  const prefillId = params?.prefillId;
+  
+  // Support both eligibilityId (new) and prefillId (legacy) for now
+  const eligibilityId = params?.eligibilityId || params?.prefillId;
   const focusQuestion = params?.focusQuestion;
 
-  return <EligibilityCheckClient prefillId={prefillId} focusQuestion={focusQuestion} />;
+  return (
+    <div className="min-h-screen bg-liberty-base">
+      <Navbar />
+      <EligibilityWrapper 
+        eligibilityId={eligibilityId} 
+        focusQuestion={focusQuestion} 
+      />
+      <Footer />
+    </div>
+  );
 }

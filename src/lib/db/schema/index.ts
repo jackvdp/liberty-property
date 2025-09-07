@@ -75,7 +75,7 @@ export const cases = pgTable('cases', {
   id: uuid('id').primaryKey().defaultRandom(),
   caseNumber: text('case_number').notNull().unique(), // e.g., "RTM-2024-001"
   buildingId: uuid('building_id').notNull().references(() => buildings.id),
-  leadUserId: uuid('lead_user_id').notNull().references(() => users.id),
+  leadUserId: uuid('lead_user_id').references(() => users.id),
   caseType: caseTypeEnum('case_type').notNull(),
   status: caseStatusEnum('status').notNull().default('draft'),
   
