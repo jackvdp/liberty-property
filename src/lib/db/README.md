@@ -3,46 +3,57 @@
 ## Overview
 
 This database layer provides a clean separation of concerns for Liberty Bell's data access, using:
-- **Supabase** for authentication and real-time features
+- **Supabase** for authentication and real-time features  
 - **Drizzle ORM** for type-safe database queries
 - **Repository Pattern** for business logic encapsulation
 - **Service Layer** for complex operations
+- **Automatic Dev/Prod Separation** based on environment
+
+## Database Configuration
+
+We use two separate Supabase projects:
+
+| Environment | Project ID | Variables Used | Supabase URL |
+|-------------|------------|----------------|--------------|
+| **Development** | `ocvhtshxyqdyspvyxjaj` | `DEV_POSTGRES_URL_*` | https://ocvhtshxyqdyspvyxjaj.supabase.co |
+| **Production** | `aaphdrpbylfhfoiqcfrl` | `POSTGRES_*` | https://aaphdrpbylfhfoiqcfrl.supabase.co |
+
+The correct database is automatically selected based on your environment.
 
 ## Setup
 
 ### 1. Environment Variables
 
-Copy `.env.local.example` to `.env.local` and add your Supabase credentials:
+Your `.env.local` is automatically populated from Vercel:
 
-```env
-# Get these from your Supabase dashboard
-NEXT_PUBLIC_SUPABASE_URL=https://[project-id].supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-DATABASE_URL=postgres://postgres.[project-id]:[password]@aws-0-eu-west-2.pooler.supabase.com:6543/postgres
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+```bash
+# Pull latest environment variables from Vercel
+npx vercel env pull .env.local
 ```
 
-### 2. Database Migration
+This will fetch both dev (`DEV_POSTGRES_URL_*`) and prod (`POSTGRES_*`) variables.
+
+### 2. Database Commands
 
 ```bash
 # Generate migration files from schema
 npm run db:generate
 
-# Push schema to database
+# Push schema to database (uses dev DB locally)
 npm run db:push
-
-# Or run migrations (production)
-npm run db:migrate
 
 # Open Drizzle Studio to browse database
 npm run db:studio
+
+# Seed development data
+npm run db:seed
 ```
 
 ## Architecture
 
 ```
-lib/db/
-├── config.ts              # Database configuration
+src/lib/db/
+├── config.ts              # Database configuration with env detection
 ├── drizzle.ts            # Drizzle ORM instance
 ├── schema/               # Database schema definitions
 │   └── index.ts         # All table definitions
@@ -53,8 +64,8 @@ lib/db/
 │   ├── base.repository.ts
 │   ├── user.repository.ts
 │   └── case.repository.ts
-└── services/           # Business logic layer
-    └── auth.service.ts
+├── migrations/          # Generated SQL migrations
+└── seed.ts             # Development seed data
 ```
 
 ## Usage Examples
@@ -62,7 +73,7 @@ lib/db/
 ### Server Components (App Router)
 
 ```typescript
-// app/dashboard/page.tsx
+// src/app/dashboard/page.tsx
 import { caseRepository } from '@/lib/db/repositories';
 import { authService } from '@/lib/services/auth.service';
 
@@ -89,7 +100,7 @@ export default async function Dashboard() {
 ### Server Actions
 
 ```typescript
-// app/actions/case.actions.ts
+// src/app/actions/case.actions.ts
 'use server';
 
 import { caseRepository } from '@/lib/db/repositories';
@@ -108,6 +119,7 @@ export async function createCase(formData: FormData) {
     addressLine1: formData.get('address') as string,
     postcode: formData.get('postcode') as string,
     numberOfFlats: parseInt(formData.get('numberOfFlats') as string),
+    city: formData.get('city') as string,
     // ... other fields
   };
   
@@ -130,7 +142,7 @@ export async function createCase(formData: FormData) {
 ### Client Components
 
 ```typescript
-// components/auth/login-form.tsx
+// src/components/auth/login-form.tsx
 'use client';
 
 import { useState } from 'react';
@@ -171,7 +183,7 @@ export function LoginForm() {
 ### API Routes
 
 ```typescript
-// app/api/documents/upload/route.ts
+// src/app/api/documents/upload/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { authService } from '@/lib/services/auth.service';
 import { put } from '@vercel/blob';
@@ -270,6 +282,27 @@ The schema includes:
 - **workflow_steps** - Process tracking
 - **communications** - Email/SMS logs
 
+## Environment Detection
+
+The system automatically detects which database to use:
+
+```typescript
+// src/lib/db/config.ts automatically handles:
+Local Development → DEV_POSTGRES_URL_* variables → Dev Database
+Vercel Preview    → POSTGRES_* variables → Prod Database
+Vercel Production → POSTGRES_* variables → Prod Database
+```
+
+## Test Data (Development Only)
+
+After running `npm run db:seed`, you'll have test accounts:
+
+| Email | Password | Role |
+|-------|----------|------|
+| john.smith@example.com | TestPassword123! | Leaseholder |
+| jane.doe@example.com | TestPassword123! | Leaseholder |
+| admin@libertybell.com | AdminPassword123! | Admin |
+
 ## Best Practices
 
 1. **Always use repositories for common operations** - Keeps business logic centralized
@@ -277,10 +310,11 @@ The schema includes:
 3. **Handle errors gracefully** - All repositories have error handling
 4. **Use proper TypeScript types** - Schema exports types for all tables
 5. **Keep sensitive operations server-side** - Use Server Actions or API routes
+6. **Import paths** - Always use `@/lib/db/*` for consistency
 
 ## Row Level Security (RLS)
 
-Remember to set up RLS policies in Supabase:
+Remember to set up RLS policies in Supabase dashboard:
 
 ```sql
 -- Example: Users can only see their own data
@@ -304,4 +338,12 @@ USING (
 1. **Database connection issues**: Check your DATABASE_URL in .env.local
 2. **Type errors**: Run `npm run db:generate` after schema changes
 3. **Migration issues**: Use `npm run db:push` for development
-4. **Auth issues**: Ensure SUPABASE_SERVICE_ROLE_KEY is set for admin operations
+4. **Auth issues**: Ensure service role key is set for admin operations
+5. **Wrong database**: Check console output on startup for which DB is being used
+
+## Important Files
+
+- `src/lib/db/config.ts` - Environment detection and configuration
+- `src/lib/db/schema/index.ts` - All table definitions
+- `drizzle.config.ts` - Drizzle CLI configuration
+- `.env.local` - Local environment variables (from Vercel)
