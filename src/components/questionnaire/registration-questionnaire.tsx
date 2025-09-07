@@ -456,7 +456,7 @@ export default function RegistrationQuestionnaire({
 
                     <div className="flex items-center justify-between p-3 bg-liberty-base rounded-lg border border-liberty-secondary/20">
                       <div>
-                        <span className="text-sm font-medium text-liberty-standard/60">Recommended Path:</span>
+                        <span className="text-sm font-medium text-liberty-standard/60">Available Path:</span>
                         <p className="font-medium text-liberty-standard">
                           {(() => {
                             const path = eligibilityData?.derivedData?.provisionalPath;
