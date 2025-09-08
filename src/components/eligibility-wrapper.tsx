@@ -30,6 +30,7 @@ interface PrefillData {
 export function EligibilityWrapper({ eligibilityId, focusQuestion }: EligibilityWrapperProps) {
   const [prefillData, setPrefillData] = useState<PrefillData | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
+  const [createdCaseId, setCreatedCaseId] = useState<string | null>(null);
   const router = useRouter();
 
   // Simple type assertion for questionnaire data
@@ -67,7 +68,7 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
     }
   }, [eligibilityId, focusQuestion]);
 
-  // Handle outcome button click with server-side case creation
+  // Handle outcome button click with stored case ID
   const handleOutcomeButtonClick = async (
     outcome: QuestionnaireOutcome, 
     answers: QuestionnaireAnswer[]
@@ -80,32 +81,10 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
 
     let href = outcome.button.href;
     
-    // If it's a success outcome, create case on server
-    if (outcome.type === "success") {
-      setIsLoading(true);
-      
-      try {
-        const result = await createEligibilityCase({
-          answers,
-          outcome
-        });
-        
-        if (result.success && result.eligibilityId) {
-          console.log('Created case successfully:', result);
-          
-          // Add eligibilityId as query parameter to success outcomes
-          href = `${href}?eligibilityId=${result.eligibilityId}`;
-          console.log('Final href with eligibilityId:', href);
-        } else {
-          console.error('Failed to create case:', result.error);
-          // Still allow navigation but without eligibilityId
-        }
-      } catch (error) {
-        console.error('Error creating case:', error);
-        // Still allow navigation but without eligibilityId
-      } finally {
-        setIsLoading(false);
-      }
+    // If it's a success outcome and we have a created case ID, use it
+    if (outcome.type === "success" && createdCaseId) {
+      href = `${href}?eligibilityId=${createdCaseId}`;
+      console.log('Final href with stored case ID:', href);
     }
     
     return href;
@@ -120,13 +99,17 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
       return null;
     }
 
-    const returnUrl = `${window.location.origin}/register?eligibilityId=${caseId}`;
+    // Use the created case ID (caseId parameter is not used here)
+    const displayCaseId = createdCaseId || 'Creating...';
+    const returnUrl = createdCaseId 
+      ? `${window.location.origin}/register?eligibilityId=${createdCaseId}`
+      : 'Will be available once case is created';
     
     return (
       <div className="mt-4 pt-4 border-t border-liberty-accent/20">
         <div className="space-y-2">
           <p className="font-semibold">
-            Your Case ID: <code className="bg-liberty-base px-2 py-1 rounded font-mono text-sm">{caseId}</code>
+            Your Case ID: <code className="bg-liberty-base px-2 py-1 rounded font-mono text-sm">{displayCaseId}</code>
           </p>
           <p className="text-sm">Save this ID for your records.</p>
           <p className="text-sm">
@@ -158,10 +141,32 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
       renderCompletionContent={renderCompletionContent}
       onComplete={(outcome, answers) => {
         console.log("Questionnaire onComplete called:", { outcome, answers });
+        
+        // Create case immediately when outcome is determined
+        if (outcome.type === "success") {
+          setIsLoading(true);
+          
+          createEligibilityCase({
+            answers,
+            outcome
+          }).then((result) => {
+            if (result.success && result.eligibilityId) {
+              console.log('Created case successfully on completion:', result);
+              setCreatedCaseId(result.eligibilityId);
+            } else {
+              console.error('Failed to create case on completion:', result.error);
+            }
+          }).catch((error) => {
+            console.error('Error creating case on completion:', error);
+          }).finally(() => {
+            setIsLoading(false);
+          });
+        }
       }}
       onRestart={() => {
         console.log("Questionnaire restarted");
         setPrefillData(undefined);
+        setCreatedCaseId(null); // Clear created case ID on restart
         // Navigate to clean eligibility check
         router.push('/eligibility-check');
       }}
