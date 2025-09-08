@@ -5,13 +5,11 @@
 
 'use server';
 
-import { CaseRepository } from '@/lib/db/repositories/case.repository';
+import { EligibilityRepository } from '@/lib/db/repositories/eligibility.repository';
 import { QuestionnaireAnswer, QuestionnaireOutcome } from '@/components/questionnaire/types';
 
 export interface EligibilityResult {
   success: boolean;
-  caseId?: string;
-  caseNumber?: string;
   eligibilityId?: string;
   error?: string;
 }
@@ -22,7 +20,7 @@ export interface EligibilityData {
 }
 
 /**
- * Create a case immediately when eligibility check succeeds
+ * Create an eligibility check record immediately when eligibility check succeeds
  * This replaces the localStorage approach
  */
 export async function createEligibilityCase(
@@ -44,156 +42,137 @@ export async function createEligibilityCase(
       };
     }
 
-    // Only create cases for success outcomes
+    // Only create records for success outcomes
     if (outcome.type !== 'success') {
       return {
         success: false,
-        error: 'Case can only be created for successful eligibility outcomes'
+        error: 'Eligibility check can only be saved for successful outcomes'
       };
     }
 
-    // Determine case type from answers and outcome
+    // Determine recommended case type from answers and outcome
     const existingRmcRtm = findAnswer('existing_rmc_rtm') as string;
     const nonResidentialProportion = findAnswer('non_residential_proportion') as string;
 
-    let caseType: 'rtm' | 'enfranchisement' | 'rmc_takeover';
+    let recommendedCaseType: 'rtm' | 'enfranchisement' | 'rmc_takeover';
     if (existingRmcRtm === 'yes') {
-      caseType = 'rmc_takeover';
+      recommendedCaseType = 'rmc_takeover';
     } else if (outcome.action === 'registration') {
       // For registration outcomes, prefer enfranchisement if both available
-      caseType = (!nonResidentialProportion || nonResidentialProportion === '25_or_less') 
+      recommendedCaseType = (!nonResidentialProportion || nonResidentialProportion === '25_or_less') 
         ? 'enfranchisement' 
         : 'rtm';
     } else {
       // Default fallback
-      caseType = 'rtm';
+      recommendedCaseType = 'rtm';
     }
 
-    // Create placeholder building
-    const building = await CaseRepository.createOrGetBuilding({
-      name: 'Building (details to be provided)',
-      addressLine1: 'To be provided during registration',
-      city: 'To be provided',
-      postcode: 'TBD',
-      numberOfFlats: (findAnswer('flat_count') as number) || 2,
+    // Create the eligibility check record
+    const newCheck = await EligibilityRepository.createEligibilityCheck({
+      // Basic property info
+      propertyType: findAnswer('property_type') as string,
+      isLeasehold: findAnswer('flat_leasehold') === 'yes',
+      flatCount: findAnswer('flat_count') as number,
       hasRmcRtm: existingRmcRtm === 'yes',
-      isConverted: findAnswer('was_converted') === 'yes',
+      
+      // Building characteristics
+      nonResidentialProportion: nonResidentialProportion as string,
+      wasConverted: findAnswer('was_converted') === 'yes',
       freeholderLivesInBuilding: findAnswer('freeholder_lives_in') === 'yes',
-      metadata: {
-        sourceType: 'eligibility_wizard',
-        answers: answers
-      }
-    });
-
-    // Generate case number
-    const caseNumber = await CaseRepository.generateCaseNumber(caseType);
-
-    // Calculate target completion date
-    const targetDate = new Date();
-    targetDate.setMonth(targetDate.getMonth() + (caseType === 'rtm' ? 6 : 12));
-
-    // Create the case without a user
-    const newCase = await CaseRepository.createCase({
-      caseNumber,
-      buildingId: building.id,
-      leadUserId: null, // No user initially
-      caseType,
-      status: 'draft',
-      hasAuthority: false,
-      startedAt: new Date(),
-      targetCompletionDate: targetDate.toISOString().split('T')[0],
-      metadata: {
-        eligibilityOutcome: outcome,
-        eligibilityAnswers: answers,
-        createdFrom: 'eligibility_wizard',
-        needsUserAssignment: true,
-        needsBuildingDetails: true
-      }
+      
+      // Support and eligibility
+      leaseholderSupport: findAnswer('leaseholder_support') as string,
+      twoThirdsLongLeases: findAnswer('two_thirds_long_leases') === 'yes',
+      singleOwnerMultipleFlats: findAnswer('single_owner_multiple_flats') === 'yes',
+      
+      // Outcome information
+      eligibilityStatus: outcome.type as 'success' | 'failure' | 'info',
+      recommendedCaseType,
+      outcomeAction: outcome.action,
+      
+      // Raw data storage
+      allAnswers: answers,
+      outcome: outcome,
     });
 
     return {
       success: true,
-      caseId: newCase.id,
-      caseNumber: newCase.caseNumber,
-      eligibilityId: newCase.id // Use case ID as eligibility ID
+      eligibilityId: newCheck.id
     };
 
   } catch (error) {
-    console.error('Error creating eligibility case:', error);
+    console.error('Error creating eligibility check:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to create case'
+      error: error instanceof Error ? error.message : 'Failed to save eligibility check'
     };
   }
 }
 
 /**
- * Get case data by eligibility ID (which is the case ID)
+ * Get eligibility check data by ID
  */
 export async function getEligibilityCase(eligibilityId: string): Promise<EligibilityResult & { 
-  case?: any;
+  eligibilityCheck?: any;
   answers?: QuestionnaireAnswer[];
   outcome?: QuestionnaireOutcome;
 }> {
   try {
-    const caseData = await CaseRepository.getCaseById(eligibilityId);
+    const eligibilityCheck = await EligibilityRepository.getEligibilityCheckById(eligibilityId);
     
-    if (!caseData) {
+    if (!eligibilityCheck) {
       return {
         success: false,
-        error: 'Case not found'
+        error: 'Eligibility check not found'
       };
     }
 
-    // Extract eligibility data from metadata
-    const metadata = caseData.metadata as any;
-    const answers = metadata?.eligibilityAnswers || [];
-    const outcome = metadata?.eligibilityOutcome;
+    // Extract answers and outcome from stored data
+    const answers = eligibilityCheck.allAnswers as QuestionnaireAnswer[];
+    const outcome = eligibilityCheck.outcome as QuestionnaireOutcome;
 
     return {
       success: true,
-      caseId: caseData.id,
-      caseNumber: caseData.caseNumber,
-      eligibilityId: caseData.id,
-      case: {
-        id: caseData.id,
-        caseNumber: caseData.caseNumber,
-        caseType: caseData.caseType,
-        status: caseData.status,
-        createdAt: caseData.createdAt,
-        metadata: caseData.metadata
+      eligibilityId: eligibilityCheck.id,
+      eligibilityCheck: {
+        id: eligibilityCheck.id,
+        propertyType: eligibilityCheck.propertyType,
+        flatCount: eligibilityCheck.flatCount,
+        recommendedCaseType: eligibilityCheck.recommendedCaseType,
+        eligibilityStatus: eligibilityCheck.eligibilityStatus,
+        createdAt: eligibilityCheck.createdAt
       },
       answers,
       outcome
     };
 
   } catch (error) {
-    console.error('Error fetching eligibility case:', error);
+    console.error('Error fetching eligibility check:', error);
     return {
       success: false,
-      error: 'Failed to fetch case'
+      error: 'Failed to fetch eligibility check'
     };
   }
 }
 
 /**
- * Check if a case exists for the given eligibility ID
+ * Check if an eligibility check exists for the given ID
  */
 export async function checkEligibilityCaseExists(eligibilityId: string): Promise<{
   exists: boolean;
-  caseNumber?: string;
-  caseType?: string;
+  recommendedCaseType?: string;
+  eligibilityStatus?: string;
 }> {
   try {
-    const caseData = await CaseRepository.getCaseById(eligibilityId);
+    const eligibilityCheck = await EligibilityRepository.getEligibilityCheckById(eligibilityId);
     
     return {
-      exists: !!caseData,
-      caseNumber: caseData?.caseNumber,
-      caseType: caseData?.caseType
+      exists: !!eligibilityCheck,
+      recommendedCaseType: eligibilityCheck?.recommendedCaseType,
+      eligibilityStatus: eligibilityCheck?.eligibilityStatus
     };
   } catch (error) {
-    console.error('Error checking case existence:', error);
+    console.error('Error checking eligibility check existence:', error);
     return { exists: false };
   }
 }
