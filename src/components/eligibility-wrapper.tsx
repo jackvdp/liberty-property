@@ -86,9 +86,19 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
     if (outcome.type === "success" && createdCaseId) {
       href = `${href}?eligibilityId=${createdCaseId}`;
       console.log('Final href with stored case ID:', href);
+      console.log('Navigating to:', href);
+      router.push(href);
+      return ""; // Return empty since we handled navigation
     }
     
-    return href;
+    // For non-success outcomes or when no case ID, navigate normally
+    if (href) {
+      console.log('Navigating to:', href);
+      router.push(href);
+      return "";
+    }
+    
+    return "";
   };
 
   // Render completion content with case information
