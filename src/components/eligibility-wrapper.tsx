@@ -29,7 +29,8 @@ interface PrefillData {
 
 export function EligibilityWrapper({ eligibilityId, focusQuestion }: EligibilityWrapperProps) {
   const [prefillData, setPrefillData] = useState<PrefillData | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingInitial, setIsLoadingInitial] = useState(false);
+  const [isCreatingCase, setIsCreatingCase] = useState(false);
   const [createdCaseId, setCreatedCaseId] = useState<string | null>(null);
   const router = useRouter();
 
@@ -45,7 +46,7 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
   useEffect(() => {
     if (eligibilityId) {
       const loadExistingCase = async () => {
-        setIsLoading(true);
+        setIsLoadingInitial(true);
         try {
           const result = await getEligibilityCase(eligibilityId);
           if (result.success && result.answers) {
@@ -60,7 +61,7 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
         } catch (error) {
           console.error('Error loading existing case:', error);
         } finally {
-          setIsLoading(false);
+          setIsLoadingInitial(false);
         }
       };
 
@@ -99,8 +100,20 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
       return null;
     }
 
-    // Use the created case ID (caseId parameter is not used here)
-    const displayCaseId = createdCaseId || 'Creating...';
+    // Show loading state while creating case
+    if (isCreatingCase) {
+      return (
+        <div className="mt-4 pt-4 border-t border-liberty-accent/20">
+          <div className="flex items-center space-x-2">
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-liberty-primary"></div>
+            <p className="text-sm">Creating your case...</p>
+          </div>
+        </div>
+      );
+    }
+
+    // Show case details once created
+    const displayCaseId = createdCaseId || 'Case creation pending...';
     const returnUrl = createdCaseId 
       ? `${window.location.origin}/register?eligibilityId=${createdCaseId}`
       : 'Will be available once case is created';
@@ -121,7 +134,7 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
     );
   };
 
-  if (isLoading) {
+  if (isLoadingInitial) {
     return (
       <div className="min-h-screen bg-liberty-base flex items-center justify-center">
         <div className="text-center">
@@ -144,7 +157,7 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
         
         // Create case immediately when outcome is determined
         if (outcome.type === "success") {
-          setIsLoading(true);
+          setIsCreatingCase(true);
           
           createEligibilityCase({
             answers,
@@ -159,7 +172,7 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
           }).catch((error) => {
             console.error('Error creating case on completion:', error);
           }).finally(() => {
-            setIsLoading(false);
+            setIsCreatingCase(false);
           });
         }
       }}
