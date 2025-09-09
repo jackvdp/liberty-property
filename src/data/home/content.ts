@@ -189,7 +189,7 @@ export const content = {
       title: "Ready to Start Your Journey?",
       subtitle: "Join thousands who've already taken control of their property destiny",
       button: {
-        text: "Check Your Eligibility",
+        text: "Check Your Eligibility Now",
         href: "/eligibility-check"
       },
       secondaryButton: {
