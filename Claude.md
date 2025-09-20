@@ -1,8 +1,8 @@
-# Liberty Bell Ethical Enfranchisement - Website Documentation
+# Liberty Bell Ethical Enfranchisement - Complete Project Documentation
 
 ## Project Overview
 
-Liberty Bell Ethical Enfranchisement is a NextJS-based website designed to help leaseholders across England & Wales gain control of their buildings through legal processes like Right to Manage (RTM) and Collective Enfranchisement. The platform aims to simplify and digitize the journey from leaseholder to commonholder through technology, transparency, and legal empowerment.
+Liberty Bell Ethical Enfranchisement is a NextJS-based platform designed to help leaseholders across England & Wales gain control of their buildings through legal processes like Right to Manage (RTM) and Collective Enfranchisement. The platform aims to simplify and digitize the journey from leaseholder to commonholder through technology, transparency, and legal empowerment.
 
 ## Vision & Mission
 
@@ -13,15 +13,281 @@ Liberty Bell Ethical Enfranchisement is a NextJS-based website designed to help 
 ## Technology Stack
 
 - **Framework**: NextJS v15 with App Router
-- **Authentication & Database**: Supabase
+- **Database**: Supabase (PostgreSQL)
+- **ORM**: Drizzle ORM for type-safe database queries
+- **Authentication**: Supabase Auth
 - **UI Components**: shadcn/ui
 - **Animations**: Framer Motion
 - **Styling**: Tailwind CSS
 - **Language**: TypeScript
 
+## Development Philosophy & Working Approach
+
+### 🐌 **Slow and Careful Development**
+We prioritize careful, deliberate development over speed. This means:
+
+1. **Analysis First**: Claude reviews existing code thoroughly before suggesting any changes
+2. **Clear Recommendations**: After understanding the codebase, Claude provides a specific recommended action plan
+3. **Wait for Approval**: No code changes happen until the human reviews and approves the plan
+4. **One Thing at a Time**: We focus on a single feature/change at a time to maintain quality
+5. **Incremental Progress**: Small, tested changes that build upon each other
+
+### 📋 **Development Workflow**
+```
+1. Claude analyzes existing code
+2. Claude suggests recommended approach
+3. Human reviews and provides feedback
+4. Human gives explicit go-ahead
+5. Claude implements the approved changes
+6. Test and verify before moving to next task
+```
+
+## Architecture Overview
+
+### 🏗️ **Current Simplified Architecture**
+```
+Client Components → Server Actions → Repository Layer → Drizzle ORM → Supabase PostgreSQL
+```
+
+### 🗄️ **Database Layer Architecture**
+
+#### **Environment Separation**
+- **Development Database**: Used locally during development
+- **Production Database**: Used when deployed to production
+- **Automatic Detection**: Environment is automatically detected and appropriate database is used
+
+#### **Database Stack**
+```
+Application Layer (NextJS)
+    ↓
+Server Actions ('use server' functions)
+    ↓  
+Repository Pattern (Static methods)
+    ↓
+Drizzle ORM (Type-safe queries)
+    ↓
+Supabase PostgreSQL
+```
+
+### 🧩 **How Our Architecture Works**
+
+#### **1. Server Actions**
+Server Actions are our primary way to handle mutations from client components:
+
+```typescript
+'use server';
+
+export async function createEligibilityCase(eligibilityData: EligibilityData) {
+  // Server-side validation
+  // Call repository methods  
+  // Return results to client
+}
+```
+
+**Key Points:**
+- Use `'use server'` directive
+- Can be called directly from client components
+- Handle all database operations
+- Return serializable data only
+
+#### **2. Repository Pattern**
+Repositories encapsulate all database access logic:
+
+```typescript
+export class EligibilityRepository {
+  static async createEligibilityCheck(data: NewEligibilityCheck): Promise<EligibilityCheck> {
+    const [newCheck] = await db.insert(eligibilityChecks).values(data).returning();
+    return newCheck;
+  }
+  
+  static async getEligibilityCheckById(id: string): Promise<EligibilityCheck | null> {
+    // Implementation
+  }
+}
+```
+
+**Key Points:**
+- Static methods (no instantiation needed)
+- One repository per main entity
+- Handle all CRUD operations for that entity
+- Use Drizzle ORM for actual database queries
+
+#### **3. Drizzle ORM Integration**
+Drizzle provides type-safe database access:
+
+```typescript
+import { db } from '@/lib/db/drizzle';
+import { eligibilityChecks } from '@/lib/db/schema';
+
+// Type-safe insert
+const [newCheck] = await db.insert(eligibilityChecks).values(data).returning();
+
+// Type-safe query
+const check = await db.query.eligibilityChecks.findFirst({
+  where: eq(eligibilityChecks.id, id)
+});
+```
+
+#### **4. Database Configuration**
+Environment detection happens automatically:
+
+```typescript
+// config.ts automatically determines:
+// - Local development → DEV database
+// - Production deployment → PROD database
+```
+
+## Current Implementation: Eligibility Wizard
+
+### 🎯 **Eligibility Check Flow**
+```
+User completes eligibility wizard
+    ↓
+EligibilityWrapper calls createEligibilityCase() server action
+    ↓
+Server action calls EligibilityRepository.createEligibilityCheck()
+    ↓
+Repository uses Drizzle to insert into eligibility_checks table
+    ↓
+Returns eligibility ID to client
+    ↓
+Client navigates to registration with eligibility ID
+```
+
+### 📊 **Current Database Schema**
+We've simplified to just one table for now:
+
+```sql
+CREATE TABLE eligibility_checks (
+  id UUID PRIMARY KEY,
+  property_type TEXT,
+  flat_count INTEGER,
+  has_rmc_rtm BOOLEAN,
+  eligibility_status eligibility_status_enum,
+  recommended_case_type case_type_enum,
+  all_answers JSONB,
+  outcome JSONB,
+  created_at TIMESTAMP,
+  updated_at TIMESTAMP
+);
+```
+
+### 🔧 **Key Files in Current Implementation**
+
+#### **Database Layer**
+- `src/lib/db/schema/index.ts` - Database schema definitions
+- `src/lib/db/repositories/eligibility.repository.ts` - Data access for eligibility checks
+- `src/lib/db/drizzle.ts` - Drizzle ORM configuration
+
+#### **Server Actions**
+- `src/lib/actions/eligibility.actions.ts` - Server functions for eligibility operations
+
+#### **Client Components**
+- `src/components/eligibility-wrapper.tsx` - Main eligibility wizard component
+- `src/app/eligibility-check/page.tsx` - Eligibility check page
+
+## Database Commands & Migrations
+
+### 🛠️ **Development Commands**
+```bash
+# Generate migration from schema changes
+drizzle-kit generate
+
+# Apply migrations to database
+drizzle-kit migrate
+
+# Push schema directly (development only)
+drizzle-kit push
+
+# Open database browser
+drizzle-kit studio
+```
+
+### 🔄 **Migration Process**
+1. Update schema in `src/lib/db/schema/index.ts`
+2. Run `drizzle-kit generate` to create migration
+3. Review generated SQL in `src/lib/db/migrations/`
+4. Run `drizzle-kit migrate` to apply to database
+
+## Replication Pattern for Future Features
+
+### 📋 **Step-by-Step Process for New Features**
+
+When building new features that need database storage, follow this exact pattern:
+
+#### **1. Analysis Phase**
+- Claude reviews existing code structure
+- Identifies what needs to be changed/added
+- Provides clear recommendation before any code changes
+
+#### **2. Schema Design**
+```typescript
+// Add new table to src/lib/db/schema/index.ts
+export const newFeatureTable = pgTable('new_feature', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  // ... other fields
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+});
+```
+
+#### **3. Repository Creation**
+```typescript
+// Create src/lib/db/repositories/newfeature.repository.ts
+export class NewFeatureRepository {
+  static async create(data: NewNewFeature): Promise<NewFeature> {
+    const [record] = await db.insert(newFeatureTable).values(data).returning();
+    return record;
+  }
+  
+  static async findById(id: string): Promise<NewFeature | null> {
+    const result = await db.query.newFeatureTable.findFirst({
+      where: eq(newFeatureTable.id, id)
+    });
+    return result || null;
+  }
+}
+```
+
+#### **4. Server Actions**
+```typescript
+// Create src/lib/actions/newfeature.actions.ts
+'use server';
+
+export async function createNewFeature(data: FormData) {
+  try {
+    const result = await NewFeatureRepository.create({
+      // extract data from FormData
+    });
+    
+    return { success: true, id: result.id };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
+```
+
+#### **5. Client Integration**
+```typescript
+// In client component
+const handleSubmit = async (formData) => {
+  const result = await createNewFeature(formData);
+  if (result.success) {
+    // Handle success
+  }
+};
+```
+
+#### **6. Database Migration**
+```bash
+# Generate and apply migration
+drizzle-kit generate
+drizzle-kit migrate
+```
+
 ## Design System
 
-### Color Palette
+### 🎨 **Color Palette**
 ```css
 @theme {
   --color-liberty-primary: #456e9b;      /* Primary blue */
@@ -33,247 +299,121 @@ Liberty Bell Ethical Enfranchisement is a NextJS-based website designed to help 
 }
 ```
 
-### Typography
+### 📝 **Typography**
 - **Primary Font**: Inter (sans-serif)
 - **Display Font**: Reckless (serif) - used for headings and hero text
 
-## Key Components
+## Customer Journey & Business Model
 
-### 1. Hero Section
-- **Purpose**: Primary landing section with main value proposition
-- **Content**: "Take Back Control of Your Building" messaging
-- **CTA**: Check If You Qualify button
-- **Features**: Emotional messaging focused on empowerment and control
-
-### 2. Problem-Solution Component
-**Problems Addressed**:
-- Average service charge: £2,300/year per flat
-- Many buildings overpay by 20% or more
-- Trapped with poor service
-- Expensive lawyer-led processes
-
-**Solutions Offered**:
-- Select Your Path to Control (RTM, Collective Enfranchisement, Commonhold)
-- Eliminate Ground Rent & Increase Property Value
-- Choose Your Management
-
-### 3. How It Works Section
-Interactive step-by-step process with animated content:
-1. **Check Eligibility** (60 seconds)
-2. **Legal Work** (Fixed fee)
-3. **Choose Your Path** (Self-manage or hands-free)
-
-### 4. Pricing Section
-Transparent pricing model with three tiers:
-- **RTM Process**: £2,000 + VAT
-- **Enfranchisement**: £500-£2,000 per flat
-- **Aftercare**: Optional monthly pricing
-
-**Savings Model**: Upfront fee for legal work + shared savings from better management.
-
-### 5. Why Liberty Bell Section
-Personal touch explaining founders' motivation:
-- "We're Leaseholders Too"
-- Personal experience with powerlessness and overcharging
-- Built tools to change the system for everyone
-
-### 6. Contact Form
-**Layout**: Full-width card with contact information below
-**Features**:
-- Clean underline-style inputs
-- Formspree integration ready
-- Contact information: email, phone, coverage area
-- Privacy-focused messaging
-
-### 7. FAQ Section
-Expandable sections covering:
-- RTM qualification
-- Service quality concerns
-- Charge reduction possibilities
-- Existing RMC situations
-
-## Target Market & Customer Journey
-
-### Primary Audience
+### 🎯 **Target Market**
 - **Size**: 3.6 million unhappy and unenfranchised leaseholders
 - **Location**: England & Wales
 - **Pain Points**: Unfair charges, poor service, lack of control
 - **Discovery**: Facebook groups, online communities
 
-### Customer Journey
-1. **Discovery**: Unhappy leaseholders find the website
-2. **Education**: AI Advisor provides better guidance than ChatGPT
-3. **Engagement**: Business case calculation and benefits explanation
-4. **Conversion**: Liberty Bell Enfranchisement Engine Web App
-5. **Success**: Enfranchised leaseholders join the community
-
-## Competitive Analysis
-
-### Government & Charity Competitors
-- **LEASE (Leasehold Advisory Service)**: Too passive, perpetuates uncertainty
-- **Lease Advice (leaseadvice.org)**: Good resources but lacks directional guidance
-
-### Commercial Competitors
-- **Brady Solicitors**: Traditional legal services
-- **FPRA**: Membership organization for residents' associations
-- **The Freehold Collective**: Primary competitor with similar services
-
-**Key Differentiator**: Liberty Bell focuses on technology-driven solutions and post-enfranchisement community benefits.
-
-## Technical Architecture
-
-### Right to Manage (RTM) Process Automation
-1. Marketing & Landing Experience
-2. Eligibility Pre-Check
-3. Account Registration & Onboarding
-4. Property & Lease Data Collection
-5. Co-owners & Membership Formation
-6. Document Generation & e-Signature
-7. Payment & Fee Management
-8. Submission to Freeholder & Land Registry
-9. Status Tracking & Notifications
-10. RTM Company Formation
-11. Post-RTM Care & Maintenance
-12. Reporting & Compliance
-13. Analytics & Continuous Improvement
-
-### Core Technology Pillars
-1. **Workflow Automation**: Structured processes for RTM and Collective Enfranchisement
-2. **Smart Data Collection & Validation**: Real-time eligibility validation
-3. **Advice Engine**: Dynamic legal advice based on user data
-4. **Client Workspace**: Secure portal for progress tracking
-5. **Data Insights**: Comparative analytics and benchmarking
-
-## Content Strategy
-
-### Website Copy Approach
-- **Tone**: Clear, informative, firm, and empowering
-- **Audience**: Cautious, confused leaseholders seeking clarity
-- **Focus**: Emotional connection while providing practical information
-- **Messaging**: Transform from "problems you face" to "control you can have"
-
-### Key Messages
-- "Take Back Control of Your Building"
-- "We're Leaseholders Too" - personal connection
-- "No Surprises, No Hidden Costs" - transparency
-- "Whether you've got more questions or are ready to take the first step"
-
-## Revenue Model
-
-### Immediate Revenue Streams
+### 💰 **Revenue Streams**
 - **RTM Process**: £2,000 + VAT per building
 - **Enfranchisement**: £500-£2,000 per flat
 - **Aftercare Services**: Monthly management fees
+- **Long-term**: Share of £5bn enfranchisement market + £8bn property management market
 
-### Long-term Market Opportunity
-- **Enfranchisement Market**: Share of up to £5bn in fees
-- **Property Management**: Share of £8bn market
-- **Market Savings**: Up to £1.2bn in commonhold marketplace
+## Competitive Landscape
 
-### Value Proposition
-- **Cost Savings**: Automated processes vs. traditional legal fees
-- **Ongoing Benefits**: Shared savings from better management
-- **Community Value**: Exclusive club benefits post-enfranchisement
+### 🏆 **Primary Competitor: The Freehold Collective**
+- Similar service offering
+- Established market presence
+- Focus: Beat them with better technology and user experience
 
-## Key Features & Benefits
+### 🏛️ **Government/Charity Competitors**
+- **LEASE (Leasehold Advisory Service)**: Too passive, perpetuates uncertainty
+- **Lease Advice**: Good resources but lacks directional guidance
 
-### For Leaseholders
-- **Cost Reduction**: Lower service charges through better management
-- **Control**: Ability to choose managing agents and make decisions
-- **Property Value**: Increased value through commonhold conversion
-- **Community**: Connection with other empowered property owners
-- **Transparency**: Clear pricing with no hidden fees
+## Key Technical Principles
 
-### Technology Benefits
-- **Automation**: Reduces manual legal processes
-- **Real-time Validation**: Instant eligibility checking
-- **Document Generation**: Auto-generated statutory notices
-- **Progress Tracking**: Real-time status updates
-- **Community Platform**: Post-enfranchisement support network
+### ✅ **Do's**
+- Always use Server Actions for mutations from client components
+- Use repositories for all database access
+- Keep database operations server-side
+- Generate migrations for schema changes
+- Use TypeScript types from schema
+- Implement one feature at a time
+- Test each change before moving forward
 
-## Implementation Notes
+### ❌ **Don'ts**
+- Don't use localStorage for persistent data (use database instead)
+- Don't make direct database calls from client components
+- Don't skip the repository layer
+- Don't make schema changes without migrations
+- Don't implement multiple features simultaneously
+- Don't make code changes without approval
 
-### Component Structure
-- **Modular Design**: Reusable components across pages
-- **Responsive**: Mobile-first approach
-- **Accessible**: WCAG compliance considerations
-- **Performance**: Optimized images and lazy loading
-- **SEO**: Structured data and meta optimization
+## Error Handling & Debugging
 
-### Animation Philosophy
-- **Subtle**: Enhance UX without overwhelming
-- **Meaningful**: Animations serve a purpose
-- **Performance**: Optimized for smooth interactions
-- **Progressive**: Works without animations if disabled
+### 🐛 **Common Issues**
+1. **Database connection**: Check environment variables
+2. **Migration failures**: Clean database and reapply
+3. **Type errors**: Regenerate schema types
+4. **Server action failures**: Check server logs
 
-### Forms & Data Collection
-- **Privacy First**: Clear data handling policies
-- **Progressive Disclosure**: Collect data as needed
-- **Validation**: Real-time feedback
-- **Integration**: Formspree for contact forms
-- **Security**: Secure data transmission
+### 🔍 **Debugging Process**
+1. Check server logs for error messages
+2. Verify database connection
+3. Confirm schema matches database
+4. Test server actions independently
 
-## Future Development
+## Development Environment Setup
 
-### Phase 1: Website Launch
-- Static informational site
-- Contact form integration
-- Basic eligibility checking
+### 🔧 **Database Setup**
+```bash
+# Install dependencies
+npm install
 
-### Phase 2: Interactive Platform
-- User registration and authentication
-- Advanced eligibility assessment
-- Document upload and processing
+# Pull environment variables from Vercel
+npx vercel env pull .env.local
 
-### Phase 3: Full Automation
-- Complete RTM process automation
-- Payment processing integration
-- Client dashboard and tracking
+# Generate database schema
+drizzle-kit generate
 
-### Phase 4: Community Platform
-- Post-enfranchisement community features
-- Property management marketplace
-- Data analytics and benchmarking
+# Apply migrations
+drizzle-kit migrate
+```
 
-## Success Metrics
+### 🗂️ **Project Structure**
+```
+src/
+├── app/                    # NextJS app directory
+├── components/            # Reusable UI components
+├── lib/
+│   ├── actions/          # Server actions
+│   ├── db/
+│   │   ├── schema/       # Database schema
+│   │   ├── repositories/ # Data access layer
+│   │   └── migrations/   # Database migrations
+│   └── utils/            # Utility functions
+└── data/                 # Static data files
+```
 
-### Engagement Metrics
-- **Conversion Rate**: Visitors to qualified leads
-- **Engagement Time**: Time spent on educational content
-- **Form Completion**: Contact form submission rates
-- **Return Visits**: Repeat visitor analysis
+## Important Notes for AI Assistants
 
-### Business Metrics
-- **Lead Generation**: Monthly qualified leads
-- **Conversion to Client**: Lead to customer conversion
-- **Average Transaction Value**: Revenue per client
-- **Customer Lifetime Value**: Long-term client value
+### 🤖 **When Working on This Project**
 
-### Impact Metrics
-- **Buildings Enfranchised**: Number of successful RTM/enfranchisements
-- **Leaseholders Helped**: Total individuals empowered
-- **Cost Savings Generated**: Total savings for clients
-- **Community Growth**: Post-enfranchisement engagement
+1. **Always analyze existing code first** before suggesting changes
+2. **Provide clear recommendations** and wait for human approval
+3. **Follow the established patterns** (Server Actions → Repository → Drizzle)
+4. **One change at a time** - don't implement multiple features simultaneously
+5. **Use the simplified database schema** - we're intentionally keeping it minimal
+6. **Remember the development philosophy** - slow, careful, and deliberate
+7. **Database changes require migrations** - never skip the migration process
+8. **Test after each change** before moving to the next task
 
-## Brand Positioning
-
-### Unique Value Proposition
-"We're the only technology-driven solution that combines legal expertise with personal experience as leaseholders, offering transparent pricing and ongoing community support."
-
-### Brand Pillars
-1. **Expertise**: Property Institute accredited professionals
-2. **Experience**: Founded by leaseholders who've been there
-3. **Technology**: AI-driven advice and automation
-4. **Transparency**: Fixed fees, no hidden costs
-5. **Community**: Ongoing support and connection
-
-### Competitive Advantages
-- **Technology Integration**: Automated processes vs. manual legal work
-- **Personal Experience**: Founders understand the problems firsthand
-- **Comprehensive Solution**: From initial advice to post-enfranchisement support
-- **Transparent Pricing**: Clear costs vs. traditional hourly legal fees
-- **Community Benefits**: Exclusive post-enfranchisement advantages
+### 📝 **Code Review Checklist**
+- [ ] Does it follow Server Action → Repository → Drizzle pattern?
+- [ ] Is there a migration for schema changes?
+- [ ] Are TypeScript types properly used?
+- [ ] Is error handling implemented?
+- [ ] Does it integrate with existing code structure?
+- [ ] Is it a single, focused change?
 
 ---
 
-*This documentation serves as a comprehensive guide for the Liberty Bell Ethical Enfranchisement website project, covering all aspects from technical implementation to business strategy and brand positioning.*
+This documentation should serve as the definitive guide for anyone working on the Liberty Bell project, ensuring consistency and maintainability as the platform grows.

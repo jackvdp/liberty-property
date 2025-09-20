@@ -104,45 +104,45 @@ export default function Hero() {
       </div>
 
       {/* Social Proof - Partners */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-        className="relative z-10 bg-liberty-base/95 backdrop-blur-sm border-t border-liberty-secondary/30 px-4 sm:px-6 lg:px-8 py-6"
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col items-center">
-            <p className="text-sm text-liberty-background/60 mb-4 text-center">
-              {content.hero.partners.subtitle}
-            </p>
-            <div className="flex items-center justify-center gap-8 lg:gap-24 flex-wrap">
-              {content.hero.partners.items.map((partner, index) => (
-                <motion.div
-                  key={partner.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.6 + index * 0.2, ease: "easeOut" }}
-                  className="relative"
-                >
-                  <Link
-                    href={partner.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block relative h-8 w-24 sm:h-10 sm:w-32 group transition-all duration-300"
-                  >
-                    <Image
-                      src={partner.image}
-                      alt={partner.alt}
-                      fill
-                      className="object-contain transition-all duration-300 group-hover:scale-105 filter grayscale brightness-0 opacity-75 group-hover:grayscale-0 group-hover:brightness-100 group-hover:opacity-100"
-                    />
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </motion.div>
+      {/*<motion.div*/}
+      {/*  initial={{ opacity: 0, y: 30 }}*/}
+      {/*  animate={{ opacity: 1, y: 0 }}*/}
+      {/*  transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}*/}
+      {/*  className="relative z-10 bg-liberty-base/95 backdrop-blur-sm border-t border-liberty-secondary/30 px-4 sm:px-6 lg:px-8 py-6"*/}
+      {/*>*/}
+      {/*  <div className="max-w-7xl mx-auto">*/}
+      {/*    <div className="flex flex-col items-center">*/}
+      {/*      <p className="text-sm text-liberty-background/60 mb-4 text-center">*/}
+      {/*        {content.hero.partners.subtitle}*/}
+      {/*      </p>*/}
+      {/*      <div className="flex items-center justify-center gap-8 lg:gap-24 flex-wrap">*/}
+      {/*        {content.hero.partners.items.map((partner, index) => (*/}
+      {/*          <motion.div*/}
+      {/*            key={partner.name}*/}
+      {/*            initial={{ opacity: 0, y: 20 }}*/}
+      {/*            animate={{ opacity: 1, y: 0 }}*/}
+      {/*            transition={{ duration: 0.6, delay: 0.6 + index * 0.2, ease: "easeOut" }}*/}
+      {/*            className="relative"*/}
+      {/*          >*/}
+      {/*            <Link*/}
+      {/*              href={partner.url}*/}
+      {/*              target="_blank"*/}
+      {/*              rel="noopener noreferrer"*/}
+      {/*              className="block relative h-8 w-24 sm:h-10 sm:w-32 group transition-all duration-300"*/}
+      {/*            >*/}
+      {/*              <Image*/}
+      {/*                src={partner.image}*/}
+      {/*                alt={partner.alt}*/}
+      {/*                fill*/}
+      {/*                className="object-contain transition-all duration-300 group-hover:scale-105 filter grayscale brightness-0 opacity-75 group-hover:grayscale-0 group-hover:brightness-100 group-hover:opacity-100"*/}
+      {/*              />*/}
+      {/*            </Link>*/}
+      {/*          </motion.div>*/}
+      {/*        ))}*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</motion.div>*/}
     </section>
   )
 }
