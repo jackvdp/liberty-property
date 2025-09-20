@@ -6,10 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import {ArrowLeft, ArrowRight, CheckCircle2, Plus, Trash2} from "lucide-react";
+import {ArrowLeft, ArrowRight, CheckCircle2} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RadioInput, TextInput, CheckboxInput, FileInput } from "./shared-inputs";
 import { QuestionnaireValue } from "./types";
@@ -35,7 +33,6 @@ export default function RegistrationQuestionnaire({
   const [progress, setProgress] = useState<number>(0);
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [outcome, setOutcome] = useState<RegistrationOutcome | null>(null);
-  const [supportersList, setSupportersList] = useState<Array<{ name: string; email: string }>>([]);
 
   const { sections, outcomes } = data;
   const sectionKeys = Object.keys(sections);
@@ -94,20 +91,6 @@ export default function RegistrationQuestionnaire({
     });
   };
 
-  const addSupporter = () => {
-    setSupportersList(prev => [...prev, { name: "", email: "" }]);
-  };
-
-  const removeSupporter = (index: number) => {
-    setSupportersList(prev => prev.filter((_, i) => i !== index));
-  };
-
-  const updateSupporter = (index: number, field: "name" | "email", value: string) => {
-    setSupportersList(prev => prev.map((supporter, i) => 
-      i === index ? { ...supporter, [field]: value } : supporter
-    ));
-  };
-
   const validateSection = () => {
     for (const question of currentSection.questions) {
       const value = currentSectionData[question.id];
@@ -157,15 +140,6 @@ export default function RegistrationQuestionnaire({
       sectionId: currentSectionId
     }));
 
-    // Add supporters data if applicable
-    if (currentSectionId === "step3" && currentSectionData.add_supporters === "yes") {
-      sectionAnswerData.push({
-        questionId: "supporters_list",
-        value: supportersList,
-        sectionId: currentSectionId
-      });
-    }
-
     const newSectionAnswers = {
       ...sectionAnswers,
       [currentSectionId]: sectionAnswerData
@@ -192,7 +166,6 @@ export default function RegistrationQuestionnaire({
       // Move to next section
       setCurrentSectionId(nextSectionId);
       setCurrentSectionData({});
-      setSupportersList([]);
     }
   };
 
@@ -207,11 +180,7 @@ export default function RegistrationQuestionnaire({
     if (prevAnswers) {
       const restoredData: Record<string, QuestionnaireValue> = {};
       prevAnswers.forEach(answer => {
-        if (answer.questionId === "supporters_list" && Array.isArray(answer.value)) {
-          setSupportersList(answer.value as Array<{ name: string; email: string }>);
-        } else {
-          restoredData[answer.questionId] = answer.value;
-        }
+        restoredData[answer.questionId] = answer.value;
       });
       setCurrentSectionData(restoredData);
     }
@@ -219,11 +188,6 @@ export default function RegistrationQuestionnaire({
 
   const shouldShowChooseProcess = () => {
     return eligibilityData?.derivedData?.allowsBothRtmAndCe || false;
-  };
-
-  const shouldShowConditionalQuestions = (questionId: string, triggerValue: string) => {
-    const value = currentSectionData[questionId];
-    return typeof value === 'string' && value === triggerValue;
   };
 
   const renderQuestion = (question: RegistrationQuestion) => {
@@ -245,66 +209,6 @@ export default function RegistrationQuestionnaire({
       default:
         return null;
     }
-  };
-
-  const renderSupportersList = () => {
-    if (!shouldShowConditionalQuestions("add_supporters", "yes")) {
-      return null;
-    }
-
-    return (
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <Label className="text-base font-medium text-liberty-standard">
-            Supporter Details
-          </Label>
-          <Button 
-            type="button" 
-            variant="outline" 
-            size="sm" 
-            onClick={addSupporter}
-            className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white"
-          >
-            <Plus className="w-4 h-4 mr-1" />
-            Add Supporter
-          </Button>
-        </div>
-        {supportersList.map((supporter, index) => (
-          <div key={index} className="flex gap-3 items-end p-4 border border-liberty-secondary/30 rounded-lg">
-            <div className="flex-1 space-y-3">
-              <div>
-                <Label className="text-sm text-liberty-standard/70">Name</Label>
-                <Input
-                  value={supporter.name}
-                  onChange={(e) => updateSupporter(index, "name", e.target.value)}
-                  placeholder="Supporter name"
-                  className="border-liberty-secondary/50"
-                />
-              </div>
-              <div>
-                <Label className="text-sm text-liberty-standard/70">Email</Label>
-                <Input
-                  type="email"
-                  value={supporter.email}
-                  onChange={(e) => updateSupporter(index, "email", e.target.value)}
-                  placeholder="supporter@example.com"
-                  className="border-liberty-secondary/50"
-                />
-              </div>
-            </div>
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => removeSupporter(index)}
-              className="text-red-500 hover:text-red-700 hover:bg-red-50"
-            >
-              <Trash2 className="w-4 h-4" />
-            </Button>
-          </div>
-        ))}
-      </div>
-    );
   };
 
   // Skip step6a if conditions not met
@@ -511,9 +415,6 @@ export default function RegistrationQuestionnaire({
                 className="space-y-6"
               >
                 {currentSection.questions.map((question) => renderQuestion(question))}
-                
-                {/* Render conditional supporter list */}
-                {currentSectionId === "step3" && renderSupportersList()}
               </motion.div>
             </AnimatePresence>
           </CardContent>

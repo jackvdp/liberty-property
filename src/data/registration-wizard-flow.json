@@ -1,11 +1,11 @@
 {
   "registrationWizard": {
-    "title": "Property Registration",
-    "description": "Let's get your building registered and start the process of taking control",
+    "title": "Registration",
+    "description": "Let's get you registered and start the process of taking back control of your property",
     "sections": {
       "step1": {
         "id": "contact_details",
-        "title": "Create / Confirm Contact",
+        "title": "Confirm Contact Details",
         "description": "We need your contact details to get started",
         "color": "blue",
         "questions": [
@@ -36,17 +36,6 @@
             "required": false
           },
           {
-            "id": "role",
-            "question": "What is your role?",
-            "type": "radio",
-            "required": true,
-            "options": [
-              { "value": "owner", "label": "I own a flat in this building" },
-              { "value": "representative", "label": "I'm acting on behalf of leaseholders" },
-              { "value": "other", "label": "Other" }
-            ]
-          },
-          {
             "id": "consent_contact",
             "question": "Do you agree to be contacted about your eligibility and next steps?",
             "type": "checkbox",
@@ -60,13 +49,13 @@
       },
       "step2": {
         "id": "building_basics",
-        "title": "Building Basics",
+        "title": "Building",
         "description": "Tell us about your building",
         "color": "blue",
         "questions": [
           {
             "id": "building_address",
-            "question": "Building name/number + street",
+            "question": "Building name/number & street",
             "type": "text",
             "required": true,
             "validation": {
@@ -103,148 +92,6 @@
             "prefillFromEligibility": true
           }
         ],
-        "nextSection": "step3"
-      },
-      "step3": {
-        "id": "authority_supporters",
-        "title": "Authority to Act & Supporters",
-        "description": "Confirm your authority and add supporters",
-        "color": "blue",
-        "questions": [
-          {
-            "id": "authority_to_act",
-            "question": "Do you have authority to act?",
-            "type": "radio",
-            "required": true,
-            "options": [
-              { "value": "yes", "label": "Yes" },
-              { "value": "not_yet", "label": "Not yet" }
-            ]
-          },
-          {
-            "id": "add_supporters",
-            "question": "Would you like to add leaseholder supporters now?",
-            "type": "radio",
-            "required": true,
-            "options": [
-              { "value": "yes", "label": "Yes" },
-              { "value": "no", "label": "No, proceed without adding supporters" }
-            ]
-          }
-        ],
-        "conditionalQuestions": {
-          "add_supporters": {
-            "yes": [
-              {
-                "id": "supporters_list",
-                "question": "Add supporter details",
-                "description": "Add names and email addresses of supporting leaseholders",
-                "type": "repeater",
-                "fields": [
-                  {
-                    "id": "supporter_name",
-                    "label": "Name",
-                    "type": "text",
-                    "required": true
-                  },
-                  {
-                    "id": "supporter_email", 
-                    "label": "Email",
-                    "type": "email",
-                    "required": true
-                  }
-                ]
-              }
-            ]
-          }
-        },
-        "nextSection": "step4"
-      },
-      "step4": {
-        "id": "documents",
-        "title": "Documents",
-        "description": "Upload any relevant documents",
-        "color": "blue",
-        "questions": [
-          {
-            "id": "lease_documents",
-            "question": "Upload your lease documents",
-            "description": "Optional - but helps us provide better advice",
-            "type": "file",
-            "required": false,
-            "validation": {
-              "acceptedTypes": [".pdf", ".jpg", ".png", ".doc", ".docx"],
-              "maxSize": "10MB"
-            }
-          },
-          {
-            "id": "service_charge_documents",
-            "question": "Upload recent service charge statements",
-            "description": "Optional - helps us understand your current costs",
-            "type": "file",
-            "required": false,
-            "validation": {
-              "acceptedTypes": [".pdf", ".jpg", ".png", ".doc", ".docx"],
-              "maxSize": "10MB"
-            }
-          },
-          {
-            "id": "other_documents",
-            "question": "Any other relevant documents",
-            "description": "Optional - management accounts, correspondence, etc.",
-            "type": "file",
-            "required": false,
-            "validation": {
-              "acceptedTypes": [".pdf", ".jpg", ".png", ".doc", ".docx"],
-              "maxSize": "10MB"
-            }
-          }
-        ],
-        "nextSection": "step5"
-      },
-      "step5": {
-        "id": "meeting_preferences",
-        "title": "Meeting & Preferences",
-        "description": "Let us know your preferences for next steps",
-        "color": "blue",
-        "questions": [
-          {
-            "id": "preferred_contact_method",
-            "question": "How would you prefer to be contacted?",
-            "type": "radio",
-            "required": true,
-            "options": [
-              { "value": "email", "label": "Email" },
-              { "value": "phone", "label": "Phone call" },
-              { "value": "video", "label": "Video call" },
-              { "value": "in_person", "label": "In-person meeting" }
-            ]
-          },
-          {
-            "id": "best_contact_time",
-            "question": "When is the best time to contact you?",
-            "type": "checkbox",
-            "required": true,
-            "options": [
-              { "value": "weekday_morning", "label": "Weekday mornings" },
-              { "value": "weekday_afternoon", "label": "Weekday afternoons" },
-              { "value": "weekday_evening", "label": "Weekday evenings" },
-              { "value": "weekend", "label": "Weekends" }
-            ]
-          },
-          {
-            "id": "urgency",
-            "question": "How urgently do you want to proceed?",
-            "type": "radio",
-            "required": true,
-            "options": [
-              { "value": "asap", "label": "As soon as possible" },
-              { "value": "few_weeks", "label": "Within a few weeks" },
-              { "value": "few_months", "label": "Within a few months" },
-              { "value": "exploring", "label": "Just exploring options for now" }
-            ]
-          }
-        ],
         "nextSection": "step6a"
       },
       "step6a": {
@@ -270,6 +117,11 @@
                 "value": "ce", 
                 "label": "Collective Enfranchisement (CE)",
                 "description": "Purchase the freehold and gain full ownership control"
+              },
+              {
+                "value": "dk",
+                "label": "Don't know",
+                "description": "Want to discuss options with Liberty Bell first"
               }
             ]
           }
