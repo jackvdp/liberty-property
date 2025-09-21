@@ -44,17 +44,12 @@ We prioritize careful, deliberate development over speed. This means:
 
 ## Architecture Overview
 
-### 🏗️ **Current Simplified Architecture**
+### 🏗️ **Simplified Architecture**
 ```
-Client Components → Server Actions → Repository Layer → Drizzle ORM → Supabase PostgreSQL
+Client Components → Server Actions → Repository → Drizzle ORM → Supabase PostgreSQL
 ```
 
 ### 🗄️ **Database Layer Architecture**
-
-#### **Environment Separation**
-- **Development Database**: Used locally during development
-- **Production Database**: Used when deployed to production
-- **Automatic Detection**: Environment is automatically detected and appropriate database is used
 
 #### **Database Stack**
 ```
@@ -72,7 +67,7 @@ Supabase PostgreSQL
 ### 🧩 **How Our Architecture Works**
 
 #### **1. Server Actions**
-Server Actions are our primary way to handle mutations from client components:
+Server Actions are our primary way to handle data operations from client components:
 
 ```typescript
 'use server';
@@ -91,7 +86,7 @@ export async function createEligibilityCase(eligibilityData: EligibilityData) {
 - Return serializable data only
 
 #### **2. Repository Pattern**
-Repositories encapsulate all database access logic:
+The EligibilityRepository encapsulates all database access logic for eligibility checks:
 
 ```typescript
 export class EligibilityRepository {
@@ -108,9 +103,8 @@ export class EligibilityRepository {
 
 **Key Points:**
 - Static methods (no instantiation needed)
-- One repository per main entity
-- Handle all CRUD operations for that entity
-- Use Drizzle ORM for actual database queries
+- Handles all CRUD operations for eligibility
+- Uses Drizzle ORM for actual database queries
 
 #### **3. Drizzle ORM Integration**
 Drizzle provides type-safe database access:
@@ -128,34 +122,40 @@ const check = await db.query.eligibilityChecks.findFirst({
 });
 ```
 
-#### **4. Database Configuration**
-Environment detection happens automatically:
+## Current Implementation
 
-```typescript
-// config.ts automatically determines:
-// - Local development → DEV database
-// - Production deployment → PROD database
+### 🎯 **Eligibility Wizard Flow**
+The eligibility wizard helps users determine if their building qualifies for RTM or Collective Enfranchisement:
+
+```
+User completes eligibility questionnaire
+    ↓
+Creates eligibility case (all success paths)
+    ↓
+Server action calls EligibilityRepository
+    ↓
+Repository uses Drizzle to insert into database
+    ↓
+Returns case ID to client
+    ↓
+User redirected to registration with case ID
 ```
 
-## Current Implementation: Eligibility Wizard
+### 🎯 **Registration Wizard Flow**
+Simplified registration process that collects essential information:
 
-### 🎯 **Eligibility Check Flow**
-```
-User completes eligibility wizard
-    ↓
-EligibilityWrapper calls createEligibilityCase() server action
-    ↓
-Server action calls EligibilityRepository.createEligibilityCheck()
-    ↓
-Repository uses Drizzle to insert into eligibility_checks table
-    ↓
-Returns eligibility ID to client
-    ↓
-Client navigates to registration with eligibility ID
-```
+1. **Step 1**: Contact Details (name, email, phone, consent)
+2. **Step 2**: Building Basics (address, postcode, flat count)
+3. **Step 3** (optional): Choose Process (RTM vs CE if both available)
+4. **Step 4**: Legal & Submit (terms, privacy, data consent)
+
+**Removed sections** (can be collected later via dashboard):
+- User role question
+- Authority to act & supporters
+- Document uploads
+- Meeting preferences
 
 ### 📊 **Current Database Schema**
-We've simplified to just one table for now:
 
 ```sql
 CREATE TABLE eligibility_checks (
@@ -174,116 +174,64 @@ CREATE TABLE eligibility_checks (
 
 ### 🔧 **Key Files in Current Implementation**
 
+#### **Use Cases**
+- `src/use_cases/eligibility/createEligibilityDerivedData.ts` - Business logic for deriving eligibility data
+
 #### **Database Layer**
 - `src/lib/db/schema/index.ts` - Database schema definitions
 - `src/lib/db/repositories/eligibility.repository.ts` - Data access for eligibility checks
 - `src/lib/db/drizzle.ts` - Drizzle ORM configuration
+- `src/lib/db/config.ts` - Database configuration
 
 #### **Server Actions**
 - `src/lib/actions/eligibility.actions.ts` - Server functions for eligibility operations
 
 #### **Client Components**
 - `src/components/eligibility-wrapper.tsx` - Main eligibility wizard component
+- `src/components/questionnaire/registration-questionnaire.tsx` - Registration wizard component
 - `src/app/eligibility-check/page.tsx` - Eligibility check page
+- `src/app/register/page.tsx` - Registration page
+
+#### **Data Files**
+- `src/data/eligibility-wizard-flow.json` - Eligibility wizard configuration
+- `src/data/registration-wizard-flow.json` - Registration wizard configuration
 
 ## Database Commands & Migrations
 
 ### 🛠️ **Development Commands**
 ```bash
 # Generate migration from schema changes
-drizzle-kit generate
+npm run db:generate
 
 # Apply migrations to database
-drizzle-kit migrate
+npm run db:migrate
 
 # Push schema directly (development only)
-drizzle-kit push
+npm run db:push
 
 # Open database browser
-drizzle-kit studio
+npm run db:studio
 ```
 
 ### 🔄 **Migration Process**
 1. Update schema in `src/lib/db/schema/index.ts`
-2. Run `drizzle-kit generate` to create migration
+2. Run `npm run db:generate` to create migration
 3. Review generated SQL in `src/lib/db/migrations/`
-4. Run `drizzle-kit migrate` to apply to database
+4. Run `npm run db:migrate` to apply to database
 
-## Replication Pattern for Future Features
+## Business Logic & Use Cases
 
-### 📋 **Step-by-Step Process for New Features**
+### 📐 **Eligibility Derived Data**
+The `createEligibilityDerivedData` function transforms raw questionnaire answers into meaningful business data:
 
-When building new features that need database storage, follow this exact pattern:
-
-#### **1. Analysis Phase**
-- Claude reviews existing code structure
-- Identifies what needs to be changed/added
-- Provides clear recommendation before any code changes
-
-#### **2. Schema Design**
-```typescript
-// Add new table to src/lib/db/schema/index.ts
-export const newFeatureTable = pgTable('new_feature', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  // ... other fields
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
-});
-```
-
-#### **3. Repository Creation**
-```typescript
-// Create src/lib/db/repositories/newfeature.repository.ts
-export class NewFeatureRepository {
-  static async create(data: NewNewFeature): Promise<NewFeature> {
-    const [record] = await db.insert(newFeatureTable).values(data).returning();
-    return record;
-  }
-  
-  static async findById(id: string): Promise<NewFeature | null> {
-    const result = await db.query.newFeatureTable.findFirst({
-      where: eq(newFeatureTable.id, id)
-    });
-    return result || null;
-  }
-}
-```
-
-#### **4. Server Actions**
-```typescript
-// Create src/lib/actions/newfeature.actions.ts
-'use server';
-
-export async function createNewFeature(data: FormData) {
-  try {
-    const result = await NewFeatureRepository.create({
-      // extract data from FormData
-    });
-    
-    return { success: true, id: result.id };
-  } catch (error) {
-    return { success: false, error: error.message };
-  }
-}
-```
-
-#### **5. Client Integration**
-```typescript
-// In client component
-const handleSubmit = async (formData) => {
-  const result = await createNewFeature(formData);
-  if (result.success) {
-    // Handle success
-  }
-};
-```
-
-#### **6. Database Migration**
-```bash
-# Generate and apply migration
-drizzle-kit generate
-drizzle-kit migrate
-```
+- **Flat count, property type, leasehold status**
+- **RMC/RTM status** (exists, doesn't exist, unknown)
+- **Provisional path** (display-ready text):
+  - "Right to Manage or buy your freehold"
+  - "Right to Manage (freehold not available)"
+  - "Build neighbor support first"
+  - "Improve existing management"
+- **Whether both RTM and CE are available**
 
 ## Design System
 
@@ -303,95 +251,64 @@ drizzle-kit migrate
 - **Primary Font**: Inter (sans-serif)
 - **Display Font**: Reckless (serif) - used for headings and hero text
 
-## Customer Journey & Business Model
+## Project Structure
 
-### 🎯 **Target Market**
-- **Size**: 3.6 million unhappy and unenfranchised leaseholders
-- **Location**: England & Wales
-- **Pain Points**: Unfair charges, poor service, lack of control
-- **Discovery**: Facebook groups, online communities
-
-### 💰 **Revenue Streams**
-- **RTM Process**: £2,000 + VAT per building
-- **Enfranchisement**: £500-£2,000 per flat
-- **Aftercare Services**: Monthly management fees
-- **Long-term**: Share of £5bn enfranchisement market + £8bn property management market
-
-## Competitive Landscape
-
-### 🏆 **Primary Competitor: The Freehold Collective**
-- Similar service offering
-- Established market presence
-- Focus: Beat them with better technology and user experience
-
-### 🏛️ **Government/Charity Competitors**
-- **LEASE (Leasehold Advisory Service)**: Too passive, perpetuates uncertainty
-- **Lease Advice**: Good resources but lacks directional guidance
+```
+src/
+├── app/                    # NextJS app directory (pages)
+├── components/            # Reusable UI components
+│   └── questionnaire/     # Questionnaire components
+├── data/                  # Static configuration files
+├── lib/
+│   ├── actions/          # Server actions
+│   │   └── eligibility.actions.ts
+│   ├── db/
+│   │   ├── schema/       # Database schema
+│   │   ├── repositories/ # Data access layer
+│   │   │   └── eligibility.repository.ts
+│   │   └── migrations/   # Database migrations
+│   └── utils/            # Utility functions
+└── use_cases/            # Business logic
+    └── eligibility/
+        └── createEligibilityDerivedData.ts
+```
 
 ## Key Technical Principles
 
 ### ✅ **Do's**
-- Always use Server Actions for mutations from client components
-- Use repositories for all database access
+- Always use Server Actions for data mutations
+- Use the repository pattern for database access
 - Keep database operations server-side
 - Generate migrations for schema changes
 - Use TypeScript types from schema
 - Implement one feature at a time
+- Keep business logic in use cases
 - Test each change before moving forward
 
 ### ❌ **Don'ts**
-- Don't use localStorage for persistent data (use database instead)
 - Don't make direct database calls from client components
 - Don't skip the repository layer
 - Don't make schema changes without migrations
 - Don't implement multiple features simultaneously
-- Don't make code changes without approval
+- Don't mix business logic with infrastructure code
 
-## Error Handling & Debugging
+## Current Focus Areas
 
-### 🐛 **Common Issues**
-1. **Database connection**: Check environment variables
-2. **Migration failures**: Clean database and reapply
-3. **Type errors**: Regenerate schema types
-4. **Server action failures**: Check server logs
+### 📍 **What's Working**
+- ✅ Eligibility wizard with case creation
+- ✅ All success paths lead to registration
+- ✅ Simplified registration flow (4 steps max)
+- ✅ Database persistence of eligibility checks
+- ✅ Clean separation of concerns (use cases, actions, repositories)
 
-### 🔍 **Debugging Process**
-1. Check server logs for error messages
-2. Verify database connection
-3. Confirm schema matches database
-4. Test server actions independently
-
-## Development Environment Setup
-
-### 🔧 **Database Setup**
-```bash
-# Install dependencies
-npm install
-
-# Pull environment variables from Vercel
-npx vercel env pull .env.local
-
-# Generate database schema
-drizzle-kit generate
-
-# Apply migrations
-drizzle-kit migrate
-```
-
-### 🗂️ **Project Structure**
-```
-src/
-├── app/                    # NextJS app directory
-├── components/            # Reusable UI components
-├── lib/
-│   ├── actions/          # Server actions
-│   ├── db/
-│   │   ├── schema/       # Database schema
-│   │   ├── repositories/ # Data access layer
-│   │   └── migrations/   # Database migrations
-│   └── utils/            # Utility functions
-└── data/                 # Static data files
-```
+### 🚧 **Not Yet Implemented**
+- Registration data persistence to database
+- User authentication/accounts
+- Dashboard functionality
+- Document management
+- Case management beyond creation
+- Payment processing
+- Email notifications
 
 ## Important Notes for AI Assistants
 
@@ -401,10 +318,9 @@ src/
 2. **Provide clear recommendations** and wait for human approval
 3. **Follow the established patterns** (Server Actions → Repository → Drizzle)
 4. **One change at a time** - don't implement multiple features simultaneously
-5. **Use the simplified database schema** - we're intentionally keeping it minimal
-6. **Remember the development philosophy** - slow, careful, and deliberate
-7. **Database changes require migrations** - never skip the migration process
-8. **Test after each change** before moving to the next task
+5. **Use the simplified approach** - we're intentionally keeping it minimal
+6. **Database changes require migrations** - never skip the migration process
+7. **Test after each change** before moving to the next task
 
 ### 📝 **Code Review Checklist**
 - [ ] Does it follow Server Action → Repository → Drizzle pattern?
@@ -413,7 +329,8 @@ src/
 - [ ] Is error handling implemented?
 - [ ] Does it integrate with existing code structure?
 - [ ] Is it a single, focused change?
+- [ ] Is business logic separated from infrastructure?
 
 ---
 
-This documentation should serve as the definitive guide for anyone working on the Liberty Bell project, ensuring consistency and maintainability as the platform grows.
+This documentation reflects the current state of the Liberty Bell project after simplification and cleanup. The focus is on a clean, maintainable architecture with clear separation of concerns.
