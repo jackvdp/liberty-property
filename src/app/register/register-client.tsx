@@ -13,7 +13,7 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { useEffect, useState } from "react";
 import { getEligibilityCase } from "@/lib/actions/eligibility.actions";
-import { createEligibilityDerivedData } from "@/lib/storage/eligibility-storage-helper";
+import { createEligibilityDerivedData } from "@/use_cases/eligibility/createEligibilityDerivedData";
 
 interface RegisterClientProps {
   eligibilityId?: string;

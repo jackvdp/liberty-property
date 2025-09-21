@@ -18,7 +18,7 @@ src/lib/storage/
 ├── types.ts                    # TypeScript interfaces and types
 ├── storage-service.ts          # Core storage service class
 ├── use-questionnaire-storage.ts # React hooks for storage
-├── eligibility-storage-helper.ts # Eligibility-specific helpers
+├── createEligibilityDerivedData.ts # Eligibility-specific helpers
 └── index.ts                    # Public API exports
 ```
 
