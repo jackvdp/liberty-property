@@ -341,16 +341,20 @@ export default function RegistrationQuestionnaire({
               </div>
             </CardContent>
             
-            <CardFooter className="flex justify-center pt-0">
-              {outcome.actions && outcome.actions[0] && (
+            <CardFooter className="flex justify-center gap-3 pt-0 flex-wrap">
+              {outcome.actions && outcome.actions.map((action, index) => (
                 <Button 
-                  className="bg-liberty-primary hover:bg-liberty-primary/90 text-white"
-                  onClick={() => router.push(outcome.actions![0].href)}
+                  key={index}
+                  className={action.primary 
+                    ? "bg-liberty-primary hover:bg-liberty-primary/90 text-white" 
+                    : "bg-liberty-secondary/20 hover:bg-liberty-secondary/30 text-liberty-standard border border-liberty-secondary/30"
+                  }
+                  onClick={() => router.push(action.href)}
                 >
-                  {outcome.actions[0].text}
+                  {action.text}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
-              )}
+              ))}
             </CardFooter>
           </Card>
         </motion.div>
