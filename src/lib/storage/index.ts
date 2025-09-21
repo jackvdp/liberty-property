@@ -19,6 +19,5 @@ export {
 
 // Export eligibility helpers
 export {
-  EligibilityStorageHelper,
   createEligibilityDerivedData
 } from './eligibility-storage-helper';

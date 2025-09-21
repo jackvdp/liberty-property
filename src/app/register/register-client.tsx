@@ -13,6 +13,7 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { useEffect, useState } from "react";
 import { getEligibilityCase } from "@/lib/actions/eligibility.actions";
+import { createEligibilityDerivedData } from "@/lib/storage/eligibility-storage-helper";
 
 interface RegisterClientProps {
   eligibilityId?: string;
@@ -44,8 +45,8 @@ export function RegisterClient({ eligibilityId }: RegisterClientProps) {
               })),
               outcome: result.outcome,
               timestamp: result.case?.createdAt || new Date().toISOString(),
-              // Create derived data
-              derivedData: createDerivedData(result.answers, result.outcome)
+              // Use the imported helper function
+              derivedData: createEligibilityDerivedData(result.answers, result.outcome)
             };
             
             console.log('Loaded eligibility data from server:', eligData);
@@ -66,44 +67,6 @@ export function RegisterClient({ eligibilityId }: RegisterClientProps) {
       loadEligibilityData();
     }
   }, [eligibilityId]);
-
-  // Helper to create derived data (matches the localStorage helper logic)
-  const createDerivedData = (answers: any[], outcome: any) => {
-    const findAnswer = (questionId: string) => 
-      answers.find(a => a.questionId === questionId)?.value;
-
-    return {
-      flatCount: findAnswer('flat_count') as number | undefined,
-      propertyType: findAnswer('property_type') as string | undefined,
-      isLeasehold: findAnswer('flat_leasehold') as string | undefined,
-      existingRmcRtm: findAnswer('existing_rmc_rtm') as string | undefined,
-      nonResidentialProportion: findAnswer('non_residential_proportion') as string | undefined,
-      leaseholderSupport: findAnswer('leaseholder_support') as string | undefined,
-      
-      allowsBothRtmAndCe: (() => {
-        const nonResAnswer = findAnswer('non_residential_proportion');
-        return !nonResAnswer || nonResAnswer === '25_or_less';
-      })(),
-      
-      rmcStatus: (() => {
-        const rmcAnswer = findAnswer('existing_rmc_rtm');
-        if (rmcAnswer === 'no') return 'No RMC/RTM recorded';
-        if (rmcAnswer === 'yes') return 'RMC/RTM exists';
-        return 'RMC/RTM status unknown';
-      })(),
-      
-      provisionalPath: (() => {
-        if (!outcome) return 'Path to be determined';
-        
-        if (outcome.action === 'registration') {
-          const nonResAnswer = findAnswer('non_residential_proportion');
-          const allowsBoth = !nonResAnswer || nonResAnswer === '25_or_less';
-          return allowsBoth ? 'RTM or CE available' : 'RTM available';
-        }
-        return 'Path to be determined';
-      })()
-    };
-  };
 
   // Type assertion for the registration data
   const questionnaireData: RegistrationData = {

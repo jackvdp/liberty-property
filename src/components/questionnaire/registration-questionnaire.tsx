@@ -360,13 +360,13 @@ export default function RegistrationQuestionnaire({
 
                     <div className="flex items-center justify-between p-3 bg-liberty-base rounded-lg border border-liberty-secondary/20">
                       <div>
-                        <span className="text-sm font-medium text-liberty-standard/60">Available Path:</span>
+                        <span className="text-sm font-medium text-liberty-standard/60">Recommended Path:</span>
                         <p className="font-medium text-liberty-standard">
                           {(() => {
                             const path = eligibilityData?.derivedData?.provisionalPath;
                             if (path === "RTM or CE available") return "Right to Manage or buy your freehold";
                             if (path === "RTM available") return "Right to Manage (freehold not available)";
-                            if (path === "Leaseholder engagement required") return "Build neighbor support first";
+                            if (path === "Leaseholder engagement required") return "Build neighbor support";
                             if (path === "RMC takeover/improvement") return "Improve existing management";
                             return "Not yet determined";
                           })()}
