@@ -191,23 +191,23 @@
       "leaseholder_engagement": {
         "type": "success",
         "title": "No worries – we'll show you how to build support and get your neighbours on board.",
-        "message": "We can help you engage with other leaseholders in your building.",
+        "message": "Let's get you registered first, then we'll help you engage your neighbours.",
         "action": "leaseholder_engagement_module",
         "color": "success",
         "button": {
-          "text": "Get Engagement Tools",
-          "href": "/leaseholder-engagement"
+          "text": "Register & Get Support Tools",
+          "href": "/register"
         }
       },
       "rmc_process": {
         "type": "success",
         "title": "Sounds like there's already a structure in place.",
-        "message": "We can help you take control of it or make it work better for leaseholders.",
+        "message": "Let's get you registered first, then we'll help you take control or improve your existing management.",
         "action": "rmc_process",
         "color": "success",
         "button": {
-          "text": "Explore RMC Options",
-          "href": "/rmc-process"
+          "text": "Register & Explore RMC Options",
+          "href": "/register"
         }
       },
       "ineligible_single_flat": {

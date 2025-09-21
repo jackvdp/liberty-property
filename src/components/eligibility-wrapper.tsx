@@ -105,8 +105,8 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
   const renderCompletionContent = (caseId: string, outcome: QuestionnaireOutcome) => {
     console.log('renderCompletionContent called with caseId:', caseId, 'outcome:', outcome);
     
-    // Only show for registration outcomes (success type that leads to registration)
-    if (outcome.type !== "success" || outcome.action !== "registration") {
+    // Show for all success outcomes that lead to registration
+    if (outcome.type !== "success") {
       return null;
     }
 
