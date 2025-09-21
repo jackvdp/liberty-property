@@ -202,6 +202,48 @@ export default function RegistrationQuestionnaire({
     }
   };
 
+  // Render completion screen when questionnaire is complete
+  if (isComplete && outcome) {
+    return (
+      <div className={cn("min-h-[calc(100vh-64px)] bg-liberty-secondary/20 flex items-center justify-center p-4", className)}>
+        <motion.div 
+          className="w-full max-w-2xl"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          <Card className="bg-liberty-base border-liberty-secondary/20">
+            <CardHeader className="text-center">
+              <motion.div 
+                className="mx-auto mb-6 w-16 h-16 bg-liberty-primary/10 rounded-full flex items-center justify-center border border-liberty-primary/20"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2, duration: 0.4, ease: "easeOut" }}
+              >
+                <CheckCircle2 className="text-liberty-primary w-8 h-8" />
+              </motion.div>
+              <CardTitle className="text-3xl sm:text-4xl font-reckless font-bold text-liberty-standard mb-4">
+                {outcome.title}
+              </CardTitle>
+              <CardDescription className="text-lg text-liberty-standard/70 leading-relaxed">
+                {outcome.message}
+              </CardDescription>
+            </CardHeader>
+            <CardFooter className="flex justify-center">
+              <Button 
+                className="bg-liberty-primary hover:bg-liberty-primary/90 text-white"
+                onClick={() => router.push('/dashboard')}
+              >
+                Go to Dashboard
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </CardFooter>
+          </Card>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <div className={cn("min-h-[calc(100vh-64px)] bg-liberty-secondary/20 flex items-center justify-center p-4", className)}>
       <motion.div 
