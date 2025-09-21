@@ -111,12 +111,20 @@
               { 
                 "value": "rtm", 
                 "label": "Right to Manage (RTM)",
-                "description": "Take control of building management without buying the freehold"
+                "description": "Take control of building management without buying the freehold",
+                "link": "/right-to-manage"
               },
               { 
                 "value": "ce", 
                 "label": "Collective Enfranchisement (CE)",
-                "description": "Purchase the freehold and gain full ownership control"
+                "description": "Purchase the freehold and gain full ownership control",
+                "link": "/collective-enfranchisement"
+              },
+              {
+                "value": "rmc",
+                "label": "RMC Control",
+                "description": "Take control of your existing Residents' Management Company",
+                "link": "/rmc-process"
               },
               {
                 "value": "dk",

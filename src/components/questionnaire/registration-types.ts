@@ -4,6 +4,7 @@ export interface RegistrationOption {
   value: string;
   label: string;
   description?: string;
+  link?: string;
 }
 
 export interface RegistrationQuestion {

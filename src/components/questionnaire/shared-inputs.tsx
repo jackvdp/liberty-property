@@ -13,7 +13,12 @@ interface SharedInputProps {
     question: string;
     description?: string;
     required?: boolean;
-    options?: Array<{ value: string; label: string; description?: string }>;
+    options?: Array<{ 
+      value: string; 
+      label: string; 
+      description?: string;
+      link?: string;  // Add link support
+    }>;
     validation?: {
       min?: number;
       max?: number;
@@ -79,6 +84,17 @@ export function RadioInput({ question, value, onChange }: SharedInputProps) {
                 </Label>
                 {option.description && (
                   <p className="text-sm text-liberty-standard/60 mt-1">{option.description}</p>
+                )}
+                {option.link && (
+                  <a 
+                    href={option.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-liberty-primary hover:underline mt-1 inline-block"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Learn more about {option.label} →
+                  </a>
                 )}
               </div>
             </motion.div>
