@@ -14,6 +14,8 @@ import Footer from "@/components/footer";
 import { useEffect, useState } from "react";
 import { getEligibilityCase } from "@/lib/actions/eligibility.actions";
 import { createEligibilityDerivedData } from "@/use_cases/eligibility/createEligibilityDerivedData";
+import { Spinner } from "@/components/ui/spinner";
+import {cn} from "@/lib/utils";
 
 interface RegisterClientProps {
   eligibilityId?: string;
@@ -97,9 +99,9 @@ export function RegisterClient({ eligibilityId }: RegisterClientProps) {
     return (
       <div className="min-h-screen bg-liberty-base">
         <Navbar />
-        <div className="container mx-auto px-4 py-8 flex items-center justify-center">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-liberty-primary mx-auto"></div>
+        <div className={cn("min-h-[calc(100vh-64px)] container mx-auto px-4 py-8 flex items-center justify-center")}>
+          <div className="flex flex-col items-center space-x-2">
+            <Spinner />
             <p className="mt-2 text-liberty-standard">Loading your eligibility data...</p>
           </div>
         </div>
@@ -112,7 +114,7 @@ export function RegisterClient({ eligibilityId }: RegisterClientProps) {
     return (
       <div className="min-h-screen bg-liberty-base">
         <Navbar />
-        <div className="container mx-auto px-4 py-8">
+        <div className={cn("min-h-[calc(100vh-64px)] container mx-auto px-4 py-8")}>
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
             <h2 className="text-xl font-semibold text-red-800 mb-2">Unable to Load Registration</h2>
             <p className="text-red-600 mb-4">{error}</p>

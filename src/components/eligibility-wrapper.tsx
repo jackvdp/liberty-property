@@ -16,6 +16,7 @@ import eligibilityData from "@/data/eligibility-wizard-flow.json";
 import { createEligibilityCase, getEligibilityCase } from "@/lib/actions/eligibility.actions";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Spinner } from "@/components/ui/spinner";
 
 interface EligibilityWrapperProps {
   eligibilityId?: string;
@@ -114,8 +115,8 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
     if (isCreatingCase) {
       return (
         <div className="mt-4 pt-4 border-t border-liberty-accent/20">
-          <div className="flex items-center space-x-2">
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-liberty-primary"></div>
+          <div className="flex floex-col items-center space-x-2">
+            <Spinner />
             <p className="text-sm">Creating your case...</p>
           </div>
         </div>
@@ -147,8 +148,8 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
   if (isLoadingInitial) {
     return (
       <div className="min-h-screen bg-liberty-base flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-liberty-primary mx-auto"></div>
+        <div className="text-center flex flex-col items-center space-x-2">
+          <Spinner />
           <p className="mt-2 text-liberty-standard">Loading...</p>
         </div>
       </div>
