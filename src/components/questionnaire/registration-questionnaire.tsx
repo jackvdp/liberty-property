@@ -223,18 +223,131 @@ export default function RegistrationQuestionnaire({
                 <CheckCircle2 className="text-liberty-primary w-8 h-8" />
               </motion.div>
               <CardTitle className="text-3xl sm:text-4xl font-reckless font-bold text-liberty-standard mb-4">
-                {outcome.title}
+                Thank You for Registering!
               </CardTitle>
-              <CardDescription className="text-lg text-liberty-standard/70 leading-relaxed">
-                {outcome.message}
+              <CardDescription className="text-lg text-liberty-standard/70 leading-relaxed space-y-3">
+                <p>Your registration has been successfully submitted.</p>
+                <p className="font-medium">Our team will be in contact with you soon to discuss your next steps.</p>
               </CardDescription>
             </CardHeader>
-            <CardFooter className="flex justify-center">
+            
+            <CardContent className="space-y-6">
+              {/* Show recommended path if eligibility data exists */}
+              {eligibilityData?.derivedData?.provisionalPath && (
+                <div className="bg-liberty-secondary/10 rounded-lg p-4 border border-liberty-secondary/20">
+                  <h4 className="font-semibold text-liberty-standard mb-2">Your Recommended Path:</h4>
+                  <p className="text-liberty-standard/80 mb-3">
+                    {eligibilityData.derivedData.provisionalPath}
+                  </p>
+                  
+                  {/* Add contextual links based on path */}
+                  <div className="space-y-2">
+                    <p className="text-sm text-liberty-standard/60">Learn more about your options:</p>
+                    <div className="flex flex-col gap-2">
+                      {eligibilityData.derivedData.provisionalPath.includes("Right to Manage") && (
+                        <a 
+                          href="/right-to-manage" 
+                          className="text-liberty-primary hover:underline text-sm inline-flex items-center"
+                        >
+                          → Understanding Right to Manage (RTM)
+                        </a>
+                      )}
+                      {eligibilityData.derivedData.provisionalPath.includes("freehold") && (
+                        <a 
+                          href="/collective-enfranchisement" 
+                          className="text-liberty-primary hover:underline text-sm inline-flex items-center"
+                        >
+                          → Collective Enfranchisement Guide
+                        </a>
+                      )}
+                      {eligibilityData.derivedData.provisionalPath.includes("neighbor support") && (
+                        <a 
+                          href="/leaseholder-engagement" 
+                          className="text-liberty-primary hover:underline text-sm inline-flex items-center"
+                        >
+                          → Building Leaseholder Support
+                        </a>
+                      )}
+                      {eligibilityData.derivedData.provisionalPath.includes("existing management") && (
+                        <a 
+                          href="/rmc-process" 
+                          className="text-liberty-primary hover:underline text-sm inline-flex items-center"
+                        >
+                          → Taking Control of Your RMC
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {/* If no eligibility data, show general resources */}
+              {!eligibilityData && (
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-amber-900 mb-2">Complete Your Eligibility Check</h4>
+                  <p className="text-amber-800 text-sm mb-3">
+                    To get personalized recommendations for your building, please complete our eligibility check.
+                  </p>
+                  <Button 
+                    variant="outline"
+                    className="border-amber-600 text-amber-600 hover:bg-amber-50"
+                    onClick={() => router.push('/eligibility-check')}
+                  >
+                    Start Eligibility Check
+                  </Button>
+                </div>
+              )}
+              
+              {/* General resources section */}
+              <div className="border-t border-liberty-secondary/20 pt-6">
+                <h4 className="font-semibold text-liberty-standard mb-3">While You Wait:</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <a 
+                    href="/about" 
+                    className="flex items-center p-3 rounded-lg border border-liberty-secondary/20 hover:border-liberty-primary/30 hover:bg-liberty-primary/5 transition-colors"
+                  >
+                    <div>
+                      <p className="font-medium text-liberty-standard text-sm">About Liberty Bell</p>
+                      <p className="text-xs text-liberty-standard/60">Learn about our mission</p>
+                    </div>
+                  </a>
+                  <a 
+                    href="/how-it-works" 
+                    className="flex items-center p-3 rounded-lg border border-liberty-secondary/20 hover:border-liberty-primary/30 hover:bg-liberty-primary/5 transition-colors"
+                  >
+                    <div>
+                      <p className="font-medium text-liberty-standard text-sm">How It Works</p>
+                      <p className="text-xs text-liberty-standard/60">Our process explained</p>
+                    </div>
+                  </a>
+                  <a 
+                    href="/property-management" 
+                    className="flex items-center p-3 rounded-lg border border-liberty-secondary/20 hover:border-liberty-primary/30 hover:bg-liberty-primary/5 transition-colors"
+                  >
+                    <div>
+                      <p className="font-medium text-liberty-standard text-sm">Property Management</p>
+                      <p className="text-xs text-liberty-standard/60">After you take control</p>
+                    </div>
+                  </a>
+                  <a 
+                    href="/contact" 
+                    className="flex items-center p-3 rounded-lg border border-liberty-secondary/20 hover:border-liberty-primary/30 hover:bg-liberty-primary/5 transition-colors"
+                  >
+                    <div>
+                      <p className="font-medium text-liberty-standard text-sm">Contact Us</p>
+                      <p className="text-xs text-liberty-standard/60">Get in touch with our team</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </CardContent>
+            
+            <CardFooter className="flex justify-center pt-0">
               <Button 
                 className="bg-liberty-primary hover:bg-liberty-primary/90 text-white"
-                onClick={() => router.push('/dashboard')}
+                onClick={() => router.push('/')}
               >
-                Go to Dashboard
+                Return to Homepage
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </CardFooter>
