@@ -35,22 +35,22 @@ export const createEligibilityDerivedData = (
       return 'RMC/RTM status unknown';
     })(),
     
-    // Set provisional path based on outcome
+    // Set provisional path based on outcome - display-ready text
     provisionalPath: (() => {
-      if (!outcome) return 'Path to be determined';
+      if (!outcome) return 'Not yet determined';
       
       if (outcome.action === 'registration') {
         const nonResAnswer = findAnswer('non_residential_proportion');
         const allowsBoth = !nonResAnswer || nonResAnswer === '25_or_less';
-        return allowsBoth ? 'RTM or CE available' : 'RTM available';
+        return allowsBoth ? 'Right to Manage or buy your freehold' : 'Right to Manage (freehold not available)';
       }
       if (outcome.action === 'leaseholder_engagement_module') {
-        return 'Leaseholder engagement required';
+        return 'Build neighbor support first';
       }
       if (outcome.action === 'rmc_process') {
-        return 'RMC takeover/improvement';
+        return 'Improve existing management';
       }
-      return 'Path to be determined';
+      return 'Not yet determined';
     })()
   };
 };

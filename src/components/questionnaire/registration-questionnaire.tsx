@@ -362,14 +362,7 @@ export default function RegistrationQuestionnaire({
                       <div>
                         <span className="text-sm font-medium text-liberty-standard/60">Recommended Path:</span>
                         <p className="font-medium text-liberty-standard">
-                          {(() => {
-                            const path = eligibilityData?.derivedData?.provisionalPath;
-                            if (path === "RTM or CE available") return "Right to Manage or buy your freehold";
-                            if (path === "RTM available") return "Right to Manage (freehold not available)";
-                            if (path === "Leaseholder engagement required") return "Build neighbor support";
-                            if (path === "RMC takeover/improvement") return "Improve existing management";
-                            return "Not yet determined";
-                          })()}
+                          {eligibilityData?.derivedData?.provisionalPath || "Not yet determined"}
                         </p>
                       </div>
                       <Button 
