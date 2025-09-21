@@ -183,23 +183,13 @@
     "outcomes": {
       "success": {
         "type": "success",
-        "title": "You have successfully registered!",
-        "message": "Your case has been created and you can sign in in future via your email address.",
+        "title": "Thank You for Registering!",
+        "message": "Your registration has been successfully submitted. Our team will be in contact with you soon to discuss your next steps.",
         "actions": [
           {
-            "text": "Go to Dashboard",
-            "href": "/dashboard",
+            "text": "Return to Homepage",
+            "href": "/",
             "primary": true
-          },
-          {
-            "text": "Invite Co-lead",
-            "href": "/invite-co-lead",
-            "secondary": true
-          },
-          {
-            "text": "Upload Documents",
-            "href": "/upload-documents",
-            "secondary": true
           }
         ]
       },

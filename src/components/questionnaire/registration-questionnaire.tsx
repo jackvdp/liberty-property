@@ -223,11 +223,10 @@ export default function RegistrationQuestionnaire({
                 <CheckCircle2 className="text-liberty-primary w-8 h-8" />
               </motion.div>
               <CardTitle className="text-3xl sm:text-4xl font-reckless font-bold text-liberty-standard mb-4">
-                Thank You for Registering!
+                {outcome.title}
               </CardTitle>
               <CardDescription className="text-lg text-liberty-standard/70 leading-relaxed space-y-3">
-                <p>Your registration has been successfully submitted.</p>
-                <p className="font-medium">Our team will be in contact with you soon to discuss your next steps.</p>
+                <p>{outcome.message}</p>
               </CardDescription>
             </CardHeader>
             
@@ -343,13 +342,15 @@ export default function RegistrationQuestionnaire({
             </CardContent>
             
             <CardFooter className="flex justify-center pt-0">
-              <Button 
-                className="bg-liberty-primary hover:bg-liberty-primary/90 text-white"
-                onClick={() => router.push('/')}
-              >
-                Return to Homepage
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
+              {outcome.actions && outcome.actions[0] && (
+                <Button 
+                  className="bg-liberty-primary hover:bg-liberty-primary/90 text-white"
+                  onClick={() => router.push(outcome.actions![0].href)}
+                >
+                  {outcome.actions[0].text}
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              )}
             </CardFooter>
           </Card>
         </motion.div>
