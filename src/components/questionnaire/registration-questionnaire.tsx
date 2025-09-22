@@ -322,7 +322,7 @@ export default function RegistrationQuestionnaire({
                 <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
                   <h4 className="font-semibold text-amber-900 mb-2">Complete Your Eligibility Check</h4>
                   <p className="text-amber-800 text-sm mb-3">
-                    To get personalized recommendations for your building, please complete our eligibility check.
+                    To get personalised recommendations for your building, please complete our eligibility check.
                   </p>
                   <Button 
                     variant="outline"

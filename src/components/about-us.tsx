@@ -36,7 +36,7 @@ const credentials = [
 
 export default function AboutUs() {
   return (
-    <section className="py-16 sm:py-24 lg:py-32 bg-liberty-base">
+    <section className="py-16 sm:py-24 bg-liberty-base">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -55,7 +55,7 @@ export default function AboutUs() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left: Content */}
           <div>
             <motion.div
@@ -124,84 +124,84 @@ export default function AboutUs() {
         </div>
 
         {/* Professional Credentials */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true }}
-        >
-          <div className="text-center mb-12">
-            <h3 className="text-2xl lg:text-3xl font-reckless font-bold text-liberty-background mb-4">
-              Our <span className="text-liberty-primary">Credentials & Partners</span>
-            </h3>
-            <p className="text-lg text-liberty-background/70 max-w-3xl mx-auto">
-              Backed by leading institutions and recognized by government as a trusted partner in leasehold reform.
-            </p>
-          </div>
+        {/*<motion.div*/}
+        {/*  initial={{ opacity: 0, y: 30 }}*/}
+        {/*  whileInView={{ opacity: 1, y: 0 }}*/}
+        {/*  transition={{ duration: 0.8, ease: "easeOut" }}*/}
+        {/*  viewport={{ once: true }}*/}
+        {/*>*/}
+        {/*  <div className="text-center mb-12">*/}
+        {/*    <h3 className="text-2xl lg:text-3xl font-reckless font-bold text-liberty-background mb-4">*/}
+        {/*      Our <span className="text-liberty-primary">Credentials & Partners</span>*/}
+        {/*    </h3>*/}
+        {/*    <p className="text-lg text-liberty-background/70 max-w-3xl mx-auto">*/}
+        {/*      Backed by leading institutions and recognized by government as a trusted partner in leasehold reform.*/}
+        {/*    </p>*/}
+        {/*  </div>*/}
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {credentials.map((credential, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
-                viewport={{ once: true }}
-              >
-                <Card className="h-full bg-liberty-base border-liberty-secondary/30 hover:border-liberty-accent/50 transition-all duration-300 hover:shadow-lg">
-                  <CardContent className="p-8 text-center flex flex-col h-full">
-                    <div className="h-16 flex items-center justify-center mx-auto mb-6">
-                      {index === 0 && (
-                        <Image 
-                          src="/partners/property-institute.png" 
-                          alt="Property Institute" 
-                          width={120} 
-                          height={50} 
-                          className="object-contain"
-                        />
-                      )}
-                      {index === 1 && (
-                        <Image 
-                          src="/partners/santander.png" 
-                          alt="Santander Buildings" 
-                          width={140} 
-                          height={50} 
-                          className="object-contain"
-                        />
-                      )}
-                      {index === 2 && (
-                        <Image 
-                          src="/partners/mhlcg.png" 
-                          alt="Ministry of Housing, Communities & Local Government" 
-                          width={100} 
-                          height={50} 
-                          className="object-contain"
-                        />
-                      )}
-                    </div>
-                    <h4 className="text-xl font-reckless font-bold text-liberty-background mb-4">
-                      {credential.title}
-                    </h4>
-                    <p className="text-liberty-background/70 leading-relaxed mb-4 flex-grow">
-                      {credential.description}
-                    </p>
-                    {credential.link && (
-                      <a
-                        href={credential.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-liberty-primary hover:text-liberty-accent transition-colors text-sm font-medium"
-                      >
-                        Learn More
-                        <ExternalLink size={14} />
-                      </a>
-                    )}
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+        {/*  <div className="grid md:grid-cols-3 gap-8">*/}
+        {/*    {credentials.map((credential, index) => (*/}
+        {/*      <motion.div*/}
+        {/*        key={index}*/}
+        {/*        initial={{ opacity: 0, y: 20 }}*/}
+        {/*        whileInView={{ opacity: 1, y: 0 }}*/}
+        {/*        transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}*/}
+        {/*        viewport={{ once: true }}*/}
+        {/*      >*/}
+        {/*        <Card className="h-full bg-liberty-base border-liberty-secondary/30 hover:border-liberty-accent/50 transition-all duration-300 hover:shadow-lg">*/}
+        {/*          <CardContent className="p-8 text-center flex flex-col h-full">*/}
+        {/*            <div className="h-16 flex items-center justify-center mx-auto mb-6">*/}
+        {/*              {index === 0 && (*/}
+        {/*                <Image */}
+        {/*                  src="/partners/property-institute.png" */}
+        {/*                  alt="Property Institute" */}
+        {/*                  width={120} */}
+        {/*                  height={50} */}
+        {/*                  className="object-contain"*/}
+        {/*                />*/}
+        {/*              )}*/}
+        {/*              {index === 1 && (*/}
+        {/*                <Image */}
+        {/*                  src="/partners/santander.png" */}
+        {/*                  alt="Santander Buildings" */}
+        {/*                  width={140} */}
+        {/*                  height={50} */}
+        {/*                  className="object-contain"*/}
+        {/*                />*/}
+        {/*              )}*/}
+        {/*              {index === 2 && (*/}
+        {/*                <Image */}
+        {/*                  src="/partners/mhlcg.png" */}
+        {/*                  alt="Ministry of Housing, Communities & Local Government" */}
+        {/*                  width={100} */}
+        {/*                  height={50} */}
+        {/*                  className="object-contain"*/}
+        {/*                />*/}
+        {/*              )}*/}
+        {/*            </div>*/}
+        {/*            <h4 className="text-xl font-reckless font-bold text-liberty-background mb-4">*/}
+        {/*              {credential.title}*/}
+        {/*            </h4>*/}
+        {/*            <p className="text-liberty-background/70 leading-relaxed mb-4 flex-grow">*/}
+        {/*              {credential.description}*/}
+        {/*            </p>*/}
+        {/*            {credential.link && (*/}
+        {/*              <a*/}
+        {/*                href={credential.link}*/}
+        {/*                target="_blank"*/}
+        {/*                rel="noopener noreferrer"*/}
+        {/*                className="inline-flex items-center gap-2 text-liberty-primary hover:text-liberty-accent transition-colors text-sm font-medium"*/}
+        {/*              >*/}
+        {/*                Learn More*/}
+        {/*                <ExternalLink size={14} />*/}
+        {/*              </a>*/}
+        {/*            )}*/}
+        {/*          </CardContent>*/}
+        {/*        </Card>*/}
+        {/*      </motion.div>*/}
+        {/*    ))}*/}
+        {/*  </div>*/}
+        {/*</motion.div>*/}
       </div>
     </section>
   )

@@ -33,42 +33,42 @@ export default function AboutPage() {
             </p>
             
             {/* Partner Logos */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-              className="flex flex-wrap justify-center items-center gap-8 lg:gap-12"
-            >
-              <div className="h-12 flex items-center">
-                <Image 
-                  src="/partners/property-institute.png" 
-                  alt="Property Institute" 
-                  width={100} 
-                  height={40} 
-                  className="object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-300"
-                />
-              </div>
-              
-              <div className="h-12 flex items-center">
-                <Image 
-                  src="/partners/santander.png" 
-                  alt="Santander Buildings" 
-                  width={120} 
-                  height={40} 
-                  className="object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-300"
-                />
-              </div>
-              
-              <div className="h-12 flex items-center">
-                <Image 
-                  src="/partners/mhlcg.png" 
-                  alt="Ministry of Housing, Communities & Local Government" 
-                  width={80} 
-                  height={40} 
-                  className="object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-300"
-                />
-              </div>
-            </motion.div>
+            {/*<motion.div*/}
+            {/*  initial={{ opacity: 0, y: 10 }}*/}
+            {/*  animate={{ opacity: 1, y: 0 }}*/}
+            {/*  transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}*/}
+            {/*  className="flex flex-wrap justify-center items-center gap-8 lg:gap-12"*/}
+            {/*>*/}
+            {/*  <div className="h-12 flex items-center">*/}
+            {/*    <Image */}
+            {/*      src="/partners/property-institute.png" */}
+            {/*      alt="Property Institute" */}
+            {/*      width={100} */}
+            {/*      height={40} */}
+            {/*      className="object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-300"*/}
+            {/*    />*/}
+            {/*  </div>*/}
+            {/*  */}
+            {/*  <div className="h-12 flex items-center">*/}
+            {/*    <Image */}
+            {/*      src="/partners/santander.png" */}
+            {/*      alt="Santander Buildings" */}
+            {/*      width={120} */}
+            {/*      height={40} */}
+            {/*      className="object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-300"*/}
+            {/*    />*/}
+            {/*  </div>*/}
+            {/*  */}
+            {/*  <div className="h-12 flex items-center">*/}
+            {/*    <Image */}
+            {/*      src="/partners/mhlcg.png" */}
+            {/*      alt="Ministry of Housing, Communities & Local Government" */}
+            {/*      width={80} */}
+            {/*      height={40} */}
+            {/*      className="object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-300"*/}
+            {/*    />*/}
+            {/*  </div>*/}
+            {/*</motion.div>*/}
           </motion.div>
         </div>
       </section>
