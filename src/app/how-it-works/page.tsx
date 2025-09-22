@@ -629,133 +629,153 @@ export default function HowItWorksPage() {
         </section>
 
         {/* Pathways Section */}
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="py-20"
-        >
-          <div className="container mx-auto px-4">
-            <div className="space-y-32">
+        <section className="py-16 sm:py-24 lg:py-32 bg-liberty-base">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Section Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
+                Three Paths to <span className="text-liberty-accent">Property Control</span>
+              </h2>
+              <p className="text-lg text-liberty-background/70 max-w-3xl mx-auto">
+                Each route offers different benefits and timelines. We'll help you choose the right path for your building and circumstances.
+              </p>
+            </motion.div>
+
+            {/* Pathways Cards */}
+            <div className="space-y-20">
               {pathways.map((pathway, index) => {
-                const PathwayIcon = pathway.icon;
-                
                 return (
                   <motion.div
                     key={pathway.id}
-                    variants={itemVariants}
-                    className="relative"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    viewport={{ once: true }}
                   >
-                    <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
+                    <div className={`grid lg:grid-cols-2 gap-12 items-center ${
                       index % 2 === 1 ? 'lg:flex-row-reverse' : ''
                     }`}>
                       {/* Content */}
                       <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
                         <motion.div
-                          initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                          initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
                           whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                           viewport={{ once: true }}
-                          transition={{ duration: 0.6 }}
                         >
-                          <div className={`inline-block px-4 py-2 rounded-full ${pathway.color} mb-4`}>
-                            <span className={`text-sm font-semibold ${pathway.id === 'rtm' ? 'text-white' : 'text-liberty-standard'}`}>
+                          {/* Option Badge */}
+                          <div className="inline-flex items-center gap-2 mb-4">
+                            <span className="text-sm font-medium px-3 py-1 bg-liberty-accent/10 text-liberty-accent rounded-full">
                               Option {index + 1}
+                            </span>
+                            <span className="text-sm text-liberty-background/60">
+                              • {pathway.timeframe}
                             </span>
                           </div>
                           
-                          <h2 className="!text-4xl font-reckless !text-liberty-standard mb-2">
+                          <h3 className="text-3xl sm:text-4xl font-reckless font-bold text-liberty-background mb-2">
                             {pathway.title}
-                          </h2>
+                          </h3>
                           <p className="text-xl text-liberty-primary mb-4">
                             {pathway.subtitle}
                           </p>
-                          <p className="text-lg text-gray-700 mb-8">
+                          <p className="text-liberty-background/70 leading-relaxed mb-8">
                             {pathway.description}
                           </p>
 
-                          {/* Key Info */}
-                          <div className="mb-8">
-                            <div className="bg-liberty-secondary rounded-lg p-4 inline-block">
-                              <Clock className="w-5 h-5 text-liberty-primary mb-2" />
-                              <p className="text-sm text-gray-600">Timeline</p>
-                              <p className="text-lg font-semibold text-liberty-standard">{pathway.timeframe}</p>
-                            </div>
-                          </div>
-
-                          {/* Benefits & Limitations */}
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                            <div>
-                              <h4 className="!font-semibold !text-liberty-standard mb-3 flex items-center">
-                                <CheckCircle2 className="w-5 h-5 text-liberty-accent mr-2" />
-                                Benefits
-                              </h4>
-                              <ul className="space-y-2">
-                                {pathway.benefits.map((benefit, i) => (
-                                  <motion.li
-                                    key={i}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: i * 0.1 }}
-                                    className="text-sm text-gray-700 flex items-start"
-                                  >
-                                    <Sparkles className="w-4 h-4 text-liberty-accent mr-2 mt-0.5 flex-shrink-0" />
+                          {/* Benefits List */}
+                          <div className="space-y-4 mb-8">
+                            <h4 className="font-semibold text-liberty-background flex items-center gap-2">
+                              <CheckCircle2 className="w-5 h-5 text-liberty-accent" />
+                              Key Benefits
+                            </h4>
+                            <div className="space-y-3">
+                              {pathway.benefits.slice(0, 3).map((benefit, i) => (
+                                <motion.div
+                                  key={i}
+                                  initial={{ opacity: 0, x: -20 }}
+                                  whileInView={{ opacity: 1, x: 0 }}
+                                  transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
+                                  viewport={{ once: true }}
+                                  className="flex items-start gap-3"
+                                >
+                                  <div className="w-2 h-2 bg-liberty-accent rounded-full mt-2 flex-shrink-0" />
+                                  <span className="text-liberty-background/70">
                                     {benefit}
-                                  </motion.li>
-                                ))}
-                              </ul>
-                            </div>
-                            <div>
-                              <h4 className="!font-semibold !text-liberty-standard mb-3">
-                                Considerations
-                              </h4>
-                              <ul className="space-y-2">
-                                {pathway.limitations.map((limitation, i) => (
-                                  <motion.li
-                                    key={i}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: i * 0.1 }}
-                                    className="text-sm text-gray-600"
-                                  >
-                                    • {limitation}
-                                  </motion.li>
-                                ))}
-                              </ul>
+                                  </span>
+                                </motion.div>
+                              ))}
                             </div>
                           </div>
 
-                          {/* Best For */}
-                          <div className="bg-liberty-secondary rounded-lg p-4 mb-6">
+                          {/* Best For Section */}
+                          <div className="p-4 bg-liberty-secondary/20 border border-liberty-secondary/30 rounded-lg mb-8">
                             <p className="text-sm font-semibold text-liberty-primary mb-1">Best For:</p>
-                            <p className="text-gray-700">{pathway.bestFor}</p>
+                            <p className="text-liberty-background/70 text-sm">{pathway.bestFor}</p>
                           </div>
 
-                          <Button size="xl" onClick={() => setSelectedPathway(pathway.id)}
-                                  className={`${pathway.color} ${pathway.id === 'rtm' ? 'text-white' : 'text-liberty-standard'} hover:opacity-90 group`}>
-                              Learn More About {pathway.title}
-                              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                          </Button>
+                          <div className="flex flex-col sm:flex-row gap-4">
+                            <Button 
+                              size="lg" 
+                              asChild
+                              className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base"
+                            >
+                              <Link href={pathway.detailPage} className="flex items-center gap-2">
+                                Learn About {pathway.title}
+                                <ArrowRight size={20} />
+                              </Link>
+                            </Button>
+                            <Button 
+                              size="lg" 
+                              variant="outline"
+                              onClick={() => setSelectedPathway(pathway.id)}
+                              className="border-liberty-secondary text-liberty-standard hover:bg-liberty-secondary/10"
+                            >
+                              Quick View Details
+                            </Button>
+                          </div>
                         </motion.div>
                       </div>
 
                       {/* Image */}
                       <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
                         <motion.div
-                          initial={{ opacity: 0, scale: 0.9 }}
+                          initial={{ opacity: 0, scale: 0.95 }}
                           whileInView={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
                           viewport={{ once: true }}
-                          transition={{ duration: 0.6 }}
-                          className="relative"
+                          className="relative h-[400px] rounded-xl overflow-hidden shadow-xl"
                         >
                           <Image
                             src={pathway.image}
                             alt={pathway.title}
-                            width={600}
-                            height={400}
-                            className="rounded-lg w-full h-auto"
+                            fill
+                            className="object-cover"
                           />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                          
+                          {/* Control Level Indicator */}
+                          <div className="absolute bottom-4 left-4 right-4 bg-liberty-base/95 backdrop-blur-sm p-4 rounded-lg">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-sm font-medium text-liberty-background">Level of Control</span>
+                              <span className="text-sm font-bold text-liberty-accent">{pathway.control}%</span>
+                            </div>
+                            <div className="h-2 bg-liberty-secondary/30 rounded-full overflow-hidden">
+                              <motion.div
+                                initial={{ width: 0 }}
+                                whileInView={{ width: `${pathway.control}%` }}
+                                transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+                                viewport={{ once: true }}
+                                className="h-full bg-liberty-accent"
+                              />
+                            </div>
+                          </div>
                         </motion.div>
                       </div>
                     </div>
@@ -763,8 +783,31 @@ export default function HowItWorksPage() {
                 );
               })}
             </div>
+
+            {/* CTA Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+              viewport={{ once: true }}
+              className="text-center mt-20"
+            >
+              <p className="text-liberty-background/70 mb-6 text-lg">
+                Not sure which path is right for your building?
+              </p>
+              <Button 
+                size="xl" 
+                asChild 
+                className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base"
+              >
+                <Link href="/eligibility-check" className="flex items-center gap-3 group">
+                  Check Your Eligibility
+                  <ArrowRight size={20} className="group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300 ease-out" />
+                </Link>
+              </Button>
+            </motion.div>
           </div>
-        </motion.section>
+        </section>
 
         {/* Decision Helper */}
         <motion.section
