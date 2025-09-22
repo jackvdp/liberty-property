@@ -189,7 +189,10 @@ export function CheckboxInput({ question, value, onChange, onCheckboxChange }: S
               {question.required && <span className="text-red-500 ml-1">*</span>}
             </Label>
             {question.description && (
-              <p className="text-sm text-liberty-standard/60 mt-1">{question.description}</p>
+              <p 
+                className="text-sm text-liberty-standard/60 mt-1"
+                dangerouslySetInnerHTML={{ __html: question.description }}
+              />
             )}
           </div>
         </div>

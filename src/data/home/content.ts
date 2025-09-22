@@ -423,15 +423,11 @@ export const content = {
     legal: [
       {
         title: "Privacy Policy",
-        href: "/privacy-policy"
+        href: "/privacy"
       },
       {
-        title: "Terms of Service",
-        href: "/terms-of-service"
-      },
-      {
-        title: "Cookie Policy",
-        href: "/cookie-policy"
+        title: "Terms & Conditions",
+        href: "/terms"
       }
     ],
     copyright: "© 2025 Liberty Bell Property Management",

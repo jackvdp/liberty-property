@@ -145,6 +145,7 @@
           {
             "id": "terms_conditions",
             "question": "I agree to the Terms & Conditions",
+            "description": "Please read our <a href='/terms' target='_blank' class='text-liberty-primary hover:underline'>Terms & Conditions</a> before proceeding",
             "type": "checkbox",
             "required": true,
             "validation": {
@@ -154,6 +155,7 @@
           {
             "id": "privacy_policy",
             "question": "I agree to the Privacy Policy",
+            "description": "Please read our <a href='/privacy' target='_blank' class='text-liberty-primary hover:underline'>Privacy Policy</a> to understand how we protect your data",
             "type": "checkbox",
             "required": true,
             "validation": {
