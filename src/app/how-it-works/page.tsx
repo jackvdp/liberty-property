@@ -428,10 +428,13 @@ export default function HowItWorksPage() {
               {/* Journey Steps Container with Line */}
               <div className="relative">
                 {/* Progress Line with Scroll Effect */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-1 top-0 bottom-0 bg-liberty-secondary overflow-hidden rounded-2xl">
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 top-0 bottom-0 bg-liberty-secondary/30">
                   <motion.div
-                    className="w-full h-full bg-liberty-primary origin-top"
-                    style={{ scaleY: scrollYProgress }}
+                    className="w-full bg-liberty-primary/70 origin-top"
+                    style={{ 
+                      scaleY: scrollYProgress,
+                      height: '100%'
+                    }}
                   />
                 </div>
                 
@@ -455,19 +458,18 @@ export default function HowItWorksPage() {
                           {step.position === 'left' ? (
                             <>
                               <div className="w-5/12 pr-8">
-                                <Card className="bg-white border-liberty-secondary p-6 shadow-sm transition-shadow hover:shadow-md">
+                                <Card className="bg-liberty-accent/5 border border-liberty-accent/20 p-6 hover:bg-liberty-accent/10 transition-colors duration-300">
                                   <div className="flex items-start justify-between mb-4">
                                     <div>
-                                      <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
+                                      <h3 className="font-semibold text-liberty-background text-lg mb-1">
                                         {step.title}
                                       </h3>
-                                      <p className="text-sm text-liberty-primary font-medium">
+                                      <p className="text-sm text-liberty-primary">
                                         {step.subtitle}
                                       </p>
                                     </div>
-                                    <Icon className={`w-6 h-6 ${step.iconColor}`} />
                                   </div>
-                                  <p className="text-sm text-gray-600 mb-4">
+                                  <p className="text-sm text-liberty-background/70 leading-relaxed mb-4">
                                     {step.description}
                                   </p>
                                   
@@ -486,12 +488,12 @@ export default function HowItWorksPage() {
                                   )}
                                   
                                   {step.badges && step.badges.length > 0 && (
-                                    <div className="flex gap-4 text-xs text-gray-500">
+                                    <div className="flex gap-4 text-xs text-liberty-background/60">
                                       {step.badges.map((badge, i) => {
                                         const BadgeIcon = badge.icon;
                                         return (
                                           <span key={i} className="flex items-center">
-                                            <BadgeIcon className={`w-3 h-3 mr-1 ${badge.color || ''}`} />
+                                            <BadgeIcon className={`w-3 h-3 mr-1 ${badge.color || 'text-liberty-accent'}`} />
                                             {badge.text}
                                           </span>
                                         );
@@ -523,8 +525,8 @@ export default function HowItWorksPage() {
                               </div>
                               
                               <div className="w-2/12 flex justify-center">
-                                <div className="w-16 h-16 bg-liberty-primary rounded-full flex items-center justify-center shadow-lg relative z-10">
-                                  <span className="text-2xl font-bold text-white">{step.number}</span>
+                                <div className="w-14 h-14 bg-liberty-base border-2 border-liberty-primary/40 rounded-full flex items-center justify-center shadow-sm relative z-10">
+                                  <span className="text-2xl font-reckless font-bold text-liberty-primary">{step.number}</span>
                                 </div>
                               </div>
                               
@@ -535,35 +537,34 @@ export default function HowItWorksPage() {
                               <div className="w-5/12" />
                               
                               <div className="w-2/12 flex justify-center">
-                                <div className="w-16 h-16 bg-liberty-primary rounded-full flex items-center justify-center shadow-lg relative z-10">
-                                  <span className="text-2xl font-bold text-white">{step.number}</span>
+                                <div className="w-14 h-14 bg-liberty-base border-2 border-liberty-primary/40 rounded-full flex items-center justify-center shadow-sm relative z-10">
+                                  <span className="text-2xl font-reckless font-bold text-liberty-primary">{step.number}</span>
                                 </div>
                               </div>
 
                               <div className="w-5/12 pl-8">
-                                <Card className="bg-white border-liberty-secondary p-6 shadow-sm transition-shadow hover:shadow-md">
+                                <Card className="bg-liberty-accent/5 border border-liberty-accent/20 p-6 hover:bg-liberty-accent/10 transition-colors duration-300">
                                   <div className="flex items-start justify-between mb-4">
                                     <div>
-                                      <h3 className="!text-xl font-bold !text-liberty-standard mb-1">
+                                      <h3 className="font-semibold text-liberty-background text-lg mb-1">
                                         {step.title}
                                       </h3>
-                                      <p className="text-sm text-liberty-primary font-medium">
+                                      <p className="text-sm text-liberty-primary">
                                         {step.subtitle}
                                       </p>
                                     </div>
-                                    <Icon className={`w-6 h-6 ${step.iconColor}`} />
                                   </div>
-                                  <p className="text-sm text-gray-600 mb-4">
+                                  <p className="text-sm text-liberty-background/70 leading-relaxed mb-4">
                                     {step.description}
                                   </p>
                                   
                                   {step.badges && step.badges.length > 0 && (
-                                    <div className="flex gap-4 text-xs text-gray-500">
+                                    <div className="flex gap-4 text-xs text-liberty-background/60">
                                       {step.badges.map((badge, i) => {
                                         const BadgeIcon = badge.icon;
                                         return (
                                           <span key={i} className="flex items-center">
-                                            <BadgeIcon className={`w-3 h-3 mr-1 ${badge.color || ''}`} />
+                                            <BadgeIcon className={`w-3 h-3 mr-1 ${badge.color || 'text-liberty-accent'}`} />
                                             {badge.text}
                                           </span>
                                         );
