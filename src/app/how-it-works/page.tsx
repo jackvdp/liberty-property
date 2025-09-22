@@ -444,10 +444,10 @@ export default function HowItWorksPage() {
                     return (
                       <motion.div
                         key={step.number}
-                        initial={{ opacity: 0, x: animationX, y: 30 }}
-                        whileInView={{ opacity: 1, x: 0, y: 0 }}
+                        initial={{ opacity: 0, x: animationX }}
+                        whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
+                        transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
                         className="relative"
                         style={{ zIndex: 50 - (index * 10) }}
                       >
@@ -673,16 +673,11 @@ export default function HowItWorksPage() {
                           </p>
 
                           {/* Key Info */}
-                          <div className="grid grid-cols-2 gap-6 mb-8">
-                            <div className="bg-liberty-secondary rounded-lg p-4">
+                          <div className="mb-8">
+                            <div className="bg-liberty-secondary rounded-lg p-4 inline-block">
                               <Clock className="w-5 h-5 text-liberty-primary mb-2" />
                               <p className="text-sm text-gray-600">Timeline</p>
                               <p className="text-lg font-semibold text-liberty-standard">{pathway.timeframe}</p>
-                            </div>
-                            <div className="bg-liberty-secondary rounded-lg p-4">
-                              <Coins className="w-5 h-5 text-liberty-primary mb-2" />
-                              <p className="text-sm text-gray-600">Typical Cost</p>
-                              <p className="text-lg font-semibold text-liberty-standard">{pathway.cost}</p>
                             </div>
                           </div>
 
@@ -751,25 +746,15 @@ export default function HowItWorksPage() {
                           whileInView={{ opacity: 1, scale: 1 }}
                           viewport={{ once: true }}
                           transition={{ duration: 0.6 }}
-                          whileHover={{ scale: 1.05 }}
                           className="relative"
                         >
-                          <div className="relative bg-white rounded-2xl p-8 shadow-xl border border-gray-200">
-                            <Image
-                              src={pathway.image}
-                              alt={pathway.title}
-                              width={600}
-                              height={400}
-                              className="rounded-lg w-full h-auto"
-                            />
-                            
-                            {/* Floating icon */}
-                            <div
-                              className={`absolute -top-4 -right-4 ${pathway.color} p-3 rounded-full shadow-lg`}
-                            >
-                              <PathwayIcon className={`w-6 h-6 ${pathway.iconColor}`} />
-                            </div>
-                          </div>
+                          <Image
+                            src={pathway.image}
+                            alt={pathway.title}
+                            width={600}
+                            height={400}
+                            className="rounded-lg w-full h-auto"
+                          />
                         </motion.div>
                       </div>
                     </div>
