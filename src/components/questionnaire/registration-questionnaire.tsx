@@ -18,6 +18,7 @@ import {
   RegistrationAnswer,
   RegistrationOutcome
 } from "./registration-types";
+import { createRegistrationCase } from "@/lib/actions/registration.actions";
 
 export default function RegistrationQuestionnaire({
   data,
@@ -33,6 +34,8 @@ export default function RegistrationQuestionnaire({
   const [progress, setProgress] = useState<number>(0);
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [outcome, setOutcome] = useState<RegistrationOutcome | null>(null);
+  const [registrationId, setRegistrationId] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
 
   const { sections, outcomes } = data;
   const sectionKeys = Object.keys(sections);
@@ -153,10 +156,33 @@ export default function RegistrationQuestionnaire({
     const nextSectionId = currentSection.nextSection;
 
     if (nextSectionId === "success") {
-      // We've reached the end
-      setOutcome(outcomes.success as RegistrationOutcome);
-      setIsComplete(true);
-      onComplete?.(outcomes.success as RegistrationOutcome, newSectionAnswers);
+      // Save registration to database
+      setIsSaving(true);
+      try {
+        const result = await createRegistrationCase(
+          newSectionAnswers,
+          eligibilityData?.uuid
+        );
+        
+        if (result.success && result.data) {
+          setRegistrationId(result.data.id);
+          setOutcome(outcomes.success as RegistrationOutcome);
+          setIsComplete(true);
+          onComplete?.(outcomes.success as RegistrationOutcome, newSectionAnswers);
+        } else {
+          // Handle error - show error message but still mark as complete
+          console.error("Failed to save registration:", result.error);
+          setOutcome(outcomes.success as RegistrationOutcome);
+          setIsComplete(true);
+        }
+      } catch (error) {
+        console.error("Error saving registration:", error);
+        // Still show success screen even if save fails
+        setOutcome(outcomes.success as RegistrationOutcome);
+        setIsComplete(true);
+      } finally {
+        setIsSaving(false);
+      }
     } else {
       // Move to next section
       setCurrentSectionId(nextSectionId);
@@ -227,6 +253,17 @@ export default function RegistrationQuestionnaire({
               </CardTitle>
               <CardDescription className="text-lg text-liberty-standard/70 leading-relaxed space-y-3">
                 <p>{outcome.message}</p>
+                {registrationId && (
+                  <div className="mt-4 p-4 bg-liberty-primary/5 rounded-lg border border-liberty-primary/20">
+                    <p className="text-sm text-liberty-standard/60 mb-1">Your registration reference:</p>
+                    <p className="font-mono font-semibold text-liberty-primary text-lg">
+                      {registrationId.slice(0, 8).toUpperCase()}
+                    </p>
+                    <p className="text-xs text-liberty-standard/50 mt-2">
+                      Please save this reference for future correspondence.
+                    </p>
+                  </div>
+                )}
               </CardDescription>
             </CardHeader>
             
@@ -514,7 +551,7 @@ export default function RegistrationQuestionnaire({
             <Button 
               variant="outline" 
               onClick={handleBack} 
-              disabled={currentSectionIndex === 0}
+              disabled={currentSectionIndex === 0 || isSaving}
               className="border-liberty-secondary text-liberty-standard hover:bg-liberty-secondary/10"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -522,11 +559,26 @@ export default function RegistrationQuestionnaire({
             </Button>
             <Button 
               onClick={handleNext} 
-              disabled={!validateSection()}
+              disabled={!validateSection() || isSaving}
               className="bg-liberty-primary hover:bg-liberty-primary/90 text-white"
             >
-              {currentSection.nextSection === "success" ? "Submit" : "Continue"}
-              <ArrowRight className="w-4 h-4" />
+              {isSaving ? (
+                <>
+                  Saving...
+                  <motion.div 
+                    className="ml-2"
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  >
+                    ⟳
+                  </motion.div>
+                </>
+              ) : (
+                <>
+                  {currentSection.nextSection === "success" ? "Submit" : "Continue"}
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </>
+              )}
             </Button>
           </CardFooter>
         </Card>

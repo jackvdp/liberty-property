@@ -1,6 +1,6 @@
 /**
  * Simplified Liberty Bell Database Schema
- * Just eligibility checks for now
+ * Eligibility checks and registrations
  */
 
 import {
@@ -18,6 +18,12 @@ import {
 
 export const eligibilityStatusEnum = pgEnum('eligibility_status', ['success', 'failure', 'info']);
 export const caseTypeEnum = pgEnum('case_type', ['rtm', 'enfranchisement', 'rmc_takeover']);
+export const registrationStatusEnum = pgEnum('registration_status', [
+  'pending',
+  'contacted',
+  'active',
+  'completed'
+]);
 
 // ============ ELIGIBILITY CHECKS ============
 
@@ -54,6 +60,45 @@ export const eligibilityChecks = pgTable('eligibility_checks', {
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
 
+// ============ REGISTRATIONS ============
+
+export const registrations = pgTable('registrations', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  eligibilityCheckId: uuid('eligibility_check_id').references(() => eligibilityChecks.id),
+  
+  // Contact Details (Step 1)
+  fullName: text('full_name').notNull(),
+  emailAddress: text('email_address').notNull(),
+  mobileNumber: text('mobile_number'),
+  consentContact: boolean('consent_contact').notNull(),
+  
+  // Building Details (Step 2)
+  buildingAddress: text('building_address').notNull(),
+  postcode: text('postcode').notNull(),
+  localAuthority: text('local_authority'),
+  numberOfFlats: integer('number_of_flats').notNull(),
+  
+  // Process Choice (Step 6a - optional)
+  preferredProcess: text('preferred_process'), // 'rtm', 'ce', 'rmc', 'dk'
+  
+  // Legal Consents (Step 7)
+  termsConditions: boolean('terms_conditions').notNull(),
+  privacyPolicy: boolean('privacy_policy').notNull(),
+  dataProcessing: boolean('data_processing').notNull(),
+  marketingConsent: boolean('marketing_consent'),
+  
+  // Metadata
+  allAnswers: jsonb('all_answers'), // Store complete form data for reference
+  status: registrationStatusEnum('status').default('pending'),
+  
+  // Timestamps
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+});
+
 // Export types
 export type EligibilityCheck = typeof eligibilityChecks.$inferSelect;
 export type NewEligibilityCheck = typeof eligibilityChecks.$inferInsert;
+
+export type Registration = typeof registrations.$inferSelect;
+export type NewRegistration = typeof registrations.$inferInsert;
