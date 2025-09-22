@@ -168,7 +168,7 @@ export default function WhoWeAre() {
               giving knowledge and power to us as buyers.
             </p>
             <p className="text-2xl sm:text-3xl font-reckless font-bold text-liberty-primary">
-              Join us because as a community together we are better and stronger!
+              Join our community - together we're stronger.
             </p>
           </motion.div>
 
