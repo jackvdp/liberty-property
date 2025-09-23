@@ -107,7 +107,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile menu button - Right side for mobile */}
-          <div className="lg:hidden flex justify-end">
+          <div className="lg:hidden col-span-2 flex justify-end">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <Button
@@ -169,7 +169,7 @@ export default function Navbar() {
                   </div>
                   {/* Mobile Services Section */}
                   <div className="space-y-4">
-                    <h3 className="font-reckless font-semibold text-liberty-background text-lg border-b border-liberty-secondary/30 pb-2">Services</h3>
+                    <h3 className="font-reckless font-semibold text-liberty-background text-lg border-b border-liberty-secondary/30 pb-2">Options</h3>
                     <div className="space-y-1">
                       <Link 
                         href="/right-to-manage" 

@@ -339,9 +339,9 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <Card className="bg-liberty-background text-liberty-base max-w-2xl mx-auto">
+          <Card className="bg-liberty-background !text-liberty-base max-w-2xl mx-auto">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-reckless font-bold mb-4">
+              <h3 className="!text-liberty-secondary text-2xl font-reckless font-bold mb-4">
                 {content.howItWorks.cta.title}
               </h3>
               <p className="text-liberty-secondary mb-6">
