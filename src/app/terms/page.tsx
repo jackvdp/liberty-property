@@ -10,94 +10,189 @@ import {
   AlertCircle,
   Clock,
   Mail,
-  Building
+  Building,
+  Database,
+  Lock,
+  Briefcase,
+  AlertTriangle,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react'
+import { useState } from 'react'
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 
 const sections = [
   {
+    id: 'definitions',
     icon: FileText,
-    title: "1. Services We Provide",
-    content: [
-      "Liberty Bell Ethical Enfranchisement provides advisory, consultation and project management services to leaseholders seeking to exercise their legal rights including Right to Manage (RTM) and Collective Enfranchisement.",
-      "We offer eligibility assessments, legal process guidance, document preparation assistance, and ongoing support throughout your enfranchisement journey.",
-      "Our services are subject to availability and may be modified, suspended, or discontinued at any time."
-    ]
+    title: '1. Definitions & Interpretation',
+    content: `
+      <p><strong>"We", "Us", "Our"</strong> means Liberty Bell Ethical Enfranchisement Ltd, a company registered in England and Wales (Company Number: 16430826).</p>
+      <p><strong>"You", "Your"</strong> means the individual or group of leaseholders entering into a contract with us.</p>
+      <p><strong>"RTM"</strong> refers to the Right to Manage under the Commonhold and Leasehold Reform Act 2002.</p>
+      <p><strong>"Services"</strong> means the consultancy services we provide including eligibility assessment, RTM/enfranchisement support, and property management advisory.</p>
+      <p><strong>"Business Day"</strong> means a day other than a Saturday, Sunday, or public holiday in England when banks in London are open for business.</p>
+    `
   },
   {
+    id: 'services',
+    icon: Briefcase,
+    title: '2. Our Services',
+    content: `
+      <p>We provide consultancy services which may include:</p>
+      <ul>
+        <li>Eligibility assessment for Right to Manage and Collective Enfranchisement</li>
+        <li>Assistance in setting up RTM companies</li>
+        <li>Drafting and serving statutory notices</li>
+        <li>Liaising with landlords and their representatives</li>
+        <li>Advising on compliance with legal procedures</li>
+        <li>Support in First-tier Tribunal proceedings if required</li>
+        <li>General project guidance and management</li>
+      </ul>
+      <p class="mt-4"><strong>Important:</strong> We are not a law firm and do not provide legal representation. We may refer you to qualified solicitors where appropriate.</p>
+    `
+  },
+  {
+    id: 'obligations',
     icon: Users,
-    title: "2. Your Responsibilities",
-    content: [
-      "You must provide accurate, complete, and current information when using our services.",
-      "You are responsible for maintaining the confidentiality of your account credentials and for all activities under your account.",
-      "You agree to promptly notify us of any unauthorized use of your account or any security breach.",
-      "You must have legal authority to act on behalf of your building or leaseholder group if claiming to represent them."
-    ]
+    title: '3. Your Obligations',
+    content: `
+      <p>When using our services, you agree to:</p>
+      <ul>
+        <li>Provide accurate and timely information as requested</li>
+        <li>Grant necessary access to premises, systems, and data</li>
+        <li>Have proper authority to act on behalf of your building or leaseholder group</li>
+        <li>Prepare relevant premises and systems at your own cost</li>
+        <li>Not engage other consultants for similar services during our engagement without prior written consent</li>
+      </ul>
+    `
   },
   {
+    id: 'data',
+    icon: Database,
+    title: '4. Data Use & Commercial Application',
+    content: `
+      <p>We may collect, store, and process data provided during our services. We are entitled to anonymise and aggregate this data to:</p>
+      <ul>
+        <li>Develop and maintain a national database of leasehold information</li>
+        <li>Conduct benchmarking and market analysis</li>
+        <li>Create insights and research products</li>
+        <li>Improve our services and develop new offerings</li>
+      </ul>
+      <p class="mt-4"><strong>Privacy Guarantee:</strong> All data will be fully anonymised - no individual property, client, or personal data will be identifiable. We comply with UK GDPR and the Data Protection Act 2018.</p>
+    `
+  },
+  {
+    id: 'payment',
     icon: Scale,
-    title: "3. Legal Disclaimer",
-    content: [
-      "Our services provide general information and guidance. We are not a law firm and do not provide legal advice.",
-      "For specific legal matters, you should consult with qualified solicitors specialising in property law.",
-      "We make no guarantees about the outcome of any RTM or enfranchisement process.",
-      "Your use of our services does not create a solicitor-client relationship."
-    ]
+    title: '5. Charges & Payment',
+    content: `
+      <p>Payment terms for our services:</p>
+      <ul>
+        <li>Fixed prices exclude VAT and ancillary expenses unless specified</li>
+        <li>Payment is due within 30 days of invoice</li>
+        <li>We may charge interest on late payments under the Late Payment of Commercial Debts Act 1998</li>
+        <li>We may suspend services until payment is received in full</li>
+        <li>All payments must be made without deduction or set-off except as required by law</li>
+      </ul>
+    `
   },
   {
-    icon: Shield,
-    title: "4. Privacy & Data Protection",
-    content: [
-      "We process your personal data in accordance with our Privacy Policy and applicable data protection laws.",
-      "By using our services, you consent to our collection and use of your information as described in our Privacy Policy.",
-      "We implement appropriate technical and organisational measures to protect your personal data.",
-      "You have rights regarding your personal data including access, rectification, and deletion as outlined in our Privacy Policy."
-    ]
-  },
-  {
+    id: 'liability',
     icon: AlertCircle,
-    title: "5. Limitation of Liability",
-    content: [
-      "To the maximum extent permitted by law, Liberty Bell shall not be liable for any indirect, incidental, special, or consequential damages.",
-      "Our total liability for any claim arising from your use of our services shall not exceed the amount paid by you for those services.",
-      "We are not responsible for delays or failures in performance resulting from causes beyond our reasonable control.",
-      "These limitations apply regardless of the legal theory under which damages are sought."
-    ]
+    title: '6. Limitation of Liability',
+    content: `
+      <p><strong>We do not exclude liability for:</strong></p>
+      <ul>
+        <li>Death or personal injury caused by negligence</li>
+        <li>Fraud or fraudulent misrepresentation</li>
+      </ul>
+      <p class="mt-4"><strong>We are not liable for:</strong></p>
+      <ul>
+        <li>Loss of profits, business, goodwill, or anticipated savings</li>
+        <li>Indirect, consequential or economic losses</li>
+        <li>Legal consequences of statutory deadline failures beyond our control</li>
+        <li>Data loss or corruption</li>
+      </ul>
+      <p class="mt-4">Our total liability is limited to the price paid for the services. We do not guarantee successful outcomes as results may be affected by factors outside our control.</p>
+    `
   },
   {
-    icon: Clock,
-    title: "6. Termination",
-    content: [
-      "Either party may terminate the service agreement at any time with written notice.",
-      "We reserve the right to suspend or terminate your access to our services for breach of these terms.",
-      "Upon termination, your right to use our services will immediately cease.",
-      "Provisions that by their nature should survive termination shall remain in effect."
-    ]
-  },
-  {
+    id: 'intellectual',
     icon: Building,
-    title: "7. Intellectual Property",
-    content: [
-      "All content, features, and functionality of our services are owned by Liberty Bell and protected by intellectual property laws.",
-      "You may not copy, modify, distribute, or create derivative works based on our content without express written permission.",
-      "Any feedback or suggestions you provide may be used by us without obligation to you.",
-      "Your use of our services does not grant you any ownership rights to our intellectual property."
-    ]
+    title: '7. Intellectual Property',
+    content: `
+      <p>All intellectual property rights in our deliverables remain our property. We grant you a non-exclusive, non-transferable licence to use deliverables as necessary for the services.</p>
+      <p class="mt-4">Any feedback you provide may be used by us without obligation to you.</p>
+    `
   },
   {
-    icon: Mail,
-    title: "8. Contact & Disputes",
-    content: [
-      "These terms are governed by the laws of England and Wales.",
-      "Any disputes shall be resolved through good faith negotiation, and if necessary, through the courts of England and Wales.",
-      "For questions about these terms, please contact us at legal@libertybell.co.uk.",
-      "We may update these terms from time to time, and will notify you of material changes."
-    ]
+    id: 'confidentiality',
+    icon: Lock,
+    title: '8. Confidentiality',
+    content: `
+      <p>Both parties agree to keep confidential information secret and not disclose it except:</p>
+      <ul>
+        <li>For performing obligations under our agreement</li>
+        <li>To representatives who need to know and are bound by confidentiality</li>
+        <li>As required by law or regulatory authorities</li>
+        <li>If information becomes public through no breach</li>
+      </ul>
+      <p class="mt-4">These obligations continue after our services end.</p>
+    `
+  },
+  {
+    id: 'rtm',
+    icon: AlertTriangle,
+    title: '9. RTM Process & Legal Proceedings',
+    content: `
+      <p>For Right to Manage services, please note:</p>
+      <ul>
+        <li>The RTM company (once formed) is the formal party to legal proceedings, not individual leaseholders</li>
+        <li>We act as consultants and advisers only, not legal representatives</li>
+        <li>You are responsible for forming the RTM company and ensuring compliance</li>
+        <li>We are not liable for acts or omissions of the RTM company or its directors</li>
+        <li>Tribunal support is administrative only unless separately agreed in writing</li>
+      </ul>
+    `
+  },
+  {
+    id: 'termination',
+    icon: Clock,
+    title: '10. Termination',
+    content: `
+      <p>Either party may terminate our agreement if the other party:</p>
+      <ul>
+        <li>Fails to pay within 7 days of written notice</li>
+        <li>Materially breaches terms and fails to remedy within 14 days of notice</li>
+        <li>Becomes insolvent or enters administration</li>
+        <li>Repeatedly breaches terms showing inability to comply</li>
+      </ul>
+      <p class="mt-4">Termination doesn't affect accrued rights or obligations.</p>
+    `
+  },
+  {
+    id: 'general',
+    icon: Shield,
+    title: '11. General Terms',
+    content: `
+      <p><strong>Force Majeure:</strong> Neither party is liable for delays due to circumstances beyond reasonable control. If delays exceed 3 months, either party may terminate with 14 days' notice.</p>
+      <p class="mt-4"><strong>Governing Law:</strong> These terms are governed by the laws of England and Wales.</p>
+      <p class="mt-4"><strong>Dispute Resolution:</strong> Disputes should be resolved informally first, then through mediation before legal proceedings.</p>
+      <p class="mt-4"><strong>Third Parties:</strong> We may recommend third-party providers but accept no liability for their services.</p>
+      <p class="mt-4"><strong>Insurance:</strong> We hold professional indemnity insurance (details available on request).</p>
+    `
   }
 ]
 
 export default function TermsAndConditions() {
+  const [expandedSection, setExpandedSection] = useState<string | null>(null)
+
+  const toggleSection = (sectionId: string) => {
+    setExpandedSection(expandedSection === sectionId ? null : sectionId)
+  }
+
   return (
     <div className="min-h-screen bg-liberty-base">
       <Navbar />
@@ -120,16 +215,16 @@ export default function TermsAndConditions() {
               Terms & Conditions
             </h1>
             <p className="text-xl text-liberty-background/70 max-w-3xl mx-auto mb-4">
-              Please read these terms carefully before using Liberty Bell Ethical Enfranchisement services
+              Liberty Bell Ethical Enfranchisement Ltd
             </p>
             <p className="text-sm text-liberty-background/60">
-              Last updated: {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+              Company No: 16430826 | Effective: September 2025
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Introduction Section */}
+      {/* Introduction */}
       <section className="py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -138,16 +233,15 @@ export default function TermsAndConditions() {
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             className="bg-liberty-accent/10 border border-liberty-accent/30 rounded-lg p-6 mb-12"
           >
-            <h2 className="text-2xl font-semibold text-liberty-background mb-4">Welcome to Liberty Bell</h2>
+            <h2 className="text-2xl font-semibold text-liberty-background mb-4">Welcome</h2>
             <p className="text-liberty-background/80 leading-relaxed mb-4">
-              These Terms and Conditions ("Terms") govern your use of Liberty Bell Ethical Enfranchisement's 
-              website, services, and platform (collectively, "Services"). By accessing or using our Services, 
-              you agree to be bound by these Terms.
+              These terms and conditions apply when you engage Liberty Bell Ethical Enfranchisement Ltd for 
+              consultancy services. They form the basis of our agreement and prevail over any other terms.
             </p>
             <p className="text-liberty-background/80 leading-relaxed">
-              Liberty Bell Ethical Enfranchisement is operated by Liberty Bell Limited, a company registered 
-              in England and Wales. Our mission is to empower leaseholders to take control of their buildings 
-              through legal processes such as Right to Manage and Collective Enfranchisement.
+              By instructing us to proceed with our services, you confirm that you have read, understood, 
+              and agreed to these terms. They constitute the entire agreement between us and supersede all 
+              previous agreements.
             </p>
           </motion.div>
         </div>
@@ -156,97 +250,79 @@ export default function TermsAndConditions() {
       {/* Terms Sections */}
       <section className="py-12 bg-liberty-secondary/10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-8">
+          <div className="space-y-4">
             {sections.map((section, index) => (
               <motion.div
-                key={index}
+                key={section.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+                transition={{ duration: 0.6, delay: index * 0.05, ease: "easeOut" }}
                 viewport={{ once: true }}
                 className="bg-liberty-base border border-liberty-secondary/30 rounded-lg overflow-hidden"
               >
-                <div className="p-6">
-                  <div className="flex items-start gap-4 mb-4">
+                <button
+                  onClick={() => toggleSection(section.id)}
+                  className="w-full px-6 py-4 flex items-center justify-between hover:bg-liberty-secondary/5 transition-colors"
+                >
+                  <div className="flex items-center gap-4">
                     <div className="flex-shrink-0 w-10 h-10 bg-liberty-primary/10 text-liberty-primary rounded-lg flex items-center justify-center">
                       <section.icon className="w-5 h-5" />
                     </div>
-                    <h3 className="text-xl font-semibold text-liberty-background flex-1">
+                    <h3 className="text-lg font-semibold text-liberty-background text-left">
                       {section.title}
                     </h3>
                   </div>
-                  <div className="ml-14 space-y-3">
-                    {section.content.map((paragraph, pIndex) => (
-                      <p key={pIndex} className="text-liberty-background/70 leading-relaxed text-sm">
-                        {paragraph}
-                      </p>
-                    ))}
+                  {expandedSection === section.id ? (
+                    <ChevronUp className="w-5 h-5 text-liberty-background/60" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5 text-liberty-background/60" />
+                  )}
+                </button>
+                
+                {expandedSection === section.id && (
+                  <div className="px-6 pb-6">
+                    <div 
+                      className="ml-14 text-liberty-background/70 leading-relaxed text-sm prose prose-sm max-w-none"
+                      dangerouslySetInnerHTML={{ __html: section.content }}
+                    />
                   </div>
-                </div>
+                )}
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Additional Information */}
+      {/* Contact Section */}
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="bg-liberty-primary/5 border border-liberty-primary/20 rounded-lg p-8"
-          >
-            <h2 className="text-2xl font-semibold text-liberty-background mb-6">Important Information</h2>
-            
-            <div className="space-y-6">
-              <div>
-                <h3 className="font-semibold text-liberty-background mb-2">Acceptance of Terms</h3>
-                <p className="text-liberty-background/70 text-sm leading-relaxed">
-                  By creating an account, submitting an eligibility check, or otherwise using our Services, 
-                  you acknowledge that you have read, understood, and agree to be bound by these Terms.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-liberty-background mb-2">Changes to Terms</h3>
-                <p className="text-liberty-background/70 text-sm leading-relaxed">
-                  We reserve the right to modify these Terms at any time. Material changes will be notified 
-                  to registered users via email. Your continued use of our Services after such modifications 
-                  constitutes acceptance of the updated Terms.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-liberty-background mb-2">Severability</h3>
-                <p className="text-liberty-background/70 text-sm leading-relaxed">
-                  If any provision of these Terms is found to be unenforceable or invalid, that provision 
-                  shall be limited or eliminated to the minimum extent necessary so that these Terms shall 
-                  otherwise remain in full force and effect.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            viewport={{ once: true }}
-            className="text-center mt-12"
+            className="text-center"
           >
             <p className="text-liberty-background/60 mb-6">
               Have questions about our terms? We're here to help.
             </p>
-            <Link 
-              href="/contact" 
-              className="inline-flex items-center gap-2 text-liberty-primary hover:text-liberty-primary/80 font-medium transition-colors"
-            >
-              <Mail className="w-5 h-5" />
-              Contact Our Team
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link 
+                href="/contact" 
+                className="inline-flex items-center gap-2 text-liberty-primary hover:text-liberty-primary/80 font-medium transition-colors"
+              >
+                <Mail className="w-5 h-5" />
+                Contact Our Team
+              </Link>
+              <span className="text-liberty-background/40">|</span>
+              <Link 
+                href="/privacy" 
+                className="inline-flex items-center gap-2 text-liberty-primary hover:text-liberty-primary/80 font-medium transition-colors"
+              >
+                <Lock className="w-5 h-5" />
+                Privacy Policy
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>
