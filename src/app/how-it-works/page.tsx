@@ -158,9 +158,9 @@ const journeySteps: JourneyStep[] = [
   },
   {
     number: 2,
-    title: 'Register Your Building',
-    subtitle: 'Secure your spot',
-    description: 'Join our pilot programme and register your building details. We\'ll create your case file and connect you with neighbours who want to take control too. No commitment required at this stage.',
+    title: 'Register',
+    subtitle: 'Join the Community',
+    description: 'Join our pilot programme and register your building details. We\'ll create your case file and begin the process of helping you take back control. No commitment required at this stage.',
     icon: Building2,
     iconColor: 'text-liberty-accent',
     position: 'right',
@@ -171,7 +171,7 @@ const journeySteps: JourneyStep[] = [
   },
   {
     number: 3,
-    title: 'We Analyze Your Situation',
+    title: 'We Analyse Your Situation',
     subtitle: 'Expert assessment',
     description: 'Our experts review your building\'s specifics, current service charges, and ownership structure. We calculate potential savings and identify the best path forward for your unique situation.',
     icon: TrendingUp,
@@ -251,27 +251,6 @@ const decisionCards = [
     delay: 0.4
   }
 ];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5
-    }
-  }
-};
 
 export default function HowItWorksPage() {
   const [selectedPathway, setSelectedPathway] = useState<string | null>(null);
@@ -428,9 +407,9 @@ export default function HowItWorksPage() {
               {/* Journey Steps Container with Line */}
               <div className="relative">
                 {/* Progress Line with Scroll Effect */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 top-0 bottom-0 bg-liberty-secondary/30">
+                <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-0.5 top-0 bottom-0 bg-liberty-secondary/30">
                   <motion.div
-                    className="w-full bg-liberty-primary/70 origin-top"
+                    className="hidden md:flex w-full bg-liberty-primary/70 origin-top"
                     style={{ 
                       scaleY: scrollYProgress,
                       height: '100%'
@@ -439,7 +418,7 @@ export default function HowItWorksPage() {
                 </div>
                 
                 {/* Journey Steps */}
-                <div className="-space-y-16 relative pb-8">
+                <div className="space-y-8 md:space-y-0 md:-space-y-16 relative pb-8">
                   {journeySteps.map((step, index) => {
                     const Icon = step.icon;
                     const animationX = step.position === 'left' ? -100 : 100;
@@ -454,6 +433,80 @@ export default function HowItWorksPage() {
                         className="relative"
                         style={{ zIndex: 50 - (index * 10) }}
                       >
+                        {/* Mobile view */}
+                        <div className="flex md:hidden items-center relative z-10">
+                          <div className="flex-1">
+                            <Card className="bg-liberty-accent/5 border border-liberty-accent/20 p-6 hover:bg-liberty-accent/10 transition-colors duration-300 mx-4">
+                              <div className="flex items-center gap-4 mb-4">
+                                <div className="w-12 h-12 bg-liberty-base border-2 border-liberty-primary/40 rounded-full flex items-center justify-center shadow-sm">
+                                  <span className="text-xl font-reckless font-bold text-liberty-primary">{step.number}</span>
+                                </div>
+                                <div className="flex-1">
+                                  <h3 className="font-semibold text-liberty-background text-lg mb-1">
+                                    {step.title}
+                                  </h3>
+                                  <p className="text-sm text-liberty-primary">
+                                    {step.subtitle}
+                                  </p>
+                                </div>
+                              </div>
+                              <p className="text-sm text-liberty-background/70 leading-relaxed mb-4">
+                                {step.description}
+                              </p>
+                              
+                              {step.link && (
+                                <Button
+                                  asChild
+                                  size="sm"
+                                  variant="outline"
+                                  className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white"
+                                >
+                                  <Link href={step.link.href}>
+                                    {step.link.text}
+                                    <ArrowRight className="w-3 h-3 ml-1" />
+                                  </Link>
+                                </Button>
+                              )}
+                              
+                              {step.badges && step.badges.length > 0 && (
+                                <div className="flex flex-wrap gap-3 text-xs text-liberty-background/60 mt-4">
+                                  {step.badges.map((badge, i) => {
+                                    const BadgeIcon = badge.icon;
+                                    return (
+                                      <span key={i} className="flex items-center">
+                                        <BadgeIcon className={`w-3 h-3 mr-1 ${badge.color || 'text-liberty-accent'}`} />
+                                        {badge.text}
+                                      </span>
+                                    );
+                                  })}
+                                </div>
+                              )}
+                              
+                              {step.pathOptions && (
+                                <div className="grid grid-cols-3 gap-2 text-xs mt-4">
+                                  {step.pathOptions.map((option, i) => {
+                                    const OptionIcon = option.icon;
+                                    const pathwayId = option.label === 'RTM' ? 'rtm' : 
+                                                     option.label === 'Enfranchise' ? 'enfranchisement' : 
+                                                     'commonhold';
+                                    return (
+                                      <button
+                                        key={i}
+                                        onClick={() => setSelectedPathway(pathwayId)}
+                                        className="text-center p-2 bg-gray-50 rounded hover:bg-gray-100 hover:shadow-sm transition-all cursor-pointer group"
+                                      >
+                                        <OptionIcon className={`w-4 h-4 mx-auto mb-1 ${option.color} group-hover:scale-110 transition-transform`} />
+                                        <span className="group-hover:text-liberty-primary transition-colors">{option.label}</span>
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              )}
+                            </Card>
+                          </div>
+                        </div>
+
+                        {/* Desktop view */}
                         <div className="hidden md:flex items-center relative z-10">
                           {step.position === 'left' ? (
                             <>
