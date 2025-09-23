@@ -163,12 +163,9 @@ export default function WhoWeAre() {
             viewport={{ once: true }}
             className="text-center mb-20"
           >
-            <p className="text-xl text-liberty-background/70 mb-6 max-w-3xl mx-auto">
-              <strong className="text-liberty-background">We want to change the way the market works</strong>, 
-              giving knowledge and power to us as buyers.
-            </p>
-            <p className="text-2xl sm:text-3xl font-reckless font-bold text-liberty-primary">
-              Join our community - together we're stronger.
+            <p className="text-liberty-standard/70 mb-6 max-w-3xl mx-auto">
+              We want to change the way the market works, giving knowledge and power to us as buyers.
+              <strong> Join our community - together we're stronger.</strong>
             </p>
           </motion.div>
 
@@ -181,7 +178,7 @@ export default function WhoWeAre() {
             className="text-center"
           >
             <div className="max-w-2xl mx-auto">
-              <h3 className="text-2xl font-reckless font-bold text-liberty-background mb-4">
+              <h3 className="text-3xl font-reckless font-bold text-liberty-background mb-4">
                 Join Our Community
               </h3>
               <p className="text-liberty-background/70 mb-8 text-lg">
