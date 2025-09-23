@@ -810,81 +810,194 @@ export default function HowItWorksPage() {
         </section>
 
         {/* Decision Helper */}
-        <motion.section
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="py-20 bg-liberty-secondary"
-        >
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="!text-3xl md:!text-4xl font-reckless !text-liberty-standard mb-8">
-                Not Sure Which Path Is Right for You?
+        <section className="py-16 sm:py-24 lg:py-32 bg-gradient-to-b from-liberty-secondary/20 to-liberty-base">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Section Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
+                Not Sure Which Path Is <span className="text-liberty-accent">Right for You?</span>
               </h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                {decisionCards.map((card, index) => {
-                  const CardIcon = card.icon;
-                  
-                  return (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 50 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: card.delay }}
-                    >
-                      <Card className="bg-white p-6 shadow-lg border-0 flex flex-col h-full">
-                        <CardIcon className="w-12 h-12 text-liberty-accent mb-4" />
-                        <h3 className="!text-lg !font-semibold !text-liberty-standard mb-2">
-                          {card.title}
-                        </h3>
-                        <p className="text-sm text-gray-600 mb-4 flex-grow">
-                          {card.description}
-                        </p>
-                        <div className="text-liberty-primary font-semibold mb-3">{card.suggestion}</div>
+              <p className="text-lg text-liberty-background/70 max-w-3xl mx-auto">
+                Answer these simple questions to find your ideal route to property control
+              </p>
+            </motion.div>
+            
+            {/* Decision Cards */}
+            <div className="max-w-4xl mx-auto space-y-4 mb-16">
+              {decisionCards.map((card, index) => {
+                const CardIcon = card.icon;
+                
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+                    viewport={{ once: true }}
+                    className="flex items-start gap-4 p-6 bg-liberty-accent/5 border border-liberty-accent/20 rounded-lg hover:bg-liberty-accent/10 transition-colors duration-300"
+                  >
+                    <div className="flex-shrink-0 w-10 h-10 bg-liberty-accent/10 rounded-full flex items-center justify-center">
+                      <CardIcon className="w-5 h-5 text-liberty-accent" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-liberty-background mb-2 text-lg">
+                        {card.title}
+                      </h3>
+                      <p className="text-liberty-background/70 text-sm leading-relaxed mb-3">
+                        {card.description}
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-liberty-primary font-medium">
+                          {card.suggestion}
+                        </span>
                         <Button
                           asChild
-                          variant="outline"
+                          variant="ghost"
                           size="sm"
-                          className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white mt-auto"
+                          className="text-liberty-primary hover:text-liberty-primary/80 hover:bg-transparent p-0"
                         >
-                          <Link href={card.link.href}>
+                          <Link href={card.link.href} className="flex items-center gap-1">
                             {card.link.text}
-                            <ArrowRight className="w-3 h-3 ml-1" />
+                            <ArrowRight className="w-4 h-4" />
                           </Link>
                         </Button>
-                      </Card>
-                    </motion.div>
-                  );
-                })}
-              </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
 
-              <div className="flex flex-wrap gap-4 justify-center">
+            {/* Quick Comparison Table */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+              viewport={{ once: true }}
+              className="max-w-5xl mx-auto mb-16"
+            >
+              <div className="bg-liberty-base border border-liberty-secondary/20 rounded-2xl overflow-hidden">
+                <div className="grid grid-cols-4 gap-px bg-liberty-secondary/20">
+                  {/* Header */}
+                  <div className="bg-liberty-base p-4">
+                    <p className="font-semibold text-liberty-background text-sm">Compare Options</p>
+                  </div>
+                  <div className="bg-liberty-base p-4 text-center">
+                    <p className="font-semibold text-liberty-background text-sm">RTM</p>
+                    <p className="text-xs text-liberty-background/60 mt-1">Quick Control</p>
+                  </div>
+                  <div className="bg-liberty-base p-4 text-center">
+                    <p className="font-semibold text-liberty-background text-sm">Enfranchisement</p>
+                    <p className="text-xs text-liberty-background/60 mt-1">Own Building</p>
+                  </div>
+                  <div className="bg-liberty-base p-4 text-center">
+                    <p className="font-semibold text-liberty-background text-sm">Commonhold</p>
+                    <p className="text-xs text-liberty-background/60 mt-1">Future Proof</p>
+                  </div>
+                </div>
+                
+                {/* Comparison Rows */}
+                <div className="grid grid-cols-4 gap-px bg-liberty-secondary/20">
+                  <div className="bg-liberty-base p-4">
+                    <p className="text-sm text-liberty-background/70">Timeline</p>
+                  </div>
+                  <div className="bg-liberty-base p-4 text-center">
+                    <p className="text-sm font-medium text-liberty-accent">4-6 months</p>
+                  </div>
+                  <div className="bg-liberty-base p-4 text-center">
+                    <p className="text-sm font-medium text-liberty-primary">9-12 months</p>
+                  </div>
+                  <div className="bg-liberty-base p-4 text-center">
+                    <p className="text-sm font-medium text-liberty-standard/70">12-18 months</p>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-4 gap-px bg-liberty-secondary/20">
+                  <div className="bg-liberty-base p-4">
+                    <p className="text-sm text-liberty-background/70">Control Level</p>
+                  </div>
+                  <div className="bg-liberty-base p-4 text-center">
+                    <p className="text-sm font-medium text-liberty-standard">65%</p>
+                  </div>
+                  <div className="bg-liberty-base p-4 text-center">
+                    <p className="text-sm font-medium text-liberty-standard">85%</p>
+                  </div>
+                  <div className="bg-liberty-base p-4 text-center">
+                    <p className="text-sm font-medium text-liberty-accent">100%</p>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-4 gap-px bg-liberty-secondary/20">
+                  <div className="bg-liberty-base p-4">
+                    <p className="text-sm text-liberty-background/70">Complexity</p>
+                  </div>
+                  <div className="bg-liberty-base p-4 text-center">
+                    <div className="flex justify-center gap-1">
+                      <div className="w-2 h-2 rounded-full bg-liberty-accent"></div>
+                      <div className="w-2 h-2 rounded-full bg-liberty-secondary"></div>
+                      <div className="w-2 h-2 rounded-full bg-liberty-secondary"></div>
+                    </div>
+                  </div>
+                  <div className="bg-liberty-base p-4 text-center">
+                    <div className="flex justify-center gap-1">
+                      <div className="w-2 h-2 rounded-full bg-liberty-accent"></div>
+                      <div className="w-2 h-2 rounded-full bg-liberty-accent"></div>
+                      <div className="w-2 h-2 rounded-full bg-liberty-secondary"></div>
+                    </div>
+                  </div>
+                  <div className="bg-liberty-base p-4 text-center">
+                    <div className="flex justify-center gap-1">
+                      <div className="w-2 h-2 rounded-full bg-liberty-accent"></div>
+                      <div className="w-2 h-2 rounded-full bg-liberty-accent"></div>
+                      <div className="w-2 h-2 rounded-full bg-liberty-accent"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* CTA Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <p className="text-xl text-liberty-background/70 mb-8">
+                Let us help you find the perfect path for your building
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
                   asChild
                   size="xl"
-                  className="bg-liberty-primary text-white hover:bg-liberty-primary/90"
+                  className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base"
                 >
-                  <Link href="/eligibility-check" className={"group"}>
+                  <Link href="/eligibility-check" className="flex items-center gap-3 group">
                     Check Your Eligibility
-                    <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight size={20} className="group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300 ease-out" />
                   </Link>
                 </Button>
                 <Button
                   asChild
                   size="xl"
                   variant="outline"
-                  className="border-liberty-primary text-liberty-primary hover:bg-liberty-primary hover:text-white"
+                  className="border-liberty-secondary text-liberty-standard hover:bg-liberty-secondary/10"
                 >
                   <Link href="/contact">
                     Get Expert Advice
                   </Link>
                 </Button>
               </div>
-            </div>
+            </motion.div>
           </div>
-        </motion.section>
+        </section>
 
         {/* Detailed Modal */}
         <AnimatePresence>
