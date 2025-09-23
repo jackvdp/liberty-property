@@ -359,16 +359,11 @@ export default function HowItWorksPage() {
                           </div>
                         </div>
                         
-                        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-200">
-                          <div>
-                            <Clock className="w-4 h-4 text-liberty-accent mb-1" />
-                            <p className="text-sm text-gray-600">Timeline</p>
+                        <div className="pt-4 border-t border-gray-200">
+                          <div className="flex items-center gap-2">
+                            <Clock className="w-4 h-4 text-liberty-accent" />
+                            <p className="text-sm text-gray-600">Timeline:</p>
                             <p className="text-sm font-semibold text-liberty-standard">{pathway.timeframe}</p>
-                          </div>
-                          <div>
-                            <Coins className="w-4 h-4 text-liberty-accent mb-1" />
-                            <p className="text-sm text-gray-600">Cost</p>
-                            <p className="text-sm font-semibold text-liberty-standard">{pathway.cost}</p>
                           </div>
                         </div>
                       </div>
