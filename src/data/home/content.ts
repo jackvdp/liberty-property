@@ -8,7 +8,7 @@ export const content = {
       main: "Take Back Control of",
       highlight: "Your Building"
     },
-    description: "Stop battling unfair charges and poor service every day. We help leaseholders across England & Wales gain legal control, cut costs, and finally live in and enjoy your home stress-free.",
+    description: "Stop battling unfair charges and poor service every day. We're a team of leaseholder specialists who guide you through Right to Manage, Collective Enfranchisement, and other proven routes to control.",
     buttons: {
       primary: {
         text: "Check Your Eligibility",

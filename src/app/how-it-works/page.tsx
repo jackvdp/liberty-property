@@ -413,9 +413,8 @@ export default function HowItWorksPage() {
                 </div>
                 
                 {/* Journey Steps */}
-                <div className="space-y-8 md:space-y-0 md:-space-y-16 relative pb-8">
+                <div className="space-y-8 md:-space-y-16 relative pb-8">
                   {journeySteps.map((step, index) => {
-                    const Icon = step.icon;
                     const animationX = step.position === 'left' ? -100 : 100;
                     
                     return (
