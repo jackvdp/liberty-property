@@ -3,16 +3,11 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import {
-  CheckCircle, 
-  Users, 
-  Building,
-  ClipboardList,
+  Users,
   PoundSterling,
   ArrowRight,
   Info,
   Shield,
-  Vote,
-  FileText,
   TrendingUp
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'

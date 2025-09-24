@@ -59,7 +59,7 @@ export default function Navbar() {
                 {/* Services Dropdown */}
                 <NavigationMenuItem>
                   <NavigationMenuTrigger className="text-liberty-background/70 hover:text-liberty-primary bg-transparent hover:bg-liberty-secondary/20">
-                    Options
+                    Pathways
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="grid gap-3 p-6 w-80 bg-liberty-base border border-liberty-secondary/30 rounded-lg shadow-lg">
@@ -68,6 +68,9 @@ export default function Navbar() {
                       </ListItem>
                       <ListItem href="/collective-enfranchisement" title="Collective Enfranchisement">
                         Buy your freehold and own your property outright
+                      </ListItem>
+                      <ListItem href="/rmc-process" title="RMC Takeover">
+                        Take control of your existing RMC structure
                       </ListItem>
                       <ListItem href="/commonhold-conversion" title="Commonhold Conversion">
                         Convert to the future of property ownership
@@ -169,7 +172,7 @@ export default function Navbar() {
                   </div>
                   {/* Mobile Services Section */}
                   <div className="space-y-4">
-                    <h3 className="font-reckless font-semibold text-liberty-background text-lg border-b border-liberty-secondary/30 pb-2">Options</h3>
+                    <h3 className="font-reckless font-semibold text-liberty-background text-lg border-b border-liberty-secondary/30 pb-2">Pathways</h3>
                     <div className="space-y-1">
                       <Link 
                         href="/right-to-manage" 
@@ -196,6 +199,20 @@ export default function Navbar() {
                         <div>
                           <div className="font-medium">Collective Enfranchisement</div>
                           <div className="text-sm text-liberty-background/50">Buy your freehold</div>
+                        </div>
+                      </Link>
+
+                      <Link 
+                        href="/rmc-process" 
+                        className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200 group"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <div className="w-8 h-8 bg-liberty-primary/10 rounded-lg flex items-center justify-center group-hover:bg-liberty-primary/20 transition-colors">
+                          <Users className="w-4 h-4 text-liberty-primary" />
+                        </div>
+                        <div>
+                          <div className="font-medium">RMC Takeover</div>
+                          <div className="text-sm text-liberty-background/50">Control your existing RMC</div>
                         </div>
                       </Link>
                       

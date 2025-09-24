@@ -14,7 +14,6 @@ import {
   Home,
   Key,
   Scale,
-  Sparkles,
   Zap,
   Trophy,
   Rocket

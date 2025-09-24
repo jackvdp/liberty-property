@@ -97,6 +97,10 @@ export const content = {
             {
               text: "Commonhold Conversion",
               href: "/commonhold"
+            },
+            {
+              text: "RMC Takeover",
+              href: "/rmc-process"
             }
           ]
         },
@@ -227,7 +231,7 @@ export const content = {
     ],
     cta: {
       primaryButton: "Get A Quote",
-      secondaryButton: "Register Your Building"
+      secondaryButton: "Register"
     }
   },
 
@@ -396,6 +400,10 @@ export const content = {
       {
         title: "Collective Enfranchisement", 
         href: "/collective-enfranchisement"
+      },
+      {
+        title: "RMC Takeover",
+        href: "/rmc-process"
       },
       {
         title: "Commonhold Conversion",

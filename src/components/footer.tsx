@@ -59,7 +59,7 @@ export default function Footer() {
             {/* Services */}
             <div>
               <h3 className="text-lg font-reckless font-bold !text-liberty-base mb-4">
-                Services
+                Pathways
               </h3>
               <ul className="space-y-3">
                 {content.footer.services.map((service, index) => (

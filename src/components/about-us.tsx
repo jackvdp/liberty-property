@@ -6,33 +6,29 @@ import { motion } from 'framer-motion'
 import { 
   Shield,
   ArrowRight,
-  Award,
-  Building,
-  ExternalLink
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
 
-const credentials = [
-  {
-    icon: Award,
-    title: "Property Institute Accredited",
-    description: "Professional accreditation ensuring the highest standards of service",
-    link: "https://www.propertyinstitute.org"
-  },
-  {
-    icon: Building,
-    title: "Santander Buildings Scheme",
-    description: "Backed by Santander's support for NGOs in public policy campaigns",
-    link: null
-  },
-  {
-    icon: Shield,
-    title: "Government Partnership",
-    description: "Official partner with Ministry of Housing, Communities & Local Government helping deliver leaseholder reform",
-    link: null
-  }
-]
+// const credentials = [
+//   {
+//     icon: Award,
+//     title: "Property Institute Accredited",
+//     description: "Professional accreditation ensuring the highest standards of service",
+//     link: "https://www.propertyinstitute.org"
+//   },
+//   {
+//     icon: Building,
+//     title: "Santander Buildings Scheme",
+//     description: "Backed by Santander's support for NGOs in public policy campaigns",
+//     link: null
+//   },
+//   {
+//     icon: Shield,
+//     title: "Government Partnership",
+//     description: "Official partner with Ministry of Housing, Communities & Local Government helping deliver leaseholder reform",
+//     link: null
+//   }
+// ]
 
 export default function AboutUs() {
   return (
