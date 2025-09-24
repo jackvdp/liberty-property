@@ -47,10 +47,11 @@ export class EligibilityRepository {
    * Delete an eligibility check
    */
   static async deleteEligibilityCheck(id: string): Promise<boolean> {
-    const result = await db
-      .delete(eligibilityChecks)
-      .where(eq(eligibilityChecks.id, id));
-    
-    return result.rowCount > 0;
+    const deleted = await db
+        .delete(eligibilityChecks)
+        .where(eq(eligibilityChecks.id, id))
+        .returning();
+
+    return deleted.length > 0;
   }
 }
