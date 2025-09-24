@@ -164,8 +164,8 @@ export default function RegistrationQuestionnaire({
           eligibilityData?.uuid
         );
         
-        if (result.success && result.data) {
-          setRegistrationId(result.data.id);
+        if (result.success && result.registrationId) {
+          setRegistrationId(result.registrationId);
           setOutcome(outcomes.success as RegistrationOutcome);
           setIsComplete(true);
           onComplete?.(outcomes.success as RegistrationOutcome, newSectionAnswers);

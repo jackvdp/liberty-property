@@ -109,11 +109,20 @@ export async function createEligibilityCase(
   }
 }
 
+interface EligibilityCheck {
+  id: string;
+  propertyType: string | null;
+  flatCount: number | null;
+  recommendedCaseType:  "rtm" | "enfranchisement" | "rmc_takeover" | null;
+  eligibilityStatus: "success" | "failure" | "info";
+  createdAt: Date;
+}
+
 /**
  * Get eligibility check data by ID
  */
 export async function getEligibilityCase(eligibilityId: string): Promise<EligibilityResult & { 
-  eligibilityCheck?: any;
+  eligibilityCheck?: EligibilityCheck;
   answers?: QuestionnaireAnswer[];
   outcome?: QuestionnaireOutcome;
 }> {
@@ -134,7 +143,7 @@ export async function getEligibilityCase(eligibilityId: string): Promise<Eligibi
     return {
       success: true,
       eligibilityId: eligibilityCheck.id,
-      eligibilityCheck: {
+      eligibilityCheck: <EligibilityCheck>{
         id: eligibilityCheck.id,
         propertyType: eligibilityCheck.propertyType,
         flatCount: eligibilityCheck.flatCount,
@@ -168,7 +177,7 @@ export async function checkEligibilityCaseExists(eligibilityId: string): Promise
     
     return {
       exists: !!eligibilityCheck,
-      recommendedCaseType: eligibilityCheck?.recommendedCaseType,
+      recommendedCaseType: eligibilityCheck?.recommendedCaseType ?? undefined,
       eligibilityStatus: eligibilityCheck?.eligibilityStatus
     };
   } catch (error) {

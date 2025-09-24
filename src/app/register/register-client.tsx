@@ -46,7 +46,7 @@ export function RegisterClient({ eligibilityId }: RegisterClientProps) {
                 value: a.value
               })),
               outcome: result.outcome,
-              timestamp: result.case?.createdAt || new Date().toISOString(),
+              timestamp: result.eligibilityCheck?.createdAt.toISOString() || new Date().toISOString(),
               // Use the imported helper function
               derivedData: createEligibilityDerivedData(result.answers, result.outcome)
             };

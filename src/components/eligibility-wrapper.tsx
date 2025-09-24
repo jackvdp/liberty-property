@@ -71,10 +71,10 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
   }, [eligibilityId, focusQuestion]);
 
   // Handle outcome button click with stored case ID
-  const handleOutcomeButtonClick = async (
+  const handleOutcomeButtonClick = (
     outcome: QuestionnaireOutcome, 
     answers: QuestionnaireAnswer[]
-  ): Promise<string> => {
+  ): string => {
     console.log('handleOutcomeButtonClick called with:', { outcome, answers });
     
     if (!outcome.button?.href) {
