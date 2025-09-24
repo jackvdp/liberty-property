@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
+    "db:migrate:dev": "drizzle-kit migrate",
+    "db:migrate:prod": "dotenv -e .env.local -- sh -c 'VERCEL_ENV=production drizzle-kit migrate'",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio"
   },
@@ -44,6 +45,7 @@
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.21",
     "dotenv": "^17.2.2",
+    "dotenv-cli": "^10.0.0",
     "drizzle-kit": "^0.31.4",
     "eslint": "^9",
     "eslint-config-next": "15.3.5",
