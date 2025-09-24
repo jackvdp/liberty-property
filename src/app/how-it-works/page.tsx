@@ -424,7 +424,7 @@ export default function HowItWorksPage() {
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
                         className="relative"
-                        style={{ zIndex: 50 - (index * 10) }}
+                        style={{ zIndex: 49 - (index * 10) }}
                       >
                         {/* Mobile view */}
                         <div className="flex md:hidden items-center relative z-10">
