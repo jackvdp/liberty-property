@@ -60,6 +60,22 @@ export default function ScrollEligibilityModal() {
     }
   }, [isOpen])
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      // Store original body overflow
+      const originalOverflow = document.body.style.overflow
+      
+      // Prevent scrolling
+      document.body.style.overflow = 'hidden'
+      
+      return () => {
+        // Restore original overflow
+        document.body.style.overflow = originalOverflow
+      }
+    }
+  }, [isOpen])
+
   const closeModal = () => {
     setIsOpen(false)
     sessionStorage.setItem('eligibilityModalSeen', 'true')
@@ -76,6 +92,7 @@ export default function ScrollEligibilityModal() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100]"
             onClick={closeModal}
+            style={{ pointerEvents: 'auto' }}
           />
           
           {/* Modal */}
@@ -85,11 +102,13 @@ export default function ScrollEligibilityModal() {
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
             className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl bg-liberty-base rounded-2xl shadow-2xl z-[101] mx-4"
+            style={{ pointerEvents: 'auto' }}
           >
             {/* Close Button */}
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 text-liberty-background/60 hover:text-liberty-background transition-colors"
+              className="absolute top-4 right-4 text-liberty-background/60 hover:text-liberty-background transition-colors z-10"
+              style={{ pointerEvents: 'auto' }}
             >
               <X className="w-6 h-6" />
             </button>
@@ -101,7 +120,7 @@ export default function ScrollEligibilityModal() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-2xl sm:text-3xl font-reckless font-bold text-liberty-background mb-4"
+                className="text-2xl sm:text-4xl font-reckless font-bold text-liberty-background mb-8"
               >
                 Ready to <span className="text-liberty-accent">Take Control?</span>
               </motion.h2>
