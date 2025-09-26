@@ -2,11 +2,12 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { 
-  PoundSterling,
+import {
   Building,
   Users,
-  ArrowRight
+  ArrowRight,
+  Lightbulb,
+  Key,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -20,13 +21,13 @@ const pricingItems = [
     description: content.pricing.items[0].description
   },
   {
-    icon: PoundSterling,
+    icon: Lightbulb,
     title: content.pricing.items[1].title,
     price: content.pricing.items[1].price,
     description: content.pricing.items[1].description
   },
   {
-    icon: Users,
+    icon: Key,
     title: content.pricing.items[2].title,
     price: content.pricing.items[2].price,
     description: content.pricing.items[2].description
