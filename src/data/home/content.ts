@@ -87,7 +87,7 @@ export const content = {
           description: "We'll help you choose the right approach for your building and situation:",
           links: [
             {
-              text: "Right to Manage (RTM)",
+              text: "Right to Manage (RTM)!!",
               href: "/right-to-manage"
             },
             {
