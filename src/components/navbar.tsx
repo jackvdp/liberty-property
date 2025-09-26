@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
-import { Menu, ArrowRight, FileText, Users, Building } from 'lucide-react'
+import { Menu, ArrowRight, FileText, Users, Building, Home } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet'
 import {
@@ -41,6 +41,13 @@ export default function Navbar() {
           <div className="hidden lg:flex justify-center">
             <NavigationMenu>
               <NavigationMenuList>
+
+                {/* Home Link */}
+                <NavigationMenuItem>
+                  <Link href="/" className="text-liberty-background/70 hover:text-liberty-primary px-4 py-2 text-sm font-medium transition-colors rounded-md hover:bg-liberty-secondary/20 flex items-center gap-2">
+                    <Home className="w-4 h-4" />
+                  </Link>
+                </NavigationMenuItem>
 
                 {/* Simple Links */}
                 <NavigationMenuItem>
@@ -145,8 +152,15 @@ export default function Navbar() {
                 <div className="flex-1 overflow-y-auto px-2 space-y-6">
                   {/* Mobile Simple Links */}
                   <div className="space-y-4">
-                    <h3 className="font-reckless font-semibold text-liberty-background text-lg border-b border-liberty-secondary/30 pb-2">Company</h3>
+                    <h3 className="font-reckless font-semibold text-liberty-background text-lg border-b border-liberty-secondary/30 pb-2">Navigation</h3>
                     <div className="space-y-1">
+                      <Link
+                          href="/"
+                          className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200"
+                          onClick={() => setIsOpen(false)}
+                      >
+                        <Home className="w-5 h-5" />
+                      </Link>
                       <Link
                           href="/about"
                           className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200"
