@@ -47,7 +47,7 @@ export default function AboutUs() {
             Who We <span className="text-liberty-accent">Are</span>
           </h2>
           <p className="text-xl text-liberty-background/70 max-w-4xl mx-auto leading-relaxed">
-            Combining lived experience with professional accreditation, institutional backing, and government recognition to deliver real results.
+            Leaseholders who understand your challenges, working to make the legal process simpler and more affordable for everyone.
           </p>
         </motion.div>
 
@@ -63,13 +63,13 @@ export default function AboutUs() {
             >
               <div className="space-y-6 text-lg text-liberty-background/70 leading-relaxed">
                 <p>
-                  <strong className="text-liberty-primary">Liberty Bell Ethical Enfranchisement</strong> brings together the best of both worlds: the deep understanding that comes from being leaseholders ourselves, and the professional expertise backed by leading industry bodies.
+                  <strong className="text-liberty-primary">Liberty Bell Ethical Enfranchisement</strong> was founded by leaseholders who've been through the same struggles you're facing. We understand the frustration of unfair service charges, poor management, and feeling powerless in your own home.
                 </p>
                 <p>
-                  We've developed cutting-edge technology and streamlined processes that traditional legal firms haven't caught up with yet. Our approach is built on professional standards, institutional support, and government recognition as a trusted partner in leasehold reform.
+                  We're building digital tools and streamlined processes to make Right to Manage and Collective Enfranchisement more accessible and affordable. While traditional legal firms charge thousands, we're working to democratise these legal rights through technology and clear guidance.
                 </p>
                 <p>
-                  This isn't just about paperwork and legal processes – it's about delivering meaningful change with the credibility and backing to make it happen at scale.
+                  Our mission is simple: help leaseholders take control. We are committed to making the journey clearer, more transparent, and less expensive than the traditional routes.
                 </p>
               </div>
 

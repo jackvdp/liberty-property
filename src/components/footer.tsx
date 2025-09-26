@@ -36,15 +36,6 @@ export default function Footer() {
                   </a>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Phone className="w-4 h-4 text-liberty-accent flex-shrink-0" />
-                  <a 
-                    href={contactInfo.phone.href}
-                    className="text-liberty-secondary hover:text-liberty-accent transition-colors text-sm"
-                  >
-                    {contactInfo.phone.display}
-                  </a>
-                </div>
-                <div className="flex items-center gap-3">
                   <MapPin className="w-4 h-4 text-liberty-accent flex-shrink-0" />
                   <span className="text-liberty-secondary text-sm">
                     {contactInfo.location.display}

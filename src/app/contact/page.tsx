@@ -77,16 +77,6 @@ export default function ContactPage() {
               </span>
             </a>
             
-            <a 
-              href={contactInfo.phone.href}
-              className="group flex items-center gap-3 border border-liberty-primary p-8 hover:border-liberty-accent transition-all duration-300"
-            >
-              <Phone className="w-5 h-5 text-liberty-primary group-hover:text-liberty-accent transition-colors" />
-              <span className="text-liberty-primary group-hover:text-liberty-accent transition-colors">
-                {contactInfo.phone.display}
-              </span>
-            </a>
-            
             <div className="flex items-center gap-3 border border-liberty-primary p-8">
               <MapPin className="w-5 h-5 text-liberty-primary" />
               <span className="text-liberty-primary">{contactInfo.location.display}</span>

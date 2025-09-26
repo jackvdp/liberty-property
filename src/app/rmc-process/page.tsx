@@ -295,7 +295,7 @@ export default function RMCProcess() {
               <ul className="space-y-2 text-liberty-background/80 text-sm">
                 <li>• Work within existing structure</li>
                 <li>• No complex legal notices required</li>
-                <li>• Faster to implement (weeks not months)</li>
+                <li>• Faster to implement</li>
                 <li>• Lower costs (minimal legal fees)</li>
                 <li>• Immediate budget control</li>
                 <li>• No qualifying criteria to meet</li>
