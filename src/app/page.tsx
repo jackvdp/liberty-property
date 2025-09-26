@@ -7,6 +7,7 @@ import ContactForm from '@/components/contact-form'
 import Footer from '@/components/footer'
 import HowItWorks from "@/components/how-it-works";
 import WhyLibertyBell from "@/components/why-liberty-bell";
+import ScrollEligibilityModal from '@/components/ui/scroll-eligibility-modal'
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         <FAQSection />
         <ContactForm />
         <Footer />
+        <ScrollEligibilityModal />
     </div>
   )
 }
