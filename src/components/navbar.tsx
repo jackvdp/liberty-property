@@ -22,8 +22,8 @@ export default function Navbar() {
   return (
     <nav className="bg-liberty-base/95 backdrop-blur-sm border-b border-liberty-secondary/30 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-3 items-center h-16">
-          {/* Logo - Left side */}
+        <div className="grid grid-cols-[1fr_2fr_1fr] items-center h-16">
+          {/* Logo - Left side (1fr) */}
           <div className="flex justify-start">
             <Link href="/" className="block">
               <Image
@@ -37,7 +37,7 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Desktop Navigation - Center */}
+          {/* Desktop Navigation - Center (2fr) */}
           <div className="hidden lg:flex justify-center">
             <NavigationMenu>
               <NavigationMenuList>
@@ -100,7 +100,7 @@ export default function Navbar() {
             `}</style>
           </div>
 
-          {/* Desktop CTA Button - Right side */}
+          {/* Desktop CTA Button - Right side (1fr) */}
           <div className="hidden lg:flex justify-end">
             <Button asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base">
               <Link href="/eligibility-check" className="flex items-center gap-2">
