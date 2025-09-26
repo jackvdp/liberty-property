@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Mail, Phone, MapPin, ChevronDown } from 'lucide-react'
+import { ArrowRight, Mail, MapPin, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { contactInfo } from '@/data/contact-info'
