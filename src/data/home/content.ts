@@ -205,23 +205,28 @@ export const content = {
 
   pricing: {
     header: {
-      title: "No Surprises, No Hidden Costs",
-      subtitle: "Transparent, fixed-fee pricing with our savings-based model"
+      title: "Clear, Transparent Pricing",
+      subtitle: "We'll agree a pricing structure that works for you - with no hidden costs"
     },
     savingsModel: {
-      strongText: "You pay the upfront fee to help you get control. We take a cut of the savings.",
-      description: "The upfront fee covers all the legal work and processes. Our revenue comes from the savings we create for you through better management."
+      strongText: "Ask us about our innovative shared savings pricing model.",
+      description: "We'll agree a clear, transparent pricing structure that works for you. Once agreed, we don't get paid until we have secured you control."
     },
     items: [
       {
         title: "RTM Process",
-        price: "£2,000 + VAT",
-        description: "Complete Right to Manage process to take control of your building"
+        price: "No win, no fee",
+        description: "Our indicative price is £2,000 + VAT plus costs. Complete Right to Manage process to take control of your building"
       },
       {
         title: "Enfranchisement",
-        price: "£500-£2,000 per flat",
-        description: "Collective purchase of your freehold - varies by building complexity"
+        price: "Competitive market rates",
+        description: "We help you source a solution at competitive market rates for collective purchase of your freehold"
+      },
+      {
+        title: "RMC Takeover",
+        price: "No win, no fee",
+        description: "Free if you take our aftercare package. Take control of your existing RMC structure"
       },
       {
         title: "Aftercare",
@@ -230,8 +235,7 @@ export const content = {
       }
     ],
     cta: {
-      primaryButton: "Get A Quote",
-      secondaryButton: "Register"
+      primaryButton: "Get A Quote"
     }
   },
 
