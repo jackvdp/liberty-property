@@ -79,7 +79,7 @@ function HowItWorksContent({ enableScrollTracking = false }: HowItWorksContentPr
   }
 
   return (
-    <section ref={sectionRef} className="py-16 sm:py-24 lg:py-32 bg-gradient-to-br from-liberty-secondary/20 via-liberty-base to-liberty-secondary/10">
+    <section ref={sectionRef} className="py-16 sm:py-24 lg:py-32 bg-liberty-secondary/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
