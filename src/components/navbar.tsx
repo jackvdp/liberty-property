@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { Menu, ArrowRight, FileText, Users, Building, Home } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet'
@@ -18,6 +19,32 @@ import { cn } from '@/lib/utils'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname()
+
+  // Helper function to check if a path is active
+  const isActive = (path: string) => {
+    if (path === '/' && pathname === '/') return true
+    if (path !== '/' && pathname.startsWith(path)) return true
+    return false
+  }
+
+  // Helper function to get link classes
+  const getLinkClasses = (path: string) => {
+    const baseClasses = "px-4 py-2 text-sm font-medium transition-all duration-300 rounded-md"
+    if (isActive(path)) {
+      return `${baseClasses} text-liberty-accent bg-liberty-accent/10`
+    }
+    return `${baseClasses} text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/20`
+  }
+
+  // Helper function for mobile link classes
+  const getMobileLinkClasses = (path: string) => {
+    const baseClasses = "flex items-center gap-3 px-3 py-3 rounded-lg text-base transition-all duration-300"
+    if (isActive(path)) {
+      return `${baseClasses} text-liberty-accent bg-liberty-accent/10`
+    }
+    return `${baseClasses} text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10`
+  }
 
   return (
     <nav className="bg-liberty-base/95 backdrop-blur-sm border-b border-liberty-secondary/30 sticky top-0 z-50">
@@ -44,28 +71,36 @@ export default function Navbar() {
 
                 {/* Home Link */}
                 <NavigationMenuItem>
-                  <Link href="/" className="text-liberty-background/70 hover:text-liberty-primary px-4 py-2 text-sm font-medium transition-colors rounded-md hover:bg-liberty-secondary/20 flex items-center gap-2">
+                  <Link href="/" className={`${getLinkClasses('/')} flex items-center gap-2`}>
                     <Home className="w-4 h-4" />
                   </Link>
                 </NavigationMenuItem>
 
                 {/* Simple Links */}
                 <NavigationMenuItem>
-                  <Link href="/about" className="text-liberty-background/70 hover:text-liberty-primary px-4 py-2 text-sm font-medium transition-colors rounded-md hover:bg-liberty-secondary/20">
+                  <Link href="/about" className={getLinkClasses('/about')}>
                     About
                   </Link>
                 </NavigationMenuItem>
 
                 {/* How It Works - Simple Link */}
                 <NavigationMenuItem>
-                  <Link href="/how-it-works" className="text-liberty-background/70 hover:text-liberty-primary px-4 py-2 text-sm font-medium transition-colors rounded-md hover:bg-liberty-secondary/20">
+                  <Link href="/how-it-works" className={getLinkClasses('/how-it-works')}>
                     How It Works
                   </Link>
                 </NavigationMenuItem>
 
                 {/* Services Dropdown */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-liberty-background/70 hover:text-liberty-primary bg-transparent hover:bg-liberty-secondary/20">
+                  <NavigationMenuTrigger className={
+                    isActive('/right-to-manage') || 
+                    isActive('/collective-enfranchisement') || 
+                    isActive('/rmc-process') || 
+                    isActive('/commonhold-conversion') || 
+                    isActive('/property-management')
+                      ? "text-liberty-accent bg-liberty-accent/10 hover:bg-liberty-accent/20"
+                      : "text-liberty-background/70 hover:text-liberty-primary bg-transparent hover:bg-liberty-secondary/20"
+                  }>
                     Pathways
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -90,7 +125,7 @@ export default function Navbar() {
                 </NavigationMenuItem>
                 
                 <NavigationMenuItem>
-                  <Link href="/contact" className="text-liberty-background/70 hover:text-liberty-primary px-4 py-2 text-sm font-medium transition-colors rounded-md hover:bg-liberty-secondary/20">
+                  <Link href="/contact" className={getLinkClasses('/contact')}>
                     Contact
                   </Link>
                 </NavigationMenuItem>
@@ -156,28 +191,28 @@ export default function Navbar() {
                     <div className="space-y-1">
                       <Link
                           href="/"
-                          className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200"
+                          className={getMobileLinkClasses('/')}
                           onClick={() => setIsOpen(false)}
                       >
                         <Home className="w-5 h-5" />
                       </Link>
                       <Link
                           href="/about"
-                          className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200"
+                          className={getMobileLinkClasses('/about')}
                           onClick={() => setIsOpen(false)}
                       >
                         <span className="font-medium">About Us</span>
                       </Link>
                       <Link
                           href="/how-it-works"
-                          className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200"
+                          className={getMobileLinkClasses('/how-it-works')}
                           onClick={() => setIsOpen(false)}
                       >
                         <span className="font-medium">How It Works</span>
                       </Link>
                       <Link
                           href="/contact"
-                          className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200"
+                          className={getMobileLinkClasses('/contact')}
                           onClick={() => setIsOpen(false)}
                       >
                         <span className="font-medium">Contact</span>
@@ -190,7 +225,7 @@ export default function Navbar() {
                     <div className="space-y-1">
                       <Link 
                         href="/right-to-manage" 
-                        className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200 group"
+                        className={`${getMobileLinkClasses('/right-to-manage')} group`}
                         onClick={() => setIsOpen(false)}
                       >
                         <div className="w-8 h-8 bg-liberty-primary/10 rounded-lg flex items-center justify-center group-hover:bg-liberty-primary/20 transition-colors">
