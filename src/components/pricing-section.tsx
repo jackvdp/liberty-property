@@ -30,6 +30,12 @@ const pricingItems = [
     title: content.pricing.items[2].title,
     price: content.pricing.items[2].price,
     description: content.pricing.items[2].description
+  },
+  {
+    icon: Users,
+    title: content.pricing.items[3].title,
+    price: content.pricing.items[3].price,
+    description: content.pricing.items[3].description
   }
 ]
 
@@ -77,7 +83,7 @@ export default function PricingSection() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="grid md:grid-cols-3 gap-8 mb-16"
+          className="grid md:grid-cols-2 xl:grid-cols-4 gap-8 mb-16"
         >
           {pricingItems.map((item, index) => (
             <motion.div
