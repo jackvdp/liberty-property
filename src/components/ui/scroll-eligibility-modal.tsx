@@ -96,33 +96,21 @@ export default function ScrollEligibilityModal() {
 
             {/* Content */}
             <div className="p-8 md:p-10 text-center">
-              {/* Icon */}
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
-                className="mx-auto mb-6"
-              >
-                <div className="w-20 h-20 bg-liberty-accent/20 rounded-full flex items-center justify-center">
-                  <Home className="w-10 h-10 text-liberty-accent" />
-                </div>
-              </motion.div>
-
               {/* Heading */}
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
+                transition={{ delay: 0.1 }}
                 className="text-2xl sm:text-3xl font-reckless font-bold text-liberty-background mb-4"
               >
-                Ready to Take <span className="text-liberty-accent">Control?</span>
+                Ready to <span className="text-liberty-accent">Take Control?</span>
               </motion.h2>
 
               {/* Description */}
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
+                transition={{ delay: 0.2 }}
                 className="text-base sm:text-lg text-liberty-background/70 mb-8 px-4"
               >
                 Find out if your building qualifies for Right to Manage or Collective Enfranchisement in just 2 minutes.
@@ -132,7 +120,7 @@ export default function ScrollEligibilityModal() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
+                transition={{ delay: 0.3 }}
                 className="space-y-3 mb-8 text-left max-w-md mx-auto px-4"
               >
                 <div className="flex items-start gap-3">
@@ -159,13 +147,13 @@ export default function ScrollEligibilityModal() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
+                transition={{ delay: 0.4 }}
                 className="flex flex-col sm:flex-row gap-4 justify-center px-4"
               >
                 <Button
-                  size="lg"
+                  size="xl"
                   asChild
-                  className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-background"
+                  className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base"
                 >
                   <Link href="/eligibility-check" className="flex items-center justify-center gap-2">
                     Check Eligibility Now
@@ -173,7 +161,7 @@ export default function ScrollEligibilityModal() {
                   </Link>
                 </Button>
                 <Button
-                  size="lg"
+                  size="xl"
                   variant="outline"
                   onClick={closeModal}
                   className="border-liberty-background/20 text-liberty-background hover:bg-liberty-secondary/10"
@@ -181,16 +169,6 @@ export default function ScrollEligibilityModal() {
                   Maybe Later
                 </Button>
               </motion.div>
-
-              {/* Trust Badge */}
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6 }}
-                className="text-xs sm:text-sm text-liberty-background/50 mt-6"
-              >
-                Join 1,000+ leaseholders who've taken the first step
-              </motion.p>
             </div>
           </motion.div>
         </>
