@@ -267,80 +267,80 @@ export default function PropertyManagement() {
       </section>
 
       {/* Network & Experience Section */}
-      <section className="py-16 bg-liberty-secondary/20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl sm:text-4xl font-reckless font-bold text-liberty-background mb-6">
-              Our Network & Experience
-            </h2>
-            <p className="text-xl text-liberty-background/70">
-              Built through real-world experience fighting for leaseholder rights
-            </p>
-          </motion.div>
+      {/*<section className="py-16 bg-liberty-secondary/20">*/}
+      {/*  <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">*/}
+      {/*    <motion.div*/}
+      {/*      initial={{ opacity: 0, y: 30 }}*/}
+      {/*      whileInView={{ opacity: 1, y: 0 }}*/}
+      {/*      transition={{ duration: 0.8, ease: "easeOut" }}*/}
+      {/*      viewport={{ once: true }}*/}
+      {/*      className="text-center mb-12"*/}
+      {/*    >*/}
+      {/*      <h2 className="text-3xl sm:text-4xl font-reckless font-bold text-liberty-background mb-6">*/}
+      {/*        Our Network & Experience*/}
+      {/*      </h2>*/}
+      {/*      <p className="text-xl text-liberty-background/70">*/}
+      {/*        Built through real-world experience fighting for leaseholder rights*/}
+      {/*      </p>*/}
+      {/*    </motion.div>*/}
 
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              viewport={{ once: true }}
-              className="bg-liberty-base border border-liberty-secondary/50 rounded-lg p-6"
-            >
-              <h3 className="text-xl font-semibold text-liberty-background mb-4">Trusted Supplier Network</h3>
-              <ul className="space-y-2 text-liberty-background/80 text-sm">
-                <li>• <strong>Vetted contractors</strong> who deliver quality work at fair prices</li>
-                <li>• <strong>Established relationships</strong> built on trust and performance</li>
-                <li>• <strong>Competitive pricing</strong> with no hidden markups or kickbacks</li>
-                <li>• <strong>Proven track record</strong> with other leaseholder-controlled buildings</li>
-                <li>• <strong>Local expertise</strong> across England & Wales</li>
-              </ul>
-            </motion.div>
+      {/*    <div className="grid md:grid-cols-2 gap-8 mb-12">*/}
+      {/*      <motion.div*/}
+      {/*        initial={{ opacity: 0, x: -30 }}*/}
+      {/*        whileInView={{ opacity: 1, x: 0 }}*/}
+      {/*        transition={{ duration: 0.8, ease: "easeOut" }}*/}
+      {/*        viewport={{ once: true }}*/}
+      {/*        className="bg-liberty-base border border-liberty-secondary/50 rounded-lg p-6"*/}
+      {/*      >*/}
+      {/*        <h3 className="text-xl font-semibold text-liberty-background mb-4">Trusted Supplier Network</h3>*/}
+      {/*        <ul className="space-y-2 text-liberty-background/80 text-sm">*/}
+      {/*          <li>• <strong>Vetted contractors</strong> who deliver quality work at fair prices</li>*/}
+      {/*          <li>• <strong>Established relationships</strong> built on trust and performance</li>*/}
+      {/*          <li>• <strong>Competitive pricing</strong> with no hidden markups or kickbacks</li>*/}
+      {/*          <li>• <strong>Proven track record</strong> with other leaseholder-controlled buildings</li>*/}
+      {/*          <li>• <strong>Local expertise</strong> across England & Wales</li>*/}
+      {/*        </ul>*/}
+      {/*      </motion.div>*/}
 
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              viewport={{ once: true }}
-              className="bg-liberty-base border border-liberty-secondary/50 rounded-lg p-6"
-            >
-              <h3 className="text-xl font-semibold text-liberty-background mb-4">Real-World Experience</h3>
-              <ul className="space-y-2 text-liberty-background/80 text-sm">
-                <li>• <strong>Battle-tested knowledge</strong> from managing our own enfranchised buildings</li>
-                <li>• <strong>Understanding of law</strong> and leaseholder rights from our legal work</li>
-                <li>• <strong>Financial expertise</strong> in service charge management and budgeting</li>
-                <li>• <strong>Compliance knowledge</strong> including health & safety requirements</li>
-                <li>• <strong>Community building</strong> skills to unite leaseholders</li>
-              </ul>
-            </motion.div>
-          </div>
+      {/*      <motion.div*/}
+      {/*        initial={{ opacity: 0, x: 30 }}*/}
+      {/*        whileInView={{ opacity: 1, x: 0 }}*/}
+      {/*        transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}*/}
+      {/*        viewport={{ once: true }}*/}
+      {/*        className="bg-liberty-base border border-liberty-secondary/50 rounded-lg p-6"*/}
+      {/*      >*/}
+      {/*        <h3 className="text-xl font-semibold text-liberty-background mb-4">Real-World Experience</h3>*/}
+      {/*        <ul className="space-y-2 text-liberty-background/80 text-sm">*/}
+      {/*          <li>• <strong>Battle-tested knowledge</strong> from managing our own enfranchised buildings</li>*/}
+      {/*          <li>• <strong>Understanding of law</strong> and leaseholder rights from our legal work</li>*/}
+      {/*          <li>• <strong>Financial expertise</strong> in service charge management and budgeting</li>*/}
+      {/*          <li>• <strong>Compliance knowledge</strong> including health & safety requirements</li>*/}
+      {/*          <li>• <strong>Community building</strong> skills to unite leaseholders</li>*/}
+      {/*        </ul>*/}
+      {/*      </motion.div>*/}
+      {/*    </div>*/}
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            viewport={{ once: true }}
-            className="bg-liberty-accent/10 border border-liberty-accent/30 rounded-lg p-6"
-          >
-            <div className="flex items-start gap-4">
-              <Users className="text-liberty-accent w-6 h-6 mt-1 flex-shrink-0" />
-              <div>
-                <h3 className="font-semibold text-liberty-background mb-2">Join Our Community</h3>
-                <p className="text-liberty-background/80 text-sm leading-relaxed">
-                  When you choose Liberty Bell for property management, you're not just getting a service - 
-                  you're joining a community of empowered leaseholders sharing knowledge, costs, and experiences. 
-                  Together, we're building a better way to manage and maintain our homes.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/*    <motion.div*/}
+      {/*      initial={{ opacity: 0, y: 20 }}*/}
+      {/*      whileInView={{ opacity: 1, y: 0 }}*/}
+      {/*      transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}*/}
+      {/*      viewport={{ once: true }}*/}
+      {/*      className="bg-liberty-accent/10 border border-liberty-accent/30 rounded-lg p-6"*/}
+      {/*    >*/}
+      {/*      <div className="flex items-start gap-4">*/}
+      {/*        <Users className="text-liberty-accent w-6 h-6 mt-1 flex-shrink-0" />*/}
+      {/*        <div>*/}
+      {/*          <h3 className="font-semibold text-liberty-background mb-2">Join Our Community</h3>*/}
+      {/*          <p className="text-liberty-background/80 text-sm leading-relaxed">*/}
+      {/*            When you choose Liberty Bell for property management, you're not just getting a service - */}
+      {/*            you're joining a community of empowered leaseholders sharing knowledge, costs, and experiences. */}
+      {/*            Together, we're building a better way to manage and maintain our homes.*/}
+      {/*          </p>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </motion.div>*/}
+      {/*  </div>*/}
+      {/*</section>*/}
 
       {/* Comparison Section */}
       <section className="py-16">

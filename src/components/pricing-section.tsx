@@ -121,7 +121,7 @@ export default function PricingSection() {
               asChild 
               className="bg-liberty-accent hover:bg-liberty-accent/90 text-liberty-background"
             >
-              <Link href="/register" className="flex items-center gap-3 group">
+              <Link href="/eligibility-check" className="flex items-center gap-3 group">
                 {content.pricing.cta.primaryButton}
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>

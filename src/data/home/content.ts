@@ -235,7 +235,7 @@ export const content = {
       }
     ],
     cta: {
-      primaryButton: "Get A Quote"
+      primaryButton: "Check your eligibility",
     }
   },
 

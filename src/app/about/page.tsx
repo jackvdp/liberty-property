@@ -21,15 +21,12 @@ export default function AboutPage() {
             className="text-center"
           >
             <h1 className="text-5xl lg:text-7xl font-reckless font-bold !text-liberty-base mb-6">
-              About <span className="text-liberty-accent">Us</span>
+              Who <span className="text-liberty-accent">we are</span>
             </h1>
             <p className="text-xl text-liberty-base/80 max-w-3xl mx-auto mb-8">
-              We're leaseholders too, but with accredited expertise and institutional backing to deliver real change.
+                Leaseholders who understand your challenges, working to make the legal process simpler and more affordable for everyone.
             </p>
-            
-            <p className="text-sm font-medium text-liberty-base/60 mb-6">
-              Trusted by leading institutions and professional bodies
-            </p>
+
             
             {/* Partner Logos */}
             {/*<motion.div*/}

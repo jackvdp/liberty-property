@@ -34,22 +34,6 @@ export default function AboutUs() {
   return (
     <section className="py-16 sm:py-24 bg-liberty-base">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-reckless font-bold text-liberty-background mb-6">
-            Who We <span className="text-liberty-accent">Are</span>
-          </h2>
-          <p className="text-xl text-liberty-background/70 max-w-4xl mx-auto leading-relaxed">
-            Leaseholders who understand your challenges, working to make the legal process simpler and more affordable for everyone.
-          </p>
-        </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left: Content */}
