@@ -8,7 +8,7 @@ import WhoWeAre from "@/components/who-we-are";
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-liberty-base">
+    <div className="min-h-screen bg-liberty-base overflow-hidden">
       <Navbar />
       
       {/* Hero Section - Clean solid background */}

@@ -63,7 +63,7 @@ const process = [
 
 export default function WhatIsRTM() {
   return (
-    <div className="min-h-screen bg-liberty-base">
+    <div className="min-h-screen bg-liberty-base overflow-hidden">
       {/* Header */}
       <Navbar />
 

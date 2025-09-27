@@ -89,7 +89,7 @@ const rmcAdvantages = [
 
 export default function RMCProcess() {
   return (
-    <div className="min-h-screen bg-liberty-base">
+    <div className="min-h-screen bg-liberty-base overflow-hidden">
       {/* Header */}
       <Navbar />
 

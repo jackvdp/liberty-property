@@ -81,7 +81,7 @@ const process = [
 
 export default function CollectiveEnfranchisement() {
   return (
-    <div className="min-h-screen bg-liberty-base">
+    <div className="min-h-screen bg-liberty-base overflow-hidden">
       {/* Header */}
       <Navbar />
 

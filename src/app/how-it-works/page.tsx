@@ -263,7 +263,7 @@ export default function HowItWorksPage() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-liberty-base">
+      <div className="min-h-screen bg-liberty-base overflow-hidden">
         {/* Hero Section */}
         <motion.section 
           initial={{ opacity: 0 }}
