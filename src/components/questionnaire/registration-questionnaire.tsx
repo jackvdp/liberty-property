@@ -205,12 +205,31 @@ export default function RegistrationQuestionnaire({
           // Registration or user creation failed
           console.error("Failed to complete registration:", result.error);
           
-          if (result.userAlreadyExists) {
-            // User exists but we couldn't get their ID
+          if (result.alreadyRegistered) {
+            // User is already fully registered
+            setOutcome({
+              type: 'error',
+              title: 'Already Registered',
+              message: 'You have already completed registration with this email address. Please log in to access your account.',
+              actions: [
+                {
+                  text: 'Go to Login',
+                  href: '/login',
+                  primary: true
+                },
+                {
+                  text: 'Return Home',
+                  href: '/',
+                  primary: false
+                }
+              ]
+            } as RegistrationOutcome);
+          } else if (result.userAlreadyExists) {
+            // User exists but couldn't complete registration
             setOutcome({
               type: 'error',
               title: 'Account Already Exists',
-              message: 'An account already exists with this email address. Please log in first, then complete your registration.',
+              message: 'An account exists with this email address. Please log in first to complete registration.',
               actions: [
                 {
                   text: 'Go to Login',

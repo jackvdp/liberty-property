@@ -15,6 +15,7 @@ export interface CreateRegistrationResult {
   registrationId?: string;
   userId?: string;
   userAlreadyExists?: boolean;
+  alreadyRegistered?: boolean;
   error?: string;
 }
 
@@ -86,157 +87,101 @@ export async function createRegistrationCase(
       userMetadata
     );
 
-    if (!userResult.success) {
+    let userId: string;
+
+    // Handle different user creation scenarios
+    if (userResult.userAlreadyExists) {
+      // User exists - check if they already have a registration
+      const existingRegistration = await RegistrationRepository.getRegistrationsByEmail(emailAddress);
+      
+      if (existingRegistration.length > 0) {
+        // They already completed registration
+        return {
+          success: false,
+          error: 'You have already registered. Please log in to access your account.',
+          userAlreadyExists: true,
+          alreadyRegistered: true
+        };
+      }
+      
+      // User exists but no registration yet
+      // Since we can't easily get the user ID without searching all users,
+      // and that's inefficient, we should ask them to login first
+      if (!userResult.userId) {
+        return {
+          success: false,
+          error: 'An account exists with this email. Please log in first to complete your registration.',
+          userAlreadyExists: true
+        };
+      }
+      
+      userId = userResult.userId;
+    } else if (userResult.success && userResult.userId) {
+      // New user created successfully
+      userId = userResult.userId;
+    } else {
+      // Failed to create user
       return {
         success: false,
         error: `Failed to create user account: ${userResult.error}`
       };
     }
 
-    // If user already exists but we don't have the ID, we need to handle this
-    if (userResult.userAlreadyExists && !userResult.userId) {
-      // For existing users without ID, we'll need to get it differently
-      // For now, we'll return an error asking them to log in
-      return {
-        success: false,
-        error: 'An account already exists with this email. Please log in to continue.',
-        userAlreadyExists: true
-      };
-    }
-
-    if (!userResult.userId) {
-      return {
-        success: false,
-        error: 'Failed to get user ID after account creation'
-      };
-    }
-
     // STEP 2: Create registration with user ID
-    const registrationData: NewRegistration = {
-      eligibilityCheckId: eligibilityCheckId || null,
-      userId: userResult.userId, // Now we have the user ID!
-      fullName,
-      emailAddress,
-      mobileNumber: mobileNumber || null,
-      consentContact,
-      buildingAddress,
-      postcode,
-      localAuthority: localAuthority || null,
-      numberOfFlats,
-      preferredProcess: preferredProcess || null,
-      termsConditions,
-      privacyPolicy,
-      dataProcessing,
-      marketingConsent: marketingConsent || null,
-      allAnswers: answers,
-      status: 'pending'
-    };
+    try {
+      const registrationData: NewRegistration = {
+        eligibilityCheckId: eligibilityCheckId || null,
+        userId: userId, // Now we have the user ID!
+        fullName,
+        emailAddress,
+        mobileNumber: mobileNumber || null,
+        consentContact,
+        buildingAddress,
+        postcode,
+        localAuthority: localAuthority || null,
+        numberOfFlats,
+        preferredProcess: preferredProcess || null,
+        termsConditions,
+        privacyPolicy,
+        dataProcessing,
+        marketingConsent: marketingConsent || null,
+        allAnswers: answers,
+        status: 'pending'
+      };
 
-    // Save to database
-    const registration = await RegistrationRepository.createRegistration(registrationData);
+      // Save to database
+      const registration = await RegistrationRepository.createRegistration(registrationData);
 
-    console.log('Registration created successfully:', registration.id);
-    console.log('Associated with user ID:', userResult.userId);
+      console.log('Registration created successfully:', registration.id);
+      console.log('Associated with user ID:', userId);
 
-    return {
-      success: true,
-      registrationId: registration.id,
-      userId: userResult.userId,
-      userAlreadyExists: userResult.userAlreadyExists
-    };
+      return {
+        success: true,
+        registrationId: registration.id,
+        userId: userId,
+        userAlreadyExists: userResult.userAlreadyExists
+      };
+    } catch (dbError) {
+      // Check if it's a unique constraint violation
+      if (dbError instanceof Error && dbError.message.includes('unique constraint')) {
+        console.error('User already has a registration:', userId);
+        return {
+          success: false,
+          error: 'You have already completed registration. Please log in to access your account.',
+          userAlreadyExists: true,
+          alreadyRegistered: true
+        };
+      }
+      
+      // Some other database error
+      throw dbError;
+    }
 
   } catch (error) {
     console.error('Error creating registration:', error);
     return {
       success: false,
       error: error instanceof Error ? error.message : 'Failed to create registration'
-    };
-  }
-}
-
-/**
- * Get a registration by ID
- */
-export async function getRegistrationById(registrationId: string) {
-  try {
-    const registration = await RegistrationRepository.getRegistrationById(registrationId);
-    
-    if (!registration) {
-      return {
-        success: false,
-        error: 'Registration not found'
-      };
-    }
-
-    return {
-      success: true,
-      registration
-    };
-
-  } catch (error) {
-    console.error('Error fetching registration:', error);
-    return {
-      success: false,
-      error: 'Failed to fetch registration'
-    };
-  }
-}
-
-/**
- * Get registration by eligibility check ID
- */
-export async function getRegistrationByEligibilityId(eligibilityCheckId: string) {
-  try {
-    const registration = await RegistrationRepository.getRegistrationByEligibilityId(eligibilityCheckId);
-    
-    if (!registration) {
-      return {
-        success: false,
-        error: 'No registration found for this eligibility check'
-      };
-    }
-
-    return {
-      success: true,
-      registration
-    };
-
-  } catch (error) {
-    console.error('Error fetching registration by eligibility ID:', error);
-    return {
-      success: false,
-      error: 'Failed to fetch registration'
-    };
-  }
-}
-
-/**
- * Update registration status (for admin use)
- */
-export async function updateRegistrationStatus(
-  registrationId: string,
-  status: 'pending' | 'contacted' | 'active' | 'completed'
-) {
-  try {
-    const updated = await RegistrationRepository.updateRegistrationStatus(registrationId, status);
-    
-    if (!updated) {
-      return {
-        success: false,
-        error: 'Registration not found'
-      };
-    }
-
-    return {
-      success: true,
-      registration: updated
-    };
-
-  } catch (error) {
-    console.error('Error updating registration status:', error);
-    return {
-      success: false,
-      error: 'Failed to update registration status'
     };
   }
 }

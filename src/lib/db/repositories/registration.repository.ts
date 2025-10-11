@@ -79,13 +79,12 @@ export class RegistrationRepository {
   }
 
   /**
-   * Get registrations by user ID
+   * Get single registration by user ID (since it's 1:1)
    */
-  static async getRegistrationsByUserId(userId: string): Promise<Registration[]> {
-    const results = await db.query.registrations.findMany({
+  static async getRegistrationByUserId(userId: string): Promise<Registration | null> {
+    const result = await db.query.registrations.findFirst({
       where: eq(registrations.userId, userId),
-      orderBy: (registrations, { desc }) => [desc(registrations.createdAt)],
     });
-    return results;
+    return result || null;
   }
 }

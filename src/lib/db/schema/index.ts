@@ -78,7 +78,7 @@ export const eligibilityChecks = pgTable('eligibility_checks', {
 export const registrations = pgTable('registrations', {
   id: uuid('id').primaryKey().defaultRandom(),
   eligibilityCheckId: uuid('eligibility_check_id').references(() => eligibilityChecks.id),
-  userId: uuid('user_id').notNull().references(() => authUsers.id),
+  userId: uuid('user_id').notNull().references(() => authUsers.id).unique(), // Added unique constraint
   
   // Contact Details (Step 1)
   fullName: text('full_name').notNull(),
