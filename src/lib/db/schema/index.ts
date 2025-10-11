@@ -51,6 +51,11 @@ export const eligibilityChecks = pgTable('eligibility_checks', {
   recommendedCaseType: caseTypeEnum('recommended_case_type'),
   outcomeAction: text('outcome_action'), // 'registration', 'leaseholder_engagement_module', 'rmc_process'
   
+  // User contact information
+  userName: text('user_name'),
+  userEmail: text('user_email'),
+  userPhone: text('user_phone'),
+  
   // Raw data storage
   allAnswers: jsonb('all_answers').notNull(), // Complete questionnaire answers
   outcome: jsonb('outcome').notNull(), // Complete outcome object

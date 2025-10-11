@@ -1,0 +1,338 @@
+{
+  "id": "99a940a1-85de-4b74-ac6f-9f5f195ffc26",
+  "prevId": "8d1bc554-a153-4790-883e-7e3c22ee8cb9",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.eligibility_checks": {
+      "name": "eligibility_checks",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "property_type": {
+          "name": "property_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_leasehold": {
+          "name": "is_leasehold",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "flat_count": {
+          "name": "flat_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "has_rmc_rtm": {
+          "name": "has_rmc_rtm",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "non_residential_proportion": {
+          "name": "non_residential_proportion",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "was_converted": {
+          "name": "was_converted",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "freeholder_lives_in_building": {
+          "name": "freeholder_lives_in_building",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "leaseholder_support": {
+          "name": "leaseholder_support",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "two_thirds_long_leases": {
+          "name": "two_thirds_long_leases",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "single_owner_multiple_flats": {
+          "name": "single_owner_multiple_flats",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "eligibility_status": {
+          "name": "eligibility_status",
+          "type": "eligibility_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "recommended_case_type": {
+          "name": "recommended_case_type",
+          "type": "case_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "outcome_action": {
+          "name": "outcome_action",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_name": {
+          "name": "user_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_email": {
+          "name": "user_email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_phone": {
+          "name": "user_phone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "all_answers": {
+          "name": "all_answers",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "outcome": {
+          "name": "outcome",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.registrations": {
+      "name": "registrations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "eligibility_check_id": {
+          "name": "eligibility_check_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "full_name": {
+          "name": "full_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email_address": {
+          "name": "email_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mobile_number": {
+          "name": "mobile_number",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "consent_contact": {
+          "name": "consent_contact",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "building_address": {
+          "name": "building_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "postcode": {
+          "name": "postcode",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "local_authority": {
+          "name": "local_authority",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "number_of_flats": {
+          "name": "number_of_flats",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "preferred_process": {
+          "name": "preferred_process",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "terms_conditions": {
+          "name": "terms_conditions",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "privacy_policy": {
+          "name": "privacy_policy",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data_processing": {
+          "name": "data_processing",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "marketing_consent": {
+          "name": "marketing_consent",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "all_answers": {
+          "name": "all_answers",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "registration_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'pending'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "registrations_eligibility_check_id_eligibility_checks_id_fk": {
+          "name": "registrations_eligibility_check_id_eligibility_checks_id_fk",
+          "tableFrom": "registrations",
+          "tableTo": "eligibility_checks",
+          "columnsFrom": [
+            "eligibility_check_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.case_type": {
+      "name": "case_type",
+      "schema": "public",
+      "values": [
+        "rtm",
+        "enfranchisement",
+        "rmc_takeover"
+      ]
+    },
+    "public.eligibility_status": {
+      "name": "eligibility_status",
+      "schema": "public",
+      "values": [
+        "success",
+        "failure",
+        "info"
+      ]
+    },
+    "public.registration_status": {
+      "name": "registration_status",
+      "schema": "public",
+      "values": [
+        "pending",
+        "contacted",
+        "active",
+        "completed"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
