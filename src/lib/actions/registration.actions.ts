@@ -8,15 +8,19 @@
 import { RegistrationRepository } from '@/lib/db/repositories/registration.repository';
 import { type NewRegistration } from '@/lib/db/schema';
 import { type RegistrationAnswer } from '@/components/questionnaire/registration-types';
+import { createUserAccount, type UserMetadata } from '@/lib/actions/auth.actions';
 
 export interface CreateRegistrationResult {
   success: boolean;
   registrationId?: string;
+  userId?: string;
+  userAlreadyExists?: boolean;
   error?: string;
 }
 
 /**
  * Create a registration from the registration wizard data
+ * Creates a user account first, then saves the registration with the user ID
  */
 export async function createRegistrationCase(
   answers: Record<string, RegistrationAnswer[]>,
@@ -67,9 +71,50 @@ export async function createRegistrationCase(
       };
     }
 
-    // Create registration data
+    // STEP 1: Create user account first
+    const userMetadata: UserMetadata = {
+      eligibility_id: eligibilityCheckId,
+      building_address: buildingAddress,
+      postcode: postcode,
+      preferred_process: preferredProcess
+    };
+
+    const userResult = await createUserAccount(
+      emailAddress,
+      fullName,
+      mobileNumber,
+      userMetadata
+    );
+
+    if (!userResult.success) {
+      return {
+        success: false,
+        error: `Failed to create user account: ${userResult.error}`
+      };
+    }
+
+    // If user already exists but we don't have the ID, we need to handle this
+    if (userResult.userAlreadyExists && !userResult.userId) {
+      // For existing users without ID, we'll need to get it differently
+      // For now, we'll return an error asking them to log in
+      return {
+        success: false,
+        error: 'An account already exists with this email. Please log in to continue.',
+        userAlreadyExists: true
+      };
+    }
+
+    if (!userResult.userId) {
+      return {
+        success: false,
+        error: 'Failed to get user ID after account creation'
+      };
+    }
+
+    // STEP 2: Create registration with user ID
     const registrationData: NewRegistration = {
       eligibilityCheckId: eligibilityCheckId || null,
+      userId: userResult.userId, // Now we have the user ID!
       fullName,
       emailAddress,
       mobileNumber: mobileNumber || null,
@@ -91,10 +136,13 @@ export async function createRegistrationCase(
     const registration = await RegistrationRepository.createRegistration(registrationData);
 
     console.log('Registration created successfully:', registration.id);
+    console.log('Associated with user ID:', userResult.userId);
 
     return {
       success: true,
-      registrationId: registration.id
+      registrationId: registration.id,
+      userId: userResult.userId,
+      userAlreadyExists: userResult.userAlreadyExists
     };
 
   } catch (error) {

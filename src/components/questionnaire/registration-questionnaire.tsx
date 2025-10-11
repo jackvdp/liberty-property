@@ -7,7 +7,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
-import {ArrowLeft, ArrowRight, CheckCircle2} from "lucide-react";
+import {ArrowLeft, ArrowRight, CheckCircle2, CircleX} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { RadioInput, TextInput, CheckboxInput, FileInput } from "./shared-inputs";
 import { QuestionnaireValue } from "./types";
@@ -19,7 +19,6 @@ import {
   RegistrationOutcome
 } from "./registration-types";
 import { createRegistrationCase } from "@/lib/actions/registration.actions";
-import { createUserAccount } from "@/lib/actions/auth.actions";
 
 export default function RegistrationQuestionnaire({
   data,
@@ -172,7 +171,7 @@ export default function RegistrationQuestionnaire({
     const nextSectionId = currentSection.nextSection;
 
     if (nextSectionId === "success") {
-      // Save registration to database
+      // Save registration to database (user creation happens inside)
       setIsSaving(true);
       try {
         const result = await createRegistrationCase(
@@ -183,42 +182,90 @@ export default function RegistrationQuestionnaire({
         if (result.success && result.registrationId) {
           setRegistrationId(result.registrationId);
           
-          // Create user account silently in the background
-          const contactAnswers = newSectionAnswers['step1'] || [];
-          const fullName = contactAnswers.find(a => a.questionId === 'full_name')?.value as string;
-          const email = contactAnswers.find(a => a.questionId === 'email_address')?.value as string;
-          const phone = contactAnswers.find(a => a.questionId === 'mobile_number')?.value as string;
+          // Check if user already existed
+          if (result.userAlreadyExists) {
+            // User already has an account - show different message
+            const contactAnswers = newSectionAnswers['step1'] || [];
+            const email = contactAnswers.find(a => a.questionId === 'email_address')?.value as string;
+            
+            setOutcome({
+              type: 'info',
+              title: 'Registration Complete - Existing Account',
+              message: `Your registration has been saved. We noticed you already have an account with the email ${email}. You can use your existing login to access your dashboard.`,
+              actions: outcomes.success.actions
+            } as RegistrationOutcome);
+          } else {
+            // New user created successfully with registration
+            setOutcome(outcomes.success as RegistrationOutcome);
+          }
           
-          // Fire and forget - don't block the success screen
-          createUserAccount(email, fullName, phone, {
-            registration_id: result.registrationId,
-            eligibility_id: eligibilityData?.uuid || eligibilityData?.derivedData?.flatCount ? 'has-eligibility-data' : 'no-eligibility'
-          }).then(userResult => {
-            if (userResult.success) {
-              console.log('User account created successfully for:', email);
-              if (userResult.userAlreadyExists) {
-                console.log('Note: User already existed in Supabase');
-              }
-            } else {
-              console.error('Failed to create user account:', userResult.error);
-            }
-          }).catch(error => {
-            console.error('Unexpected error creating user account:', error);
-          });
-          
-          setOutcome(outcomes.success as RegistrationOutcome);
           setIsComplete(true);
-          onComplete?.(outcomes.success as RegistrationOutcome, newSectionAnswers);
+          onComplete?.(outcome || outcomes.success as RegistrationOutcome, newSectionAnswers);
         } else {
-          // Handle error - show error message but still mark as complete
-          console.error("Failed to save registration:", result.error);
-          setOutcome(outcomes.success as RegistrationOutcome);
+          // Registration or user creation failed
+          console.error("Failed to complete registration:", result.error);
+          
+          if (result.userAlreadyExists) {
+            // User exists but we couldn't get their ID
+            setOutcome({
+              type: 'error',
+              title: 'Account Already Exists',
+              message: 'An account already exists with this email address. Please log in first, then complete your registration.',
+              actions: [
+                {
+                  text: 'Go to Login',
+                  href: '/login',
+                  primary: true
+                },
+                {
+                  text: 'Return Home',
+                  href: '/',
+                  primary: false
+                }
+              ]
+            } as RegistrationOutcome);
+          } else {
+            // General error
+            setOutcome({
+              type: 'error',
+              title: 'Registration Failed',
+              message: result.error || 'We were unable to complete your registration. Please try again or contact support.',
+              actions: [
+                {
+                  text: 'Try Again',
+                  href: '/register',
+                  primary: true
+                },
+                {
+                  text: 'Contact Support',
+                  href: '/contact',
+                  primary: false
+                }
+              ]
+            } as RegistrationOutcome);
+          }
           setIsComplete(true);
         }
       } catch (error) {
         console.error("Error saving registration:", error);
-        // Still show success screen even if save fails
-        setOutcome(outcomes.success as RegistrationOutcome);
+        // Show error outcome
+        setOutcome({
+          type: 'error',
+          title: 'Registration Error',
+          message: 'An unexpected error occurred. Please try again or contact support.',
+          actions: [
+            {
+              text: 'Try Again',
+              href: '/register',
+              primary: true
+            },
+            {
+              text: 'Return Home',
+              href: '/',
+              primary: false
+            }
+          ]
+        } as RegistrationOutcome);
         setIsComplete(true);
       } finally {
         setIsSaving(false);
@@ -286,7 +333,12 @@ export default function RegistrationQuestionnaire({
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, duration: 0.4, ease: "easeOut" }}
               >
-                <CheckCircle2 className="text-liberty-primary w-8 h-8" />
+                {
+                  outcome.type === "error" ?
+                      <CircleX className="text-red-500 w-8 h-8"/>
+                      :
+                      <CheckCircle2 className="text-liberty-primary w-8 h-8"/>
+                }
               </motion.div>
               <CardTitle className="text-3xl sm:text-4xl font-reckless font-bold text-liberty-standard mb-4">
                 {outcome.title}

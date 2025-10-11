@@ -77,4 +77,15 @@ export class RegistrationRepository {
     });
     return results;
   }
+
+  /**
+   * Get registrations by user ID
+   */
+  static async getRegistrationsByUserId(userId: string): Promise<Registration[]> {
+    const results = await db.query.registrations.findMany({
+      where: eq(registrations.userId, userId),
+      orderBy: (registrations, { desc }) => [desc(registrations.createdAt)],
+    });
+    return results;
+  }
 }

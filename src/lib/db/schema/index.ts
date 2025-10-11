@@ -25,6 +25,14 @@ export const registrationStatusEnum = pgEnum('registration_status', [
   'completed'
 ]);
 
+// ============ REFERENCE TABLES ============
+
+// Reference to Supabase auth.users table (for foreign keys only)
+// We don't create this table, it's managed by Supabase
+const authUsers = pgTable('auth.users', {
+  id: uuid('id').primaryKey(),
+});
+
 // ============ ELIGIBILITY CHECKS ============
 
 export const eligibilityChecks = pgTable('eligibility_checks', {
@@ -70,6 +78,7 @@ export const eligibilityChecks = pgTable('eligibility_checks', {
 export const registrations = pgTable('registrations', {
   id: uuid('id').primaryKey().defaultRandom(),
   eligibilityCheckId: uuid('eligibility_check_id').references(() => eligibilityChecks.id),
+  userId: uuid('user_id').notNull().references(() => authUsers.id),
   
   // Contact Details (Step 1)
   fullName: text('full_name').notNull(),
