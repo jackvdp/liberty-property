@@ -69,6 +69,11 @@ export async function createEligibilityCase(
 
     // Create the eligibility check record
     const newCheck = await EligibilityRepository.createEligibilityCheck({
+      // Contact information
+      userName: findAnswer('user_name') as string,
+      userEmail: findAnswer('user_email') as string,
+      userPhone: findAnswer('user_phone') as string,
+      
       // Basic property info
       propertyType: findAnswer('property_type') as string,
       isLeasehold: findAnswer('flat_leasehold') === 'yes',

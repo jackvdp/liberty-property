@@ -1,6 +1,38 @@
 {
   "wizardFlow": {
     "questions": {
+      "q_contact_1": {
+        "id": "user_name",
+        "question": "What is your full name?",
+        "description": "We'll use this for any follow-up communication.",
+        "type": "text",
+        "validation": {
+          "required": true,
+          "minLength": 2
+        },
+        "nextQuestion": "q_contact_2"
+      },
+      "q_contact_2": {
+        "id": "user_email",
+        "question": "What is your email address?",
+        "description": "We'll send your case details and next steps to this email.",
+        "type": "email",
+        "validation": {
+          "required": true,
+          "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+        },
+        "nextQuestion": "q_contact_3"
+      },
+      "q_contact_3": {
+        "id": "user_phone",
+        "question": "What is your mobile number?",
+        "description": "Optional - to allow us to get in touch to discuss next steps.",
+        "type": "tel",
+        "validation": {
+          "required": false
+        },
+        "nextQuestion": "q1"
+      },
       "q1": {
         "id": "property_type",
         "question": "Is your property a flat or a house?",

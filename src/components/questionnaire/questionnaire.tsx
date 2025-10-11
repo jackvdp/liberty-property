@@ -32,7 +32,7 @@ export default function Questionnaire({
   renderCompletionContent
 }: QuestionnaireProps & { renderCompletionContent?: (uuid: string, outcome: QuestionnaireOutcome) => React.ReactNode }) {
   const router = useRouter();
-  const [currentQuestionId, setCurrentQuestionId] = useState<string>("q1");
+  const [currentQuestionId, setCurrentQuestionId] = useState<string>("q_contact_1");
   const [answers, setAnswers] = useState<QuestionnaireAnswer[]>([]);
   const [currentAnswer, setCurrentAnswer] = useState<QuestionnaireValue>("");
   const [progress, setProgress] = useState<number>(0);
@@ -89,7 +89,7 @@ export default function Questionnaire({
         const focusQuestionAnswer = prefillData.answers.find(a => a.questionId === prefillData.focusQuestion);
         
         // Navigate through the flow to get all answers before the focus question
-        let currentQuestionKey = "q1";
+        let currentQuestionKey = "q_contact_1";
         for (const answer of prefillData.answers) {
           if (answer.questionId === prefillData.focusQuestion) {
             break; // Stop before the focus question
@@ -99,7 +99,7 @@ export default function Questionnaire({
         }
         
         // Find the question key that corresponds to the focus question ID
-        let focusQuestionKey = "q1";
+        let focusQuestionKey = "q_contact_1";
         for (const [key, question] of Object.entries(questions)) {
           if ((question as QuestionnaireQuestion).id === prefillData.focusQuestion) {
             focusQuestionKey = key;
@@ -121,7 +121,7 @@ export default function Questionnaire({
         
         if (lastAnswer) {
           // Find the question key that corresponds to the last answer's question ID
-          let lastQuestionKey = "q1";
+          let lastQuestionKey = "q_contact_1";
           for (const [key, question] of Object.entries(questions)) {
             if ((question as QuestionnaireQuestion).id === lastAnswer.questionId) {
               lastQuestionKey = key;
@@ -204,10 +204,10 @@ export default function Questionnaire({
 
     // If no previous answers, go back to first question
     if (previousAnswers.length === 0) {
-      setCurrentQuestionId("q1");
+      setCurrentQuestionId("q_contact_1");
     } else {
       // Get the question ID we should be on based on the previous answers
-      let currentId = "q1";
+      let currentId = "q_contact_1";
       
       // Replay the answers to determine the correct current question
       for (const answer of previousAnswers) {
@@ -236,7 +236,7 @@ export default function Questionnaire({
   };
 
   const handleRestart = () => {
-    setCurrentQuestionId("q1");
+    setCurrentQuestionId("q_contact_1");
     setAnswers([]);
     setCurrentAnswer("");
     setProgress(0);
@@ -537,6 +537,36 @@ export default function Questionnaire({
                       value={currentAnswer} 
                       onChange={handleAnswerChange}
                       type="text"
+                    />
+                  </motion.div>
+                )}
+
+                {currentQuestion.type === "email" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.4 }}
+                  >
+                    <TextInput 
+                      question={currentQuestion} 
+                      value={currentAnswer} 
+                      onChange={handleAnswerChange}
+                      type="email"
+                    />
+                  </motion.div>
+                )}
+
+                {currentQuestion.type === "tel" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.4 }}
+                  >
+                    <TextInput 
+                      question={currentQuestion} 
+                      value={currentAnswer} 
+                      onChange={handleAnswerChange}
+                      type="tel"
                     />
                   </motion.div>
                 )}

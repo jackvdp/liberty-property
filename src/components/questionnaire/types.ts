@@ -21,12 +21,15 @@ export interface QuestionnaireQuestion {
   id: string;
   question: string;
   description?: string;
-  type: 'radio' | 'number' | 'text';
+  type: 'radio' | 'number' | 'text' | 'email' | 'tel';
   options?: QuestionnaireOption[];
   validation?: {
     min?: number;
     max?: number;
     required?: boolean;
+    minLength?: number;
+    maxLength?: number;
+    pattern?: string;
   };
   nextQuestion: string | Record<string, string> | Record<string, string | undefined>;
 }
