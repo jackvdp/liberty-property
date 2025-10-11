@@ -60,13 +60,13 @@ export default function RegistrationQuestionnaire({
       // Prefill contact information in step1
       if (currentSectionId === "step1") {
         // Only update if the values aren't already set
-        if (!prev.full_name && eligibilityData.derivedData.userName) {
+        if (!prev.full_name && eligibilityData.derivedData?.userName) {
           prefillData.full_name = eligibilityData.derivedData.userName;
         }
-        if (!prev.email_address && eligibilityData.derivedData.userEmail) {
+        if (!prev.email_address && eligibilityData.derivedData?.userEmail) {
           prefillData.email_address = eligibilityData.derivedData.userEmail;
         }
-        if (!prev.mobile_number && eligibilityData.derivedData.userPhone) {
+        if (!prev.mobile_number && eligibilityData.derivedData?.userPhone) {
           prefillData.mobile_number = eligibilityData.derivedData.userPhone;
         }
       }
@@ -74,7 +74,7 @@ export default function RegistrationQuestionnaire({
       // Prefill building information in step2
       if (currentSectionId === "step2") {
         // Only update if the value isn't already set
-        if (!prev.number_of_flats && eligibilityData.derivedData.flatCount) {
+        if (!prev.number_of_flats && eligibilityData.derivedData?.flatCount) {
           prefillData.number_of_flats = eligibilityData.derivedData.flatCount;
         }
       }
