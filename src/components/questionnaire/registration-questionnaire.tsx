@@ -19,6 +19,7 @@ import {
   RegistrationOutcome
 } from "./registration-types";
 import { createRegistrationCase } from "@/lib/actions/registration.actions";
+import { createUserAccount } from "@/lib/actions/auth.actions";
 
 export default function RegistrationQuestionnaire({
   data,
@@ -181,6 +182,30 @@ export default function RegistrationQuestionnaire({
         
         if (result.success && result.registrationId) {
           setRegistrationId(result.registrationId);
+          
+          // Create user account silently in the background
+          const contactAnswers = newSectionAnswers['step1'] || [];
+          const fullName = contactAnswers.find(a => a.questionId === 'full_name')?.value as string;
+          const email = contactAnswers.find(a => a.questionId === 'email_address')?.value as string;
+          const phone = contactAnswers.find(a => a.questionId === 'mobile_number')?.value as string;
+          
+          // Fire and forget - don't block the success screen
+          createUserAccount(email, fullName, phone, {
+            registration_id: result.registrationId,
+            eligibility_id: eligibilityData?.uuid || eligibilityData?.derivedData?.flatCount ? 'has-eligibility-data' : 'no-eligibility'
+          }).then(userResult => {
+            if (userResult.success) {
+              console.log('User account created successfully for:', email);
+              if (userResult.userAlreadyExists) {
+                console.log('Note: User already existed in Supabase');
+              }
+            } else {
+              console.error('Failed to create user account:', userResult.error);
+            }
+          }).catch(error => {
+            console.error('Unexpected error creating user account:', error);
+          });
+          
           setOutcome(outcomes.success as RegistrationOutcome);
           setIsComplete(true);
           onComplete?.(outcomes.success as RegistrationOutcome, newSectionAnswers);
