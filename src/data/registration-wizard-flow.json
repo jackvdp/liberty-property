@@ -16,7 +16,8 @@
             "required": true,
             "validation": {
               "required": true
-            }
+            },
+            "prefillFromEligibility": true
           },
           {
             "id": "email_address",
@@ -26,14 +27,16 @@
             "validation": {
               "required": true,
               "email": true
-            }
+            },
+            "prefillFromEligibility": true
           },
           {
             "id": "mobile_number",
             "question": "What is your mobile number?",
             "description": "Optional - helps us contact you more quickly",
             "type": "tel",
-            "required": false
+            "required": false,
+            "prefillFromEligibility": true
           },
           {
             "id": "consent_contact",

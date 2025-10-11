@@ -50,23 +50,38 @@ export default function RegistrationQuestionnaire({
     setProgress(Math.min(progressPercentage, 100));
   }, [sectionAnswers, totalSections]);
 
-  // Prefill data from eligibility wizard - only run once when section changes
+  // Prefill data from eligibility wizard - handle both step1 and step2
   useEffect(() => {
-    if (eligibilityData?.derivedData && currentSectionId === "step2") {
-      setCurrentSectionData(prev => {
-        // Only update if the value isn't already set
-        if (prev.number_of_flats) {
-          return prev; // Don't update if already has data
+    if (!eligibilityData?.derivedData) return;
+    
+    setCurrentSectionData(prev => {
+      const prefillData = { ...prev };
+      
+      // Prefill contact information in step1
+      if (currentSectionId === "step1") {
+        // Only update if the values aren't already set
+        if (!prev.full_name && eligibilityData.derivedData.userName) {
+          prefillData.full_name = eligibilityData.derivedData.userName;
         }
-        
-        const prefillData = { ...prev };
-        if (eligibilityData.derivedData && eligibilityData.derivedData.flatCount) {
+        if (!prev.email_address && eligibilityData.derivedData.userEmail) {
+          prefillData.email_address = eligibilityData.derivedData.userEmail;
+        }
+        if (!prev.mobile_number && eligibilityData.derivedData.userPhone) {
+          prefillData.mobile_number = eligibilityData.derivedData.userPhone;
+        }
+      }
+      
+      // Prefill building information in step2
+      if (currentSectionId === "step2") {
+        // Only update if the value isn't already set
+        if (!prev.number_of_flats && eligibilityData.derivedData.flatCount) {
           prefillData.number_of_flats = eligibilityData.derivedData.flatCount;
         }
-        return prefillData;
-      });
-    }
-  }, [currentSectionId, eligibilityData?.derivedData?.flatCount]); // Remove currentSectionData from deps
+      }
+      
+      return prefillData;
+    });
+  }, [currentSectionId, eligibilityData?.derivedData]); // Simplified dependencies
 
   const handleFieldChange = (fieldId: string, value: QuestionnaireValue) => {
     setCurrentSectionData(prev => ({

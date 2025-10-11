@@ -89,6 +89,12 @@ export interface EligibilityData {
   
   // Derived/computed data for easy access
   derivedData?: {
+    // Contact information
+    userName?: string;
+    userEmail?: string;
+    userPhone?: string;
+    
+    // Property information
     flatCount?: number;
     propertyType?: string;
     isLeasehold?: string;

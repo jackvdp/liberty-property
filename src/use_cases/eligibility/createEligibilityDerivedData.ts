@@ -14,6 +14,12 @@ export const createEligibilityDerivedData = (
     answers.find(a => a.questionId === questionId)?.value;
 
   return {
+    // Contact information from the eligibility wizard
+    userName: findAnswer('user_name') as string | undefined,
+    userEmail: findAnswer('user_email') as string | undefined,
+    userPhone: findAnswer('user_phone') as string | undefined,
+    
+    // Property information
     flatCount: findAnswer('flat_count') as number | undefined,
     propertyType: findAnswer('property_type') as string | undefined,
     isLeasehold: findAnswer('flat_leasehold') as string | undefined,
