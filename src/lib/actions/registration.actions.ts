@@ -14,7 +14,6 @@ export interface CreateRegistrationResult {
   success: boolean;
   registrationId?: string;
   userId?: string;
-  userAlreadyExists?: boolean;
   alreadyRegistered?: boolean;
   error?: string;
 }
@@ -99,19 +98,18 @@ export async function createRegistrationCase(
         return {
           success: false,
           error: 'You have already registered. Please log in to access your account.',
-          userAlreadyExists: true,
           alreadyRegistered: true
         };
       }
       
-      // User exists but no registration yet
-      // Since we can't easily get the user ID without searching all users,
-      // and that's inefficient, we should ask them to login first
+      // User exists but no registration yet - this is rare but we'll handle it quietly
+      // Since we can't easily get the user ID, we'll have to fail here
+      // In practice this should almost never happen
       if (!userResult.userId) {
+        console.log('Edge case: User exists but no registration and cannot get user ID');
         return {
           success: false,
-          error: 'An account exists with this email. Please log in first to complete your registration.',
-          userAlreadyExists: true
+          error: 'Please try again or contact support if the problem persists.'
         };
       }
       
@@ -123,7 +121,7 @@ export async function createRegistrationCase(
       // Failed to create user
       return {
         success: false,
-        error: `Failed to create user account: ${userResult.error}`
+        error: 'We were unable to create your account. Please try again.'
       };
     }
 
@@ -131,7 +129,7 @@ export async function createRegistrationCase(
     try {
       const registrationData: NewRegistration = {
         eligibilityCheckId: eligibilityCheckId || null,
-        userId: userId, // Now we have the user ID!
+        userId: userId,
         fullName,
         emailAddress,
         mobileNumber: mobileNumber || null,
@@ -158,8 +156,7 @@ export async function createRegistrationCase(
       return {
         success: true,
         registrationId: registration.id,
-        userId: userId,
-        userAlreadyExists: userResult.userAlreadyExists
+        userId: userId
       };
     } catch (dbError) {
       // Check if it's a unique constraint violation
@@ -168,7 +165,6 @@ export async function createRegistrationCase(
         return {
           success: false,
           error: 'You have already completed registration. Please log in to access your account.',
-          userAlreadyExists: true,
           alreadyRegistered: true
         };
       }

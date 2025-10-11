@@ -182,27 +182,12 @@ export default function RegistrationQuestionnaire({
         if (result.success && result.registrationId) {
           setRegistrationId(result.registrationId);
           
-          // Check if user already existed
-          if (result.userAlreadyExists) {
-            // User already has an account - show different message
-            const contactAnswers = newSectionAnswers['step1'] || [];
-            const email = contactAnswers.find(a => a.questionId === 'email_address')?.value as string;
-            
-            setOutcome({
-              type: 'info',
-              title: 'Registration Complete - Existing Account',
-              message: `Your registration has been saved. We noticed you already have an account with the email ${email}. You can use your existing login to access your dashboard.`,
-              actions: outcomes.success.actions
-            } as RegistrationOutcome);
-          } else {
-            // New user created successfully with registration
-            setOutcome(outcomes.success as RegistrationOutcome);
-          }
-          
+          // Success - show normal success outcome
+          setOutcome(outcomes.success as RegistrationOutcome);
           setIsComplete(true);
-          onComplete?.(outcome || outcomes.success as RegistrationOutcome, newSectionAnswers);
+          onComplete?.(outcomes.success as RegistrationOutcome, newSectionAnswers);
         } else {
-          // Registration or user creation failed
+          // Registration failed
           console.error("Failed to complete registration:", result.error);
           
           if (result.alreadyRegistered) {
@@ -211,25 +196,6 @@ export default function RegistrationQuestionnaire({
               type: 'error',
               title: 'Already Registered',
               message: 'You have already completed registration with this email address. Please log in to access your account.',
-              actions: [
-                {
-                  text: 'Go to Login',
-                  href: '/login',
-                  primary: true
-                },
-                {
-                  text: 'Return Home',
-                  href: '/',
-                  primary: false
-                }
-              ]
-            } as RegistrationOutcome);
-          } else if (result.userAlreadyExists) {
-            // User exists but couldn't complete registration
-            setOutcome({
-              type: 'error',
-              title: 'Account Already Exists',
-              message: 'An account exists with this email address. Please log in first to complete registration.',
               actions: [
                 {
                   text: 'Go to Login',
