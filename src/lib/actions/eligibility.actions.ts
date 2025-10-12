@@ -190,3 +190,34 @@ export async function checkEligibilityCaseExists(eligibilityId: string): Promise
     return { exists: false };
   }
 }
+
+/**
+ * Get all eligibility checks (admin only)
+ */
+export async function getAllEligibilityChecks(): Promise<{
+  success: boolean;
+  checks?: EligibilityCheck[];
+  error?: string;
+}> {
+  try {
+    const checks = await EligibilityRepository.getAllEligibilityChecks();
+    
+    return {
+      success: true,
+      checks: checks.map(check => ({
+        id: check.id,
+        propertyType: check.propertyType,
+        flatCount: check.flatCount,
+        recommendedCaseType: check.recommendedCaseType,
+        eligibilityStatus: check.eligibilityStatus,
+        createdAt: check.createdAt,
+      }))
+    };
+  } catch (error) {
+    console.error('Error fetching all eligibility checks:', error);
+    return {
+      success: false,
+      error: 'Failed to fetch eligibility checks'
+    };
+  }
+}

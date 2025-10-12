@@ -31,6 +31,16 @@ export class EligibilityRepository {
   }
 
   /**
+   * Get all eligibility checks (for admin dashboard)
+   */
+  static async getAllEligibilityChecks(): Promise<EligibilityCheck[]> {
+    const results = await db.query.eligibilityChecks.findMany({
+      orderBy: (eligibilityChecks, { desc }) => [desc(eligibilityChecks.createdAt)]
+    });
+    return results;
+  }
+
+  /**
    * Update an eligibility check
    */
   static async updateEligibilityCheck(id: string, data: Partial<NewEligibilityCheck>): Promise<EligibilityCheck | null> {
