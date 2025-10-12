@@ -193,9 +193,9 @@ export default function Navbar() {
                         <span className="font-medium">{getDisplayName()}</span>
                       </Button>
                     </SheetTrigger>
-                    <SheetContent side="right" className="w-[400px] sm:w-[400px]">
+                    <SheetContent side="right" className="w-[400px] sm:w-[400px] bg-liberty-base">
                       <SheetHeader>
-                        <SheetTitle>Account</SheetTitle>
+                        <SheetTitle className="text-liberty-background">Account</SheetTitle>
                       </SheetHeader>
                       <div className="flex flex-col gap-6 py-6">
                         {/* User Info */}
@@ -217,7 +217,7 @@ export default function Navbar() {
                         <div className="space-y-1">
                           <Link 
                             href="/dashboard"
-                            className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-liberty-secondary/10 transition-colors"
+                            className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-liberty-secondary/10 transition-colors text-liberty-background"
                             onClick={() => setIsUserMenuOpen(false)}
                           >
                             <Building className="w-5 h-5 text-liberty-primary" />
@@ -226,20 +226,22 @@ export default function Navbar() {
                         </div>
                       </div>
                       
-                      <SheetFooter className="flex-col sm:flex-col gap-2">
-                        <Button
-                          variant="outline"
-                          onClick={handleSignOut}
-                          className="w-full flex items-center justify-center gap-2"
-                        >
-                          <LogOut className="w-4 h-4" />
-                          Sign Out
-                        </Button>
-                        <SheetClose asChild>
-                          <Button variant="ghost" className="w-full">
-                            Close
+                      <SheetFooter className="mt-auto">
+                        <div className="flex flex-col gap-2 w-full">
+                          <Button
+                            variant="outline"
+                            onClick={handleSignOut}
+                            className="w-full flex items-center justify-center gap-2"
+                          >
+                            <LogOut className="w-4 h-4" />
+                            Sign Out
                           </Button>
-                        </SheetClose>
+                          <SheetClose asChild>
+                            <Button variant="ghost" className="w-full">
+                              Close
+                            </Button>
+                          </SheetClose>
+                        </div>
                       </SheetFooter>
                     </SheetContent>
                   </Sheet>
