@@ -20,7 +20,25 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl
 
-  // Protect dashboard routes - require authentication
+  // Protect admin dashboard routes - require authentication AND admin status
+  if (pathname.startsWith('/admin-dashboard')) {
+    if (!user) {
+      // Not authenticated, redirect to login
+      const loginUrl = new URL('/login', request.url)
+      loginUrl.searchParams.set('redirectTo', pathname)
+      return NextResponse.redirect(loginUrl)
+    }
+    
+    // Check if user is admin
+    const isAdmin = user.user_metadata?.is_admin === true
+    if (!isAdmin) {
+      // Not admin, redirect to regular dashboard
+      const dashboardUrl = new URL('/dashboard', request.url)
+      return NextResponse.redirect(dashboardUrl)
+    }
+  }
+
+  // Protect regular dashboard routes - require authentication
   if (pathname.startsWith('/dashboard')) {
     if (!user) {
       // Not authenticated, redirect to login

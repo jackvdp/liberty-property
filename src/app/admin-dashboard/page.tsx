@@ -47,6 +47,11 @@ export default async function AdminDashboardPage() {
     redirect('/login')
   }
 
+  // Redirect to regular dashboard if not admin
+  if (!user.isAdmin) {
+    redirect('/dashboard')
+  }
+
   return (
     <SidebarProvider
       style={
