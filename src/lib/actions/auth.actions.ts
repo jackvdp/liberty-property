@@ -125,6 +125,7 @@ export interface CurrentUser {
   email: string;
   fullName?: string;
   phone?: string;
+  isAdmin: boolean;
 }
 
 /**
@@ -146,7 +147,8 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
       id: user.id,
       email: user.email || '',
       fullName: user.user_metadata?.full_name,
-      phone: user.user_metadata?.phone
+      phone: user.user_metadata?.phone,
+      isAdmin: user.user_metadata?.is_admin === true,
     };
     
   } catch (error) {
@@ -176,6 +178,62 @@ export async function signOut(): Promise<{ success: boolean; error?: string }> {
     return {
       success: false,
       error: error instanceof Error ? error.message : 'Failed to sign out'
+    };
+  }
+}
+
+/**
+ * Checks if the current user is an admin
+ */
+export async function isCurrentUserAdmin(): Promise<boolean> {
+  try {
+    const user = await getCurrentUser();
+    return user?.isAdmin === true;
+  } catch (error) {
+    console.error('Error checking admin status:', error);
+    return false;
+  }
+}
+
+/**
+ * Sets admin status for a user (use with caution - should be protected)
+ * This is for initial admin setup only
+ */
+export async function setUserAdminStatus(
+  userId: string,
+  isAdmin: boolean
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const supabaseAdmin = createSupabaseAdmin();
+    
+    // Get current user metadata
+    const { data: userData, error: getUserError } = await supabaseAdmin.auth.admin.getUserById(userId);
+    
+    if (getUserError || !userData.user) {
+      throw new Error('User not found');
+    }
+    
+    // Update user metadata with admin flag
+    const { error } = await supabaseAdmin.auth.admin.updateUserById(userId, {
+      user_metadata: {
+        ...userData.user.user_metadata,
+        is_admin: isAdmin
+      }
+    });
+    
+    if (error) {
+      throw error;
+    }
+    
+    console.log(`Successfully set admin status to ${isAdmin} for user:`, userId);
+    
+    return { success: true };
+    
+  } catch (error) {
+    console.error('Error setting admin status:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to set admin status'
     };
   }
 }
