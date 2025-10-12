@@ -9,6 +9,9 @@ import {
   IconUsers,
   IconSettings,
   IconHelp,
+  IconDashboard,
+  IconClipboardCheck,
+  type Icon,
 } from "@tabler/icons-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -24,50 +27,57 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import type { CurrentUser } from "@/lib/actions/auth.actions"
-import Link from "next/link";
+import Link from "next/link"
 
-const navMainItems = [
-  {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: IconHome,
-  },
-  {
-    title: "My Registration",
-    url: "/dashboard/registration",
-    icon: IconFileText,
-  },
-  {
-    title: "My Building",
-    url: "/dashboard/building",
-    icon: IconBuilding,
-  },
-  {
-    title: "Leaseholders",
-    url: "/dashboard/leaseholders",
-    icon: IconUsers,
-  },
-]
+// Icon mapping for serialization
+const iconMap: Record<string, Icon> = {
+  home: IconHome,
+  building: IconBuilding,
+  fileText: IconFileText,
+  users: IconUsers,
+  settings: IconSettings,
+  help: IconHelp,
+  dashboard: IconDashboard,
+  clipboardCheck: IconClipboardCheck,
+}
 
-const navSecondaryItems = [
-  {
-    title: "Settings",
-    url: "/dashboard/settings",
-    icon: IconSettings,
-  },
-  {
-    title: "Get Help",
-    url: "/contact",
-    icon: IconHelp,
-  },
-]
+export interface NavItemInput {
+  title: string
+  url: string
+  icon?: string // Icon name instead of component
+}
+
+interface NavItemWithIcon {
+  title: string
+  url: string
+  icon?: Icon
+}
+
+export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  user: CurrentUser
+  navMainItems: NavItemInput[]
+  navSecondaryItems: NavItemInput[]
+  sidebarLabel?: string
+}
 
 export function AppSidebar({ 
   user,
+  navMainItems,
+  navSecondaryItems,
+  sidebarLabel = "Dashboard",
   ...props 
-}: React.ComponentProps<typeof Sidebar> & {
-  user: CurrentUser
-}) {
+}: AppSidebarProps) {
+  // Convert icon names to icon components
+  const resolvedMainItems: NavItemWithIcon[] = navMainItems.map(item => ({
+    ...item,
+    icon: item.icon ? iconMap[item.icon] : undefined,
+  }))
+
+  const resolvedSecondaryItems: NavItemWithIcon[] = navSecondaryItems.map(item => ({
+    ...item,
+    icon: item.icon ? iconMap[item.icon] : undefined,
+  }))
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -90,7 +100,7 @@ export function AppSidebar({
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">Liberty Bell</span>
-                  <span className="truncate text-xs">Dashboard</span>
+                  <span className="truncate text-xs">{sidebarLabel}</span>
                 </div>
               </Link>
             </SidebarMenuButton>
@@ -98,8 +108,8 @@ export function AppSidebar({
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={navMainItems} />
-        <NavSecondary items={navSecondaryItems} className="mt-auto" />
+        <NavMain items={resolvedMainItems} />
+        <NavSecondary items={resolvedSecondaryItems} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} />

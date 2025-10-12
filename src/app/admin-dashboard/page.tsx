@@ -9,23 +9,18 @@ import { redirect } from "next/navigation"
 
 const navMainItems = [
   {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: "home",
+    title: "Admin Dashboard",
+    url: "/admin-dashboard",
+    icon: "dashboard",
   },
   {
-    title: "My Registration",
-    url: "/dashboard/registration",
-    icon: "fileText",
+    title: "Eligibility Checks",
+    url: "/admin-dashboard/eligibility",
+    icon: "clipboardCheck",
   },
   {
-    title: "My Building",
-    url: "/dashboard/building",
-    icon: "building",
-  },
-  {
-    title: "Leaseholders",
-    url: "/dashboard/leaseholders",
+    title: "Users",
+    url: "/admin-dashboard/users",
     icon: "users",
   },
 ]
@@ -33,7 +28,7 @@ const navMainItems = [
 const navSecondaryItems = [
   {
     title: "Settings",
-    url: "/dashboard/settings",
+    url: "/admin-dashboard/settings",
     icon: "settings",
   },
   {
@@ -43,7 +38,7 @@ const navSecondaryItems = [
   },
 ]
 
-export default async function Page() {
+export default async function AdminDashboardPage() {
   // Get current user
   const user = await getCurrentUser()
   
@@ -66,13 +61,13 @@ export default async function Page() {
         user={user}
         navMainItems={navMainItems}
         navSecondaryItems={navSecondaryItems}
-        sidebarLabel="Dashboard"
+        sidebarLabel="Admin"
       />
       <SidebarInset>
-        <SiteHeader title="Dashboard" />
+        <SiteHeader title="Admin Dashboard" />
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 p-8 md:min-h-min">
-            {/* Coming Soon Content */}
+            {/* Admin Dashboard Content - To be implemented */}
             <div className="mx-auto max-w-3xl">
               <div className="bg-liberty-secondary/10 border border-liberty-secondary/30 rounded-xl p-12 text-center">
                 <div className="max-w-2xl mx-auto space-y-4">
@@ -87,40 +82,40 @@ export default async function Page() {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth={2}
-                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
                       />
                     </svg>
                   </div>
                   <h2 className="font-reckless text-3xl font-bold text-liberty-background">
-                    Coming Soon
+                    Admin Dashboard
                   </h2>
                   <p className="text-liberty-background/70 text-lg">
-                    We're building your personalized dashboard where you'll be able to:
+                    Admin features coming soon. This is where you'll be able to:
                   </p>
                   <ul className="text-left space-y-3 mt-6 max-w-md mx-auto">
                     <li className="flex items-start gap-3">
                       <svg className="w-6 h-6 text-liberty-accent flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span className="text-liberty-background">Track your RTM or CE progress</span>
+                      <span className="text-liberty-background">View all eligibility checks and registrations</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <svg className="w-6 h-6 text-liberty-accent flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span className="text-liberty-background">Manage your building documents</span>
+                      <span className="text-liberty-background">Manage user accounts and permissions</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <svg className="w-6 h-6 text-liberty-accent flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span className="text-liberty-background">Connect with fellow leaseholders</span>
+                      <span className="text-liberty-background">Review platform analytics and insights</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <svg className="w-6 h-6 text-liberty-accent flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span className="text-liberty-background">View service charge comparisons</span>
+                      <span className="text-liberty-background">Configure system settings and preferences</span>
                     </li>
                   </ul>
                 </div>
