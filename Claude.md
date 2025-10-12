@@ -358,6 +358,267 @@ src/
 - ✅ 1:1 relationship between users and registrations
 - ✅ Duplicate registration prevention
 - ✅ Clean separation of concerns (use cases, actions, repositories)
+- ✅ **Magic link authentication (PKCE flow)**
+- ✅ **Secure session management with cookies**
+
+## Authentication System
+
+### 🔐 **Magic Link Authentication (PKCE Flow)**
+
+The platform uses **passwordless authentication** via magic links sent to users' emails. This implementation uses the modern **PKCE (Proof Key for Code Exchange)** flow for maximum security.
+
+#### **Why Magic Links?**
+- ✅ No passwords to remember or manage
+- ✅ More secure than password-based auth
+- ✅ Better user experience
+- ✅ Reduces support burden (no password resets)
+- ✅ Users already have email verified during registration
+
+#### **Authentication Flow Architecture**
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ 1. User Registration (Required First Step)                  │
+│    - User completes registration wizard                     │
+│    - Server creates Supabase Auth user account             │
+│    - Email auto-confirmed (verified during registration)    │
+│    - Registration record linked to user_id                  │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ 2. User Wants to Login                                       │
+│    - Navigates to /login                                     │
+│    - Enters email address                                    │
+│    - Clicks "Send Magic Link"                                │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ 3. Client-Side: Send Magic Link (PKCE Initiated)           │
+│    File: src/app/login/login-client.tsx                     │
+│                                                              │
+│    const supabase = createSupabaseBrowser();                │
+│    await supabase.auth.signInWithOtp({                      │
+│      email: email,                                           │
+│      options: {                                              │
+│        emailRedirectTo: `${window.location.origin}/auth/    │
+│                          callback`,                          │
+│        shouldCreateUser: false  // Only existing users      │
+│      }                                                       │
+│    });                                                       │
+│                                                              │
+│    - Browser client automatically generates PKCE challenge  │
+│    - Supabase stores challenge and sends email              │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ 4. Email Delivered                                           │
+│    - Supabase sends email with magic link                   │
+│    - Link format: https://[project].supabase.co/auth/v1/    │
+│      verify?token=pkce_xxx&redirect_to=http://localhost:    │
+│      3000/auth/callback                                      │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ 5. User Clicks Magic Link                                    │
+│    - Opens in browser                                        │
+│    - Goes to Supabase verify endpoint                       │
+│    - Supabase validates the token                           │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ 6. Supabase Redirects with Code (PKCE)                     │
+│    - Validates token successfully                           │
+│    - Generates one-time authorization code                  │
+│    - Redirects to: http://localhost:3000/auth/callback?    │
+│      code=ABC123XYZ                                         │
+│    - Code can only be used once                             │
+│    - Code expires quickly (seconds)                         │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ 7. Server-Side: Auth Callback Route                         │
+│    File: src/app/auth/callback/route.ts                     │
+│                                                              │
+│    export async function GET(request: NextRequest) {        │
+│      const code = requestUrl.searchParams.get('code');      │
+│                                                              │
+│      const supabase = await createSupabaseServer();         │
+│                                                              │
+│      // Exchange code for session (PKCE verification)       │
+│      const { data, error } = await supabase.auth.           │
+│        exchangeCodeForSession(code);                         │
+│                                                              │
+│      if (data.session) {                                     │
+│        // Session cookie automatically set by               │
+│        // createSupabaseServer()                             │
+│        return NextResponse.redirect('/');                    │
+│      }                                                       │
+│    }                                                         │
+│                                                              │
+│    - Server verifies PKCE challenge                         │
+│    - Creates session from verified code                     │
+│    - Sets secure HTTP-only session cookie                   │
+│    - Code is consumed (can't be reused)                     │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ 8. User Authenticated & Redirected                          │
+│    - Session cookie stored securely                         │
+│    - User redirected to home page (or dashboard)            │
+│    - User is now authenticated across the site              │
+│    - Session persists across page loads                     │
+└─────────────────────────────────────────────────────────────┘
+```
+
+#### **PKCE Flow Security Benefits**
+
+**What is PKCE?**
+PKCE (Proof Key for Code Exchange, pronounced "pixy") is an OAuth 2.0 extension that prevents authorization code interception attacks.
+
+**How it works:**
+1. Client generates random `code_verifier`
+2. Client creates `code_challenge` = hash(code_verifier)
+3. Client sends `code_challenge` with auth request
+4. Server stores challenge and sends authorization code
+5. Client exchanges code + `code_verifier` for tokens
+6. Server verifies: hash(code_verifier) === stored code_challenge
+
+**Security advantages:**
+- ✅ Authorization code useless without verifier
+- ✅ Prevents code interception attacks
+- ✅ No tokens exposed in URL or browser
+- ✅ Works securely on public clients (browsers)
+- ✅ Code can only be exchanged once
+- ✅ Verifier never transmitted during initial request
+
+**Comparison with Implicit Flow (what we avoided):**
+```
+❌ Implicit Flow (Insecure):
+/login → #access_token=xxx&refresh_token=yyy
+- Tokens in URL hash
+- Visible in browser history
+- Can be intercepted
+- Client-side token handling
+
+✅ PKCE Flow (Secure):
+/auth/callback?code=ABC123
+- No tokens in URL
+- Code useless without verifier
+- Server-side token handling
+- Session in HTTP-only cookie
+```
+
+#### **Key Authentication Files**
+
+**Client-Side:**
+- `src/app/login/page.tsx` - Login page wrapper
+- `src/app/login/login-client.tsx` - Login form with magic link trigger
+- `src/lib/db/supabase/client.ts` - Browser Supabase client
+
+**Server-Side:**
+- `src/app/auth/callback/route.ts` - Handles code exchange
+- `src/lib/db/supabase/server.ts` - Server Supabase client with cookie handling
+- `src/lib/actions/auth.actions.ts` - Auth-related server actions
+
+**Configuration:**
+- `src/lib/db/config.ts` - Environment-based config
+- `.env.local` - Environment variables (NEXT_PUBLIC_ prefixed for browser)
+
+#### **Environment Variables for Authentication**
+
+```env
+# Development
+NEXT_PUBLIC_DEV_POSTGRES_URL_SUPABASE_URL=https://xxx.supabase.co
+NEXT_PUBLIC_DEV_POSTGRES_URL_SUPABASE_ANON_KEY=eyJhbGc...
+DEV_POSTGRES_URL_SUPABASE_SERVICE_ROLE_KEY=eyJhbGc...
+
+# Production
+NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGc...
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGc...
+```
+
+**Why NEXT_PUBLIC_ prefix?**
+- Environment variables with `NEXT_PUBLIC_` are exposed to the browser
+- Required for client-side Supabase client (`createSupabaseBrowser()`)
+- Service role key should NEVER be prefixed (server-only)
+
+#### **Supabase Configuration Requirements**
+
+In your Supabase Dashboard (Authentication → URL Configuration):
+
+1. **Site URL**: `http://localhost:3000` (dev) or your production domain
+2. **Redirect URLs**: Must include callback URL
+   - Dev: `http://localhost:3000/auth/callback`
+   - Prod: `https://yourdomain.com/auth/callback`
+3. **Email Template**: Magic Link template should contain `{{ .ConfirmationURL }}`
+
+#### **Session Management**
+
+**Server-Side Session Handling:**
+```typescript
+// src/lib/db/supabase/server.ts
+export async function createSupabaseServer() {
+  const cookieStore = await cookies();
+
+  return createServerClient(
+    dbConfig.supabase.url,
+    dbConfig.supabase.anonKey,
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            cookieStore.set(name, value, options);
+          });
+        },
+      },
+    }
+  );
+}
+```
+
+**Key Points:**
+- Session stored in HTTP-only cookies (not accessible via JavaScript)
+- Cookies automatically sent with requests to server
+- Server can verify session on any protected route
+- Supabase handles token refresh automatically
+
+#### **Error Handling**
+
+The authentication system handles various error cases:
+
+**During Magic Link Send:**
+- Invalid email format
+- User not found (must register first)
+- Rate limiting (too many requests)
+- Network errors
+
+**During Callback:**
+- Invalid or expired code
+- Missing code parameter
+- Session exchange failures
+- Network errors
+
+All errors redirect to `/login?error=message` with user-friendly error text.
+
+#### **Testing Authentication Flow**
+
+1. **Register a new account** at `/register`
+2. Complete the registration wizard
+3. Go to `/login`
+4. Enter your registered email
+5. Check email for magic link
+6. Click the magic link
+7. Verify redirect to home page
+8. Check browser cookies (should see Supabase session cookies)
+
+**Debugging:**
+- Check browser console for client-side errors
+- Check server terminal logs for callback errors
+- Verify Supabase Dashboard → Authentication → Users shows your account
 
 ### 🚧 **Next Steps to Implement**
 - Dashboard showing user's registration
