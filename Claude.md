@@ -141,23 +141,49 @@ Returns case ID to client
 User redirected to registration with case ID
 ```
 
-### 🎯 **Registration Wizard Flow**
-Simplified registration process that collects essential information:
+### 🎯 **Registration & User Account Flow**
+Registration process that creates both user account and registration record:
 
+#### **Registration Steps**
 1. **Step 1**: Contact Details (name, email, phone, consent)
 2. **Step 2**: Building Basics (address, postcode, flat count)
 3. **Step 3** (optional): Choose Process (RTM vs CE if both available)
 4. **Step 4**: Legal & Submit (terms, privacy, data consent)
 
-**Removed sections** (can be collected later via dashboard):
-- User role question
-- Authority to act & supporters
-- Document uploads
-- Meeting preferences
+#### **Registration Flow Architecture**
+```
+User submits registration form
+    ↓
+Server action: createRegistrationCase()
+    ↓
+1. Create Supabase Auth user account
+    ↓
+2. Get user ID from creation
+    ↓
+3. Create registration record with user_id
+    ↓
+Return success or appropriate error
+```
+
+#### **Key Registration Features**
+- **User-First Creation**: User account created before registration record
+- **1:1 Relationship**: One user = one registration (enforced by unique constraint)
+- **Duplicate Prevention**: Checks if email already registered
+- **Error Handling**: 
+  - Already registered → "Please login" message
+  - User creation failed → Generic error with retry
+  - Edge cases handled quietly
+
+#### **Database Relationships**
+```typescript
+// Registration table has foreign key to auth.users
+registrations.user_id → auth.users.id (unique constraint)
+```
 
 ### 📊 **Current Database Schema**
 
 ```sql
+-- Eligibility checks table
 CREATE TABLE eligibility_checks (
   id UUID PRIMARY KEY,
   property_type TEXT,
@@ -170,6 +196,30 @@ CREATE TABLE eligibility_checks (
   created_at TIMESTAMP,
   updated_at TIMESTAMP
 );
+
+-- Registrations table (1:1 with users)
+CREATE TABLE registrations (
+  id UUID PRIMARY KEY,
+  user_id UUID NOT NULL UNIQUE REFERENCES auth.users(id),
+  eligibility_check_id UUID REFERENCES eligibility_checks(id),
+  full_name TEXT NOT NULL,
+  email_address TEXT NOT NULL,
+  mobile_number TEXT,
+  consent_contact BOOLEAN NOT NULL,
+  building_address TEXT NOT NULL,
+  postcode TEXT NOT NULL,
+  local_authority TEXT,
+  number_of_flats INTEGER NOT NULL,
+  preferred_process TEXT,
+  terms_conditions BOOLEAN NOT NULL,
+  privacy_policy BOOLEAN NOT NULL,
+  data_processing BOOLEAN NOT NULL,
+  marketing_consent BOOLEAN,
+  all_answers JSONB,
+  status registration_status_enum DEFAULT 'pending',
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
 ```
 
 ### 🔧 **Key Files in Current Implementation**
@@ -180,11 +230,15 @@ CREATE TABLE eligibility_checks (
 #### **Database Layer**
 - `src/lib/db/schema/index.ts` - Database schema definitions
 - `src/lib/db/repositories/eligibility.repository.ts` - Data access for eligibility checks
+- `src/lib/db/repositories/registration.repository.ts` - Data access for registrations
 - `src/lib/db/drizzle.ts` - Drizzle ORM configuration
 - `src/lib/db/config.ts` - Database configuration
+- `src/lib/db/supabase/client.ts` - Supabase client setup
 
 #### **Server Actions**
 - `src/lib/actions/eligibility.actions.ts` - Server functions for eligibility operations
+- `src/lib/actions/registration.actions.ts` - Server functions for registration and user creation
+- `src/lib/actions/auth.actions.ts` - Server functions for authentication
 
 #### **Client Components**
 - `src/components/eligibility-wrapper.tsx` - Main eligibility wizard component
@@ -299,14 +353,15 @@ src/
 - ✅ All success paths lead to registration
 - ✅ Simplified registration flow (4 steps max)
 - ✅ Database persistence of eligibility checks
+- ✅ User account creation during registration
+- ✅ Registration data persistence with user association
+- ✅ 1:1 relationship between users and registrations
+- ✅ Duplicate registration prevention
 - ✅ Clean separation of concerns (use cases, actions, repositories)
 
-### 🚧 **Not Yet Implemented**
-- Registration data persistence to database
-- User authentication/accounts
-- Dashboard functionality
+### 🚧 **Next Steps to Implement**
+- Dashboard showing user's registration
 - Document management
-- Case management beyond creation
 - Payment processing
 - Email notifications
 
