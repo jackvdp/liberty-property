@@ -7,6 +7,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import Link from 'next/link';
 import { ArrowRight, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { signInWithMagicLink } from '@/lib/actions/auth.actions';
 
 export function LoginClient() {
   const [email, setEmail] = React.useState('');
@@ -20,17 +21,24 @@ export function LoginClient() {
     setSuccessMessage('');
     setErrorMessage('');
 
-    // TODO: Connect to Supabase magic link authentication in next step
-    console.log('Magic link would be sent to:', email);
+    try {
+      // Call the server action to send magic link
+      const result = await signInWithMagicLink(email);
 
-    // Simulate API call for now
-    setTimeout(() => {
+      if (result.success) {
+        setSuccessMessage(
+          `Check your email! We've sent a magic link to ${email}. Click the link in your email to log in.`
+        );
+        setEmail(''); // Clear the email input on success
+      } else {
+        setErrorMessage(result.error || 'Failed to send magic link. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error in magic link flow:', error);
+      setErrorMessage('An unexpected error occurred. Please try again.');
+    } finally {
       setIsLoading(false);
-      setSuccessMessage(
-        `Check your email! We've sent a magic link to ${email}. Click the link in your email to log in.`
-      );
-      setEmail('');
-    }, 1000);
+    }
   };
 
   return (
