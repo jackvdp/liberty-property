@@ -119,3 +119,63 @@ export interface SignInWithMagicLinkResult {
   success: boolean;
   error?: string;
 }
+
+export interface CurrentUser {
+  id: string;
+  email: string;
+  fullName?: string;
+  phone?: string;
+}
+
+/**
+ * Gets the current authenticated user from the server
+ * This reads the session cookie set by the magic link
+ */
+export async function getCurrentUser(): Promise<CurrentUser | null> {
+  try {
+    const { createSupabaseServer } = await import('@/lib/db/supabase/server');
+    const supabase = await createSupabaseServer();
+    
+    const { data: { user }, error } = await supabase.auth.getUser();
+    
+    if (error || !user) {
+      return null;
+    }
+    
+    return {
+      id: user.id,
+      email: user.email || '',
+      fullName: user.user_metadata?.full_name,
+      phone: user.user_metadata?.phone
+    };
+    
+  } catch (error) {
+    console.error('Error getting current user:', error);
+    return null;
+  }
+}
+
+/**
+ * Signs out the current user
+ */
+export async function signOut(): Promise<{ success: boolean; error?: string }> {
+  try {
+    const { createSupabaseServer } = await import('@/lib/db/supabase/server');
+    const supabase = await createSupabaseServer();
+    
+    const { error } = await supabase.auth.signOut();
+    
+    if (error) {
+      throw error;
+    }
+    
+    return { success: true };
+    
+  } catch (error) {
+    console.error('Error signing out:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to sign out'
+    };
+  }
+}

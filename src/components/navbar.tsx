@@ -2,11 +2,11 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState } from 'react'
-import { usePathname } from 'next/navigation'
-import { Menu, ArrowRight, FileText, Users, Building, Home } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { Menu, ArrowRight, FileText, Users, Building, Home, User, LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetFooter, SheetClose } from '@/components/ui/sheet'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -16,10 +16,36 @@ import {
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu'
 import { cn } from '@/lib/utils'
+import { getCurrentUser, signOut, type CurrentUser } from '@/lib/actions/auth.actions'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
   const pathname = usePathname()
+  const router = useRouter()
+
+  // Fetch current user on mount
+  useEffect(() => {
+    async function loadUser() {
+      const user = await getCurrentUser()
+      setCurrentUser(user)
+      setIsLoading(false)
+    }
+    loadUser()
+  }, [])
+
+  // Handle sign out
+  async function handleSignOut() {
+    const result = await signOut()
+    if (result.success) {
+      setCurrentUser(null)
+      setIsUserMenuOpen(false)
+      router.push('/')
+      router.refresh()
+    }
+  }
 
   // Helper function to check if a path is active
   const isActive = (path: string) => {
@@ -44,6 +70,13 @@ export default function Navbar() {
       return `${baseClasses} text-liberty-accent bg-liberty-accent/10`
     }
     return `${baseClasses} text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10`
+  }
+
+  // Get display name (first name or full name)
+  const getDisplayName = () => {
+    if (!currentUser?.fullName) return currentUser?.email?.split('@')[0] || 'User'
+    const firstName = currentUser.fullName.split(' ')[0]
+    return firstName
   }
 
   return (
@@ -142,13 +175,98 @@ export default function Navbar() {
             `}</style>
           </div>
 
-          {/* Desktop CTA Button - Right side (1fr) */}
-          <div className="hidden lg:flex justify-end">
-            <Button asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base">
-              <Link href="/eligibility-check" className="flex items-center gap-2">
-                Get Started
-              </Link>
-            </Button>
+          {/* Desktop CTA Button / User Menu - Right side (1fr) */}
+          <div className="hidden lg:flex justify-end items-center gap-3">
+            {!isLoading && (
+              <>
+                {currentUser ? (
+                  // User Menu Sheet
+                  <Sheet open={isUserMenuOpen} onOpenChange={setIsUserMenuOpen}>
+                    <SheetTrigger asChild>
+                      <Button 
+                        variant="ghost" 
+                        className="flex items-center gap-2 text-liberty-background hover:text-liberty-primary hover:bg-liberty-secondary/20"
+                      >
+                        <div className="w-8 h-8 bg-liberty-primary/10 rounded-full flex items-center justify-center">
+                          <User className="w-4 h-4 text-liberty-primary" />
+                        </div>
+                        <span className="font-medium">{getDisplayName()}</span>
+                      </Button>
+                    </SheetTrigger>
+                    <SheetContent side="right" className="w-[400px] sm:w-[400px]">
+                      <SheetHeader>
+                        <SheetTitle>Account</SheetTitle>
+                      </SheetHeader>
+                      <div className="flex flex-col gap-6 py-6">
+                        {/* User Info */}
+                        <div className="flex items-center gap-3 px-4 py-3 bg-liberty-secondary/20 rounded-lg">
+                          <div className="w-12 h-12 bg-liberty-primary/10 rounded-full flex items-center justify-center">
+                            <User className="w-6 h-6 text-liberty-primary" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-liberty-background truncate">
+                              {currentUser.fullName || 'User'}
+                            </p>
+                            <p className="text-sm text-liberty-background/60 truncate">
+                              {currentUser.email}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Menu Items */}
+                        <div className="space-y-1">
+                          <Link 
+                            href="/dashboard"
+                            className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-liberty-secondary/10 transition-colors"
+                            onClick={() => setIsUserMenuOpen(false)}
+                          >
+                            <Building className="w-5 h-5 text-liberty-primary" />
+                            <span className="font-medium">Dashboard</span>
+                          </Link>
+                        </div>
+                      </div>
+                      
+                      <SheetFooter className="flex-col sm:flex-col gap-2">
+                        <Button
+                          variant="outline"
+                          onClick={handleSignOut}
+                          className="w-full flex items-center justify-center gap-2"
+                        >
+                          <LogOut className="w-4 h-4" />
+                          Sign Out
+                        </Button>
+                        <SheetClose asChild>
+                          <Button variant="ghost" className="w-full">
+                            Close
+                          </Button>
+                        </SheetClose>
+                      </SheetFooter>
+                    </SheetContent>
+                  </Sheet>
+                ) : (
+                  // Logged out: Show Login + Get Started
+                  <>
+                    <Button 
+                      asChild 
+                      variant="ghost"
+                      className="text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/20"
+                    >
+                      <Link href="/login">
+                        Login
+                      </Link>
+                    </Button>
+                    <Button 
+                      asChild 
+                      className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base"
+                    >
+                      <Link href="/eligibility-check" className="flex items-center gap-2">
+                        Get Started
+                      </Link>
+                    </Button>
+                  </>
+                )}
+              </>
+            )}
           </div>
 
           {/* Mobile menu button - Right side for mobile */}
@@ -296,14 +414,80 @@ export default function Navbar() {
                   </div>
                 </div>
 
-                {/* Fixed footer with CTA */}
-                <SheetFooter className="flex-shrink-0 px-2 pb-4">
-                  <Button asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base w-full h-12">
-                    <Link href="/eligibility-check" onClick={() => setIsOpen(false)} className="flex items-center justify-center gap-2">
-                      Get Started
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
+                {/* Fixed footer with CTA or User Actions */}
+                <SheetFooter className="flex-shrink-0 px-2 pb-4 space-y-2">
+                  {!isLoading && (
+                    <>
+                      {currentUser ? (
+                        // Logged in: Show user info and sign out
+                        <>
+                          <div className="flex items-center gap-3 px-4 py-3 bg-liberty-secondary/20 rounded-lg mb-2">
+                            <div className="w-10 h-10 bg-liberty-primary/10 rounded-full flex items-center justify-center">
+                              <User className="w-5 h-5 text-liberty-primary" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="font-medium text-liberty-background truncate text-sm">
+                                {currentUser.fullName || 'User'}
+                              </p>
+                              <p className="text-xs text-liberty-background/60 truncate">
+                                {currentUser.email}
+                              </p>
+                            </div>
+                          </div>
+                          <Button 
+                            asChild 
+                            className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base w-full h-12"
+                          >
+                            <Link 
+                              href="/dashboard" 
+                              onClick={() => setIsOpen(false)} 
+                              className="flex items-center justify-center gap-2"
+                            >
+                              <Building className="h-4 w-4" />
+                              Dashboard
+                            </Link>
+                          </Button>
+                          <Button
+                            variant="outline"
+                            onClick={() => {
+                              handleSignOut()
+                              setIsOpen(false)
+                            }}
+                            className="w-full flex items-center justify-center gap-2"
+                          >
+                            <LogOut className="w-4 h-4" />
+                            Sign Out
+                          </Button>
+                        </>
+                      ) : (
+                        // Logged out: Show Get Started + Login
+                        <>
+                          <Button 
+                            asChild 
+                            className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base w-full h-12"
+                          >
+                            <Link 
+                              href="/eligibility-check" 
+                              onClick={() => setIsOpen(false)} 
+                              className="flex items-center justify-center gap-2"
+                            >
+                              Get Started
+                              <ArrowRight className="h-4 w-4" />
+                            </Link>
+                          </Button>
+                          <Button
+                            asChild
+                            variant="outline"
+                            className="w-full"
+                          >
+                            <Link href="/login" onClick={() => setIsOpen(false)}>
+                              Login
+                            </Link>
+                          </Button>
+                        </>
+                      )}
+                    </>
+                  )}
                 </SheetFooter>
               </SheetContent>
             </Sheet>
