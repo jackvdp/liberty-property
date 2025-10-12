@@ -1,37 +1,68 @@
 'use client';
 
-import * as React from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import Link from 'next/link';
 import { ArrowRight, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { signInWithMagicLink } from '@/lib/actions/auth.actions';
+import { getSupabaseBrowser } from '@/lib/db/supabase/client';
 
-export function LoginClient() {
-  const [email, setEmail] = React.useState('');
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [successMessage, setSuccessMessage] = React.useState('');
-  const [errorMessage, setErrorMessage] = React.useState('');
+export function LoginClient({ initialError }: { initialError?: string }) {
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState(initialError || '');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Clear initial error after a few seconds
+  useEffect(() => {
+    if (initialError) {
+      const timer = setTimeout(() => {
+        setErrorMessage('');
+      }, 8000); // Clear after 8 seconds
+      
+      return () => clearTimeout(timer);
+    }
+  }, [initialError]);
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setSuccessMessage('');
     setErrorMessage('');
 
     try {
-      // Call the server action to send magic link
-      const result = await signInWithMagicLink(email);
+      // Use browser client for PKCE flow
+      const supabase = getSupabaseBrowser();
+      
+      const { error } = await supabase.auth.signInWithOtp({
+        email: email,
+        options: {
+          // Use window.location.origin to get the correct URL dynamically
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          // Don't create new users - they must register first
+          shouldCreateUser: false,
+        }
+      });
 
-      if (result.success) {
+      if (error) {
+        console.error('Magic link send error:', error);
+        
+        // Handle specific error cases
+        if (error.message?.includes('User not found') || 
+            error.message?.includes('Invalid login credentials')) {
+          setErrorMessage('No account found with this email. Please register first.');
+        } else if (error.message?.includes('rate limit')) {
+          setErrorMessage('Too many requests. Please wait a moment and try again.');
+        } else {
+          setErrorMessage(error.message || 'Unable to send magic link. Please try again.');
+        }
+      } else {
         setSuccessMessage(
           `Check your email! We've sent a magic link to ${email}. Click the link in your email to log in.`
         );
         setEmail(''); // Clear the email input on success
-      } else {
-        setErrorMessage(result.error || 'Failed to send magic link. Please try again.');
       }
     } catch (error) {
       console.error('Error in magic link flow:', error);

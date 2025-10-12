@@ -22,8 +22,8 @@ const getDbConfig = () => {
   if (!process.env.VERCEL_ENV || process.env.VERCEL_ENV === 'development') {
     return {
       supabase: {
-        url: process.env.DEV_POSTGRES_URL_NEXT_PUBLIC_SUPABASE_URL || process.env.DEV_POSTGRES_URL_SUPABASE_URL!,
-        anonKey: process.env.DEV_POSTGRES_URL_NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.DEV_POSTGRES_URL_SUPABASE_ANON_KEY!,
+        url: process.env.NEXT_PUBLIC_DEV_POSTGRES_URL_SUPABASE_URL || process.env.DEV_POSTGRES_URL_SUPABASE_URL!,
+        anonKey: process.env.NEXT_PUBLIC_DEV_POSTGRES_URL_SUPABASE_ANON_KEY || process.env.DEV_POSTGRES_URL_SUPABASE_ANON_KEY!,
         serviceRoleKey: process.env.DEV_POSTGRES_URL_SUPABASE_SERVICE_ROLE_KEY!,
       },
       database: {
