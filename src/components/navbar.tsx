@@ -2,11 +2,19 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
-import { Menu, ArrowRight, FileText, Users, Building, Home, User, LogOut } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetFooter, SheetClose } from '@/components/ui/sheet'
+import {useEffect, useState} from 'react'
+import {usePathname, useRouter} from 'next/navigation'
+import {ArrowRight, Building, FileText, Home, LogOut, Menu, User, Users} from 'lucide-react'
+import {Button} from '@/components/ui/button'
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger
+} from '@/components/ui/sheet'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -15,8 +23,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu'
-import { cn } from '@/lib/utils'
-import { getCurrentUser, signOut, type CurrentUser } from '@/lib/actions/auth.actions'
+import {cn} from '@/lib/utils'
+import {type CurrentUser, getCurrentUser, signOut} from '@/lib/actions/auth.actions'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -75,8 +83,7 @@ export default function Navbar() {
   // Get display name (first name or full name)
   const getDisplayName = () => {
     if (!currentUser?.fullName) return currentUser?.email?.split('@')[0] || 'User'
-    const firstName = currentUser.fullName.split(' ')[0]
-    return firstName
+    return currentUser.fullName.split(' ')[0]
   }
 
   return (
