@@ -10,7 +10,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://libertybellenfranchise.co.uk'),
   title: {
-    default: "Liberty Bell - Ethical Enfranchisement for Leaseholders",
+    default: "Liberty Bell - Ethical Enfranchisement",
     template: "%s | Liberty Bell Ethical Enfranchisement",
   },
   description: "Turn every unhappy leaseholder into a happy and empowered commonholder through technology, transparency, and legal empowerment. Property Institute accredited.",
