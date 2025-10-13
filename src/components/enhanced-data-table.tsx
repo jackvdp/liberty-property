@@ -209,7 +209,7 @@ export function EnhancedDataTable<TData, TValue>({
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder={filterConfig.title} />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className={"bg-white"}>
                   <SelectItem value="all">All {filterConfig.title}</SelectItem>
                   {filterConfig.options.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
