@@ -95,6 +95,10 @@ export const columns: ColumnDef<AdminUserData>[] = [
         <Badge variant="outline">User</Badge>
       )
     },
+    filterFn: (row, id, value) => {
+      // Convert string filter value to boolean for comparison
+      return row.getValue(id) === (value === "true")
+    },
   },
   {
     accessorKey: "lastSignInAt",
