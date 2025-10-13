@@ -6,42 +6,7 @@ import {
 } from "@/components/ui/sidebar"
 import { getCurrentUser } from "@/lib/actions/auth.actions"
 import { redirect } from "next/navigation"
-
-const navMainItems = [
-  {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: "home",
-  },
-  {
-    title: "My Registration",
-    url: "/dashboard/registration",
-    icon: "fileText",
-  },
-  {
-    title: "My Building",
-    url: "/dashboard/building",
-    icon: "building",
-  },
-  {
-    title: "Leaseholders",
-    url: "/dashboard/leaseholders",
-    icon: "users",
-  },
-]
-
-const navSecondaryItems = [
-  {
-    title: "Settings",
-    url: "/dashboard/settings",
-    icon: "settings",
-  },
-  {
-    title: "Get Help",
-    url: "/contact",
-    icon: "help",
-  },
-]
+import { userDashboardNavMain, sharedNavSecondary } from "@/config/navigation"
 
 export default async function Page() {
   // Get current user
@@ -64,8 +29,8 @@ export default async function Page() {
       <AppSidebar 
         variant="inset" 
         user={user}
-        navMainItems={navMainItems}
-        navSecondaryItems={navSecondaryItems}
+        navMainItems={userDashboardNavMain}
+        navSecondaryItems={sharedNavSecondary}
         sidebarLabel="Dashboard"
       />
       <SidebarInset>

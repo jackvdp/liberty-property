@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import {useEffect, useState} from 'react'
 import {usePathname, useRouter} from 'next/navigation'
-import {ArrowRight, Building, FileText, Home, LogOut, Menu, User, Users} from 'lucide-react'
+import {ArrowRight, Building, FileText, Home, LogOut, Menu, Shield, User, Users} from 'lucide-react'
 import {Button} from '@/components/ui/button'
 import {
   Sheet,
@@ -222,6 +222,16 @@ export default function Navbar() {
 
                         {/* Menu Items */}
                         <div className="space-y-1">
+                          {currentUser.isAdmin && (
+                            <Link 
+                              href="/admin-dashboard"
+                              className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-liberty-secondary/10 transition-colors text-liberty-background"
+                              onClick={() => setIsUserMenuOpen(false)}
+                            >
+                              <Shield className="w-5 h-5 text-liberty-primary" />
+                              <span className="font-medium">Admin</span>
+                            </Link>
+                          )}
                           <Link 
                             href="/dashboard"
                             className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-liberty-secondary/10 transition-colors text-liberty-background"
