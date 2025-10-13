@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { MetaPixel } from "@/components/analytics/meta-pixel";
+import { VercelAnalytics } from "@/components/analytics/vercel-analytics";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -104,6 +106,8 @@ export default function RootLayout({
         <link rel="manifest" href="/favicons/site.webmanifest" />
       </head>
       <body className={`${inter.variable} font-inter antialiased`}>
+        <MetaPixel />
+        <VercelAnalytics />
         {children}
       </body>
     </html>
