@@ -10,6 +10,7 @@ The `EnhancedDataTable` component is a reusable data table with built-in search,
 - ✅ **Pagination** - Navigate through large datasets
 - ✅ **Column Visibility** - Show/hide columns
 - ✅ **Clear Filters** - Reset all filters at once
+- ✅ **CSV Export** - Export filtered data to CSV file
 - ✅ **Results Count** - Shows filtered vs total results
 
 ## Basic Usage
@@ -89,6 +90,11 @@ export default function MyPage() {
     },
   ]}
   defaultPageSize={50}  // Default: 20
+  enableExport={true}   // Default: true
+  exportConfig={{
+    filename: "users-export",  // Default: "export"
+    excludeColumns: ["id", "password"],  // Optional
+  }}
 />
 ```
 
@@ -102,6 +108,28 @@ export default function MyPage() {
 | `searchPlaceholder` | `string` | No | `"Search..."` | Placeholder text for search input |
 | `filterConfigs` | `FilterConfig[]` | No | `[]` | Array of filter configurations |
 | `defaultPageSize` | `number` | No | `20` | Number of rows per page |
+| `enableExport` | `boolean` | No | `true` | Enable CSV export button |
+| `exportConfig` | `ExportConfig` | No | `{}` | CSV export configuration |
+
+## Export Config Structure
+
+```tsx
+interface ExportConfig {
+  filename?: string        // Base filename (date appended automatically)
+  excludeColumns?: string[] // Column IDs to exclude from export
+}
+```
+
+## Export Behavior
+
+- **Exports filtered data** - Only rows matching current filters
+- **Respects column visibility** - Only exports visible columns
+- **Auto-formats data**:
+  - Dates → ISO format
+  - Booleans → "Yes"/"No"
+  - Null/undefined → Empty string
+  - Objects → JSON string
+- **Filename includes date** - e.g., `eligibility-checks_2025-01-15.csv`
 
 ## Filter Config Structure
 
@@ -244,6 +272,11 @@ export default async function UsersPage() {
           },
         ]}
         defaultPageSize={50}
+        enableExport={true}
+        exportConfig={{
+          filename: "users",
+          excludeColumns: ["id"], // Don't export internal ID
+        }}
       />
     </div>
   )

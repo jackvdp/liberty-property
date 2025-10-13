@@ -13,7 +13,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { IconSearch, IconFilter, IconX } from "@tabler/icons-react"
+import { IconSearch, IconFilter, IconX, IconDownload } from "@tabler/icons-react"
+import Papa from "papaparse"
 
 import {
   Table,
@@ -47,6 +48,11 @@ export interface FilterConfig {
   options: { label: string; value: string }[]
 }
 
+export interface ExportConfig {
+  filename?: string
+  excludeColumns?: string[]
+}
+
 interface EnhancedDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
@@ -54,6 +60,8 @@ interface EnhancedDataTableProps<TData, TValue> {
   searchPlaceholder?: string
   filterConfigs?: FilterConfig[]
   defaultPageSize?: number
+  enableExport?: boolean
+  exportConfig?: ExportConfig
 }
 
 export function EnhancedDataTable<TData, TValue>({
@@ -63,6 +71,8 @@ export function EnhancedDataTable<TData, TValue>({
   searchPlaceholder = "Search...",
   filterConfigs = [],
   defaultPageSize = 20,
+  enableExport = true,
+  exportConfig = {},
 }: EnhancedDataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -101,6 +111,67 @@ export function EnhancedDataTable<TData, TValue>({
   }
 
   const hasActiveFilters = columnFilters.length > 0 || globalFilter !== ""
+
+  // Export to CSV
+  const exportToCSV = () => {
+    const { filename = "export", excludeColumns = [] } = exportConfig
+
+    // Get visible columns
+    const visibleColumns = table
+      .getAllColumns()
+      .filter((column) => column.getIsVisible() && !excludeColumns.includes(column.id))
+
+    // Get filtered rows
+    const rows = table.getFilteredRowModel().rows
+
+    // Prepare data for CSV
+    const csvData = rows.map((row) => {
+      const rowData: Record<string, any> = {}
+      
+      visibleColumns.forEach((column) => {
+        const cell = row.getAllCells().find((c) => c.column.id === column.id)
+        if (cell) {
+          // Get the raw value
+          const value = cell.getValue()
+          
+          // Handle different value types
+          if (value === null || value === undefined) {
+            rowData[column.id] = ""
+          } else if (value instanceof Date) {
+            rowData[column.id] = value.toISOString()
+          } else if (typeof value === "boolean") {
+            rowData[column.id] = value ? "Yes" : "No"
+          } else if (typeof value === "object") {
+            // For objects, try to stringify or use toString
+            rowData[column.id] = JSON.stringify(value)
+          } else {
+            rowData[column.id] = value
+          }
+        }
+      })
+      
+      return rowData
+    })
+
+    // Convert to CSV
+    const csv = Papa.unparse(csvData, {
+      columns: visibleColumns.map((col) => col.id),
+      header: true,
+    })
+
+    // Create blob and download
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" })
+    const link = document.createElement("a")
+    const url = URL.createObjectURL(blob)
+    
+    link.setAttribute("href", url)
+    link.setAttribute("download", `${filename}_${new Date().toISOString().split("T")[0]}.csv`)
+    link.style.visibility = "hidden"
+    
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
 
   return (
     <div className="space-y-4">
@@ -163,33 +234,48 @@ export function EnhancedDataTable<TData, TValue>({
           )}
         </div>
 
-        {/* Column Visibility */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="ml-auto">
-              Columns
+        <div className="flex items-center gap-2">
+          {/* Export Button */}
+          {enableExport && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={exportToCSV}
+              className="h-9"
+            >
+              <IconDownload className="mr-2 h-4 w-4" />
+              Export CSV
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-[200px]">
-            <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+          )}
+
+          {/* Column Visibility */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="h-9">
+                Columns
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-[200px]">
+              <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  )
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
 
       {/* Results Count */}

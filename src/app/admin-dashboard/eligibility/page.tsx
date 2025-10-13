@@ -132,6 +132,11 @@ export default async function AdminEligibilityPage() {
                     },
                   ]}
                   defaultPageSize={20}
+                  enableExport={true}
+                  exportConfig={{
+                    filename: "eligibility-checks",
+                    excludeColumns: ["id"], // Don't export ID column
+                  }}
                 />
               )}
 
