@@ -8,7 +8,7 @@ import { getCurrentUser } from "@/lib/actions/auth.actions"
 import { getAllEligibilityChecks } from "@/lib/actions/eligibility.actions"
 import { redirect } from "next/navigation"
 import { columns } from "./columns"
-import { DataTable } from "./data-table"
+import { EnhancedDataTable } from "@/components/enhanced-data-table"
 
 const navMainItems = [
   {
@@ -83,7 +83,7 @@ export default async function AdminEligibilityPage() {
               <div>
                 <h2 className="text-2xl font-bold tracking-tight">All Eligibility Checks</h2>
                 <p className="text-muted-foreground">
-                  View all eligibility wizard submissions
+                  View and filter all eligibility wizard submissions
                 </p>
               </div>
 
@@ -96,9 +96,43 @@ export default async function AdminEligibilityPage() {
                 </div>
               )}
 
-              {/* Data Table */}
+              {/* Enhanced Data Table */}
               {success && checks && (
-                <DataTable columns={columns} data={checks} />
+                <EnhancedDataTable
+                  columns={columns}
+                  data={checks}
+                  searchKey="userName"
+                  searchPlaceholder="Search by name, email, or phone..."
+                  filterConfigs={[
+                    {
+                      columnId: "eligibilityStatus",
+                      title: "Status",
+                      options: [
+                        { label: "Success", value: "success" },
+                        { label: "Failure", value: "failure" },
+                        { label: "Info", value: "info" },
+                      ],
+                    },
+                    {
+                      columnId: "recommendedCaseType",
+                      title: "Case Type",
+                      options: [
+                        { label: "RTM", value: "rtm" },
+                        { label: "Enfranchisement", value: "enfranchisement" },
+                        { label: "RMC Takeover", value: "rmc_takeover" },
+                      ],
+                    },
+                    {
+                      columnId: "propertyType",
+                      title: "Property Type",
+                      options: [
+                        { label: "Flat", value: "flat" },
+                        { label: "House", value: "house" },
+                      ],
+                    },
+                  ]}
+                  defaultPageSize={20}
+                />
               )}
 
               {/* Empty State */}

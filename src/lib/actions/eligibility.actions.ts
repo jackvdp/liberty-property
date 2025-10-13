@@ -207,9 +207,21 @@ export async function getAllEligibilityChecks(): Promise<{
       checks: checks.map(check => ({
         id: check.id,
         propertyType: check.propertyType,
+        isLeasehold: check.isLeasehold,
         flatCount: check.flatCount,
+        hasRmcRtm: check.hasRmcRtm,
+        nonResidentialProportion: check.nonResidentialProportion,
+        wasConverted: check.wasConverted,
+        freeholderLivesInBuilding: check.freeholderLivesInBuilding,
+        leaseholderSupport: check.leaseholderSupport,
+        twoThirdsLongLeases: check.twoThirdsLongLeases,
+        singleOwnerMultipleFlats: check.singleOwnerMultipleFlats,
         recommendedCaseType: check.recommendedCaseType,
         eligibilityStatus: check.eligibilityStatus,
+        outcomeAction: check.outcomeAction,
+        userName: check.userName,
+        userEmail: check.userEmail,
+        userPhone: check.userPhone,
         createdAt: check.createdAt,
       }))
     };
