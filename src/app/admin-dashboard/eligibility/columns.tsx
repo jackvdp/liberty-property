@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
-import { IconCheck, IconX, IconMinus } from "@tabler/icons-react"
+import { IconCheck, IconX } from "@tabler/icons-react"
 
 export type EligibilityCheck = {
   id: string

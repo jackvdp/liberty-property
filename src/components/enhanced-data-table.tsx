@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { IconSearch, IconFilter, IconX, IconDownload } from "@tabler/icons-react"
+import { IconSearch, IconX, IconDownload } from "@tabler/icons-react"
 import Papa from "papaparse"
 
 import {
