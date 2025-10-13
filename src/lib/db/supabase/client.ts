@@ -23,6 +23,11 @@ export function createSupabaseBrowser() {
  * Bypasses RLS - use with caution
  */
 export function createSupabaseAdmin() {
+  console.log(
+        'Creating Supabase Admin Client with URL:',
+      dbConfig.supabase.url,
+      dbConfig.supabase.serviceRoleKey
+  )
   return createClient(
     dbConfig.supabase.url,
     dbConfig.supabase.serviceRoleKey,
