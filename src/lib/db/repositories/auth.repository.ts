@@ -6,18 +6,27 @@
 import { createSupabaseAdmin } from '@/lib/db/supabase/client';
 import type { User } from '@supabase/supabase-js';
 
+/**
+ * User metadata type with known fields and extensibility
+ */
+export interface UserMetadata {
+  full_name?: string;
+  phone?: string;
+  is_admin?: boolean;
+  registration_id?: string;
+  eligibility_id?: string;
+  source?: string;
+  created_via?: string;
+  [key: string]: string | number | boolean | undefined;
+}
+
 export interface AuthUser {
   id: string;
   email: string;
   emailConfirmedAt: Date | null;
   createdAt: Date;
   lastSignInAt: Date | null;
-  userMetadata: {
-    full_name?: string;
-    phone?: string;
-    is_admin?: boolean;
-    [key: string]: any;
-  };
+  userMetadata: UserMetadata;
 }
 
 export class AuthRepository {
@@ -73,7 +82,7 @@ export class AuthRepository {
    */
   static async updateUserMetadata(
     userId: string,
-    metadata: Record<string, any>
+    metadata: Partial<UserMetadata>
   ): Promise<AuthUser | null> {
     const supabaseAdmin = createSupabaseAdmin();
 

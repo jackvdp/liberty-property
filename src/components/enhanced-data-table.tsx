@@ -124,9 +124,9 @@ export function EnhancedDataTable<TData, TValue>({
     // Get filtered rows
     const rows = table.getFilteredRowModel().rows
 
-    // Prepare data for CSV
+    // Prepare data for CSV - type-safe approach
     const csvData = rows.map((row) => {
-      const rowData: Record<string, any> = {}
+      const rowData: Record<string, string | number | boolean> = {}
       
       visibleColumns.forEach((column) => {
         const cell = row.getAllCells().find((c) => c.column.id === column.id)
@@ -144,8 +144,11 @@ export function EnhancedDataTable<TData, TValue>({
           } else if (typeof value === "object") {
             // For objects, try to stringify or use toString
             rowData[column.id] = JSON.stringify(value)
-          } else {
+          } else if (typeof value === "string" || typeof value === "number") {
             rowData[column.id] = value
+          } else {
+            // Fallback for any other type
+            rowData[column.id] = String(value)
           }
         }
       })
