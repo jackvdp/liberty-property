@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import Script from 'next/script'
 
 declare global {
@@ -13,14 +13,13 @@ declare global {
 
 export function MetaPixel() {
   const pathname = usePathname()
-  const searchParams = useSearchParams()
 
   useEffect(() => {
     // Track page views on route change (after initial load)
     if (typeof window !== 'undefined' && window.fbq) {
       window.fbq('track', 'PageView')
     }
-  }, [pathname, searchParams])
+  }, [pathname])
 
   return (
     <>

@@ -19,6 +19,7 @@ import {
   RegistrationOutcome
 } from "./registration-types";
 import { createRegistrationCase } from "@/lib/actions/registration.actions";
+import { analytics } from "@/lib/analytics";
 
 export default function RegistrationQuestionnaire({
   data,
@@ -36,12 +37,30 @@ export default function RegistrationQuestionnaire({
   const [outcome, setOutcome] = useState<RegistrationOutcome | null>(null);
   const [registrationId, setRegistrationId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [hasStarted, setHasStarted] = useState<boolean>(false);
 
   const { sections, outcomes } = data;
   const sectionKeys = Object.keys(sections);
   const currentSection = sections[currentSectionId] as RegistrationSection;
   const currentSectionIndex = sectionKeys.indexOf(currentSectionId);
   const totalSections = sectionKeys.length;
+
+  // Track wizard opened and page exit
+  useEffect(() => {
+    analytics.trackRegistrationWizardOpened(eligibilityData?.uuid);
+    analytics.trackPageView('registration');
+
+    // Track page exit when component unmounts
+    return () => {
+      analytics.trackPageExit('registration');
+      
+      // Track abandonment if they haven't completed
+      if (!isComplete) {
+        const completedSections = Object.keys(sectionAnswers).length;
+        analytics.trackRegistrationWizardAbandoned(completedSections, totalSections);
+      }
+    };
+  }, []); // Only run once on mount
 
   // Calculate progress based on completed sections
   useEffect(() => {
@@ -84,6 +103,12 @@ export default function RegistrationQuestionnaire({
   }, [currentSectionId, eligibilityData?.derivedData]); // Simplified dependencies
 
   const handleFieldChange = (fieldId: string, value: QuestionnaireValue) => {
+    // Track when first field is filled (wizard started)
+    if (!hasStarted && value) {
+      setHasStarted(true);
+      analytics.trackStartedRegistration(eligibilityData?.uuid);
+    }
+
     setCurrentSectionData(prev => ({
       ...prev,
       [fieldId]: value
@@ -91,6 +116,12 @@ export default function RegistrationQuestionnaire({
   };
 
   const handleCheckboxChange = (fieldId: string, optionValue: string, checked: boolean) => {
+    // Track when first checkbox is checked (wizard started)
+    if (!hasStarted && checked) {
+      setHasStarted(true);
+      analytics.trackStartedRegistration(eligibilityData?.uuid);
+    }
+
     setCurrentSectionData(prev => {
       const currentValue = prev[fieldId];
       const currentValues = Array.isArray(currentValue) ? currentValue as string[] : [];
@@ -164,6 +195,10 @@ export default function RegistrationQuestionnaire({
     };
     setSectionAnswers(newSectionAnswers);
 
+    // Track progress
+    const completedSections = Object.keys(newSectionAnswers).length;
+    analytics.trackRegistrationWizardProgress(completedSections, totalSections);
+
     // Call section complete callback
     onSectionComplete?.(currentSection, sectionAnswerData);
 
@@ -182,12 +217,36 @@ export default function RegistrationQuestionnaire({
         if (result.success && result.registrationId) {
           setRegistrationId(result.registrationId);
           
+          // Track successful completion
+          const preferredProcess = Object.values(newSectionAnswers)
+            .flat()
+            .find(a => a.questionId === 'preferred_process')?.value as string | undefined;
+
+          analytics.trackCompletedRegistration({
+            process: preferredProcess || 'unknown',
+            userId: result.userId,
+            stepCount: totalSections,
+          });
+
+          // Track as lead generation
+          analytics.trackLead({
+            source: 'registration',
+            value: 1500, // Estimated value per registration
+            currency: 'GBP'
+          });
+          
           // Success - show normal success outcome
           setOutcome(outcomes.success as RegistrationOutcome);
           setIsComplete(true);
           onComplete?.(outcomes.success as RegistrationOutcome, newSectionAnswers);
         } else {
-          // Registration failed
+          // Registration failed - track error
+          analytics.trackError({
+            errorType: result.alreadyRegistered ? 'DUPLICATE_REGISTRATION' : 'REGISTRATION_FAILED',
+            errorMessage: result.error || 'Unknown error',
+            location: 'registration-submit'
+          });
+
           console.error("Failed to complete registration:", result.error);
           
           if (result.alreadyRegistered) {
@@ -233,6 +292,14 @@ export default function RegistrationQuestionnaire({
         }
       } catch (error) {
         console.error("Error saving registration:", error);
+        
+        // Track error
+        analytics.trackError({
+          errorType: 'REGISTRATION_EXCEPTION',
+          errorMessage: error instanceof Error ? error.message : 'Unknown exception',
+          location: 'registration-submit'
+        });
+
         // Show error outcome
         setOutcome({
           type: 'error',

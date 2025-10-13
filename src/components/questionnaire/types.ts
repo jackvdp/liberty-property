@@ -63,6 +63,7 @@ export interface QuestionnaireProps {
   data: QuestionnaireData;
   onComplete?: (outcome: QuestionnaireOutcome, answers: QuestionnaireAnswer[]) => void;
   onRestart?: () => void;
+  onAnswerChange?: (currentStep: number, totalSteps: number) => void;
   className?: string;
   showSeparator?: boolean;
   completionActions?: {
@@ -77,4 +78,5 @@ export interface QuestionnaireProps {
   };
   // New props for making questionnaire reusable
   onOutcomeButtonClick?: (outcome: QuestionnaireOutcome, answers: QuestionnaireAnswer[]) => string | void;
+  renderCompletionContent?: (caseId: string, outcome: QuestionnaireOutcome) => React.ReactNode;
 }

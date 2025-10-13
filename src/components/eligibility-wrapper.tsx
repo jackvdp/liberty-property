@@ -17,6 +17,7 @@ import { createEligibilityCase, getEligibilityCase } from "@/lib/actions/eligibi
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/ui/spinner";
+import { analytics } from "@/lib/analytics";
 
 interface EligibilityWrapperProps {
   eligibilityId?: string;
@@ -33,6 +34,7 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
   const [isLoadingInitial, setIsLoadingInitial] = useState(false);
   const [isCreatingCase, setIsCreatingCase] = useState(false);
   const [createdCaseId, setCreatedCaseId] = useState<string | null>(null);
+  const [hasStarted, setHasStarted] = useState(false);
   const router = useRouter();
 
   // Simple type assertion for questionnaire data
@@ -42,6 +44,16 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
     questions: eligibilityData.wizardFlow.questions as Record<string, QuestionnaireQuestion>,
     outcomes: eligibilityData.wizardFlow.outcomes as Record<string, QuestionnaireOutcome>
   };
+
+  // Track wizard opened
+  useEffect(() => {
+    analytics.trackEligibilityWizardOpened();
+
+    // Track page exit when component unmounts
+    return () => {
+      analytics.trackPageExit('eligibility-check');
+    };
+  }, []);
 
   // Load existing case data if eligibilityId provided
   useEffect(() => {
@@ -163,8 +175,24 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
       prefillData={prefillData}
       onOutcomeButtonClick={handleOutcomeButtonClick}
       renderCompletionContent={renderCompletionContent}
+      onAnswerChange={(currentStep, totalSteps) => {
+        // Track when first question is answered (wizard started)
+        if (!hasStarted) {
+          setHasStarted(true);
+          analytics.trackStartedEligibilityCheck();
+        }
+        
+        // Track progress through wizard
+        analytics.trackEligibilityWizardProgress(currentStep, totalSteps);
+      }}
       onComplete={(outcome, answers) => {
         console.log("Questionnaire onComplete called:", { outcome, answers });
+        
+        // Track completion
+        analytics.trackCompletedEligibilityCheck({
+          status: outcome.type,
+          questionCount: answers.length,
+        });
         
         // Create case immediately when outcome is determined
         if (outcome.type === "success") {
@@ -189,8 +217,20 @@ export function EligibilityWrapper({ eligibilityId, focusQuestion }: Eligibility
       }}
       onRestart={() => {
         console.log("Questionnaire restarted");
+        
+        // Get current progress before restart
+        const currentStep = prefillData?.answers?.length || 0;
+        const totalSteps = Object.keys(questionnaireData.questions).length;
+        
+        // Track abandonment if they restarted before completing
+        if (currentStep < totalSteps) {
+          analytics.trackEligibilityWizardAbandoned(currentStep, totalSteps);
+        }
+        
         setPrefillData(undefined);
-        setCreatedCaseId(null); // Clear created case ID on restart
+        setCreatedCaseId(null);
+        setHasStarted(false);
+        
         // Navigate to clean eligibility check
         router.push('/eligibility-check');
       }}
