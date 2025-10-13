@@ -18,7 +18,7 @@ export type AdminUserData = {
   registration: Registration | null
 }
 
-export const columns: ColumnDef<AdminUserData>[] = [
+export const columns: ColumnDef<AdminUserData, unknown>[] = [
   {
     accessorKey: "createdAt",
     header: "Joined",

@@ -9,37 +9,7 @@ import { getAllUsers } from "@/lib/actions/users.actions"
 import { redirect } from "next/navigation"
 import { columns } from "./columns"
 import { EnhancedDataTable } from "@/components/enhanced-data-table"
-
-const navMainItems = [
-  {
-    title: "Admin Dashboard",
-    url: "/admin-dashboard",
-    icon: "dashboard",
-  },
-  {
-    title: "Eligibility Checks",
-    url: "/admin-dashboard/eligibility",
-    icon: "clipboardCheck",
-  },
-  {
-    title: "Users",
-    url: "/admin-dashboard/users",
-    icon: "users",
-  },
-]
-
-const navSecondaryItems = [
-  {
-    title: "Settings",
-    url: "/admin-dashboard/settings",
-    icon: "settings",
-  },
-  {
-    title: "Get Help",
-    url: "/contact",
-    icon: "help",
-  },
-]
+import { adminDashboardNavMain, sharedNavSecondary } from "@/config/navigation"
 
 export default async function AdminUsersPage() {
   // Get current user
@@ -70,8 +40,8 @@ export default async function AdminUsersPage() {
       <AppSidebar 
         variant="inset" 
         user={user}
-        navMainItems={navMainItems}
-        navSecondaryItems={navSecondaryItems}
+        navMainItems={adminDashboardNavMain}
+        navSecondaryItems={sharedNavSecondary}
         sidebarLabel="Admin"
       />
       <SidebarInset>

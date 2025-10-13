@@ -9,7 +9,7 @@ type SearchParams = {
 };
 
 export default async function LoginPage({ searchParams }: SearchParams) {
-  const params = await (searchParams || Promise.resolve({}));
+  const params = await (searchParams || Promise.resolve({ error: undefined }));
   const error = params.error;
 
   return (

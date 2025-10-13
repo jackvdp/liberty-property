@@ -4,27 +4,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
 import { IconCheck, IconX } from "@tabler/icons-react"
-
-export type EligibilityCheck = {
-  id: string
-  propertyType: string | null
-  isLeasehold: boolean | null
-  flatCount: number | null
-  hasRmcRtm: boolean | null
-  nonResidentialProportion: string | null
-  wasConverted: boolean | null
-  freeholderLivesInBuilding: boolean | null
-  leaseholderSupport: string | null
-  twoThirdsLongLeases: boolean | null
-  singleOwnerMultipleFlats: boolean | null
-  recommendedCaseType: "rtm" | "enfranchisement" | "rmc_takeover" | null
-  eligibilityStatus: "success" | "failure" | "info"
-  outcomeAction: string | null
-  userName: string | null
-  userEmail: string | null
-  userPhone: string | null
-  createdAt: Date
-}
+import type { EligibilityCheck } from "@/lib/db/schema"
 
 // Helper component for boolean display
 const BooleanCell = ({ value }: { value: boolean | null }) => {
@@ -36,7 +16,7 @@ const BooleanCell = ({ value }: { value: boolean | null }) => {
   )
 }
 
-export const columns: ColumnDef<EligibilityCheck>[] = [
+export const columns: ColumnDef<EligibilityCheck, unknown>[] = [
   {
     accessorKey: "createdAt",
     header: "Date",

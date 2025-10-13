@@ -196,7 +196,7 @@ export async function checkEligibilityCaseExists(eligibilityId: string): Promise
  */
 export async function getAllEligibilityChecks(): Promise<{
   success: boolean;
-  checks?: EligibilityCheck[];
+  checks?: import('@/lib/db/schema').EligibilityCheck[];
   error?: string;
 }> {
   try {
@@ -204,26 +204,7 @@ export async function getAllEligibilityChecks(): Promise<{
     
     return {
       success: true,
-      checks: checks.map(check => ({
-        id: check.id,
-        propertyType: check.propertyType,
-        isLeasehold: check.isLeasehold,
-        flatCount: check.flatCount,
-        hasRmcRtm: check.hasRmcRtm,
-        nonResidentialProportion: check.nonResidentialProportion,
-        wasConverted: check.wasConverted,
-        freeholderLivesInBuilding: check.freeholderLivesInBuilding,
-        leaseholderSupport: check.leaseholderSupport,
-        twoThirdsLongLeases: check.twoThirdsLongLeases,
-        singleOwnerMultipleFlats: check.singleOwnerMultipleFlats,
-        recommendedCaseType: check.recommendedCaseType,
-        eligibilityStatus: check.eligibilityStatus,
-        outcomeAction: check.outcomeAction,
-        userName: check.userName,
-        userEmail: check.userEmail,
-        userPhone: check.userPhone,
-        createdAt: check.createdAt,
-      }))
+      checks: checks
     };
   } catch (error) {
     console.error('Error fetching all eligibility checks:', error);
