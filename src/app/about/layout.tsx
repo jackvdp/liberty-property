@@ -1,14 +1,14 @@
 import { generateMetadata as generateSEOMetadata, seoConfig } from '@/lib/seo/metadata'
 
 export const metadata = generateSEOMetadata({
-  ...seoConfig.eligibilityCheck,
-  canonicalUrl: '/eligibility-check',
+  ...seoConfig.about,
+  canonicalUrl: '/about',
 });
 
-export default function EligibilityLayout({
+export default function AboutLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  return children;
+  return <>{children}</>;
 }

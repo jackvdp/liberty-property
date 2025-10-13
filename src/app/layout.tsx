@@ -8,8 +8,26 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Liberty Bell - Ethical Enfranchisement",
-  description: "Turn every unhappy leaseholder into a happy and empowered commonholder through technology, transparency, and legal empowerment.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://libertybellenfranchise.co.uk'),
+  title: {
+    default: "Liberty Bell - Ethical Enfranchisement for Leaseholders",
+    template: "%s | Liberty Bell Ethical Enfranchisement",
+  },
+  description: "Turn every unhappy leaseholder into a happy and empowered commonholder through technology, transparency, and legal empowerment. Property Institute accredited.",
+  keywords: [
+    "right to manage",
+    "collective enfranchisement",
+    "leasehold property",
+    "freehold purchase",
+    "leaseholder rights",
+    "RTM company",
+    "property management",
+    "leasehold reform",
+  ],
+  authors: [{ name: "Liberty Bell Ethical Enfranchisement" }],
+  creator: "Liberty Bell Ethical Enfranchisement",
+  publisher: "Liberty Bell Ethical Enfranchisement",
+  
   icons: {
     icon: [
       { url: '/favicons/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
@@ -24,7 +42,49 @@ export const metadata: Metadata = {
       { rel: 'android-chrome', url: '/favicons/android-chrome-512x512.png', sizes: '512x512' }
     ]
   },
-  manifest: '/favicons/site.webmanifest'
+  
+  manifest: '/favicons/site.webmanifest',
+  
+  openGraph: {
+    type: 'website',
+    locale: 'en_GB',
+    url: '/',
+    siteName: 'Liberty Bell Ethical Enfranchisement',
+    title: 'Liberty Bell - Take Back Control of Your Building',
+    description: 'Help leaseholders across England & Wales gain legal control through Right to Manage and Collective Enfranchisement. Property Institute accredited.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Liberty Bell Ethical Enfranchisement',
+      },
+    ],
+  },
+  
+  twitter: {
+    card: 'summary_large_image',
+    site: '@libertybellpm',
+    creator: '@libertybellpm',
+  },
+  
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  
+  verification: {
+    // Add your verification codes after registering with search engines
+    // google: 'your-google-verification-code',
+    // bing: 'your-bing-verification-code',
+  },
 };
 
 export default function RootLayout({

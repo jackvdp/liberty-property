@@ -1,14 +1,14 @@
 import { generateMetadata as generateSEOMetadata, seoConfig } from '@/lib/seo/metadata'
 
 export const metadata = generateSEOMetadata({
-  ...seoConfig.eligibilityCheck,
-  canonicalUrl: '/eligibility-check',
+  ...seoConfig.rmcProcess,
+  canonicalUrl: '/rmc-process',
 });
 
-export default function EligibilityLayout({
+export default function RMCProcessLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  return children;
+  return <>{children}</>;
 }

@@ -8,6 +8,12 @@ import Footer from '@/components/footer'
 import HowItWorks from "@/components/how-it-works";
 import WhyLibertyBell from "@/components/why-liberty-bell";
 import ScrollEligibilityModal from '@/components/ui/scroll-eligibility-modal'
+import { generateMetadata as generateSEOMetadata, seoConfig } from '@/lib/seo/metadata'
+
+export const metadata = generateSEOMetadata({
+  ...seoConfig.home,
+  canonicalUrl: '/',
+});
 
 export default function Home() {
   return (
