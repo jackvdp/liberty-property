@@ -19,7 +19,7 @@ if (isDevelopment) {
 // Select the correct database based on environment
 const getDbConfig = () => {
   // For local development, use DEV_ prefixed variables
-  if (!process.env.VERCEL_ENV || process.env.VERCEL_ENV === 'development') {
+  if (process.env.NEXT_PUBLIC_ENVIRONMENT === 'development' ) {
     console.log("DEV STUFF")
     return {
       supabase: {
