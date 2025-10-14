@@ -15,7 +15,7 @@ export function createSupabaseBrowser() {
   console.log(
       'Creating Supabase Admin Client with URL:',
       dbConfig.supabase.url,
-      dbConfig.supabase.serviceRoleKey
+      dbConfig.supabase.anonKey
   )
   return createBrowserClient(
     dbConfig.supabase.url,

@@ -20,6 +20,7 @@ if (isDevelopment) {
 const getDbConfig = () => {
   // For local development, use DEV_ prefixed variables
   if (!process.env.VERCEL_ENV || process.env.VERCEL_ENV === 'development') {
+    console.log("DEV STUFF")
     return {
       supabase: {
         url: process.env.NEXT_PUBLIC_DEV_POSTGRES_URL_SUPABASE_URL || process.env.DEV_POSTGRES_URL_SUPABASE_URL!,
@@ -32,7 +33,8 @@ const getDbConfig = () => {
       },
     };
   }
-  
+
+  console.log("PROD STUFF")
   // For production/preview, use the main POSTGRES_ variables
   return {
     supabase: {
