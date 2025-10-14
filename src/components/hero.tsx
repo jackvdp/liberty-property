@@ -14,7 +14,7 @@ interface HeroProps {
 export default function Hero({ isLoggedIn = false }: HeroProps) {
   // Determine primary button based on login state
   const primaryButton = isLoggedIn
-    ? { text: 'Go to Dashboard', href: '/dashboard' }
+    ? content.hero.buttons.primaryLoggedIn
     : content.hero.buttons.primary;
   return (
     <section className="h-[calc(100vh-64px)] bg-liberty-base relative overflow-hidden flex flex-col">

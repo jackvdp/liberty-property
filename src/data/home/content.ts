@@ -14,6 +14,10 @@ export const content = {
         text: "Check Your Eligibility",
         href: "/eligibility-check"
       },
+      primaryLoggedIn: {
+        text: "Go to Dashboard",
+        href: "/dashboard"
+      },
       secondary: {
         text: "Our Story", 
         href: "/about"
