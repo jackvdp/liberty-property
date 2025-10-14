@@ -189,11 +189,16 @@
       "success": {
         "type": "success",
         "title": "Thank You for Registering!",
-        "message": "Your registration has been successfully submitted. Our team will be in contact with you soon to discuss your next steps.",
+        "message": "Your registration has been successfully submitted. You can now login to your account via the button below.",
         "actions": [
           {
             "text": "Return to Homepage",
             "href": "/",
+            "primary": false
+          },
+          {
+            "text": "Login",
+            "href": "/login",
             "primary": true
           }
         ]
