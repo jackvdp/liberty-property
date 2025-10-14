@@ -1,37 +1,16 @@
 'use client'
 
-import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Mail, MapPin, ChevronDown } from 'lucide-react'
+import { Mail, MapPin, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { contactInfo } from '@/data/contact-info'
 import Image from 'next/image'
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
+import Navbar from "@/components/navbar"
+import Footer from "@/components/footer"
+import ContactFormFields from '@/components/ui/contact-form-fields'
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    message: ''
-  })
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // TODO: Integrate with Formspree
-    console.log('Form submitted:', formData)
-    alert('Thank you for your message. We\'ll get back to you soon!')
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }))
-  }
 
   const scrollToForm = () => {
     document.getElementById('contact-form')?.scrollIntoView({
@@ -143,88 +122,17 @@ export default function ContactPage() {
                   </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        required
-                        value={formData.name}
-                        onChange={handleChange}
-                        className="w-full px-0 py-4 border-0 border-b-2 border-liberty-secondary/30 focus:border-liberty-accent focus:outline-none transition-colors bg-transparent placeholder:text-liberty-background/40 text-lg"
-                        placeholder="Your Name"
-                      />
-                    </div>
-
-                    <div>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        required
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="w-full px-0 py-4 border-0 border-b-2 border-liberty-secondary/30 focus:border-liberty-accent focus:outline-none transition-colors bg-transparent placeholder:text-liberty-background/40 text-lg"
-                        placeholder="Email Address"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="w-full px-0 py-4 border-0 border-b-2 border-liberty-secondary/30 focus:border-liberty-accent focus:outline-none transition-colors bg-transparent placeholder:text-liberty-background/40 text-lg"
-                        placeholder="Phone Number"
-                      />
-                    </div>
-
-                    <div>
-                      <input
-                        type="text"
-                        id="address"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
-                        className="w-full px-0 py-4 border-0 border-b-2 border-liberty-secondary/30 focus:border-liberty-accent focus:outline-none transition-colors bg-transparent placeholder:text-liberty-background/40 text-lg"
-                        placeholder="Property Address"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={5}
-                      value={formData.message}
-                      onChange={handleChange}
-                      className="w-full px-0 py-4 border-0 border-b-2 border-liberty-secondary/30 focus:border-liberty-accent focus:outline-none transition-colors resize-none bg-transparent placeholder:text-liberty-background/40 text-lg"
-                      placeholder="Tell us about your situation and what you'd like to discuss..."
-                    />
-                  </div>
-
-                  <div className="pt-8 text-center">
-                    <Button
-                      size="xl"
-                      type="submit"
-                      className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-secondary px-12 py-4 rounded-full font-medium group text-lg"
-                    >
-                      Let's Talk
-                      <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform ml-2" />
-                    </Button>
-                  </div>
-
-                  <p className="text-sm text-liberty-background/50 text-center pt-4">
-                    We respect your privacy and will never share your information with third parties.
-                  </p>
-                </form>
+                <ContactFormFields
+                  submitButtonText="Let's Talk"
+                  successMessage="Thank you! We'll get back to you soon."
+                  privacyText="We respect your privacy and will never share your information with third parties."
+                  namePlaceholder="Your Name"
+                  emailPlaceholder="Email Address"
+                  phonePlaceholder="Phone Number"
+                  addressPlaceholder="Property Address"
+                  messagePlaceholder="Tell us about your situation and what you'd like to discuss..."
+                  buttonVariant="primary"
+                />
               </CardContent>
             </Card>
           </motion.div>
