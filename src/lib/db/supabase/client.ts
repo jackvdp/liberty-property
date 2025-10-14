@@ -12,11 +12,6 @@ import { dbConfig } from '../config';
  * Uses anon key with RLS policies
  */
 export function createSupabaseBrowser() {
-  console.log(
-      'Creating Supabase Admin Client with URL:',
-      dbConfig.supabase.url,
-      dbConfig.supabase.anonKey
-  )
   return createBrowserClient(
     dbConfig.supabase.url,
     dbConfig.supabase.anonKey
