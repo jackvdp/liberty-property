@@ -7,7 +7,15 @@ import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
 import { content } from '@/data/home/content'
 
-export default function Hero() {
+interface HeroProps {
+  isLoggedIn?: boolean;
+}
+
+export default function Hero({ isLoggedIn = false }: HeroProps) {
+  // Determine primary button based on login state
+  const primaryButton = isLoggedIn
+    ? { text: 'Go to Dashboard', href: '/dashboard' }
+    : content.hero.buttons.primary;
   return (
     <section className="h-[calc(100vh-64px)] bg-liberty-base relative overflow-hidden flex flex-col">
       <div className="flex-1 flex">
@@ -57,8 +65,8 @@ export default function Hero() {
                 className="flex flex-col sm:flex-row gap-4"
               >
                 <Button size="xl" asChild className="bg-liberty-primary hover:bg-liberty-primary/90 text-liberty-base">
-                  <Link href={content.hero.buttons.primary.href} className="flex items-center gap-3 group">
-                    {content.hero.buttons.primary.text}
+                  <Link href={primaryButton.href} className="flex items-center gap-3 group">
+                    {primaryButton.text}
                     <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </Button>

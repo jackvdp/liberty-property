@@ -9,17 +9,22 @@ import HowItWorks from "@/components/how-it-works";
 import WhyLibertyBell from "@/components/why-liberty-bell";
 import ScrollEligibilityModal from '@/components/ui/scroll-eligibility-modal'
 import { generateMetadata as generateSEOMetadata, seoConfig } from '@/lib/seo/metadata'
+import { getCurrentUser } from '@/lib/actions/auth.actions'
 
 export const metadata = generateSEOMetadata({
   ...seoConfig.home,
   canonicalUrl: '/',
 });
 
-export default function Home() {
+export default async function Home() {
+  // Check if user is logged in (server-side)
+  const currentUser = await getCurrentUser();
+  const isLoggedIn = !!currentUser;
+
   return (
     <div className="min-h-screen bg-liberty-base">
         <Navbar />
-        <Hero />
+        <Hero isLoggedIn={isLoggedIn} />
         <ProblemSolution />
         <HowItWorks />
         <PricingSection />
