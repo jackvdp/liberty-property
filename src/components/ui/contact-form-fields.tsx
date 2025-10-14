@@ -47,7 +47,6 @@ export default function ContactFormFields({
     message: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitSuccess, setSubmitSuccess] = useState(false)
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -63,7 +62,6 @@ export default function ContactFormFields({
       })
 
       if (response.ok) {
-        setSubmitSuccess(true)
         setFormData({
           name: '',
           email: '',
