@@ -230,9 +230,7 @@ export default function RegistrationQuestionnaire({
 
           // Track as lead generation
           analytics.trackLead({
-            source: 'registration',
-            value: 1500, // Estimated value per registration
-            currency: 'GBP'
+            source: 'registration'
           });
           
           // Success - show normal success outcome
