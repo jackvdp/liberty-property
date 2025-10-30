@@ -259,17 +259,15 @@ export function LoginClient({ initialError }: { initialError?: string }) {
 
                     {/* Back Button */}
                     <div className="text-center space-y-4">
-                      <Button
+                      <button
                         type="button"
                         onClick={handleBackToEmail}
                         disabled={isLoading}
-                        variant="outline"
-                        size="lg"
-                        className="w-full group"
+                        className="text-sm text-liberty-background/60 hover:text-liberty-background font-medium transition-colors disabled:opacity-50 group flex items-center gap-2 mx-auto"
                       >
-                        <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
+                        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
                         Use a different email
-                      </Button>
+                      </button>
 
                       <button
                         type="button"
