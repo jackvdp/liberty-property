@@ -10,6 +10,7 @@ import { redirect } from "next/navigation"
 import { columns } from "./columns"
 import { EnhancedDataTable } from "@/components/enhanced-data-table"
 import { adminDashboardNavMain, sharedNavSecondary } from "@/config/navigation"
+import { SharePointSyncButton } from "@/components/sharepoint-sync-button"
 
 export default async function AdminUsersPage() {
   // Get current user
@@ -49,12 +50,15 @@ export default async function AdminUsersPage() {
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 p-8 md:min-h-min">
             <div className="mx-auto max-w-7xl space-y-6">
-              {/* Header */}
-              <div>
-                <h2 className="text-2xl font-bold tracking-tight">All Users</h2>
-                <p className="text-muted-foreground">
-                  Manage system users and view their registration details
-                </p>
+              {/* Header with SharePoint Sync */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold tracking-tight">All Users</h2>
+                  <p className="text-muted-foreground">
+                    Manage system users and view their registration details
+                  </p>
+                </div>
+                <SharePointSyncButton />
               </div>
 
               {/* Error State */}

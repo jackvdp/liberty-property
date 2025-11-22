@@ -1,0 +1,590 @@
+{
+  "id": "9f1c5b31-0216-4487-b091-9efab7d6ca4a",
+  "prevId": "99a940a1-85de-4b74-ac6f-9f5f195ffc26",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.eligibility_checks": {
+      "name": "eligibility_checks",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "property_type": {
+          "name": "property_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_leasehold": {
+          "name": "is_leasehold",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "flat_count": {
+          "name": "flat_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "has_rmc_rtm": {
+          "name": "has_rmc_rtm",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "non_residential_proportion": {
+          "name": "non_residential_proportion",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "was_converted": {
+          "name": "was_converted",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "freeholder_lives_in_building": {
+          "name": "freeholder_lives_in_building",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "leaseholder_support": {
+          "name": "leaseholder_support",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "two_thirds_long_leases": {
+          "name": "two_thirds_long_leases",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "single_owner_multiple_flats": {
+          "name": "single_owner_multiple_flats",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "eligibility_status": {
+          "name": "eligibility_status",
+          "type": "eligibility_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "recommended_case_type": {
+          "name": "recommended_case_type",
+          "type": "case_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "outcome_action": {
+          "name": "outcome_action",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_name": {
+          "name": "user_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_email": {
+          "name": "user_email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_phone": {
+          "name": "user_phone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "all_answers": {
+          "name": "all_answers",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "outcome": {
+          "name": "outcome",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.registrations": {
+      "name": "registrations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "eligibility_check_id": {
+          "name": "eligibility_check_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "full_name": {
+          "name": "full_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email_address": {
+          "name": "email_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mobile_number": {
+          "name": "mobile_number",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "consent_contact": {
+          "name": "consent_contact",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "building_address": {
+          "name": "building_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "postcode": {
+          "name": "postcode",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "local_authority": {
+          "name": "local_authority",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "number_of_flats": {
+          "name": "number_of_flats",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "preferred_process": {
+          "name": "preferred_process",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "terms_conditions": {
+          "name": "terms_conditions",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "privacy_policy": {
+          "name": "privacy_policy",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data_processing": {
+          "name": "data_processing",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "marketing_consent": {
+          "name": "marketing_consent",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "all_answers": {
+          "name": "all_answers",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "registration_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'pending'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "registrations_eligibility_check_id_eligibility_checks_id_fk": {
+          "name": "registrations_eligibility_check_id_eligibility_checks_id_fk",
+          "tableFrom": "registrations",
+          "tableTo": "eligibility_checks",
+          "columnsFrom": [
+            "eligibility_check_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "registrations_user_id_auth.users_id_fk": {
+          "name": "registrations_user_id_auth.users_id_fk",
+          "tableFrom": "registrations",
+          "tableTo": "auth.users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "registrations_user_id_unique": {
+          "name": "registrations_user_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "user_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sharepoint_contacts": {
+      "name": "sharepoint_contacts",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "sharepoint_id": {
+          "name": "sharepoint_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sharepoint_url": {
+          "name": "sharepoint_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_synced_at": {
+          "name": "last_synced_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "full_name": {
+          "name": "full_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contact_role": {
+          "name": "contact_role",
+          "type": "contact_role",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contact_type": {
+          "name": "contact_type",
+          "type": "contact_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone": {
+          "name": "phone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "preferred_channel": {
+          "name": "preferred_channel",
+          "type": "preferred_channel",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "consent_to_contact": {
+          "name": "consent_to_contact",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "source": {
+          "name": "source",
+          "type": "contact_source",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "associated_building_id": {
+          "name": "associated_building_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "owner": {
+          "name": "owner",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_director": {
+          "name": "is_director",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "director_of": {
+          "name": "director_of",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "raw_sharepoint_data": {
+          "name": "raw_sharepoint_data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_on": {
+          "name": "created_on",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "sharepoint_contacts_associated_building_id_registrations_id_fk": {
+          "name": "sharepoint_contacts_associated_building_id_registrations_id_fk",
+          "tableFrom": "sharepoint_contacts",
+          "tableTo": "registrations",
+          "columnsFrom": [
+            "associated_building_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "sharepoint_contacts_sharepoint_id_unique": {
+          "name": "sharepoint_contacts_sharepoint_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "sharepoint_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.case_type": {
+      "name": "case_type",
+      "schema": "public",
+      "values": [
+        "rtm",
+        "enfranchisement",
+        "rmc_takeover"
+      ]
+    },
+    "public.contact_role": {
+      "name": "contact_role",
+      "schema": "public",
+      "values": [
+        "lead_leaseholder",
+        "director_rmc_rtm",
+        "referrer",
+        "freeholder",
+        "other"
+      ]
+    },
+    "public.contact_source": {
+      "name": "contact_source",
+      "schema": "public",
+      "values": [
+        "website_supabase",
+        "email",
+        "facebook",
+        "phone",
+        "referral",
+        "other"
+      ]
+    },
+    "public.contact_type": {
+      "name": "contact_type",
+      "schema": "public",
+      "values": [
+        "individual",
+        "organisation",
+        "representative"
+      ]
+    },
+    "public.eligibility_status": {
+      "name": "eligibility_status",
+      "schema": "public",
+      "values": [
+        "success",
+        "failure",
+        "info"
+      ]
+    },
+    "public.preferred_channel": {
+      "name": "preferred_channel",
+      "schema": "public",
+      "values": [
+        "email",
+        "phone",
+        "whatsapp",
+        "messenger"
+      ]
+    },
+    "public.registration_status": {
+      "name": "registration_status",
+      "schema": "public",
+      "values": [
+        "pending",
+        "contacted",
+        "active",
+        "completed"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
