@@ -41,14 +41,14 @@ export default async function DocumentsPage() {
             <div className="mx-auto max-w-5xl space-y-6">
               {/* Header */}
               <div>
-                <h2 className="text-2xl font-bold tracking-tight">Document Management</h2>
+                <h2 className="text-2xl font-bold tracking-tight">Upload Documents</h2>
                 <p className="text-muted-foreground">
-                  Upload and manage your personal and building documents securely
+                  Upload your personal and building documents securely
                 </p>
               </div>
 
               {/* Documents Upload Component */}
-              <DocumentsUpload userId={user.id} />
+              <DocumentsUpload />
             </div>
           </div>
         </div>
