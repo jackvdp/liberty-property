@@ -9,6 +9,7 @@ import { RegistrationRepository } from '@/lib/db/repositories/registration.repos
 import { type NewRegistration } from '@/lib/db/schema';
 import { type RegistrationAnswer } from '@/components/questionnaire/registration-types';
 import { createUserAccount, type UserMetadata } from '@/lib/actions/auth.actions';
+import { normalizeForMatching } from '@/lib/utils/building-identifier';
 
 export interface CreateRegistrationResult {
   success: boolean;
@@ -128,6 +129,9 @@ export async function createRegistrationCase(
 
     // STEP 2: Create registration with user ID
     try {
+      // Compute building identifier from normalized address + postcode
+      const buildingIdentifier = normalizeForMatching(mainBuildingAddress, postcode);
+
       const registrationData: NewRegistration = {
         eligibilityCheckId: eligibilityCheckId || null,
         userId: userId,
@@ -137,6 +141,7 @@ export async function createRegistrationCase(
         consentContact,
         buildingAddress,
         mainBuildingAddress,
+        buildingIdentifier,
         postcode,
         localAuthority: localAuthority || null,
         numberOfFlats,

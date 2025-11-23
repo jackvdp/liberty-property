@@ -15,6 +15,7 @@ interface SharePointListItem {
     Source?: string;
     ConsenttoContact?: boolean;
     Supabase_User_ID: string;
+    Building_Identifier: string;  // Normalized building identifier
     BuildingAddress?: string;
     Postcode?: string;
     NumberofFlats?: number;
@@ -283,6 +284,7 @@ export async function syncRegistrationsToSharePoint(): Promise<SyncResult> {
           Source: 'Website (Supabase)',
           ConsenttoContact: reg.consentContact,
           Supabase_User_ID: user.id, // UUID from auth.users for tracking
+          Building_Identifier: reg.buildingIdentifier, // Normalized identifier for matching
           BuildingAddress: reg.buildingAddress,
           Postcode: reg.postcode,
           NumberofFlats: reg.numberOfFlats,

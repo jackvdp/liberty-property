@@ -89,6 +89,7 @@ export const registrations = pgTable('registrations', {
   // Building Details (Step 2)
   buildingAddress: text('building_address').notNull(), // User's full address including flat
   mainBuildingAddress: text('main_building_address').notNull(), // Building address WITHOUT flat number - for matching
+  buildingIdentifier: text('building_identifier').notNull(), // Normalized identifier: wymeringmansionsnw66he
   postcode: text('postcode').notNull(),
   localAuthority: text('local_authority'),
   numberOfFlats: integer('number_of_flats').notNull(),
