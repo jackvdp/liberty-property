@@ -54,6 +54,11 @@ export const adminDashboardNavMain: NavItem[] = [
     url: "/admin-dashboard/users",
     icon: "users",
   },
+  {
+    title: "Buildings",
+    url: "/admin-dashboard/buildings",
+    icon: "building2",
+  },
 ];
 
 /**

@@ -5,6 +5,7 @@ import Image from "next/image"
 import {
   IconHome,
   IconBuilding,
+  IconBuilding as IconBuilding2,
   IconFileText,
   IconUsers,
   IconSettings,
@@ -33,6 +34,7 @@ import Link from "next/link"
 const iconMap: Record<string, Icon> = {
   home: IconHome,
   building: IconBuilding,
+  building2: IconBuilding2,
   fileText: IconFileText,
   users: IconUsers,
   settings: IconSettings,
