@@ -29,6 +29,11 @@ export const userDashboardNavMain: NavItem[] = [
     icon: "building",
   },
   {
+    title: "Documents",
+    url: "/dashboard/documents",
+    icon: "folder",
+  },
+  {
     title: "Leaseholders",
     url: "/dashboard/leaseholders",
     icon: "users",
