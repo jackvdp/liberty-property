@@ -121,3 +121,39 @@ export async function getUserById(userId: string): Promise<{
     };
   }
 }
+
+/**
+ * Update registration status (admin only)
+ */
+export async function updateRegistrationStatus(
+  registrationId: string,
+  newStatus: 'pending' | 'contacted' | 'active' | 'completed'
+): Promise<{
+  success: boolean;
+  error?: string;
+}> {
+  try {
+    // Update via repository
+    const updated = await RegistrationRepository.updateRegistrationStatus(
+      registrationId,
+      newStatus
+    );
+
+    if (!updated) {
+      return {
+        success: false,
+        error: 'Registration not found',
+      };
+    }
+
+    return {
+      success: true,
+    };
+  } catch (error) {
+    console.error('Error updating registration status:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to update status',
+    };
+  }
+}

@@ -6,6 +6,7 @@ import { format } from "date-fns"
 import { IconCheck, IconX, IconShieldCheck } from "@tabler/icons-react"
 import type { Registration } from "@/lib/db/schema"
 import { formatPostcode } from "@/lib/utils/postcode"
+import { RegistrationStatusSelect } from "@/components/registration-status-select"
 
 export type AdminUserData = {
   id: string
@@ -120,31 +121,23 @@ export const columns: ColumnDef<AdminUserData, unknown>[] = [
   },
   {
     accessorKey: "registration",
-    header: "Registration",
+    header: "Engagement Status",
     cell: ({ row }) => {
       const registration = row.getValue("registration") as Registration | null
       
       if (!registration) {
         return (
-          <Badge variant="outline" className="bg-gray-50">
-            No Registration
+          <Badge variant="outline" className="bg-gray-50 border-gray-50">
+            -
           </Badge>
         )
       }
       
-      const statusMap: Record<string, { label: string; className: string }> = {
-        pending: { label: "Pending", className: "bg-yellow-100 text-yellow-800 hover:bg-yellow-100" },
-        contacted: { label: "Contacted", className: "bg-blue-100 text-blue-800 hover:bg-blue-100" },
-        active: { label: "Active", className: "bg-green-100 text-green-800 hover:bg-green-100" },
-        completed: { label: "Completed", className: "bg-purple-100 text-purple-800 hover:bg-purple-100" },
-      }
-      
-      const statusInfo = statusMap[registration.status || "pending"]
-      
       return (
-        <Badge className={statusInfo.className}>
-          {statusInfo.label}
-        </Badge>
+        <RegistrationStatusSelect
+          registrationId={registration.id}
+          currentStatus={registration.status || 'pending'}
+        />
       )
     },
   },
