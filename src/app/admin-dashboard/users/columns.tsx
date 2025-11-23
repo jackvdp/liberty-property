@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
 import { IconCheck, IconX, IconShieldCheck } from "@tabler/icons-react"
 import type { Registration } from "@/lib/db/schema"
+import { formatPostcode } from "@/lib/utils/postcode"
 
 export type AdminUserData = {
   id: string
@@ -161,7 +162,7 @@ export const columns: ColumnDef<AdminUserData, unknown>[] = [
         <div className="space-y-1">
           <div className="font-medium max-w-[200px] truncate">{registration.buildingAddress}</div>
           <div className="text-xs text-muted-foreground">
-            {registration.postcode}
+            {formatPostcode(registration.postcode)}
             {registration.numberOfFlats && ` • ${registration.numberOfFlats} flats`}
           </div>
         </div>

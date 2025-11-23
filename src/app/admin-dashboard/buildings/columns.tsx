@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { BuildingData } from '@/lib/db/repositories/buildings.repository';
 import { ArrowUpDown, Building2, MapPin, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { formatPostcode } from '@/lib/utils/postcode';
 
 export const columns: ColumnDef<BuildingData>[] = [
   {
@@ -69,7 +70,8 @@ export const columns: ColumnDef<BuildingData>[] = [
       );
     },
     cell: ({ row }) => {
-      return <span className="font-mono">{row.getValue('postcode')}</span>;
+      const postcode = row.getValue('postcode') as string;
+      return <span className="font-mono">{formatPostcode(postcode)}</span>;
     },
   },
   {
