@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { syncRegistrationsToSharePoint, testSharePointConnection } from '@/lib/actions/sharepoint-sync.actions';
-import { Upload, RefreshCw, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { syncRegistrationsToSharePoint } from '@/lib/actions/sharepoint-sync.actions';
+import { Upload, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface SyncStats {
@@ -15,35 +15,7 @@ interface SyncStats {
 
 export function SharePointSyncButton() {
   const [isSyncing, setIsSyncing] = useState(false);
-  const [isTesting, setIsTesting] = useState(false);
   const [lastSyncStats, setLastSyncStats] = useState<SyncStats | null>(null);
-
-  async function handleTestConnection() {
-    setIsTesting(true);
-    
-    try {
-      const result = await testSharePointConnection();
-      
-      if (result.success) {
-        toast.success('SharePoint Connection Test', {
-          description: result.message,
-          icon: <CheckCircle2 className="h-4 w-4" />
-        });
-      } else {
-        toast.error('SharePoint Connection Failed', {
-          description: result.message,
-          icon: <AlertCircle className="h-4 w-4" />
-        });
-      }
-    } catch (error) {
-      toast.error('Connection Test Error', {
-        description: error instanceof Error ? error.message : 'Unknown error',
-        icon: <AlertCircle className="h-4 w-4" />
-      });
-    } finally {
-      setIsTesting(false);
-    }
-  }
 
   async function handleSync() {
     setIsSyncing(true);
@@ -117,31 +89,12 @@ export function SharePointSyncButton() {
         </div>
       )}
 
-      {/* Test Connection Button */}
+      {/* Sync Button */}
       <Button
         variant="outline"
         size="sm"
-        onClick={handleTestConnection}
-        disabled={isTesting || isSyncing}
-      >
-        {isTesting ? (
-          <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Testing...
-          </>
-        ) : (
-          <>
-            <RefreshCw className="mr-2 h-4 w-4" />
-            Test Connection
-          </>
-        )}
-      </Button>
-
-      {/* Sync Button */}
-      <Button
         onClick={handleSync}
-        disabled={isSyncing || isTesting}
-        size="sm"
+        disabled={isSyncing}
       >
         {isSyncing ? (
           <>
