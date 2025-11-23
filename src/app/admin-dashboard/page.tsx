@@ -49,7 +49,7 @@ export default async function AdminDashboardPage() {
               {/* Welcome Header */}
               <div className="text-center space-y-2">
                 <h2 className="font-reckless text-3xl font-bold text-liberty-background">
-                  Welcome back, {user.name || 'Admin'}
+                  Welcome back, {user.fullName || 'Admin'}
                 </h2>
                 <p className="text-liberty-background/70 text-lg">
                   Manage your platform from the sections below
