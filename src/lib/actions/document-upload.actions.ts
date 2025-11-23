@@ -61,10 +61,13 @@ async function ensureFolderExists(folderPath: string): Promise<{ success: boolea
           .get();
         
         console.log(`✅ Folder exists: ${currentPath}`);
-      } catch (error: any) {
+      } catch (error: unknown) {
         // If folder doesn't exist (404), create it
-        if (error.statusCode === 404) {
-          const createPath = parentPath 
+        const isNotFoundError = error && typeof error === 'object' && 'statusCode' in error && error.statusCode === 404;
+
+        if (isNotFoundError) {
+
+          const createPath = parentPath
             ? `/sites/${siteId}/drive/root:/${libraryName}/${parentPath}:/children`
             : `/sites/${siteId}/drive/root:/${libraryName}:/children`;
 
