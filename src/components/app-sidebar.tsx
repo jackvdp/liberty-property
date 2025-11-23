@@ -13,6 +13,7 @@ import {
   IconDashboard,
   IconClipboardCheck,
   IconFolder,
+  IconUser,
   type Icon,
 } from "@tabler/icons-react"
 
@@ -43,6 +44,7 @@ const iconMap: Record<string, Icon> = {
   dashboard: IconDashboard,
   clipboardCheck: IconClipboardCheck,
   folder: IconFolder,
+  user: IconUser,
 }
 
 export interface NavItemInput {

@@ -19,24 +19,24 @@ export const userDashboardNavMain: NavItem[] = [
     icon: "home",
   },
   {
-    title: "My Registration",
-    url: "/dashboard/registration",
-    icon: "fileText",
+    title: "Manage Profile",
+    url: "/dashboard/profile",
+    icon: "user",
   },
   {
-    title: "My Building",
+    title: "Manage Building",
     url: "/dashboard/building",
     icon: "building",
+  },
+  {
+    title: "Leaseholders Network",
+    url: "/dashboard/leaseholders",
+    icon: "users",
   },
   {
     title: "Documents",
     url: "/dashboard/documents",
     icon: "folder",
-  },
-  {
-    title: "Leaseholders",
-    url: "/dashboard/leaseholders",
-    icon: "users",
   },
 ];
 
