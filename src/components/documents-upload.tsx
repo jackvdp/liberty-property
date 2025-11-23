@@ -14,11 +14,7 @@ interface UploadedFile {
   error?: string
 }
 
-interface DocumentsUploadProps {
-  userId: string
-}
-
-export function DocumentsUpload({ userId }: DocumentsUploadProps) {
+export function DocumentsUpload() {
   const [uploads, setUploads] = useState<Record<string, UploadedFile[]>>({})
 
   const handleFileSelect = (category: DocumentCategory, typeId: string, files: FileList | null) => {
