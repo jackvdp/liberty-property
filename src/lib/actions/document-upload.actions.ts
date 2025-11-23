@@ -14,9 +14,6 @@ interface UploadResult {
   error?: string;
 }
 
-// Constants
-const DOCUMENTS_ROOT = 'documents_sync';
-
 /**
  * Create Microsoft Graph API client
  */
@@ -145,10 +142,13 @@ export async function uploadDocument(formData: FormData): Promise<UploadResult> 
       };
     }
 
-    // Determine the base folder (user_id or building_id)
+    // Determine the base folder (user_id or building_id) and root directory
     let baseFolderId: string;
+    let rootDirectory: string;
+    
     if (category === 'personal') {
       baseFolderId = user.id;
+      rootDirectory = 'personal';
     } else if (category === 'building') {
       // For building documents, we need to fetch the user's registration to get building_identifier
       const { db } = await import('@/lib/db/drizzle');
@@ -167,6 +167,7 @@ export async function uploadDocument(formData: FormData): Promise<UploadResult> 
         };
       }
       baseFolderId = registration.buildingIdentifier;
+      rootDirectory = 'buildings';
     } else {
       return {
         success: false,
@@ -176,7 +177,7 @@ export async function uploadDocument(formData: FormData): Promise<UploadResult> 
     }
 
     // Construct the full folder path within the document library
-    const folderPath = `${DOCUMENTS_ROOT}/${baseFolderId}/${documentType}`;
+    const folderPath = `${rootDirectory}/${baseFolderId}/${documentType}`;
     console.log(`📁 Target folder: ${folderPath}`);
 
     // Ensure the folder structure exists
