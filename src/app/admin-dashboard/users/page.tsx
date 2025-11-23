@@ -7,10 +7,9 @@ import {
 import { getCurrentUser } from "@/lib/actions/auth.actions"
 import { getAllUsers } from "@/lib/actions/users.actions"
 import { redirect } from "next/navigation"
-import { columns } from "./columns"
-import { EnhancedDataTable } from "@/components/enhanced-data-table"
 import { adminDashboardNavMain, sharedNavSecondary } from "@/config/navigation"
 import { SharePointSyncButton } from "@/components/sharepoint-sync-button"
+import { AdminUsersTable } from "./admin-users-table"
 
 export default async function AdminUsersPage() {
   // Get current user
@@ -72,28 +71,7 @@ export default async function AdminUsersPage() {
 
               {/* Enhanced Data Table */}
               {success && users && (
-                <EnhancedDataTable
-                  columns={columns}
-                  data={users}
-                  searchKey="email"
-                  searchPlaceholder="Search by email or name..."
-                  filterConfigs={[
-                    {
-                      columnId: "isAdmin",
-                      title: "Role",
-                      options: [
-                        { label: "Admin", value: "true" },
-                        { label: "User", value: "false" },
-                      ],
-                    },
-                  ]}
-                  defaultPageSize={20}
-                  enableExport={true}
-                  exportConfig={{
-                    filename: "users",
-                    excludeColumns: ["id"], // Don't export user IDs
-                  }}
-                />
+                <AdminUsersTable users={users} />
               )}
 
               {/* Empty State */}

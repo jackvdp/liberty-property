@@ -51,6 +51,8 @@ export interface FilterConfig {
 export interface ExportConfig {
   filename?: string
   excludeColumns?: string[]
+  // Optional: Custom function to transform row data for CSV export
+  transformRow?: (row: any) => Record<string, string | number | boolean>
 }
 
 interface EnhancedDataTableProps<TData, TValue> {
@@ -114,7 +116,7 @@ export function EnhancedDataTable<TData, TValue>({
 
   // Export to CSV
   const exportToCSV = () => {
-    const { filename = "export", excludeColumns = [] } = exportConfig
+    const { filename = "export", excludeColumns = [], transformRow } = exportConfig
 
     // Get visible columns
     const visibleColumns = table
@@ -126,6 +128,12 @@ export function EnhancedDataTable<TData, TValue>({
 
     // Prepare data for CSV - type-safe approach
     const csvData = rows.map((row) => {
+      // If custom transformer provided, use it
+      if (transformRow) {
+        return transformRow(row.original)
+      }
+
+      // Otherwise, use default transformation
       const rowData: Record<string, string | number | boolean> = {}
       
       visibleColumns.forEach((column) => {
@@ -142,8 +150,8 @@ export function EnhancedDataTable<TData, TValue>({
           } else if (typeof value === "boolean") {
             rowData[column.id] = value ? "Yes" : "No"
           } else if (typeof value === "object") {
-            // For objects, try to stringify or use toString
-            rowData[column.id] = JSON.stringify(value)
+            // For objects, skip them (they're likely complex nested data)
+            rowData[column.id] = ""
           } else if (typeof value === "string" || typeof value === "number") {
             rowData[column.id] = value
           } else {
@@ -158,7 +166,6 @@ export function EnhancedDataTable<TData, TValue>({
 
     // Convert to CSV
     const csv = Papa.unparse(csvData, {
-      columns: visibleColumns.map((col) => col.id),
       header: true,
     })
 
