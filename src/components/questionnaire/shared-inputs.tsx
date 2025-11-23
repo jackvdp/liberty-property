@@ -115,7 +115,10 @@ export function TextInput({ question, value, onChange, type = "text" }: SharedIn
         {question.required && <span className="text-red-500 ml-1">*</span>}
       </Label>
       {question.description && (
-        <p className="text-sm text-liberty-standard/60">{question.description}</p>
+        <p 
+          className="text-sm text-liberty-standard/60"
+          dangerouslySetInnerHTML={{ __html: question.description }}
+        />
       )}
       <Input
         type={type}
