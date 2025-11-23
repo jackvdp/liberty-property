@@ -186,6 +186,11 @@ export function DocumentsUpload({ userId }: DocumentsUploadProps) {
                               <p className="text-xs text-muted-foreground">
                                 {(uploadedFile.file.size / 1024 / 1024).toFixed(2)} MB
                               </p>
+                              {uploadedFile.status === "error" && uploadedFile.error && (
+                                <p className="text-xs text-red-600 mt-1">
+                                  {uploadedFile.error}
+                                </p>
+                              )}
                             </div>
                           </div>
 

@@ -150,15 +150,23 @@ export async function uploadDocument(formData: FormData): Promise<UploadResult> 
     if (category === 'personal') {
       baseFolderId = user.id;
     } else if (category === 'building') {
-      // Get building identifier from user's registration
-      if (!user.registration?.buildingIdentifier) {
+      // For building documents, we need to fetch the user's registration to get building_identifier
+      const { db } = await import('@/lib/db/drizzle');
+      const { registrations } = await import('@/lib/db/schema');
+      const { eq } = await import('drizzle-orm');
+      
+      const registration = await db.query.registrations.findFirst({
+        where: eq(registrations.userId, user.id)
+      });
+
+      if (!registration?.buildingIdentifier) {
         return {
           success: false,
-          message: 'No building associated with your account',
+          message: 'No building associated with your account. Please complete your registration first.',
           error: 'Building identifier not found'
         };
       }
-      baseFolderId = user.registration.buildingIdentifier;
+      baseFolderId = registration.buildingIdentifier;
     } else {
       return {
         success: false,
