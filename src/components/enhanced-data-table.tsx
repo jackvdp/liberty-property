@@ -52,6 +52,7 @@ export interface ExportConfig {
   filename?: string
   excludeColumns?: string[]
   // Optional: Custom function to transform row data for CSV export
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   transformRow?: (row: any) => Record<string, string | number | boolean>
 }
 
