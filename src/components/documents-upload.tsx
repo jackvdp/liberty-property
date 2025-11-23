@@ -63,22 +63,63 @@ export function DocumentsUpload({ userId }: DocumentsUploadProps) {
     const files = getFilesForType(category, typeId)
     if (files.length === 0) return
 
-    // TODO: Implement actual upload logic
-    console.log(`Uploading ${files.length} files for ${category}/${typeId}`, { userId, files })
-    
-    // Simulate upload
     const key = `${category}-${typeId}`
+    
+    // Set all to uploading
     setUploads(prev => ({
       ...prev,
       [key]: prev[key].map(f => ({ ...f, status: "uploading" as const }))
     }))
 
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    // Upload each file
+    for (const uploadFile of files) {
+      try {
+        const { uploadDocument } = await import('@/lib/actions/document-upload.actions')
+        
+        // Convert File to FormData for server action
+        const formData = new FormData()
+        formData.append('file', uploadFile.file)
+        formData.append('category', category)
+        formData.append('documentType', typeId)
+        
+        const result = await uploadDocument(formData)
 
-    setUploads(prev => ({
-      ...prev,
-      [key]: prev[key].map(f => ({ ...f, status: "success" as const }))
-    }))
+        if (result.success) {
+          // Mark this file as success
+          setUploads(prev => ({
+            ...prev,
+            [key]: prev[key].map(f => 
+              f.id === uploadFile.id 
+                ? { ...f, status: "success" as const }
+                : f
+            )
+          }))
+          console.log(`✅ Uploaded: ${result.filePath}`)
+        } else {
+          // Mark this file as error
+          setUploads(prev => ({
+            ...prev,
+            [key]: prev[key].map(f => 
+              f.id === uploadFile.id 
+                ? { ...f, status: "error" as const, error: result.error }
+                : f
+            )
+          }))
+          console.error(`❌ Upload failed: ${result.error}`)
+        }
+      } catch (error) {
+        // Mark this file as error
+        setUploads(prev => ({
+          ...prev,
+          [key]: prev[key].map(f => 
+            f.id === uploadFile.id 
+              ? { ...f, status: "error" as const, error: error instanceof Error ? error.message : 'Unknown error' }
+              : f
+          )
+        }))
+        console.error('❌ Upload error:', error)
+      }
+    }
   }
 
   return (
