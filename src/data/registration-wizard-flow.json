@@ -93,6 +93,17 @@
               "required": true
             },
             "prefillFromEligibility": true
+          },
+          {
+            "id": "main_building_address",
+            "question": "What is the name or address of your building?",
+            "description": "This is the main building address WITHOUT your flat number. This helps us connect you with other leaseholders in your building.<br><br><strong>Examples:</strong><br>• If you live at \"Flat 5, 123 High Street\" → enter \"123 High Street\"<br>• If you live at \"Flat 164, Wymering Mansions\" → enter \"Wymering Mansions\"<br><br><strong>Important:</strong> Write out street names in full (e.g., \"Road\" not \"Rd\", \"Street\" not \"St\")",
+            "type": "text",
+            "required": true,
+            "validation": {
+              "required": true
+            },
+            "placeholder": "e.g. 123 High Street or Wymering Mansions"
           }
         ],
         "nextSection": "step6a"

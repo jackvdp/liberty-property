@@ -45,6 +45,7 @@ export async function createRegistrationCase(
     const consentContact = Boolean(findAnswer(contactDetails, 'consent_contact'));
 
     const buildingAddress = findAnswer(buildingBasics, 'building_address') as string;
+    const mainBuildingAddress = findAnswer(buildingBasics, 'main_building_address') as string;
     const postcode = findAnswer(buildingBasics, 'postcode') as string;
     const localAuthority = findAnswer(buildingBasics, 'local_authority') as string | undefined;
     const numberOfFlats = Number(findAnswer(buildingBasics, 'number_of_flats')) || 0;
@@ -57,7 +58,7 @@ export async function createRegistrationCase(
     const marketingConsent = Boolean(findAnswer(legalSubmit, 'marketing_consent'));
 
     // Validate required fields
-    if (!fullName || !emailAddress || !buildingAddress || !postcode) {
+    if (!fullName || !emailAddress || !buildingAddress || !mainBuildingAddress || !postcode) {
       return {
         success: false,
         error: 'Missing required contact or building information'
@@ -135,6 +136,7 @@ export async function createRegistrationCase(
         mobileNumber: mobileNumber || null,
         consentContact,
         buildingAddress,
+        mainBuildingAddress,
         postcode,
         localAuthority: localAuthority || null,
         numberOfFlats,
