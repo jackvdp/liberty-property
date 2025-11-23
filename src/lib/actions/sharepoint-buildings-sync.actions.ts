@@ -13,10 +13,10 @@ import 'isomorphic-fetch';
 // Types
 interface SharePointBuildingItem {
   fields: {
-    Title: string;  // Building Name & City/Town
+    Title: string;  // Building Name & Local Authority
     Building_ID: string;  // Normalized identifier (building_identifier)
     Address_Line_1: string;
-    Town_City?: string;
+    Local_Authority?: string;
     Postcode: string;
     Number_of_Units: number;
     Created_By_Source: string;
@@ -295,6 +295,7 @@ export async function syncBuildingsToSharePoint(): Promise<BuildingSyncResult> {
 
     // Step 6: Map buildings to SharePoint format
     const sharePointItems: SharePointBuildingItem[] = newBuildings.map(building => {
+      // Create a display title: "Address, Local Authority" or just "Address"
       const title = building.localAuthority 
         ? `${building.mainBuildingAddress}, ${building.localAuthority}`
         : building.mainBuildingAddress;
@@ -304,7 +305,7 @@ export async function syncBuildingsToSharePoint(): Promise<BuildingSyncResult> {
           Title: title,
           Building_ID: building.buildingIdentifier,
           Address_Line_1: building.mainBuildingAddress,
-          Town_City: building.localAuthority || '',
+          Local_Authority: building.localAuthority || '',
           Postcode: building.postcode,
           Number_of_Units: building.numberOfFlats,
           Created_By_Source: 'Website (Supabase)',
