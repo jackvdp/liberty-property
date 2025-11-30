@@ -136,7 +136,7 @@ export async function isSuccessOutcome(page: Page): Promise<boolean> {
   const alert = page.locator('[data-slot="alert"]');
   const className = await alert.getAttribute('class');
   // Success outcomes have liberty-primary colors (not red/destructive)
-  return className?.includes('liberty-primary') && !className?.includes('red-');
+  return (className?.includes('liberty-primary') ?? false) && !className?.includes('red-')
 }
 
 /**
