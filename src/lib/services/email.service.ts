@@ -14,7 +14,7 @@ const resend = process.env.RESEND_API_KEY
 // Only send emails in production
 const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production';
 
-const NOTIFICATION_EMAIL = 'jack@vanderpump.tech';
+const NOTIFICATION_EMAIL = 'lbpm@libertybell.co.uk';
 const FROM_EMAIL = 'Liberty Bell <notifications@vanderpump.tech>';
 
 export interface EligibilityNotificationData {
