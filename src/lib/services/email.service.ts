@@ -1,6 +1,7 @@
 /**
  * Email Service
  * Handles sending notification emails via Resend
+ * Only sends emails in production environment
  */
 
 import { Resend } from 'resend';
@@ -9,6 +10,9 @@ import { Resend } from 'resend';
 const resend = process.env.RESEND_API_KEY 
   ? new Resend(process.env.RESEND_API_KEY)
   : null;
+
+// Only send emails in production
+const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production';
 
 const NOTIFICATION_EMAIL = 'jack@vanderpump.tech';
 const FROM_EMAIL = 'Liberty Bell <notifications@vanderpump.tech>';
@@ -40,6 +44,12 @@ export interface RegistrationNotificationData {
  * Send notification email for new eligibility check
  */
 export async function sendEligibilityNotification(data: EligibilityNotificationData): Promise<void> {
+  // Skip if not in production
+  if (!isProduction) {
+    console.log('Skipping eligibility notification email - not in production environment');
+    return;
+  }
+
   // Skip if Resend is not configured
   if (!resend) {
     console.log('Skipping eligibility notification email - Resend API key not configured');
@@ -94,6 +104,12 @@ export async function sendEligibilityNotification(data: EligibilityNotificationD
  * Send notification email for new registration
  */
 export async function sendRegistrationNotification(data: RegistrationNotificationData): Promise<void> {
+  // Skip if not in production
+  if (!isProduction) {
+    console.log('Skipping registration notification email - not in production environment');
+    return;
+  }
+
   // Skip if Resend is not configured
   if (!resend) {
     console.log('Skipping registration notification email - Resend API key not configured');
