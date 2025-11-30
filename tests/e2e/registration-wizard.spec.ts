@@ -965,12 +965,12 @@ test.describe('Registration Wizard', () => {
       // Check if process choice step appears
       const step3Visible = await page.locator('text=Choose your preferred process').isVisible({ timeout: 2000 }).catch(() => false);
       if (step3Visible) {
-        // Verify all options are visible
-        await expect(page.locator('text=Right to Manage (RTM)')).toBeVisible();
-        await expect(page.locator('text=Collective Enfranchisement (CE)')).toBeVisible();
+        // Verify radio options are visible by checking their labels
+        await expect(page.getByLabel('Right to Manage (RTM)')).toBeVisible();
+        await expect(page.getByLabel('Collective Enfranchisement (CE)')).toBeVisible();
         
-        // Select RTM
-        await selectRadioOption(page, 'Right to Manage (RTM)');
+        // Select RTM using the radio input
+        await page.getByLabel('Right to Manage (RTM)').click();
         await page.getByRole('button', { name: /continue/i }).click();
         await page.waitForTimeout(500);
       }
@@ -1011,8 +1011,8 @@ test.describe('Registration Wizard', () => {
       // Check if process choice step appears
       const step3Visible = await page.locator('text=Choose your preferred process').isVisible({ timeout: 2000 }).catch(() => false);
       if (step3Visible) {
-        // Select CE
-        await selectRadioOption(page, 'Collective Enfranchisement (CE)');
+        // Select CE using the radio input
+        await page.getByLabel('Collective Enfranchisement (CE)').click();
         await page.getByRole('button', { name: /continue/i }).click();
         await page.waitForTimeout(500);
       }
@@ -1051,8 +1051,8 @@ test.describe('Registration Wizard', () => {
       // Check if process choice step appears
       const step3Visible = await page.locator('text=Choose your preferred process').isVisible({ timeout: 2000 }).catch(() => false);
       if (step3Visible) {
-        // Select "Don't know"
-        await selectRadioOption(page, "Don't know");
+        // Select "Don't know" using the radio input
+        await page.getByLabel("Don't know").click();
         await page.getByRole('button', { name: /continue/i }).click();
         await page.waitForTimeout(500);
       }
