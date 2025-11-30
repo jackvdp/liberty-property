@@ -419,7 +419,8 @@ export const content = {
       },
       {
         title: "Property Management",
-        href: "/property-management"
+        href: "https://liberty-bell-pm.vercel.app",
+        external: true
       }
     ],
     company: [

@@ -136,8 +136,7 @@ export default function Navbar() {
                     isActive('/right-to-manage') || 
                     isActive('/collective-enfranchisement') || 
                     isActive('/rmc-process') || 
-                    isActive('/commonhold-conversion') || 
-                    isActive('/property-management')
+                    isActive('/commonhold-conversion')
                       ? "text-liberty-accent bg-liberty-accent/10 hover:bg-liberty-accent/20"
                       : "text-liberty-background/70 hover:text-liberty-primary bg-transparent hover:bg-liberty-secondary/20"
                   }>
@@ -157,9 +156,21 @@ export default function Navbar() {
                       <ListItem href="/commonhold-conversion" title="Commonhold Conversion">
                         Convert to the future of property ownership
                       </ListItem>
-                      <ListItem href="/property-management" title="Property Management">
-                        Professional building management services
-                      </ListItem>
+                      <NavigationMenuLink asChild>
+                        <a
+                          href="https://liberty-bell-pm.vercel.app"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-liberty-secondary/20 hover:text-liberty-primary focus:bg-liberty-secondary/20 focus:text-liberty-primary"
+                        >
+                          <div className="flex items-center gap-2 text-sm font-medium leading-none text-liberty-background">
+                            Property Management
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-liberty-background/60">
+                            Professional building management services
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
                     </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
@@ -416,8 +427,10 @@ export default function Navbar() {
                         </div>
                       </Link>
 
-                      <Link 
-                        href="/property-management" 
+                      <a 
+                        href="https://liberty-bell-pm.vercel.app"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center gap-3 text-liberty-background/70 hover:text-liberty-primary hover:bg-liberty-secondary/10 px-3 py-3 rounded-lg text-base transition-all duration-200 group"
                         onClick={() => setIsOpen(false)}
                       >
@@ -428,7 +441,7 @@ export default function Navbar() {
                           <div className="font-medium">Property Management</div>
                           <div className="text-sm text-liberty-background/50">Professional services</div>
                         </div>
-                      </Link>
+                      </a>
                     </div>
                   </div>
                 </div>
