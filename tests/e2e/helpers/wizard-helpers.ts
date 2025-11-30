@@ -49,9 +49,9 @@ export async function clickBack(page: Page): Promise<void> {
  * Selects a radio option by its label text
  */
 export async function selectRadioOption(page: Page, labelText: string): Promise<void> {
-  // Find the radio button label that has the exact text (for radio options)
-  // Radio options have a `for` attribute pointing to the input
-  const label = page.locator(`label[for]:has-text("${labelText}")`).first();
+  // Find the radio button label with exact text match
+  // Use getByText with exact: true for precise matching
+  const label = page.getByText(labelText, { exact: true });
   await expect(label).toBeVisible();
   await label.click();
   
