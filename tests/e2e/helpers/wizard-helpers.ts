@@ -232,3 +232,15 @@ export async function answerAndContinue(
   }
   await clickContinue(page);
 }
+
+/**
+ * Checks a checkbox by its label text
+ */
+export async function checkCheckbox(page: Page, labelText: string): Promise<void> {
+  const label = page.getByText(labelText, { exact: false });
+  await expect(label).toBeVisible();
+  await label.click();
+  
+  // Wait for checkbox state to register
+  await page.waitForTimeout(100);
+}

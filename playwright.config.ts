@@ -48,6 +48,10 @@ export default defineConfig({
     // Slow down actions slightly for stability
     actionTimeout: 10 * 1000,
     navigationTimeout: 30 * 1000,
+    
+    // Slow down actions for debugging (set to 0 for normal speed)
+    // Uncomment and adjust the value to slow down tests:
+    // slowMo: 1000,
   },
   
   projects: [
