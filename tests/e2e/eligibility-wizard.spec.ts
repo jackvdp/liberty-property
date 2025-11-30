@@ -135,8 +135,8 @@ test.describe('Eligibility Wizard', () => {
       await page.goto('/eligibility-check');
       await waitForWizardReady(page);
 
-      // Fill contact details
-      await fillContactDetails(page, testUser.fullName, testUser.email);
+      // Fill contact details (phone is required by the wizard even though marked optional)
+      await fillContactDetails(page, testUser.fullName, testUser.email, testUser.phone);
 
       // Answer questions leading to engagement path
       await selectRadioOption(page, 'Flat');
@@ -187,8 +187,8 @@ test.describe('Eligibility Wizard', () => {
       await page.goto('/eligibility-check');
       await waitForWizardReady(page);
 
-      // Fill contact details
-      await fillContactDetails(page, testUser.fullName, testUser.email);
+      // Fill contact details (phone is required by the wizard even though marked optional)
+      await fillContactDetails(page, testUser.fullName, testUser.email, testUser.phone);
 
       // Property type - Flat
       await selectRadioOption(page, 'Flat');
@@ -222,7 +222,7 @@ test.describe('Eligibility Wizard', () => {
       await page.goto('/eligibility-check');
       await waitForWizardReady(page);
 
-      await fillContactDetails(page, testUser.fullName, testUser.email);
+      await fillContactDetails(page, testUser.fullName, testUser.email, testUser.phone);
 
       // Property type - House
       await selectRadioOption(page, 'House');
@@ -247,7 +247,7 @@ test.describe('Eligibility Wizard', () => {
       await page.goto('/eligibility-check');
       await waitForWizardReady(page);
 
-      await fillContactDetails(page, testUser.fullName, testUser.email);
+      await fillContactDetails(page, testUser.fullName, testUser.email, testUser.phone);
 
       await selectRadioOption(page, 'Flat');
       await clickContinue(page);
@@ -269,7 +269,7 @@ test.describe('Eligibility Wizard', () => {
       await page.goto('/eligibility-check');
       await waitForWizardReady(page);
 
-      await fillContactDetails(page, testUser.fullName, testUser.email);
+      await fillContactDetails(page, testUser.fullName, testUser.email, testUser.phone);
 
       await selectRadioOption(page, 'Flat');
       await clickContinue(page);
@@ -297,7 +297,7 @@ test.describe('Eligibility Wizard', () => {
       await page.goto('/eligibility-check');
       await waitForWizardReady(page);
 
-      await fillContactDetails(page, testUser.fullName, testUser.email);
+      await fillContactDetails(page, testUser.fullName, testUser.email, testUser.phone);
 
       await selectRadioOption(page, 'Flat');
       await clickContinue(page);
@@ -367,8 +367,8 @@ test.describe('Eligibility Wizard', () => {
       await page.goto('/eligibility-check');
       await waitForWizardReady(page);
 
-      // Complete several questions
-      await fillContactDetails(page, testUser.fullName, testUser.email);
+      // Complete several questions (phone is required by the wizard even though marked optional)
+      await fillContactDetails(page, testUser.fullName, testUser.email, testUser.phone);
       
       await selectRadioOption(page, 'Flat');
       await clickContinue(page);

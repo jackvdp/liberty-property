@@ -135,8 +135,8 @@ export async function getOutcomeMessage(page: Page): Promise<string> {
 export async function isSuccessOutcome(page: Page): Promise<boolean> {
   const alert = page.locator('[data-slot="alert"]');
   const className = await alert.getAttribute('class');
-  // Success outcomes have liberty-primary colors (not destructive)
-  return !className?.includes('destructive');
+  // Success outcomes have liberty-primary colors (not red/destructive)
+  return className?.includes('liberty-primary') && !className?.includes('red-');
 }
 
 /**
@@ -145,7 +145,8 @@ export async function isSuccessOutcome(page: Page): Promise<boolean> {
 export async function isErrorOutcome(page: Page): Promise<boolean> {
   const alert = page.locator('[data-slot="alert"]');
   const className = await alert.getAttribute('class');
-  return className?.includes('destructive') || false;
+  // Error/destructive outcomes have red classes like text-red-700, bg-red-50
+  return className?.includes('red-') || false;
 }
 
 /**
