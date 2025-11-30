@@ -5,11 +5,13 @@
 
 'use server';
 
+import { after } from 'next/server';
 import { RegistrationRepository } from '@/lib/db/repositories/registration.repository';
 import { type NewRegistration } from '@/lib/db/schema';
 import { type RegistrationAnswer } from '@/components/questionnaire/registration-types';
 import { createUserAccount, type UserMetadata } from '@/lib/actions/auth.actions';
 import { normalizeForMatching } from '@/lib/utils/building-identifier';
+import { sendRegistrationNotification } from '@/lib/services/email.service';
 
 export interface CreateRegistrationResult {
   success: boolean;
@@ -159,6 +161,22 @@ export async function createRegistrationCase(
 
       console.log('Registration created successfully:', registration.id);
       console.log('Associated with user ID:', userId);
+
+      // Send notification email asynchronously (doesn't block response)
+      after(async () => {
+        await sendRegistrationNotification({
+          registrationId: registration.id,
+          fullName: registration.fullName,
+          emailAddress: registration.emailAddress,
+          mobileNumber: registration.mobileNumber ?? undefined,
+          buildingAddress: registration.buildingAddress,
+          postcode: registration.postcode,
+          numberOfFlats: registration.numberOfFlats,
+          preferredProcess: registration.preferredProcess ?? undefined,
+          eligibilityCheckId: registration.eligibilityCheckId ?? undefined,
+          createdAt: registration.createdAt,
+        });
+      });
 
       return {
         success: true,

@@ -5,8 +5,10 @@
 
 'use server';
 
+import { after } from 'next/server';
 import { EligibilityRepository } from '@/lib/db/repositories/eligibility.repository';
 import { QuestionnaireAnswer, QuestionnaireOutcome } from '@/components/questionnaire/types';
+import { sendEligibilityNotification } from '@/lib/services/email.service';
 
 export interface EligibilityResult {
   success: boolean;
@@ -98,6 +100,19 @@ export async function createEligibilityCase(
       // Raw data storage
       allAnswers: answers,
       outcome: outcome,
+    });
+
+    // Send notification email asynchronously (doesn't block response)
+    after(async () => {
+      await sendEligibilityNotification({
+        eligibilityId: newCheck.id,
+        userEmail: newCheck.userEmail ?? undefined,
+        userName: newCheck.userName ?? undefined,
+        flatCount: newCheck.flatCount ?? undefined,
+        recommendedCaseType: newCheck.recommendedCaseType ?? undefined,
+        propertyType: newCheck.propertyType ?? undefined,
+        createdAt: newCheck.createdAt,
+      });
     });
 
     return {
