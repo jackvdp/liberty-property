@@ -12,6 +12,10 @@ import { type RegistrationAnswer } from '@/components/questionnaire/registration
 import { createUserAccount, type UserMetadata } from '@/lib/actions/auth.actions';
 import { normalizeForMatching } from '@/lib/utils/building-identifier';
 import { sendRegistrationNotification } from '@/lib/services/email.service';
+import { syncToSharePoint } from '@/lib/actions/sharepoint-sync.actions';
+
+// Only sync to SharePoint in production
+const isProduction = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production';
 
 export interface CreateRegistrationResult {
   success: boolean;
@@ -176,6 +180,21 @@ export async function createRegistrationCase(
           eligibilityCheckId: registration.eligibilityCheckId ?? undefined,
           createdAt: registration.createdAt,
         });
+
+        // Sync to SharePoint in production only
+        if (isProduction) {
+          try {
+            console.log('🔄 Triggering automatic SharePoint sync after registration...');
+            const syncResult = await syncToSharePoint();
+            if (syncResult.success) {
+              console.log('✅ SharePoint sync completed successfully');
+            } else {
+              console.error('⚠️ SharePoint sync completed with issues:', syncResult.message);
+            }
+          } catch (error) {
+            console.error('❌ SharePoint sync failed:', error);
+          }
+        }
       });
 
       return {
