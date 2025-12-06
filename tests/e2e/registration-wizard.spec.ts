@@ -165,6 +165,7 @@ async function completeEligibilityWithAnswers(
     flatCount?: number;
     leaseholderSupport?: 'Yes' | 'No' | "Don't know";
     hasRmc?: 'Yes' | 'No' | "Don't know";
+    hasRtm?: 'Yes' | 'No' | "Don't know";
   } = {}
 ): Promise<void> {
   await page.goto('/eligibility-check');
@@ -186,36 +187,49 @@ async function completeEligibilityWithAnswers(
   await selectRadioOption(page, 'Yes');
   await clickContinue(page);
 
-  // Existing RMC
+  // Q3a: Existing RMC
   await selectRadioOption(page, answers.hasRmc || 'No');
   await clickContinue(page);
 
-  // If RMC exists, we go to a different path, otherwise continue
-  if (answers.hasRmc !== 'Yes') {
-    // Number of flats
-    await fillNumberInput(page, answers.flatCount || 10);
-    await clickContinue(page);
-
-    // Two thirds - Yes
-    await selectRadioOption(page, 'Yes');
-    await clickContinue(page);
-
-    // Single owner - No
-    await selectRadioOption(page, 'No');
-    await clickContinue(page);
-
-    // Non-residential - No
-    await selectRadioOption(page, 'No');
-    await clickContinue(page);
-
-    // Converted house - No
-    await selectRadioOption(page, 'No');
-    await clickContinue(page);
-
-    // Leaseholder support
-    await selectRadioOption(page, answers.leaseholderSupport || 'Yes');
-    await clickContinue(page);
+  // If RMC exists, we go to RMC outcome, otherwise continue to RTM question
+  if (answers.hasRmc === 'Yes') {
+    // RMC path ends here with outcome
+    return;
   }
+
+  // Q3b: Existing RTM
+  await selectRadioOption(page, answers.hasRtm || 'No');
+  await clickContinue(page);
+
+  // If RTM exists, we go to RTM takeover outcome, otherwise continue
+  if (answers.hasRtm === 'Yes') {
+    // RTM takeover path ends here with outcome
+    return;
+  }
+
+  // Number of flats
+  await fillNumberInput(page, answers.flatCount || 10);
+  await clickContinue(page);
+
+  // Two thirds - Yes
+  await selectRadioOption(page, 'Yes');
+  await clickContinue(page);
+
+  // Single owner - No
+  await selectRadioOption(page, 'No');
+  await clickContinue(page);
+
+  // Non-residential - No
+  await selectRadioOption(page, 'No');
+  await clickContinue(page);
+
+  // Converted house - No
+  await selectRadioOption(page, 'No');
+  await clickContinue(page);
+
+  // Leaseholder support
+  await selectRadioOption(page, answers.leaseholderSupport || 'Yes');
+  await clickContinue(page);
 }
 
 test.describe('Registration Wizard', () => {

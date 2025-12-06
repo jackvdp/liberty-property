@@ -454,14 +454,6 @@ export default function RegistrationQuestionnaire({
                           → Taking Control of Your RMC
                         </a>
                       )}
-                      {eligibilityData.derivedData.provisionalPath.includes("RTM Join/Takeover") && (
-                        <a 
-                          href="/rtm-takeover" 
-                          className="text-liberty-primary hover:underline text-sm inline-flex items-center"
-                        >
-                          → Joining or Improving Your RTM Company
-                        </a>
-                      )}
                       {eligibilityData.derivedData.provisionalPath.includes("RMC Takeover") && (
                         <a 
                           href="/rmc-process" 
