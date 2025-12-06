@@ -90,6 +90,7 @@ export default async function AdminEligibilityPage() {
                         { label: "RTM", value: "rtm" },
                         { label: "Enfranchisement", value: "enfranchisement" },
                         { label: "RMC Takeover", value: "rmc_takeover" },
+                        { label: "RTM Takeover", value: "rtm_takeover" },
                       ],
                     },
                     {

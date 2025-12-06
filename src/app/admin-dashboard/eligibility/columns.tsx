@@ -92,10 +92,74 @@ export const columns: ColumnDef<EligibilityCheck, unknown>[] = [
     },
   },
   {
-    accessorKey: "hasRmcRtm",
-    header: "Has RMC/RTM",
+    id: "hasRmc",
+    header: "Has RMC",
+    accessorFn: (row) => {
+      const allAnswers = row.allAnswers as Array<{ questionId: string; value: unknown }> | null
+      if (!allAnswers) return null
+      
+      // Check new split question first
+      const rmcAnswer = allAnswers.find(a => a.questionId === 'existing_rmc')?.value
+      if (rmcAnswer === 'yes') return true
+      if (rmcAnswer === 'no') return false
+      
+      // Fall back to old combined question for legacy records
+      const legacyAnswer = allAnswers.find(a => a.questionId === 'existing_rmc_rtm')?.value
+      if (legacyAnswer === 'yes') return true
+      if (legacyAnswer === 'no') return false
+      
+      return null
+    },
     cell: ({ row }) => {
-      return <BooleanCell value={row.getValue("hasRmcRtm")} />
+      const allAnswers = row.original.allAnswers as Array<{ questionId: string; value: unknown }> | null
+      if (!allAnswers) return <span className="text-muted-foreground">N/A</span>
+      
+      // Check new split question first
+      const rmcAnswer = allAnswers.find(a => a.questionId === 'existing_rmc')?.value
+      if (rmcAnswer === 'yes') return <IconCheck className="w-4 h-4 text-green-600" />
+      if (rmcAnswer === 'no') return <IconX className="w-4 h-4 text-red-600" />
+      
+      // Fall back to old combined question for legacy records
+      const legacyAnswer = allAnswers.find(a => a.questionId === 'existing_rmc_rtm')?.value
+      if (legacyAnswer === 'yes') return <IconCheck className="w-4 h-4 text-green-600" />
+      if (legacyAnswer === 'no') return <IconX className="w-4 h-4 text-red-600" />
+      
+      return <span className="text-muted-foreground">N/A</span>
+    },
+  },
+  {
+    id: "hasRtm",
+    header: "Has RTM",
+    accessorFn: (row) => {
+      const allAnswers = row.allAnswers as Array<{ questionId: string; value: unknown }> | null
+      if (!allAnswers) return null
+      
+      // Check new split question first
+      const rtmAnswer = allAnswers.find(a => a.questionId === 'existing_rtm')?.value
+      if (rtmAnswer === 'yes') return true
+      if (rtmAnswer === 'no') return false
+      
+      // For legacy records with combined question, default to false
+      const legacyAnswer = allAnswers.find(a => a.questionId === 'existing_rmc_rtm')?.value
+      if (legacyAnswer !== undefined) return false
+      
+      return null
+    },
+    cell: ({ row }) => {
+      const allAnswers = row.original.allAnswers as Array<{ questionId: string; value: unknown }> | null
+      if (!allAnswers) return <span className="text-muted-foreground">N/A</span>
+      
+      // Check new split question first
+      const rtmAnswer = allAnswers.find(a => a.questionId === 'existing_rtm')?.value
+      if (rtmAnswer === 'yes') return <IconCheck className="w-4 h-4 text-green-600" />
+      if (rtmAnswer === 'no') return <IconX className="w-4 h-4 text-red-600" />
+      
+      // For legacy records with combined question, we can't distinguish RMC from RTM
+      // Default to X for RTM column on legacy records
+      const legacyAnswer = allAnswers.find(a => a.questionId === 'existing_rmc_rtm')?.value
+      if (legacyAnswer !== undefined) return <IconX className="w-4 h-4 text-red-600" />
+      
+      return <span className="text-muted-foreground">N/A</span>
     },
   },
   {
@@ -176,6 +240,7 @@ export const columns: ColumnDef<EligibilityCheck, unknown>[] = [
         rtm: { label: "RTM", variant: "default" },
         enfranchisement: { label: "Enfranchisement", variant: "secondary" },
         rmc_takeover: { label: "RMC Takeover", variant: "outline" },
+        rtm_takeover: { label: "RTM Takeover", variant: "outline" },
       }
       
       const type = typeMap[caseType] || { label: "Unknown", variant: "outline" }
@@ -218,6 +283,7 @@ export const columns: ColumnDef<EligibilityCheck, unknown>[] = [
         registration: "Registration",
         leaseholder_engagement_module: "Engagement",
         rmc_process: "RMC Process",
+        rtm_takeover: "RTM Takeover",
       }
       
       return (
