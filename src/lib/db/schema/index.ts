@@ -17,7 +17,7 @@ import {
 // ============ ENUMS ============
 
 export const eligibilityStatusEnum = pgEnum('eligibility_status', ['success', 'failure', 'info']);
-export const caseTypeEnum = pgEnum('case_type', ['rtm', 'enfranchisement', 'rmc_takeover']);
+export const caseTypeEnum = pgEnum('case_type', ['rtm', 'enfranchisement', 'rmc_takeover', 'rtm_takeover']);
 export const registrationStatusEnum = pgEnum('registration_status', [
   'pending',
   'contacted',

@@ -98,7 +98,8 @@ export interface EligibilityData {
     flatCount?: number;
     propertyType?: string;
     isLeasehold?: string;
-    existingRmcRtm?: string;
+    existingRmc?: string;
+    existingRtm?: string;
     nonResidentialProportion?: string;
     leaseholderSupport?: string;
     allowsBothRtmAndCe?: boolean;

@@ -454,6 +454,22 @@ export default function RegistrationQuestionnaire({
                           → Taking Control of Your RMC
                         </a>
                       )}
+                      {eligibilityData.derivedData.provisionalPath.includes("RTM Join/Takeover") && (
+                        <a 
+                          href="/rtm-takeover" 
+                          className="text-liberty-primary hover:underline text-sm inline-flex items-center"
+                        >
+                          → Joining or Improving Your RTM Company
+                        </a>
+                      )}
+                      {eligibilityData.derivedData.provisionalPath.includes("RMC Takeover") && (
+                        <a 
+                          href="/rmc-process" 
+                          className="text-liberty-primary hover:underline text-sm inline-flex items-center"
+                        >
+                          → Taking Control of Your RMC
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -605,16 +621,18 @@ export default function RegistrationQuestionnaire({
                         <p className="font-medium text-liberty-standard">
                           {(() => {
                             const status = eligibilityData?.derivedData?.rmcStatus;
-                            const rmcAnswer = eligibilityData?.answers?.find(a => a.questionId === "existing_rmc_rtm")?.value;
+                            const rmcAnswer = eligibilityData?.answers?.find(a => a.questionId === "existing_rmc")?.value;
+                            const rtmAnswer = eligibilityData?.answers?.find(a => a.questionId === "existing_rtm")?.value;
                             
                             if (status === "No RMC/RTM recorded") return "No existing management company";
-                            if (status === "RMC/RTM exists") return "Management company already exists";  
+                            if (status === "RMC exists") return "RMC already exists";
+                            if (status === "RTM exists") return "RTM company already exists";
                             if (status === "RMC/RTM status unknown") return "Management status unclear";
                             
-                            // Fallback check using RMC answer directly if derivedData is wrong
-                            if (rmcAnswer === "no") return "No existing management company";
-                            if (rmcAnswer === "yes") return "Management company already exists";
-                            if (rmcAnswer === "dont_know") return "Management status unclear";
+                            // Fallback check using answers directly if derivedData is wrong
+                            if (rmcAnswer === "yes") return "RMC already exists";
+                            if (rtmAnswer === "yes") return "RTM company already exists";
+                            if (rmcAnswer === "no" && rtmAnswer === "no") return "No existing management company";
                             
                             return "Not yet determined";
                           })()}
@@ -626,7 +644,7 @@ export default function RegistrationQuestionnaire({
                         className="text-liberty-primary border-liberty-primary hover:bg-liberty-primary hover:text-white"
                         onClick={() => {
                           const url = eligibilityData?.uuid 
-                            ? `/eligibility-check?prefillId=${eligibilityData.uuid}&focusQuestion=existing_rmc_rtm`
+                            ? `/eligibility-check?prefillId=${eligibilityData.uuid}&focusQuestion=existing_rmc`
                             : '/eligibility-check';
                           router.push(url);
                         }}

@@ -53,12 +53,15 @@ export async function createEligibilityCase(
     }
 
     // Determine recommended case type from answers and outcome
-    const existingRmcRtm = findAnswer('existing_rmc_rtm') as string;
+    const existingRmc = findAnswer('existing_rmc') as string;
+    const existingRtm = findAnswer('existing_rtm') as string;
     const nonResidentialProportion = findAnswer('non_residential_proportion') as string;
 
-    let recommendedCaseType: 'rtm' | 'enfranchisement' | 'rmc_takeover';
-    if (existingRmcRtm === 'yes') {
+    let recommendedCaseType: 'rtm' | 'enfranchisement' | 'rmc_takeover' | 'rtm_takeover';
+    if (existingRmc === 'yes') {
       recommendedCaseType = 'rmc_takeover';
+    } else if (existingRtm === 'yes') {
+      recommendedCaseType = 'rtm_takeover';
     } else if (outcome.action === 'registration') {
       // For registration outcomes, prefer enfranchisement if both available
       recommendedCaseType = (!nonResidentialProportion || nonResidentialProportion === '25_or_less') 
@@ -80,7 +83,7 @@ export async function createEligibilityCase(
       propertyType: findAnswer('property_type') as string,
       isLeasehold: findAnswer('flat_leasehold') === 'yes',
       flatCount: findAnswer('flat_count') as number,
-      hasRmcRtm: existingRmcRtm === 'yes',
+      hasRmcRtm: existingRmc === 'yes' || existingRtm === 'yes',
       
       // Building characteristics
       nonResidentialProportion: nonResidentialProportion as string,
@@ -133,7 +136,7 @@ interface EligibilityCheck {
   id: string;
   propertyType: string | null;
   flatCount: number | null;
-  recommendedCaseType:  "rtm" | "enfranchisement" | "rmc_takeover" | null;
+  recommendedCaseType: "rtm" | "enfranchisement" | "rmc_takeover" | "rtm_takeover" | null;
   eligibilityStatus: "success" | "failure" | "info";
   createdAt: Date;
 }

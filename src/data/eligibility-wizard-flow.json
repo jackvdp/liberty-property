@@ -57,7 +57,7 @@
           { "value": "no", "label": "No" }
         ],
         "nextQuestion": {
-          "yes": "q3",
+          "yes": "q3a",
           "no": "ineligible_not_leasehold"
         }
       },
@@ -77,10 +77,10 @@
           "dont_know": "rmc_process"
         }
       },
-      "q3": {
-        "id": "existing_rmc_rtm",
-        "question": "Is there a Residents' Management Company (RMC) or RTM company already in place?",
-        "description": "If so, we can help you take it over or improve services. You can usually find this information in your lease or on your most recent service charge invoice.",
+      "q3a": {
+        "id": "existing_rmc",
+        "question": "Is there a Residents' Management Company (RMC) already in place?",
+        "description": "An RMC is a company set up by the developer when the building was built, giving leaseholders some control. You can usually find this in your lease or service charge invoice.",
         "type": "radio",
         "options": [
           { "value": "yes", "label": "Yes" },
@@ -89,6 +89,22 @@
         ],
         "nextQuestion": {
           "yes": "rmc_process",
+          "no": "q3b",
+          "dont_know": "q3b"
+        }
+      },
+      "q3b": {
+        "id": "existing_rtm",
+        "question": "Has an RTM (Right to Manage) company already been formed for your building?",
+        "description": "An RTM company is formed when leaseholders exercise their legal Right to Manage. This is different from an RMC.",
+        "type": "radio",
+        "options": [
+          { "value": "yes", "label": "Yes" },
+          { "value": "no", "label": "No" },
+          { "value": "dont_know", "label": "Don't know" }
+        ],
+        "nextQuestion": {
+          "yes": "rtm_takeover",
           "no": "q4",
           "dont_know": "q4"
         }
@@ -233,12 +249,23 @@
       },
       "rmc_process": {
         "type": "success",
-        "title": "Sounds like there's already a structure in place.",
-        "message": "Let's get you registered first, then we'll help you take control or improve your existing management.",
+        "title": "Sounds like there's already an RMC in place.",
+        "message": "We can help you take control of your RMC or improve how it's being run.",
         "action": "rmc_process",
         "color": "success",
         "button": {
           "text": "Register & Explore RMC Options",
+          "href": "/register"
+        }
+      },
+      "rtm_takeover": {
+        "type": "success",
+        "title": "It looks like your building already has an RTM company.",
+        "message": "We can help you join the existing RTM company or improve how it's being run.",
+        "action": "rtm_takeover",
+        "color": "success",
+        "button": {
+          "text": "Register & Explore RTM Options",
           "href": "/register"
         }
       },

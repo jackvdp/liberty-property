@@ -1,0 +1,1 @@
+ALTER TYPE "public"."case_type" ADD VALUE 'rtm_takeover';

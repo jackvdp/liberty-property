@@ -23,7 +23,8 @@ export const createEligibilityDerivedData = (
     flatCount: findAnswer('flat_count') as number | undefined,
     propertyType: findAnswer('property_type') as string | undefined,
     isLeasehold: findAnswer('flat_leasehold') as string | undefined,
-    existingRmcRtm: findAnswer('existing_rmc_rtm') as string | undefined,
+    existingRmc: findAnswer('existing_rmc') as string | undefined,
+    existingRtm: findAnswer('existing_rtm') as string | undefined,
     nonResidentialProportion: findAnswer('non_residential_proportion') as string | undefined,
     leaseholderSupport: findAnswer('leaseholder_support') as string | undefined,
     
@@ -33,11 +34,15 @@ export const createEligibilityDerivedData = (
       return !nonResAnswer || nonResAnswer === '25_or_less';
     })(),
     
-    // Set RMC status
+    // Set RMC/RTM status based on separate questions
     rmcStatus: (() => {
-      const rmcAnswer = findAnswer('existing_rmc_rtm');
-      if (rmcAnswer === 'no') return 'No RMC/RTM recorded';
-      if (rmcAnswer === 'yes') return 'RMC/RTM exists';
+      const rmcAnswer = findAnswer('existing_rmc');
+      const rtmAnswer = findAnswer('existing_rtm');
+      
+      if (rmcAnswer === 'yes') return 'RMC exists';
+      if (rtmAnswer === 'yes') return 'RTM exists';
+      if (rmcAnswer === 'no' && rtmAnswer === 'no') return 'No RMC/RTM recorded';
+      if (rmcAnswer === 'no' && !rtmAnswer) return 'No RMC/RTM recorded'; // RTM question not reached
       return 'RMC/RTM status unknown';
     })(),
     
@@ -54,7 +59,10 @@ export const createEligibilityDerivedData = (
         return 'Build neighbor support first';
       }
       if (outcome.action === 'rmc_process') {
-        return 'Improve existing management';
+        return 'RMC Takeover';
+      }
+      if (outcome.action === 'rtm_takeover') {
+        return 'RTM Join/Takeover';
       }
       return 'Not yet determined';
     })()
