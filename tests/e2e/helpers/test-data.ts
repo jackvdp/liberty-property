@@ -83,7 +83,8 @@ export function generateTestUser(namePrefix: string = 'Test User'): TestUserData
 export const QUALIFYING_FLAT_ANSWERS = {
   propertyType: 'flat',
   flatLeasehold: 'yes',
-  existingRmcRtm: 'no',
+  existingRmc: 'no',
+  existingRtm: 'no',
   flatCount: 10,
   longLeaseholders: 'yes',
   singleOwnerMultipleFlats: 'no',
@@ -98,7 +99,8 @@ export const QUALIFYING_FLAT_ANSWERS = {
 export const NEEDS_ENGAGEMENT_ANSWERS = {
   propertyType: 'flat',
   flatLeasehold: 'yes',
-  existingRmcRtm: 'no',
+  existingRmc: 'no',
+  existingRtm: 'no',
   flatCount: 10,
   longLeaseholders: 'yes',
   singleOwnerMultipleFlats: 'no',
@@ -113,7 +115,17 @@ export const NEEDS_ENGAGEMENT_ANSWERS = {
 export const EXISTING_RMC_ANSWERS = {
   propertyType: 'flat',
   flatLeasehold: 'yes',
-  existingRmcRtm: 'yes', // This triggers RMC process path
+  existingRmc: 'yes', // This triggers RMC process path
+} as const;
+
+/**
+ * Test data for a flat with existing RTM
+ */
+export const EXISTING_RTM_ANSWERS = {
+  propertyType: 'flat',
+  flatLeasehold: 'yes',
+  existingRmc: 'no',
+  existingRtm: 'yes', // This triggers RTM takeover path
 } as const;
 
 /**
@@ -132,14 +144,16 @@ export const INELIGIBLE_NOT_LEASEHOLD_ANSWERS = {
 export const INELIGIBLE_SINGLE_FLAT_ANSWERS = {
   propertyType: 'flat',
   flatLeasehold: 'yes',
-  existingRmcRtm: 'no',
+  existingRmc: 'no',
+  existingRtm: 'no',
   flatCount: 1, // Single flat is ineligible
 } as const;
 
 export const INELIGIBLE_TOO_COMMERCIAL_ANSWERS = {
   propertyType: 'flat',
   flatLeasehold: 'yes',
-  existingRmcRtm: 'no',
+  existingRmc: 'no',
+  existingRtm: 'no',
   flatCount: 10,
   longLeaseholders: 'yes',
   singleOwnerMultipleFlats: 'no',

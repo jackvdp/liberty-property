@@ -62,8 +62,13 @@ test.describe('Eligibility Wizard', () => {
       await selectRadioOption(page, 'Yes');
       await clickContinue(page);
 
-      // Q3: Existing RMC/RTM - No
-      await expectQuestionContains(page, 'Management Company');
+      // Q3a: Existing RMC - No
+      await expectQuestionContains(page, 'Residents\' Management Company');
+      await selectRadioOption(page, 'No');
+      await clickContinue(page);
+
+      // Q3b: Existing RTM - No
+      await expectQuestionContains(page, 'RTM');
       await selectRadioOption(page, 'No');
       await clickContinue(page);
 
@@ -148,6 +153,9 @@ test.describe('Eligibility Wizard', () => {
       await selectRadioOption(page, 'No'); // no RMC
       await clickContinue(page);
 
+      await selectRadioOption(page, 'No'); // no RTM
+      await clickContinue(page);
+
       await fillNumberInput(page, 8); // 8 flats
       await clickContinue(page);
 
@@ -207,11 +215,50 @@ test.describe('Eligibility Wizard', () => {
 
       // Verify RMC process outcome
       const outcomeTitle = await getOutcomeTitle(page);
-      expect(outcomeTitle.toLowerCase()).toContain('structure');
+      expect(outcomeTitle.toLowerCase()).toContain('rmc');
       expect(await isSuccessOutcome(page)).toBe(true);
 
       // Verify the RMC options button
       await expect(page.getByRole('button', { name: /RMC/i })).toBeVisible();
+    });
+  });
+
+  test.describe('Existing RTM Path', () => {
+    test('should direct to RTM takeover when RTM already exists', async ({ page }) => {
+      const testUser = generateTestUser('E2E RTM');
+
+      await page.goto('/eligibility-check');
+      await waitForWizardReady(page);
+
+      // Fill contact details
+      await fillContactDetails(page, testUser.fullName, testUser.email, testUser.phone);
+
+      // Property type - Flat
+      await selectRadioOption(page, 'Flat');
+      await clickContinue(page);
+
+      // Leasehold - Yes
+      await selectRadioOption(page, 'Yes');
+      await clickContinue(page);
+
+      // Existing RMC - No
+      await selectRadioOption(page, 'No');
+      await clickContinue(page);
+
+      // Existing RTM - Yes (triggers RTM takeover)
+      await selectRadioOption(page, 'Yes');
+      await clickContinue(page);
+
+      // Wait for outcome
+      await waitForOutcome(page);
+
+      // Verify RTM takeover outcome
+      const outcomeTitle = await getOutcomeTitle(page);
+      expect(outcomeTitle.toLowerCase()).toContain('rtm');
+      expect(await isSuccessOutcome(page)).toBe(true);
+
+      // Verify the RTM options button
+      await expect(page.getByRole('button', { name: /RTM/i })).toBeVisible();
     });
   });
 
@@ -277,7 +324,10 @@ test.describe('Eligibility Wizard', () => {
       await selectRadioOption(page, 'Yes');
       await clickContinue(page);
 
-      await selectRadioOption(page, 'No');
+      await selectRadioOption(page, 'No'); // no RMC
+      await clickContinue(page);
+
+      await selectRadioOption(page, 'No'); // no RTM
       await clickContinue(page);
 
       // Single flat
@@ -305,7 +355,10 @@ test.describe('Eligibility Wizard', () => {
       await selectRadioOption(page, 'Yes');
       await clickContinue(page);
 
-      await selectRadioOption(page, 'No');
+      await selectRadioOption(page, 'No'); // no RMC
+      await clickContinue(page);
+
+      await selectRadioOption(page, 'No'); // no RTM
       await clickContinue(page);
 
       await fillNumberInput(page, 10);
@@ -376,7 +429,10 @@ test.describe('Eligibility Wizard', () => {
       await selectRadioOption(page, 'Yes');
       await clickContinue(page);
 
-      await selectRadioOption(page, 'No');
+      await selectRadioOption(page, 'No'); // no RMC
+      await clickContinue(page);
+
+      await selectRadioOption(page, 'No'); // no RTM
       await clickContinue(page);
 
       await fillNumberInput(page, 5);
