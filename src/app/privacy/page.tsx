@@ -113,7 +113,7 @@ const dataController = {
   registration: "Company Registration Number: [To be provided]",
   ico: "ICO Registration Number: [To be provided]",
   address: "Registered Address: [To be provided]",
-  email: "privacy@libertybell.co.uk",
+  email: "info@libertybellpm.co.uk",
   dpo: "Data Protection Officer: [Name to be provided]"
 }
 
